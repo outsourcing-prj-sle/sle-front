@@ -78,7 +78,7 @@
         <div
           class="justify-center flex items-center p-2.5 ml-px flex-1 bg-indigo-50 max-md:px-5 max-md:max-w-full"
         >
-          예시 문장
+          응답 문항
         </div>
         <div class="justify-center w-[125px] py-2.5 text-center bg-blue-100">
           절대로<br />바꿀 수 없어요
@@ -225,7 +225,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 
 export default {
-  name: 'LoginView',
+  name: 'ReportQuestion1',
   components: {},
   props: {
     startStep: {

@@ -204,7 +204,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 
 export default {
-  name: 'LoginView',
+  name: 'ReportQuestion2',
   components: {},
   props: {
     startStep: {
