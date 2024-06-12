@@ -1,18 +1,12 @@
 <template>
-  <!-- <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav> -->
   <AppHeader />
-  <router-view/>
+  <router-view />
   <AppFooter />
 </template>
 <script>
-
-import { defineComponent } from 'vue'
-// import { useRoute } from 'vue-router'
-import AppFooter from './components/AppFooter.vue'
-import AppHeader from './components/AppHeader.vue'
+import { defineComponent } from 'vue';
+import AppFooter from './components/AppFooter.vue';
+import AppHeader from './components/AppHeader.vue';
 
 export default defineComponent({
   components: {
@@ -20,15 +14,13 @@ export default defineComponent({
     AppHeader,
   },
   setup() {
-    
-    return {
-    }
-  }
-})
+    return {};
+  },
+});
 </script>
 
 <style>
-#app { 
+#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
