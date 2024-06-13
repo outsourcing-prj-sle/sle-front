@@ -332,7 +332,8 @@ export default defineComponent({
 
           <img
             class="aspect-[1]"
-            src="qrURL"
+            src="`https://quickchart.io/qr?text=${qrURL}&size=250`"
+            alt="qrcode"
           />
       */
     };
