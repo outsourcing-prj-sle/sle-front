@@ -22,7 +22,7 @@
     <div class="flex gap-4 mt-6 ml-36 text-base font-medium text-neutral-700">
       <img
         loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/f9dd9fe252463f59eab715c00458d8a8e4bbf55a919cb8668ea06ace79c0142d?apiKey=ce28460f29bb4fafa8e3905252f0ef12&"
+        src="@/assets/img/reportchar.png"
         alt="Survey illustration"
         class="shrink-0 max-w-full aspect-[0.99] w-[127px]"
       />

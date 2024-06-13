@@ -36,30 +36,11 @@
     >
       <img
         loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/f9dd9fe252463f59eab715c00458d8a8e4bbf55a919cb8668ea06ace79c0142d?apiKey=ce28460f29bb4fafa8e3905252f0ef12&"
+        src="@/assets/img/reportchar.png"
         alt="Survey illustration"
         class="shrink-0 max-w-full aspect-[0.99] w-[127px]"
       />
       <!-- todo : 30초 뒤에 말풍성 보여줘야됨 -->
-      <!-- <div
-        class="relative w-1 h-auto border border-solid border-neutral-300 stroke-[1px] stroke-neutral-300"
-      >
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/5dc5512d2a93088a0a29e4d91010c45c3ab1f4f445c234bc2e9a3728237662dd?apiKey=ce28460f29bb4fafa8e3905252f0ef12&"
-          class="absolute t-0 r-0 aspect-[2.59] w-[200px]"
-          alt=""
-        />
-        <div class="absolute inset-0 size-full">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/288e9610cd60c9235ff4925a093a406a432933347bf48e9106aa8d73a8b7c6c4?apiKey=ce28460f29bb4fafa8e3905252f0ef12&"
-            class="shrink-0 self-start aspect-square w-[18px]"
-            alt="Icon"
-          />
-          <p class="relative">1개의 답안을 선택해<br />주세요.</p>
-        </div>
-      </div> -->
     </div>
 
     <div
@@ -85,40 +66,26 @@
         </div>
       </template>
     </div>
-    <div class="flex flex-col items-end w-full max-md:max-w-full">
+    <div class="pl-[154px] flex flex-col items-end w-full max-md:max-w-full">
       <section
-        class="flex gap-0 self-end mt-8 w-full text-base font-bold text-cyan-900 max-w-[1117px] max-md:flex-wrap max-md:max-w-full"
+        class="flex flex-col self-center py-8 mt-5 w-full font-medium text-black rounded-xl border border-solid border-neutral-300 max-w-[1117px] max-md:max-w-full"
       >
         <div
-          class="justify-center flex items-center p-2.5 ml-px flex-1 bg-indigo-50 max-md:px-5 max-md:max-w-full"
+          class="flex flex-col px-9 text-base leading-8 max-md:px-5 max-md:max-w-full"
         >
-          응답 문항
+          <p class="text-left max-md:mr-1.5 max-md:max-w-full">
+            네 개의 단어 중에서 사진 속의 사람이 생각하거나 느끼는 것을 가장 잘
+            묘사하는 단어는 무엇일까요?
+          </p>
+          <img
+            src="@/assets/img/3q1.png"
+            alt="3q1"
+            class="self-center mt-6 max-w-full aspect-[2.5] w-[371px]"
+          />
         </div>
-        <div class="justify-center w-[125px] py-2.5 text-center bg-blue-100">
-          절대로<br />그렇지 않아요
-        </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
-          가끔<br />그래요
-        </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
-          자주<br />그래요
-        </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
-          거의 항상<br />그래요
-        </div>
-      </section>
-
-      <section
-        class="flex justify-between items-center max-w-full border-b border-solid border-stone-200 w-[1117px] max-md:flex-wrap max-md:pr-5"
-      >
         <div
-          class="flex py-7 justify-between items-center max-w-full border-b border-solid border-stone-200 w-[1117px] max-md:flex-wrap max-md:pr-5"
+          class="flex gap-5 px-9 justify-between self-center mt-9 w-full text-xl leading-8 whitespace-nowrap max-w-[997px] max-md:flex-wrap max-md:max-w-full"
         >
-          <div
-            class="self-stretch pl-5 text-base font-medium leading-6 text-neutral-700 flex-1 text-left"
-          >
-            {{ metadata[nowStep + 1].Q }}
-          </div>
           <label
             for="option1"
             class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
@@ -132,9 +99,9 @@
               v-model="score"
             />
             <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
+              class="justify-center px-16 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-6"
             >
-              <div class="w-5 h-5 rounded-full"></div>
+              {{ metadata[nowStep + 1].A[0] }}
             </div>
           </label>
           <label
@@ -150,9 +117,9 @@
               v-model="score"
             />
             <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
+              class="justify-center px-16 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-6"
             >
-              <div class="w-5 h-5 rounded-full"></div>
+              {{ metadata[nowStep + 1].A[1] }}
             </div>
           </label>
           <label
@@ -168,9 +135,9 @@
               v-model="score"
             />
             <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
+              class="justify-center px-16 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-6"
             >
-              <div class="w-5 h-5 rounded-full"></div>
+              {{ metadata[nowStep + 1].A[2] }}
             </div>
           </label>
           <label
@@ -186,18 +153,23 @@
               v-model="score"
             />
             <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
+              class="justify-center px-16 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-6"
             >
-              <div class="w-5 h-5 rounded-full"></div>
+              {{ metadata[nowStep + 1].A[3] }}
             </div>
           </label>
         </div>
+      </section>
+      <section
+        class="justify-center text-left items-start px-7 py-7 mt-8 max-w-full text-base font-medium leading-8 text-black rounded-xl border border-solid border-neutral-300 w-[1117px] max-md:px-5 max-md:max-w-full"
+      >
+        결정하기 어렵더라도 각 질문마다 최선을 다해 답해주세요.
       </section>
     </div>
     <div class="flex gap-4" v-if="score">
       <button
         class="justify-center px-10 py-3 mt-6 text-base text-center text-white whitespace-nowrap bg-neutral-500 rounded-3xl max-md:px-5"
-        v-if="nowStep !== 0 && props.status === 'done'"
+        v-if="nowStep !== 0 && status === 'done'"
         @click="prevStep"
       >
         이전
@@ -218,7 +190,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 
 export default {
-  name: 'ReportQuestion2',
+  name: 'ReportQuestion3',
   components: {},
   props: {
     startStep: {
@@ -386,5 +358,12 @@ export default {
 input:checked + div div {
   --tw-bg-opacity: 1;
   background-color: rgb(96 165 250 / var(--tw-bg-opacity));
+}
+input:checked + div {
+  --tw-bg-opacity: 1;
+  background-color: rgb(96 165 250 / var(--tw-bg-opacity));
+
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 </style>

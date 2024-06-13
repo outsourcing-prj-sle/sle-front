@@ -22,30 +22,11 @@
     >
       <img
         loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/f9dd9fe252463f59eab715c00458d8a8e4bbf55a919cb8668ea06ace79c0142d?apiKey=ce28460f29bb4fafa8e3905252f0ef12&"
+        src="@/assets/img/reportchar.png"
         alt="Survey illustration"
         class="shrink-0 max-w-full aspect-[0.99] w-[127px]"
       />
       <!-- todo : 30초 뒤에 말풍성 보여줘야됨 -->
-      <!-- <div
-        class="relative w-1 h-auto border border-solid border-neutral-300 stroke-[1px] stroke-neutral-300"
-      >
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/5dc5512d2a93088a0a29e4d91010c45c3ab1f4f445c234bc2e9a3728237662dd?apiKey=ce28460f29bb4fafa8e3905252f0ef12&"
-          class="absolute t-0 r-0 aspect-[2.59] w-[200px]"
-          alt=""
-        />
-        <div class="absolute inset-0 size-full">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/288e9610cd60c9235ff4925a093a406a432933347bf48e9106aa8d73a8b7c6c4?apiKey=ce28460f29bb4fafa8e3905252f0ef12&"
-            class="shrink-0 self-start aspect-square w-[18px]"
-            alt="Icon"
-          />
-          <p class="relative">1개의 답안을 선택해<br />주세요.</p>
-        </div>
-      </div> -->
     </div>
 
     <div
