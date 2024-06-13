@@ -133,7 +133,7 @@
               <button
                 class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-blue-500 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis"
                 v-if="loginType === 'student'"
-                @click="() => goReportNotice()"
+                @click="() => goReportNotice(1)"
               >
                 시작하기
               </button>
@@ -174,7 +174,6 @@
               <button
                 class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-blue-500 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis"
                 v-if="loginType === 'teacher'"
-                @click="copyURL"
               >
                 URL 복사
               </button>
@@ -299,8 +298,11 @@ export default defineComponent({
 
     onMounted(async () => {});
 
-    const goReportNotice = () => {
-      router.push({ name: 'reportNotice' });
+    const goReportNotice = (type = 1) => {
+      router.push({
+        name: 'reportNotice',
+        params: { type: type },
+      });
     }
 
     const copyURL = async (type = 1) => {
