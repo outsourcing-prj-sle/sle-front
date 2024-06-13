@@ -110,6 +110,7 @@
           </div>
           <label
             for="option1"
+            :class="{ 'pointer-events-none': status === 'done' }"
             class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
           >
             <input
@@ -128,6 +129,7 @@
           </label>
           <label
             for="option2"
+            :class="{ 'pointer-events-none': status === 'done' }"
             class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
           >
             <input
@@ -146,6 +148,7 @@
           </label>
           <label
             for="option3"
+            :class="{ 'pointer-events-none': status === 'done' }"
             class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
           >
             <input
@@ -164,6 +167,7 @@
           </label>
           <label
             for="option4"
+            :class="{ 'pointer-events-none': status === 'done' }"
             class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
           >
             <input
@@ -182,6 +186,7 @@
           </label>
           <label
             for="option5"
+            :class="{ 'pointer-events-none': status === 'done' }"
             class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
           >
             <input
@@ -290,21 +295,22 @@ export default {
     onMounted(() => {});
 
     const nextStep = () => {
-      console.log(props.metadata);
-      console.log(props.metadata[nowStep.value]);
-      // 초기화
-      userAnswer.value[nowStep.value] = score.value;
-      score.value = null;
+      if (props.status === 'done') {
+        // 초기화
+        userAnswer.value[nowStep.value] = score.value;
+        score.value = null;
 
-      // if (props.isSave) {
-      // todo : 만약 저장해야하면 저장 - userId 이용
-      // }
+        // if (props.isSave) {
+        // todo : 만약 저장해야하면 저장 - userId 이용
+        // }
 
-      // 마지막일때 완료 페이지로
-      if (props.step.length === nowStep.value + 1) {
-        router.push({ name: 'reportFin' });
-        return;
+        // 마지막일때 완료 페이지로
+        if (props.step.length === nowStep.value + 1) {
+          router.push({ name: 'reportFin' });
+          return;
+        }
       }
+
       // nowStep 다음으로
       nowStep.value += 1;
       score.value = userAnswer.value[nowStep.value] || null;
@@ -316,14 +322,15 @@ export default {
         return;
       }
 
-      // 초기화
-      userAnswer.value[nowStep.value] = score.value;
-      score.value = null;
+      if (props.status === 'done') {
+        // 초기화
+        userAnswer.value[nowStep.value] = score.value;
+        score.value = null;
 
-      // if (props.isSave) {
-      // todo : 만약 저장해야하면 저장 - userId 이용
-      // }
-
+        // if (props.isSave) {
+        // todo : 만약 저장해야하면 저장 - userId 이용
+        // }
+      }
       // nowStep 다음으로
       nowStep.value -= 1;
       score.value = userAnswer.value[nowStep.value] || null;
