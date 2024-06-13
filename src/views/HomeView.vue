@@ -133,6 +133,7 @@
               <button
                 class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-blue-500 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis"
                 v-if="loginType === 'student'"
+                @click="() => goReportNotice()"
               >
                 시작하기
               </button>
@@ -298,6 +299,10 @@ export default defineComponent({
 
     onMounted(async () => {});
 
+    const goReportNotice = () => {
+      router.push({ name: 'reportNotice' });
+    }
+
     const copyURL = async (type = 1) => {
       try {
         await navigator.clipboard.writeText(
@@ -328,6 +333,7 @@ export default defineComponent({
       textAlert,
 
       handleSelection,
+      goReportNotice,
       copyURL,
       openQRCodePopup,
     };
