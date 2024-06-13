@@ -284,26 +284,38 @@ export default {
     onMounted(() => {});
 
     const nextStep = () => {
-      if (props.status === 'done') {
+      if (props.status !== 'done') {
         // 초기화
         userAnswer.value[nowStep.value] = score.value;
         score.value = null;
         canTTS.value = true;
 
-        // if (props.isSave) {
-        // todo : 만약 저장해야하면 저장 - userId 이용
-        // }
+        // nowStep 다음으로
+        nowStep.value += 1;
+
+        if (props.isSave) {
+          // todo : 만약 저장해야하면 저장 - userId 이용
+
+          // 임시저장된 값 있으면 입력해줌
+          score.value = userAnswer.value[nowStep.value] || null;
+        }
 
         // 마지막일때 완료 페이지로
-        if (props.step.length === nowStep.value + 1) {
+        if (props.step.length === nowStep.value) {
+          router.push({ name: 'reportFin' });
+          return;
+        }
+      } else {
+        // nowStep 다음으로
+        nowStep.value += 1;
+        // 저장된 값 입력
+        score.value = userAnswer.value[nowStep.value] || null;
+        // 마지막일때 완료 페이지로
+        if (props.step.length === nowStep.value) {
           router.push({ name: 'reportFin' });
           return;
         }
       }
-
-      // nowStep 다음으로
-      nowStep.value += 1;
-      score.value = userAnswer.value[nowStep.value] || null;
     };
 
     const prevStep = () => {
@@ -312,19 +324,24 @@ export default {
         return;
       }
 
-      if (props.status === 'done') {
+      if (props.status !== 'done') {
         // 초기화
         userAnswer.value[nowStep.value] = score.value;
         score.value = null;
 
-        // if (props.isSave) {
-        // todo : 만약 저장해야하면 저장 - userId 이용
-        // }
-      }
+        // nowStep 이전으로
+        nowStep.value -= 1;
 
-      // nowStep 다음으로
-      nowStep.value -= 1;
-      score.value = userAnswer.value[nowStep.value] || null;
+        if (props.isSave) {
+          // todo : 만약 저장해야하면 저장 - userId 이용
+          // 값 입력
+          score.value = userAnswer.value[nowStep.value] || null;
+        }
+      } else {
+        // nowStep 이전으로
+        nowStep.value -= 1;
+        score.value = userAnswer.value[nowStep.value] || null;
+      }
     };
 
     const useTTS = () => {
