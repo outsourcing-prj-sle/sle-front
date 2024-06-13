@@ -1,6 +1,9 @@
 <template>
   <div class="flex flex-col bg-white">
     <AppTopAlert :text="textAlert" :showAlert="showAlert" />
+    <AppQRPopup @closePopup="() => closePopup()" v-if="qrURL" class="z-50">
+      <img class="aspect-[1]" :src="qrURL" alt="qrcode" />
+    </AppQRPopup>
     <!-- 배너 공간 -->
     <section
       class="flex overflow-hidden relative flex-col items-center px-16 pt-12 w-full min-h-[341px] max-md:px-5 max-md:max-w-full"
@@ -276,12 +279,14 @@ import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 import AppDropdown from '../components/AppDropdown.vue';
 import AppTopAlert from '../components/AppTopAlert.vue';
+import AppQRPopup from '../components/AppQRPopup.vue';
 
 export default defineComponent({
   name: 'HomeView',
   components: {
     AppDropdown,
     AppTopAlert,
+    AppQRPopup,
   },
   setup() {
     const router = useRouter();
@@ -323,19 +328,12 @@ export default defineComponent({
     };
 
     const openQRCodePopup = (type = 1) => {
-      qrURL.value = `${window.location.host}/report/notice/${type}`;
+      const url = `${window.location.host}/report/notice/${type}`;
+      qrURL.value = `https://quickchart.io/qr?text=${url}&size=250`;
+    };
 
-      // todo : 팝업창 만들고 안에 아래 이미지 넣기
-      // 연한 회색 배경 누르면 닫기
-      // 진한 회색 안에 qr코드
-      /*
-
-          <img
-            class="aspect-[1]"
-            src="`https://quickchart.io/qr?text=${qrURL}&size=250`"
-            alt="qrcode"
-          />
-      */
+    const closePopup = () => {
+      qrURL.value = ``;
     };
 
     return {
@@ -350,6 +348,7 @@ export default defineComponent({
       goReportNotice,
       copyURL,
       openQRCodePopup,
+      closePopup,
     };
   },
 });
