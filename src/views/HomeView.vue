@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col bg-white">
-
+    <AppTopAlert :text="textAlert" :showAlert="showAlert" />
     <!-- 배너 공간 -->
     <section
       class="flex overflow-hidden relative flex-col items-center px-16 pt-12 w-full min-h-[341px] max-md:px-5 max-md:max-w-full"
@@ -101,16 +101,18 @@
             마감 기감에 맞춰 참여해주세요.
           </div>
         </div>
-        <AppDropdown 
-          :options="options" 
+        <AppDropdown
+          :options="options"
           :startText="selectedOption"
-          @update:selectedOption="handleSelection" 
+          @update:selectedOption="handleSelection"
         />
       </div>
       <div
         class="flex gap-4 justify-between mt-6 text-base font-medium text-neutral-700 max-md:flex-wrap"
       >
-        <div class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5">
+        <div
+          class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5"
+        >
           <img
             src="./../assets/img/left_arrow.png"
             alt="left_arrow1"
@@ -121,8 +123,7 @@
         <div
           class="flex flex-1 gap-4 mt-6 text-base font-medium text-neutral-700 max-md:flex-wrap overflow-scroll no-scrollbar"
         >
-
-        <article
+          <article
             class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px]"
           >
             <div class="self-center text-xl font-bold">마음알기 설문1</div>
@@ -138,7 +139,7 @@
               <button
                 class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-blue-500 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis"
                 v-if="loginType === 'teacher'"
-                @click="copyURL"
+                @click="() => copyURL(1)"
               >
                 URL 복사
               </button>
@@ -192,7 +193,9 @@
           </article>
         </div>
 
-        <div class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5">
+        <div
+          class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5"
+        >
           <img
             src="./../assets/img/right_arrow.png"
             alt="right_arrow1"
@@ -200,7 +203,6 @@
           />
         </div>
       </div>
-
 
       <!-- 목록2 -->
       <div
@@ -216,7 +218,9 @@
       <div
         class="flex gap-4 justify-between mt-6 text-base font-medium text-neutral-700 max-md:flex-wrap"
       >
-        <div class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5">
+        <div
+          class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5"
+        >
           <img
             src="./../assets/img/left_arrow.png"
             alt="left_arrow2"
@@ -230,8 +234,16 @@
           <article
             class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-zinc-600 border-solid pb-[124px]"
           >
-            <div class="self-center text-xl font-bold text-center text-neutral-700">마음알기 설문5</div>
-            <div class="mt-8 text-base font-medium text-neutral-700 max-md:mr-2.5">2023. 09. 01 ~ 12. 01</div>
+            <div
+              class="self-center text-xl font-bold text-center text-neutral-700"
+            >
+              마음알기 설문5
+            </div>
+            <div
+              class="mt-8 text-base font-medium text-neutral-700 max-md:mr-2.5"
+            >
+              2023. 09. 01 ~ 12. 01
+            </div>
             <button
               class="justify-center w-[206px] items-center px-5 py-3 mt-8 text-white whitespace-nowrap bg-zinc-600 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden"
             >
@@ -245,7 +257,9 @@
           </article>
         </div>
 
-        <div class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5">
+        <div
+          class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5"
+        >
           <img
             src="./../assets/img/right_arrow.png"
             alt="right_arrow2"
@@ -257,15 +271,17 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref, computed } from 'vue';
-import { useRouter } from 'vue-router'
-import { useUserStore } from '@/store/userStore.js'
+import { defineComponent, ref, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store/userStore.js';
 import AppDropdown from '../components/AppDropdown.vue';
+import AppTopAlert from '../components/AppTopAlert.vue';
 
 export default defineComponent({
   name: 'HomeView',
   components: {
     AppDropdown,
+    AppTopAlert,
   },
   setup() {
     const router = useRouter();
@@ -273,32 +289,49 @@ export default defineComponent({
     const loginType = computed(() => userStore.type);
     const options = ref(['마감순', '마감순 2', '마감순 3']);
     const selectedOption = ref('마감순');
+    const showAlert = ref(false);
+    const textAlert = ref('');
 
     const handleSelection = (option) => {
       selectedOption.value = option;
     };
 
-    const copyURL = () => {
-      // todo : 설문 url 복사하기
-      console.log('설문 url 복사하기')
-    }
+    onMounted(async () => {});
+
+    const copyURL = async (type = 1) => {
+      try {
+        await navigator.clipboard.writeText(
+          `http://localhost:8080/report/notice/${type}`
+        );
+        showAlert.value = true;
+        textAlert.value = 'URL이 복사되었습니다.';
+        setTimeout(() => {
+          showAlert.value = false;
+          textAlert.value = '';
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy text: ', err);
+      }
+    };
 
     const openQRCodePopup = () => {
       // todo : 팝업창
       // todo : url qr코드로
-      console.log('url qr코드로')
-    }
+      console.log('url qr코드로');
+    };
 
     return {
       options,
       selectedOption,
       loginType,
+      showAlert,
+      textAlert,
 
       handleSelection,
       copyURL,
       openQRCodePopup,
     };
-  }
+  },
 });
 </script>
 
@@ -308,7 +341,7 @@ export default defineComponent({
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
 }
 </style>
