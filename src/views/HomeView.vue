@@ -301,7 +301,7 @@ export default defineComponent({
     const copyURL = async (type = 1) => {
       try {
         await navigator.clipboard.writeText(
-          `http://localhost:8080/report/notice/${type}`
+          `${window.location.host}/report/notice/${type}`
         );
         showAlert.value = true;
         textAlert.value = 'URL이 복사되었습니다.';
