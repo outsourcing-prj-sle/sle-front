@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useUserStore } from '@/store/userStore.js';
 import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import SignupView from '../views/SignupView.vue';
@@ -13,7 +14,7 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView,
-    meta: { footerVisible: true, headerVisible: true },
+    meta: { footerVisible: true, headerVisible: true, needLogin: true },
   },
   {
     path: '/login',
@@ -31,43 +32,69 @@ const routes = [
     path: '/mySEL',
     name: 'mySEL',
     component: MySELView,
-    meta: { footerVisible: true, headerVisible: true, isMySELView: true },
+    meta: {
+      footerVisible: true,
+      headerVisible: true,
+      isMySELView: true,
+      needLogin: true,
+    },
   },
   {
     path: '/allSEL',
     name: 'allSEL',
     component: AllSELView,
-    meta: { footerVisible: true, headerVisible: true, isAllSELView: true },
+    meta: {
+      footerVisible: true,
+      headerVisible: true,
+      isAllSELView: true,
+      needLogin: true,
+    },
   },
   {
     path: '/report/notice/:type',
     name: 'reportNotice',
     component: ReportNoticeView,
-    meta: { footerVisible: true, headerVisible: true },
+    meta: { footerVisible: true, headerVisible: true, needLogin: true },
   },
   {
     path: '/report/question/:type',
     name: 'reportQuestion',
     component: ReportQuestionView,
-    meta: { footerVisible: true, headerVisible: true },
+    meta: { footerVisible: true, headerVisible: true, needLogin: true },
   },
   {
     path: '/report/fin',
     name: 'reportFin',
     component: ReportFinView,
-    meta: { footerVisible: true, headerVisible: true },
+    meta: { footerVisible: true, headerVisible: true, needLogin: true },
   },
   {
     path: '/myInfo',
     name: 'myInfo',
     component: SignupView,
-    meta: { footerVisible: true, headerVisible: true, isMyInfoPage: true },
+    meta: {
+      footerVisible: true,
+      headerVisible: true,
+      isMyInfoPage: true,
+      needLogin: true,
+    },
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+  const userId = userStore.id;
+  // 로그인 안했으면 로그인페이지로
+  if (to.meta?.needLogin && !userId) {
+    next({ name: 'login' });
+  } else {
+    next();
+  }
 });
 
 export default router;

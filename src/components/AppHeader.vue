@@ -100,7 +100,7 @@ export default {
 
     const logout = () => {
       userStore.logout();
-      router.push({ name: 'home' });
+      router.push({ name: 'login' });
     };
 
     const checkId = () => {
