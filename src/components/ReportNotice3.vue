@@ -148,6 +148,7 @@
     <button
       class="justify-center px-10 py-3 mt-6 text-base text-center text-white whitespace-nowrap bg-blue-500 rounded-3xl max-md:px-5"
       v-if="score"
+      @click="startReport"
     >
       시작
     </button>
@@ -186,7 +187,6 @@ export default {
       router.push({
         name: 'reportQuestion',
         params: { type: type.value },
-        // query: { plan: 'private' }
       });
     };
 

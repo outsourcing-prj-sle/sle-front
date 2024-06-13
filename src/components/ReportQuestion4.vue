@@ -210,7 +210,6 @@ export default {
       router.push({
         path: '/report/question',
         params: { type: type.value },
-        // query: { plan: 'private' }
       });
     };
 
