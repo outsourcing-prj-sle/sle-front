@@ -123,9 +123,6 @@
         <div
           class="flex flex-1 gap-4 mt-6 text-base font-medium text-neutral-700 max-md:flex-wrap overflow-scroll no-scrollbar"
         >
-          <!-- <img
-            src="https://quickchart.io/qr?text=http://localhost:8080/report/notice/1&size=250"
-          /> -->
           <article
             class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px]"
           >
@@ -150,7 +147,7 @@
               <button
                 class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-blue-700 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis"
                 v-if="loginType === 'teacher'"
-                @click="openQRCodePopup"
+                @click="() => openQRCodePopup(1)"
               >
                 QR 코드
               </button>
@@ -294,6 +291,7 @@ export default defineComponent({
     const selectedOption = ref('마감순');
     const showAlert = ref(false);
     const textAlert = ref('');
+    const qrURL = ref('');
 
     const handleSelection = (option) => {
       selectedOption.value = option;
@@ -324,10 +322,19 @@ export default defineComponent({
       }
     };
 
-    const openQRCodePopup = () => {
-      // todo : 팝업창
-      // todo : url qr코드로
-      console.log('url qr코드로');
+    const openQRCodePopup = (type = 1) => {
+      qrURL.value = `${window.location.host}/report/notice/${type}`;
+
+      // todo : 팝업창 만들고 안에 아래 이미지 넣기
+      // 연한 회색 배경 누르면 닫기
+      // 진한 회색 안에 qr코드
+      /*
+
+          <img
+            class="aspect-[1]"
+            src="qrURL"
+          />
+      */
     };
 
     return {
@@ -336,6 +343,7 @@ export default defineComponent({
       loginType,
       showAlert,
       textAlert,
+      qrURL,
 
       handleSelection,
       goReportNotice,
