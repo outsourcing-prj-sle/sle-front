@@ -123,6 +123,9 @@
         <div
           class="flex flex-1 gap-4 mt-6 text-base font-medium text-neutral-700 max-md:flex-wrap overflow-scroll no-scrollbar"
         >
+          <!-- <img
+            src="https://quickchart.io/qr?text=http://localhost:8080/report/notice/1&size=250"
+          /> -->
           <article
             class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px]"
           >
@@ -303,7 +306,7 @@ export default defineComponent({
         name: 'reportNotice',
         params: { type: type },
       });
-    }
+    };
 
     const copyURL = async (type = 1) => {
       try {
