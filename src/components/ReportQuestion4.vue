@@ -80,7 +80,7 @@
           <img
             :src="questionImgList[questionImgIndex]"
             alt="questionImg"
-            class="self-center mt-6 max-w-full aspect-[2.5] w-[373px] h-[476px]"
+            class="self-center mt-6 max-w-full h-[476px]"
           />
         </div>
         <div
