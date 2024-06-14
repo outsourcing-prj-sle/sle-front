@@ -1,54 +1,60 @@
 <template>
   <div class="flex justify-center">
-  <div class="w-full max-w-md p-8 space-y-8 bg-white rounded shadow-md">
-    <div class="flex justify-center">
-      <img src="@/assets/img/logo_sel.png" alt="Logo" class="h-24" />
-    </div>
-    <form @submit.prevent="handleSubmit">
-      <div class="space-y-4">
-        <div>
-          <label for="email" class="block text-sm font-medium text-gray-700">아이디</label>
-          <input
-            type="text"
-            id="email"
-            v-model="email"
-            required
-            class="w-full px-3 py-2 mt-1 text-sm border rounded focus:outline-none focus:ring focus:ring-blue-200"
-          />
-        </div>
-        <div>
-          <label for="password" class="block text-sm font-medium text-gray-700">비밀번호</label>
-          <input
-            type="password"
-            id="password"
-            v-model="password"
-            required
-            class="w-full px-3 py-2 mt-1 text-sm border rounded focus:outline-none focus:ring focus:ring-blue-200"
-          />
-        </div>
+    <div class="w-full max-w-md p-8 space-y-8 bg-white rounded shadow-md">
+      <div class="flex justify-center">
+        <img src="@/assets/img/logo_sel.png" alt="Logo" class="h-24" />
       </div>
-      <div class="flex items-center justify-between mt-6">
-        <button
-          type="submit"
-          class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none"
-        >
-          로그인
-        </button>
+      <form @submit.prevent="handleSubmit">
+        <div class="space-y-4">
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700"
+              >아이디</label
+            >
+            <input
+              type="text"
+              id="email"
+              v-model="email"
+              required
+              class="w-full px-3 py-2 mt-1 text-sm border rounded focus:outline-none focus:ring focus:ring-blue-200"
+            />
+          </div>
+          <div>
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700"
+              >비밀번호</label
+            >
+            <input
+              type="password"
+              id="password"
+              v-model="password"
+              required
+              class="w-full px-3 py-2 mt-1 text-sm border rounded focus:outline-none focus:ring focus:ring-blue-200"
+            />
+          </div>
+        </div>
+        <div class="flex items-center justify-between mt-6">
+          <button
+            type="submit"
+            class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none"
+          >
+            로그인
+          </button>
+        </div>
+      </form>
+      <div class="text-center">
+        <router-link to="/signup">
+          <div class="text-sm text-blue-500 hover:underline">회원가입</div>
+        </router-link>
       </div>
-    </form>
-    <div class="text-center">
-      <router-link to="/signup">
-        <div class="text-sm text-blue-500 hover:underline">회원가입</div>
-      </router-link>
     </div>
-  </div>
   </div>
 </template>
 
 <script>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useUserStore } from '@/store/userStore.js'
+import { useUserStore } from '@/store/userStore.js';
 
 export default {
   name: 'LoginView',
@@ -67,11 +73,11 @@ export default {
       userStore.init({
         token: 'token',
         id: email.value,
-        // type: 'student',
-        type: 'teacher',
+        type: 'student',
+        // type: 'teacher',
         extra: {},
-      })
-      
+      });
+
       router.back();
     };
 
