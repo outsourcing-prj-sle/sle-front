@@ -4,7 +4,9 @@
   <AppFooter />
 </template>
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, computed, watchEffect } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useUserStore } from '@/store/userStore.js';
 import AppFooter from './components/AppFooter.vue';
 import AppHeader from './components/AppHeader.vue';
 
@@ -14,6 +16,18 @@ export default defineComponent({
     AppHeader,
   },
   setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const userStore = useUserStore();
+    const needLogin = computed(() => route.meta.needLogin);
+    const userId = computed(() => userStore.id);
+
+    watchEffect(() => {
+      if (needLogin.value && !userId.value) {
+        router.push({ name: 'login' });
+      }
+    });
+
     return {};
   },
 });
