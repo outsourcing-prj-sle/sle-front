@@ -18,6 +18,20 @@
       </article>
     </div>
     <div
+      class="flex gap-2.5 self-start mt-1.5 max-md:flex-wrap"
+      @click="useTTS"
+    >
+      <img
+        src="@/assets/img/speaker.png"
+        alt="speaker"
+        class="shrink-0 aspect-square w-[25px]"
+      />
+      <p class="flex-auto my-auto max-md:max-w-full">
+        클릭시 안내음성을 들을 수 있습니다. 단, 안내음성은 1회만 들을 수
+        있습니다.
+      </p>
+    </div>
+    <div
       class="flex w-full justify-center gap-4 mt-6 ml-36 text-base font-medium text-neutral-700"
     >
       <img
@@ -26,13 +40,13 @@
         alt="Survey illustration"
         class="shrink-0 max-w-full aspect-[0.99] w-[127px]"
       />
-      <!-- todo : 30초 뒤에 말풍성 보여줘야됨 -->
+      <!-- todo : 1초간 사진이 보여집니다 말풍선 -->
     </div>
 
     <div
-      class="flex relative gap-20 justify-center mt-12 max-w-full w-full max-md:flex-wrap max-md:mt-10"
+      class="flex relative gap-40 justify-center mt-12 max-w-full w-full max-md:flex-wrap max-md:mt-10"
     >
-      <template v-for="n in 6" :key="`blueball${n}`">
+      <template v-for="n in 4" :key="`blueball${n}`">
         <div class="flex flex-col" v-if="nowStep + 1 >= n">
           <div
             class="flex flex-col justify-center p-2 rounded-3xl border border-blue-400 border-solid bg-white"
@@ -52,140 +66,54 @@
         </div>
       </template>
     </div>
-    <div class="flex flex-col items-end w-full max-md:max-w-full">
+    <div class="pl-[154px] flex flex-col items-end w-full max-md:max-w-full">
       <section
-        class="flex gap-0 self-end mt-8 w-full text-base font-bold text-cyan-900 max-w-[1117px] max-md:flex-wrap max-md:max-w-full"
+        class="flex flex-col self-center py-8 mt-5 w-full font-medium text-black rounded-xl border border-solid border-neutral-300 max-w-[1117px] max-md:max-w-full"
       >
         <div
-          class="justify-center flex items-center p-2.5 ml-px flex-1 bg-indigo-50 max-md:px-5 max-md:max-w-full"
+          class="flex flex-col px-9 text-base leading-8 max-md:px-5 max-md:max-w-full"
         >
-          예시 문장
-        </div>
-        <div class="justify-center w-[125px] py-2.5 text-center bg-blue-100">
-          절대로<br />바꿀 수 없어요
-        </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
-          약간<br />바꿀 수 있어요
-        </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
-          어느 정도<br />바꿀 수 있어요
-        </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
-          대체로<br />바꿀 수 있어요
-        </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
-          완전히<br />바꿀 수 있어요
+          <p class="text-left max-md:mr-1.5 max-md:max-w-full">
+            {{ metadata[nowStep + 1].Q }}
+          </p>
+          <div class="flex gap-5 max-md:flex-col max-md:gap-0">
+            <div class="flex flex-col w-[44%] max-md:ml-0 max-md:w-full">
+              <FaceImg
+                :face="face[faceIndex]"
+                :eyes="eyesIndex >= 0 && eyes[eyesIndex]"
+                :mouth="mouthIndex >= 0 && mouth[mouthIndex]"
+              />
+            </div>
+            <div class="flex ml-5 w-[56%] max-md:ml-0 max-md:w-full">
+              <FaceSelectList
+                :title="'눈'"
+                :itemList="eyes"
+                :selected="eyesIndex"
+                @selectItem="(index) => selectIndex(index, 'eyes')"
+              />
+              <div
+                class="mx-2 h-full border-2 border-l border-solid border-gray-700"
+              ></div>
+              <FaceSelectList
+                :title="'코와 입'"
+                :itemList="mouth"
+                :selected="mouthIndex"
+                @selectItem="(index) => selectIndex(index, 'mouth')"
+              />
+            </div>
+          </div>
         </div>
       </section>
-
       <section
-        class="flex justify-between items-center max-w-full border-b border-solid border-stone-200 w-[1117px] max-md:flex-wrap max-md:pr-5"
+        class="justify-center text-left items-start px-7 py-7 mt-8 max-w-full text-base font-medium leading-8 text-black rounded-xl border border-solid border-neutral-300 w-[1117px] max-md:px-5 max-md:max-w-full"
       >
-        <div
-          class="flex py-7 justify-between items-center max-w-full border-b border-solid border-stone-200 w-[1117px] max-md:flex-wrap max-md:pr-5"
-        >
-          <div
-            class="self-stretch pl-5 text-base font-medium leading-6 text-neutral-700 flex-1 text-left"
-          >
-            {{ metadata[nowStep + 1].Q }}
-          </div>
-          <label
-            for="option1"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
-          >
-            <input
-              class="hidden"
-              type="radio"
-              name="activityQuestion"
-              id="option1"
-              value="1"
-              v-model="score"
-            />
-            <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
-            >
-              <div class="w-5 h-5 rounded-full"></div>
-            </div>
-          </label>
-          <label
-            for="option2"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
-          >
-            <input
-              class="hidden"
-              type="radio"
-              name="activityQuestion"
-              id="option2"
-              value="2"
-              v-model="score"
-            />
-            <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
-            >
-              <div class="w-5 h-5 rounded-full"></div>
-            </div>
-          </label>
-          <label
-            for="option3"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
-          >
-            <input
-              class="hidden"
-              type="radio"
-              name="activityQuestion"
-              id="option3"
-              value="3"
-              v-model="score"
-            />
-            <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
-            >
-              <div class="w-5 h-5 rounded-full"></div>
-            </div>
-          </label>
-          <label
-            for="option4"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
-          >
-            <input
-              class="hidden"
-              type="radio"
-              name="activityQuestion"
-              id="option4"
-              value="4"
-              v-model="score"
-            />
-            <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
-            >
-              <div class="w-5 h-5 rounded-full"></div>
-            </div>
-          </label>
-          <label
-            for="option5"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
-          >
-            <input
-              class="hidden"
-              type="radio"
-              name="activityQuestion"
-              id="option5"
-              value="5"
-              v-model="score"
-            />
-            <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
-            >
-              <div class="w-5 h-5 rounded-full"></div>
-            </div>
-          </label>
-        </div>
+        결정하기 어렵더라도 각 질문마다 최선을 다해 답해주세요.
       </section>
     </div>
-    <div class="flex gap-4" v-if="score">
+    <div class="flex gap-4" v-if="eyesIndex > -1 && mouthIndex > -1">
       <button
         class="justify-center px-10 py-3 mt-6 text-base text-center text-white whitespace-nowrap bg-neutral-500 rounded-3xl max-md:px-5"
-        v-if="nowStep !== 0"
+        v-if="nowStep !== 0 && status === 'done'"
         @click="prevStep"
       >
         이전
@@ -204,10 +132,12 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
+import FaceImg from '@/components/FaceImg.vue';
+import FaceSelectList from '@/components/FaceSelectList.vue';
 
 export default {
-  name: 'LoginView',
-  components: {},
+  name: 'ReportQuestion6',
+  components: { FaceImg, FaceSelectList },
   props: {
     startStep: {
       type: Number,
@@ -253,7 +183,7 @@ export default {
     },
     title: {
       type: String,
-      default: '마음알기 설문1',
+      default: '마음알기 설문6',
     },
   },
   setup(props) {
@@ -267,28 +197,66 @@ export default {
     );
     const userAnswer = ref(props.stepAnswer || []);
     const nowStep = ref(props.startStep || 0);
+    const canTTS = ref(true);
+    const face = ref([
+      require('@/assets/img/6q1.png'),
+      require('@/assets/img/6q2.png'),
+      require('@/assets/img/6q3.png'),
+      require('@/assets/img/6q4.png'),
+    ]);
+    const eyes = ref([
+      require('@/assets/img/6a11.png'),
+      require('@/assets/img/6a12.png'),
+      require('@/assets/img/6a13.png'),
+      require('@/assets/img/6a14.png'),
+      require('@/assets/img/6a15.png'),
+      require('@/assets/img/6a16.png'),
+    ]);
+    const mouth = ref([
+      require('@/assets/img/6a21.png'),
+      require('@/assets/img/6a22.png'),
+      require('@/assets/img/6a23.png'),
+      require('@/assets/img/6a24.png'),
+      require('@/assets/img/6a25.png'),
+      require('@/assets/img/6a26.png'),
+    ]);
+    const faceIndex = ref(0);
+    const eyesIndex = ref(-1);
+    const mouthIndex = ref(-1);
 
     onMounted(() => {});
 
     const nextStep = () => {
-      console.log(props.metadata);
-      console.log(props.metadata[nowStep.value]);
-      // 초기화
-      userAnswer.value[nowStep.value] = score.value;
-      score.value = null;
-
-      // if (props.isSave) {
-      // todo : 만약 저장해야하면 저장 - userId 이용
-      // }
-
       // 마지막일때 완료 페이지로
       if (props.step.length === nowStep.value + 1) {
+        if (props.isSave && props.status !== 'done') {
+          // todo : 만약 저장해야하면 저장 - userId 이용
+        }
         router.push({ name: 'reportFin' });
         return;
       }
-      // nowStep 다음으로
-      nowStep.value += 1;
-      score.value = userAnswer.value[nowStep.value] || null;
+
+      if (props.status !== 'done') {
+        // 초기화
+        userAnswer.value[nowStep.value] = score.value;
+        score.value = null;
+        canTTS.value = true;
+
+        // nowStep 다음으로
+        nowStep.value += 1;
+
+        if (props.isSave) {
+          // todo : 만약 저장해야하면 저장 - userId 이용
+
+          // 임시저장된 값 있으면 입력해줌
+          score.value = userAnswer.value[nowStep.value] || null;
+        }
+      } else {
+        // nowStep 다음으로
+        nowStep.value += 1;
+        // 저장된 값 입력
+        score.value = userAnswer.value[nowStep.value] || null;
+      }
     };
 
     const prevStep = () => {
@@ -297,25 +265,73 @@ export default {
         return;
       }
 
-      // 초기화
-      userAnswer.value[nowStep.value] = score.value;
-      score.value = null;
+      if (props.status !== 'done') {
+        // 초기화
+        // todo : 답을 두개줘야하는 6번, 다음으로갈때나 이전으로 갈떄 어떻게볼지
+        // todo : 어떻게 저장할지
+        // score.value 보고 화깅ㄴ하기
+        userAnswer.value[nowStep.value] = score.value;
+        faceIndex.value = nowStep.value;
+        eyesIndex.value = null;
+        mouthIndex.value = null;
 
-      // if (props.isSave) {
-      // todo : 만약 저장해야하면 저장 - userId 이용
-      // }
+        // nowStep 이전으로
+        nowStep.value -= 1;
 
-      // nowStep 다음으로
-      nowStep.value -= 1;
-      score.value = userAnswer.value[nowStep.value] || null;
+        if (props.isSave) {
+          // todo : 만약 저장해야하면 저장 - userId 이용
+          // 값 입력
+          score.value = userAnswer.value[nowStep.value] || null;
+        }
+      } else {
+        // nowStep 이전으로
+        nowStep.value -= 1;
+        score.value = userAnswer.value[nowStep.value] || null;
+      }
+    };
+
+    const useTTS = () => {
+      if (!canTTS.value) return;
+      canTTS.value = false;
+      const questionData = props.metadata[nowStep.value + 1];
+      const questionDefault = '다음은 문제입니다.';
+      const utterancequestionDefault = new SpeechSynthesisUtterance(
+        questionDefault
+      );
+      window.speechSynthesis.speak(utterancequestionDefault);
+      const utteranceQ = new SpeechSynthesisUtterance(questionData.Q);
+      window.speechSynthesis.speak(utteranceQ);
+
+      const answerDefault = '다음은 답변의 보기입니다.';
+      const utteranceanswerDefault = new SpeechSynthesisUtterance(
+        answerDefault
+      );
+      window.speechSynthesis.speak(utteranceanswerDefault);
+      for (let i = 0; i < questionData.A.length; i++) {
+        const utteranceA = new SpeechSynthesisUtterance(questionData.A[i]);
+        window.speechSynthesis.speak(utteranceA);
+      }
+    };
+
+    const selectIndex = (index, type) => {
+      if (type === 'eyes') eyesIndex.value = index;
+      if (type === 'mouth') mouthIndex.value = index;
     };
 
     return {
       type,
       nowStep,
       score,
+      face,
+      eyes,
+      mouth,
+      faceIndex,
+      eyesIndex,
+      mouthIndex,
       nextStep,
       prevStep,
+      useTTS,
+      selectIndex,
     };
   },
 };
@@ -328,5 +344,12 @@ export default {
 input:checked + div div {
   --tw-bg-opacity: 1;
   background-color: rgb(96 165 250 / var(--tw-bg-opacity));
+}
+input:checked + div {
+  --tw-bg-opacity: 1;
+  background-color: rgb(96 165 250 / var(--tw-bg-opacity));
+
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 </style>
