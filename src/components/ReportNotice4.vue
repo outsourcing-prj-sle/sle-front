@@ -17,9 +17,9 @@
       <article
         class="flex flex-col grow shrink-0 self-end mt-9 font-medium text-black basis-0 w-fit max-md:max-w-full"
       >
-        <div class="self-end text-base leading-8">기간 : {{ date }}</div>
+        <div class="self-end text-base leading-8 max-lg:text-sm max-md:text-xs">기간 : {{ date }}</div>
         <section
-          class="justify-center items-start px-9 py-6 text-left text-base leading-8 rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:mt-10 max-md:max-w-full mt-1"
+          class="justify-center items-start px-9 py-6 text-left text-base leading-8 rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:mt-10 max-md:max-w-full mt-1 max-lg:text-sm max-md:text-xs"
         >
           다음 지시를 따라 주시기 바랍니다.<br /><br />활동이 시작되면 검은 화면
           안에 사람의 사진이 나타납니다.<br />사진은

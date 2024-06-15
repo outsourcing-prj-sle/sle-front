@@ -3,7 +3,7 @@
     class="flex flex-col items-end px-20 mt-4 w-full max-md:px-5 max-md:mt-10 max-md:max-w-full"
   >
     <div
-      class="flex gap-1 items-start self-stretch max-md:flex-wrap max-md:max-w-full"
+      class="flex gap-1 items-start self-stretch max-md:max-w-full"
     >
       <div class="flex flex-col self-start font-bold min-w-[150px]">
         <h1 class="text-xl text-blue-500 text-left">마음알기 설문1</h1>
@@ -17,11 +17,11 @@
       <article
         class="flex flex-col grow shrink-0 self-end mt-9 font-medium text-black basis-0 w-fit max-md:max-w-full"
       >
-        <div class="self-end text-base leading-8">
+        <div class="self-end text-base leading-8 max-lg:text-sm max-md:text-xs">
           기간 : YYYY년 MM월 DD일 ~ MM월 DD일
         </div>
         <section
-          class="justify-center items-start px-9 py-6 text-left text-base leading-8 rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:mt-10 max-md:max-w-full"
+          class="justify-center items-start px-9 py-6 text-left text-base leading-8 rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:mt-10 max-md:max-w-full max-lg:text-sm max-md:text-xs"
         >
           다음 지시를 따라 주시기 바랍니다.<br />이 화면에는 학생들의 생각, 감정
           그리고 행동을 나타내는 문장들이 있습니다. 각 문장을 주의 깊게 읽고 1,
@@ -34,50 +34,48 @@
         </section>
       </article>
     </div>
-    <div class="pl-[154px] flex flex-col items-end w-full max-md:max-w-full">
+    <div class="pl-[154px] flex flex-col items-end w-full max-md:max-w-full max-lg:pl-0">
       <section
-        class="flex gap-0 self-end mt-8 w-full text-base font-bold text-cyan-900 max-w-[1117px] max-md:flex-wrap max-md:max-w-full"
+        class="flex gap-0 self-end mt-8 w-full text-base font-bold text-cyan-900 max-md:max-w-full"
       >
         <div
-          class="justify-center flex items-center p-2.5 ml-px flex-1 bg-indigo-50 max-md:px-5 max-md:max-w-full"
+          class="justify-center flex items-center p-2.5 ml-px flex-1 bg-indigo-50 max-md:px-5 max-md:max-w-full min-w-96 max-2xl:min-w-72 max-xl:min-w-40 max-lg:min-w-32 max-lg:text-sm max-md:text-xs"
         >
           예시 문장
         </div>
-        <div class="justify-center w-[125px] py-2.5 text-center bg-blue-100">
+        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
           절대로<br />바꿀 수 없어요
         </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
+        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
           약간<br />바꿀 수 있어요
         </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
+        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
           어느 정도<br />바꿀 수 있어요
         </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
+        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
           대체로<br />바꿀 수 있어요
         </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
+        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
           완전히<br />바꿀 수 있어요
         </div>
       </section>
 
       <section
-        class="flex justify-between items-center max-w-full border-b border-solid border-stone-200 w-[1117px] max-md:flex-wrap max-md:pr-5"
+        class="flex gap-0 self-end w-full text-base font-bold text-cyan-900 max-md:max-w-full"
       >
         <div
-          class="flex py-7 justify-between items-center max-w-full border-b border-solid border-stone-200 w-[1117px] max-md:flex-wrap max-md:pr-5"
+          class="flex items-center p-2.5 ml-px flex-1 max-md:px-5 max-md:max-w-full min-w-96 border-stone-200 border-solid border-b font-medium leading-6 text-left pl-5 max-2xl:min-w-72 max-xl:min-w-40 max-lg:min-w-32 max-lg:text-sm max-md:text-xs"
         >
-          <div
-            class="self-stretch pl-5 text-base font-medium leading-6 text-neutral-700 flex-1 text-left"
-          >
             학교에서 단짝친구 외에 다른 친구와
             <br />
             활동이나 놀이를 해보도록
             <br />
             바꿀 수 있나요?
-          </div>
+        </div>
+        <div class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b">
           <label
             for="option1"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center"
           >
             <input
               class="hidden"
@@ -88,14 +86,16 @@
               v-model="score"
             />
             <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
+              class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
             >
-              <div class="w-5 h-5 rounded-full"></div>
+              <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
             </div>
           </label>
+        </div>
+        <div class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b">
           <label
             for="option2"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center"
           >
             <input
               class="hidden"
@@ -106,14 +106,16 @@
               v-model="score"
             />
             <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
+              class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
             >
-              <div class="w-5 h-5 rounded-full"></div>
+              <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
             </div>
           </label>
+        </div>
+        <div class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b">
           <label
             for="option3"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center"
           >
             <input
               class="hidden"
@@ -124,14 +126,16 @@
               v-model="score"
             />
             <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
+              class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
             >
-              <div class="w-5 h-5 rounded-full"></div>
+              <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
             </div>
           </label>
+        </div>
+        <div class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b">
           <label
             for="option4"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center"
           >
             <input
               class="hidden"
@@ -142,14 +146,16 @@
               v-model="score"
             />
             <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
+              class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
             >
-              <div class="w-5 h-5 rounded-full"></div>
+              <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
             </div>
           </label>
+        </div>
+        <div class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b">
           <label
             for="option5"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center"
           >
             <input
               class="hidden"
@@ -160,15 +166,16 @@
               v-model="score"
             />
             <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
+              class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
             >
-              <div class="w-5 h-5 rounded-full"></div>
+              <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
             </div>
           </label>
         </div>
       </section>
+
       <section
-        class="justify-center text-left items-start px-7 py-7 mt-8 max-w-full text-base font-medium leading-8 text-black rounded-xl border border-solid border-neutral-300 w-[1117px] max-md:px-5 max-md:max-w-full"
+        class="justify-center text-left items-start px-7 py-7 mt-8 max-w-full text-base font-medium leading-8 text-black rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:max-w-full w-full max-lg:text-sm max-md:text-xs"
         v-if="score"
       >
         질문에서 맞거나 틀린 답은 없습니다. 솔직하게 모든 질문에 답해주세요.<br />결정하기

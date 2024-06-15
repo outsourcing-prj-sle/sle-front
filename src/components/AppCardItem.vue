@@ -1,9 +1,9 @@
 <template>
     <div v-if="type === 1"
-        class="flex gap-4 justify-between mt-6 text-base font-medium text-neutral-700 max-md:flex-wrap"
+        class="flex gap-4 justify-between mt-6 text-base font-medium text-neutral-700 "
       >
         <div @click="clickPrev"
-          class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5"
+          class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5 cursor-pointer"
         >
           <img
             src="./../assets/img/left_arrow.png"
@@ -13,10 +13,10 @@
         </div>
 
         <div ref="cardSlider"
-          class="flex flex-1 gap-4 mt-6 text-base font-medium text-neutral-700 max-md:flex-wrap overflow-scroll no-scrollbar"
+          class="flex flex-1 gap-4 mt-6 text-base font-medium text-neutral-700 overflow-scroll no-scrollbar"
         >
           <article
-            class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px]"
+            class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px] cursor-pointer"
           >
             <div class="self-center text-xl font-bold">마음알기 설문1</div>
             <div class="mt-8 max-md:mr-2.5">2023. 09. 01 ~ 12. 01</div>
@@ -51,7 +51,7 @@
             />
           </article>
           <article
-            class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px]"
+            class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px] cursor-pointer"
           >
             <div class="self-center text-xl font-bold">마음알기 설문2</div>
             <div class="mt-8 max-md:mr-2.5">2023. 09. 01 ~ 12. 01</div>
@@ -84,7 +84,7 @@
             />
           </article>
           <article
-            class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px]"
+            class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px] cursor-pointer"
           >
             <div class="self-center text-xl font-bold">마음알기 설문3</div>
             <div class="mt-8 max-md:mr-2.5">2023. 09. 01 ~ 12. 01</div>
@@ -117,7 +117,7 @@
             />
           </article>
           <article
-            class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px]"
+            class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px] cursor-pointer"
           >
             <div class="self-center text-xl font-bold">마음알기 설문4</div>
             <div class="mt-8 max-md:mr-2.5">2023. 09. 01 ~ 12. 01</div>
@@ -150,7 +150,7 @@
             />
           </article>
           <article
-            class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px]"
+            class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px] cursor-pointer"
           >
             <div class="self-center text-xl font-bold">마음알기 설문6</div>
             <div class="mt-8 max-md:mr-2.5">2023. 09. 01 ~ 12. 01</div>
@@ -183,7 +183,7 @@
             />
           </article>
           <article
-            class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px]"
+            class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-blue-500 border-solid pb-[124px] cursor-pointer"
           >
             <div class="self-center text-xl font-bold">마음알기 설문7</div>
             <div class="mt-8 max-md:mr-2.5">2023. 09. 01 ~ 12. 01</div>
@@ -218,7 +218,7 @@
         </div>
 
         <div @click="clickNext"
-          class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5"
+          class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5 cursor-pointer"
         >
           <img
             src="./../assets/img/right_arrow.png"
@@ -229,10 +229,10 @@
       </div>
 
       <div v-if="type === 2"
-        class="flex gap-4 justify-between mt-6 text-base font-medium text-neutral-700 max-md:flex-wrap"
+        class="flex gap-4 justify-between mt-6 text-base font-medium text-neutral-700"
       >
         <div
-          class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5"
+          class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5 cursor-pointer"
         >
           <img
             src="./../assets/img/left_arrow.png"
@@ -242,10 +242,10 @@
         </div>
 
         <div
-          class="flex flex-1 gap-4 mt-6 text-base font-medium text-neutral-700 max-md:flex-wrap overflow-scroll no-scrollbar"
+          class="flex flex-1 gap-4 mt-6 text-base font-medium text-neutral-700 overflow-scroll no-scrollbar"
         >
           <article
-            class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-zinc-600 border-solid pb-[124px]"
+            class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-zinc-600 border-solid pb-[124px] cursor-pointer"
           >
             <div
               class="self-center text-xl font-bold text-center text-neutral-700"
@@ -271,7 +271,7 @@
         </div>
 
         <div
-          class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5"
+          class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5 cursor-pointer"
         >
           <img
             src="./../assets/img/right_arrow.png"
@@ -299,8 +299,6 @@
         const nowScrollX = ref(0);
 
         onMounted(async () => {
-            console.log(type);
-
             articleWidth.value = document.querySelector('article').offsetWidth;
         });
 
