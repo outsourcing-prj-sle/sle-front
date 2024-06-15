@@ -33,4 +33,16 @@ module.exports = defineConfig({
       ],
     },
   },
+  devServer: {
+    proxy: {
+      '/api': {
+        // target: 'http://여기에 url적어줘, 아래 예시 두개 참고',
+        // target: 'http://1.123.123.213:8080',
+        // target: 'https://예시도메인.com',
+        target: '적어용'
+        changeOrigin: true,
+        pathRewrite: { '^/api': '' },
+      },
+    },
+  },
 });
