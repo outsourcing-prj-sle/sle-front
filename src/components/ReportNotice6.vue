@@ -6,7 +6,7 @@
       class="flex gap-1 items-start self-stretch max-md:flex-wrap max-md:max-w-full"
     >
       <div class="flex flex-col self-start font-bold min-w-[150px]">
-        <h1 class="text-xl text-blue-500">마음알기 설문1</h1>
+        <h1 class="text-xl text-blue-500 text-left">마음알기 설문6</h1>
         <h2 class="mt-1 text-2xl text-neutral-700 text-left">안내사항</h2>
         <img
           src="@/assets/img/minichar.png"
@@ -20,158 +20,76 @@
         <div class="self-end text-base leading-8">
           기간 : YYYY년 MM월 DD일 ~ MM월 DD일
         </div>
+        <div class="flex gap-2.5 self-start mt-1.5 max-md:flex-wrap">
+          <img
+            src="@/assets/img/speaker.png"
+            alt="speaker"
+            class="shrink-0 aspect-square w-[25px]"
+          />
+          <p class="flex-auto my-auto max-md:max-w-full">
+            클릭시 안내음성을 들을 수 있습니다. 단, 안내음성은 1회만 들을 수
+            있습니다.
+          </p>
+        </div>
         <section
-          class="justify-center items-start px-9 py-6 text-left text-base leading-8 rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:mt-10 max-md:max-w-full"
+          class="justify-center mt-2 items-start px-9 py-6 text-left text-base leading-8 rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:mt-10 max-md:max-w-full"
         >
-          다음 지시를 따라 주시기 바랍니다.<br />이 화면에는 학생들의 생각, 감정
-          그리고 행동을 나타내는 문장들이 있습니다. 각 문장을 주의 깊게 읽고 1,
-          2, 3, 4, 5 보기 중 하나를 선택해주세요.<br /><br />&lt;보기&gt;<br />1번:
-          내가 절대로 바꿀 수 없다고 생각하는 경우<br />2번: 내가 약간 바꿀 수
-          있다고 생각하는 경우<br />3번: 내가 어느정도 바꿀 수 있다고 생각하는
-          경우<br />4번: 내가 대체로 바꿀 수 있다고 생각하는 경우<br />5번: 내가
-          완전히 바꿀 수 있다고 생각하는 경우<br /><br />아래의 예시를 한 번
-          볼까요? 예시 문장을 잘 읽고 1개의 답안을 선택해주세요.
+          다음 지시를 따라 주시기 바랍니다.<br /><br />각 질문을 주의 깊게 읽고
+          질문에 가장 잘 맞는 얼굴 표정을 만들어보세요.<br />다양한 ‘눈’ 그림과
+          ‘코와 입’ 그림 중에서 ‘눈’ 그림 1개, ‘코와 입’ 그림 1개를 선택해서
+          표정을 완성할 수 있어요.
+        </section>
+        <section
+          class="justify-center mt-3 items-start px-9 py-6 text-left text-base leading-8 rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:mt-10 max-md:max-w-full"
+        >
+          예시 질문: OOO님이 지금 느끼는 감정을 가장 잘 표현할 수 있는 얼굴
+          표정을 만들어볼까요?
+        </section>
+
+        <section
+          class="self-center px-4 pt-7 pb-3 mt-3 w-full rounded-xl border border-solid border-neutral-300 max-md:px-5"
+        >
+          <div class="flex gap-5 max-md:flex-col max-md:gap-0">
+            <div class="flex flex-col w-[44%] max-md:ml-0 max-md:w-full">
+              <FaceImg
+                :face="face[faceIndex]"
+                :eyes="eyesIndex >= 0 && eyes[eyesIndex]"
+                :mouth="mouthIndex >= 0 && mouth[mouthIndex]"
+              />
+            </div>
+            <div class="flex ml-5 w-[56%] max-md:ml-0 max-md:w-full">
+              <FaceSelectList
+                :title="'눈'"
+                :itemList="eyes"
+                :selected="eyesIndex"
+                @selectItem="(index) => selectIndex(index, 'eyes')"
+              />
+              <div
+                class="mx-2 h-full border-2 border-l border-solid border-gray-700"
+              ></div>
+              <FaceSelectList
+                :title="'코와 입'"
+                :itemList="mouth"
+                :selected="mouthIndex"
+                @selectItem="(index) => selectIndex(index, 'mouth')"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="justify-center text-left mt-3 items-start px-7 py-7 max-w-full text-base font-medium leading-8 text-black rounded-xl border border-solid border-neutral-300 max-md:px-5"
+        >
+          질문에서 맞거나 틀린 답은 없습니다. 솔직하게 모든 질문에
+          답해주세요.<br />결정하기 어렵더라도 각 질문마다 최선을 다해
+          답해주세요.<br /><br />자, 준비되었나요? 준비가 되었다면 ‘시작’을 눌러
+          시작해보세요!
         </section>
       </article>
     </div>
-    <div class="pl-[154px] flex flex-col items-end w-full max-md:max-w-full">
-      <section
-        class="flex gap-0 self-end mt-8 w-full text-base font-bold text-cyan-900 max-w-[1117px] max-md:flex-wrap max-md:max-w-full"
-      >
-        <div
-          class="justify-center flex items-center p-2.5 ml-px flex-1 bg-indigo-50 max-md:px-5 max-md:max-w-full"
-        >
-          예시 문장
-        </div>
-        <div class="justify-center w-[125px] py-2.5 text-center bg-blue-100">
-          절대로<br />바꿀 수 없어요
-        </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
-          약간<br />바꿀 수 있어요
-        </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
-          어느 정도<br />바꿀 수 있어요
-        </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
-          대체로<br />바꿀 수 있어요
-        </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
-          완전히<br />바꿀 수 있어요
-        </div>
-      </section>
-
-      <section
-        class="flex justify-between items-center max-w-full border-b border-solid border-stone-200 w-[1117px] max-md:flex-wrap max-md:pr-5"
-      >
-        <div
-          class="flex py-7 justify-between items-center max-w-full border-b border-solid border-stone-200 w-[1117px] max-md:flex-wrap max-md:pr-5"
-        >
-          <div
-            class="self-stretch pl-5 text-base font-medium leading-6 text-neutral-700 flex-1 text-left"
-          >
-            학교에서 단짝친구 외에 다른 친구와
-            <br />
-            활동이나 놀이를 해보도록
-            <br />
-            바꿀 수 있나요?
-          </div>
-          <label
-            for="option1"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
-          >
-            <input
-              class="hidden"
-              type="radio"
-              name="activityQuestion"
-              id="option1"
-              value="1"
-            />
-            <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
-            >
-              <div class="w-5 h-5 rounded-full"></div>
-            </div>
-          </label>
-          <label
-            for="option2"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
-          >
-            <input
-              class="hidden"
-              type="radio"
-              name="activityQuestion"
-              id="option2"
-              value="2"
-            />
-            <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
-            >
-              <div class="w-5 h-5 rounded-full"></div>
-            </div>
-          </label>
-          <label
-            for="option3"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
-          >
-            <input
-              class="hidden"
-              type="radio"
-              name="activityQuestion"
-              id="option3"
-              value="3"
-            />
-            <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
-            >
-              <div class="w-5 h-5 rounded-full"></div>
-            </div>
-          </label>
-          <label
-            for="option4"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
-          >
-            <input
-              class="hidden"
-              type="radio"
-              name="activityQuestion"
-              id="option4"
-              value="4"
-            />
-            <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
-            >
-              <div class="w-5 h-5 rounded-full"></div>
-            </div>
-          </label>
-          <label
-            for="option5"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
-          >
-            <input
-              class="hidden"
-              type="radio"
-              name="activityQuestion"
-              id="option5"
-              value="5"
-            />
-            <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
-            >
-              <div class="w-5 h-5 rounded-full"></div>
-            </div>
-          </label>
-        </div>
-      </section>
-      <section
-        class="justify-center text-left items-start px-7 py-7 mt-8 max-w-full text-base font-medium leading-8 text-black rounded-xl border border-solid border-neutral-300 w-[1117px] max-md:px-5 max-md:max-w-full"
-      >
-        질문에서 맞거나 틀린 답은 없습니다. 솔직하게 모든 질문에 답해주세요.<br />결정하기
-        어렵더라도 각 질문마다 최선을 다해 답해주세요.<br /><br />자,
-        준비되었나요? 준비가 되었다면 ‘시작’을 눌러 시작해보세요!
-      </section>
-    </div>
     <button
       class="justify-center px-10 py-3 mt-6 text-base text-center text-white whitespace-nowrap bg-blue-500 rounded-3xl max-md:px-5"
+      v-if="eyesIndex > -1 && mouthIndex > -1"
       @click="startReport"
     >
       시작
@@ -183,18 +101,46 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
+import FaceImg from '@/components/FaceImg.vue';
+import FaceSelectList from '@/components/FaceSelectList.vue';
 
 export default {
-  name: 'LoginView',
-  components: {},
+  name: 'ReportNotice6',
+  components: { FaceImg, FaceSelectList },
   setup() {
     const route = useRoute();
     const router = useRouter();
     const userStore = useUserStore();
     const userId = computed(() => userStore.id);
-    const type = ref(route.params.type || 1);
-    const title = ref('');
+    const type = ref(route.params.type || 6);
+    const title = ref('마음알기 설문6');
     const date = ref('YYYY년 MM월 DD일 ~ MM월 DD일');
+    const score = ref();
+    const face = ref([
+      require('@/assets/img/6q1.png'),
+      require('@/assets/img/6q2.png'),
+      require('@/assets/img/6q3.png'),
+      require('@/assets/img/6q4.png'),
+    ]);
+    const eyes = ref([
+      require('@/assets/img/6a11.png'),
+      require('@/assets/img/6a12.png'),
+      require('@/assets/img/6a13.png'),
+      require('@/assets/img/6a14.png'),
+      require('@/assets/img/6a15.png'),
+      require('@/assets/img/6a16.png'),
+    ]);
+    const mouth = ref([
+      require('@/assets/img/6a21.png'),
+      require('@/assets/img/6a22.png'),
+      require('@/assets/img/6a23.png'),
+      require('@/assets/img/6a24.png'),
+      require('@/assets/img/6a25.png'),
+      require('@/assets/img/6a26.png'),
+    ]);
+    const faceIndex = ref(0);
+    const eyesIndex = ref(-1);
+    const mouthIndex = ref(-1);
 
     onMounted(() => {
       fetchData();
@@ -202,7 +148,7 @@ export default {
 
     const fetchData = async () => {
       // todo : 설문 문제 확인 api호출. with type, 만약 필요하면 userId
-      title.value = '마음알기 설문1';
+      title.value = '마음알기 설문6';
       date.value = 'YYYY년 MM월 DD일 ~ MM월 DD일';
     };
 
@@ -210,15 +156,27 @@ export default {
       router.push({
         name: 'reportQuestion',
         params: { type: type.value },
-        // query: { plan: 'private' }
       });
+    };
+
+    const selectIndex = (index, type) => {
+      if (type === 'eyes') eyesIndex.value = index;
+      if (type === 'mouth') mouthIndex.value = index;
     };
 
     return {
       title,
       date,
       type,
+      score,
+      face,
+      eyes,
+      mouth,
+      faceIndex,
+      eyesIndex,
+      mouthIndex,
       startReport,
+      selectIndex,
     };
   },
 };

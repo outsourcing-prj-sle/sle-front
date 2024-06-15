@@ -192,7 +192,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 
 export default {
-  name: 'LoginView',
+  name: 'ReportNotice1',
   components: {},
   setup() {
     const route = useRoute();
