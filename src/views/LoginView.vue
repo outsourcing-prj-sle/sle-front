@@ -55,6 +55,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
+import UserService from '@/service/UserService.js';
 
 export default {
   name: 'LoginView',
@@ -69,6 +70,8 @@ export default {
       console.log('Password:', password.value);
       // todo : 로그인 api 호출
       // 실패 시 그냥 alert 띄우고 성공 시 아래 로직 진행
+      // service 호출 예
+      UserService.login();
 
       userStore.init({
         token: 'token',
