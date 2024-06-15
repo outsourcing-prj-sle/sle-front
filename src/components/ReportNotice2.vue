@@ -149,7 +149,7 @@
       </section>
 
       <section
-        class="justify-center text-left items-start px-7 py-7 mt-8 max-w-full text-base font-medium leading-8 text-black rounded-xl border border-solid border-neutral-300 w-[1117px] max-md:px-5 max-md:max-w-full max-lg:text-sm max-md:text-xs"
+        class="justify-center text-left items-start px-7 py-7 mt-8 max-w-full text-base font-medium leading-8 text-black rounded-xl border w-full border-solid border-neutral-300 max-md:px-5 max-md:max-w-full max-lg:text-sm max-md:text-xs"
         v-if="score"
       >
         질문에서 맞거나 틀린 답은 없습니다. 솔직하게 모든 질문에 답해주세요.<br />결정하기
