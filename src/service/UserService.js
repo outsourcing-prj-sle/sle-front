@@ -39,8 +39,14 @@ const checkId = (data = {}) => {
   return apiClient.get(baseURL + '/checkId', { params: data });
 };
 
+// 나의 SEL 알기
+const getMySEL = (data = {}) => {
+  return apiClient.get(baseURL + '/mysel');
+};
+
 export default {
   login,
   signup,
   checkId,
+  getMySEL,
 };
