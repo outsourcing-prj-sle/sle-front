@@ -1,6 +1,9 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2" style="transform: translate(-50%, -50%);">
+    <div
+      class="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2"
+      style="transform: translate(-50%, -50%)"
+    >
       <div class="flex justify-center">
         <img src="@/assets/img/logo_sel.png" alt="Logo" class="h-24" />
       </div>
@@ -65,13 +68,18 @@ export default {
     const email = ref('');
     const password = ref('');
 
-    const handleSubmit = () => {
-      console.log('Email:', email.value);
-      console.log('Password:', password.value);
-      // todo : 로그인 api 호출
-      // 실패 시 그냥 alert 띄우고 성공 시 아래 로직 진행
-      // service 호출 예
-      UserService.login();
+    const handleSubmit = async () => {
+      // todo : api - 로그인
+      const signupResponse = await UserService.login({
+        id: email,
+        password: password,
+      });
+      const resData = signupResponse.data;
+
+      if (resData.error) {
+        alert(resData.error);
+        return;
+      }
 
       userStore.init({
         token: 'token',
