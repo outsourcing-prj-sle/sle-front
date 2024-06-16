@@ -89,7 +89,7 @@ export default {
         extra: resData.extra,
       });
 
-      // router.back();
+      router.back();
     };
 
     return {
