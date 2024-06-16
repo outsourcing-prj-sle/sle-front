@@ -11,15 +11,16 @@ const baseURL = '/users';
  * }
  *
  * 프론트 사용 예시
- * const signupResponse = await UserService.checkId({
- * id: username,
- * });
- * const resData = signupResponse.data;
- *
- * if (resData.error) {
- * alert(resData.error);
- * return;
- * }
+// todo : api - 회원가입
+const signupResponse = await UserService.checkId({
+id: username,
+});
+const resData = signupResponse.data;
+
+if (resData.error) {
+alert(resData.error);
+return;
+}
  */
 
 const login = (data = {}) => {
