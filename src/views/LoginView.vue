@@ -69,7 +69,6 @@ export default {
     const password = ref('');
 
     const handleSubmit = async () => {
-      // todo : api - 로그인
       const loginResponse = await UserService.login({
         id: email.value,
         password: password.value,
@@ -82,11 +81,11 @@ export default {
       }
 
       userStore.init({
-        token: 'token',
-        id: email.value,
-        type: 'student',
-        // type: 'teacher',
-        extra: {},
+        token: resData.token,
+        id: resData.id,
+        type: resData.type,
+        school: resData.school,
+        extra: resData.extra,
       });
 
       router.back();

@@ -14,7 +14,9 @@
       <article
         class="flex flex-col grow shrink-0 self-end mt-9 font-medium text-black basis-0 w-fit max-md:max-w-full"
       >
-        <div class="self-end text-base leading-8 max-lg:text-sm max-md:text-xs">기간 : {{ dateRange }}</div>
+        <div class="self-end text-base leading-8 max-lg:text-sm max-md:text-xs">
+          기간 : {{ dateRange }}
+        </div>
       </article>
     </div>
     <div
@@ -27,7 +29,10 @@
         class="shrink-0 max-w-full aspect-[0.99] w-[127px]"
       />
       <div :key="ballonKey" class="text-ballon flex gap-[5px] items-start">
-        <img src="../assets/img/ballon-prev.png" class="w-[18px] h-[18px] mt-[2px]">
+        <img
+          src="../assets/img/ballon-prev.png"
+          class="w-[18px] h-[18px] mt-[2px]"
+        />
         <p>1개의 답안을 선택해주세요.</p>
       </div>
     </div>
@@ -40,7 +45,9 @@
           <div
             class="flex flex-col justify-center p-2 rounded-3xl border border-blue-400 border-solid bg-white"
           >
-            <div class="shrink-0 w-8 h-8 max-sm:w-6 max-sm:h-6 bg-blue-400 rounded-2xl"></div>
+            <div
+              class="shrink-0 w-8 h-8 max-sm:w-6 max-sm:h-6 bg-blue-400 rounded-2xl"
+            ></div>
           </div>
           <span class="self-center mt-4 text-base text-center text-black">{{
             n
@@ -50,7 +57,9 @@
           class="flex flex-col px-2 pt-2 text-base text-center whitespace-nowrap"
           v-else
         >
-          <div class="shrink-0 w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-2xl bg-neutral-200"></div>
+          <div
+            class="shrink-0 w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-2xl bg-neutral-200"
+          ></div>
           <span class="mt-6">{{ n }}</span>
         </div>
       </template>
@@ -64,19 +73,29 @@
         >
           응답 문항
         </div>
-        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
+        <div
+          class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
+        >
           절대로<br />바꿀 수 없어요
         </div>
-        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
+        <div
+          class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
+        >
           약간<br />바꿀 수 있어요
         </div>
-        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
+        <div
+          class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
+        >
           어느 정도<br />바꿀 수 있어요
         </div>
-        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
+        <div
+          class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
+        >
           대체로<br />바꿀 수 있어요
         </div>
-        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
+        <div
+          class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
+        >
           완전히<br />바꿀 수 있어요
         </div>
       </section>
@@ -89,7 +108,9 @@
         >
           {{ metadata[nowStep + 1].Q }}
         </div>
-        <div class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b">
+        <div
+          class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b"
+        >
           <label
             for="option1"
             class="shrink-0 self-stretch my-auto flex justify-center items-center"
@@ -109,7 +130,9 @@
             </div>
           </label>
         </div>
-        <div class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b">
+        <div
+          class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b"
+        >
           <label
             for="option2"
             :class="{ 'pointer-events-none': status === 'done' }"
@@ -130,7 +153,9 @@
             </div>
           </label>
         </div>
-        <div class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b">
+        <div
+          class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b"
+        >
           <label
             for="option3"
             :class="{ 'pointer-events-none': status === 'done' }"
@@ -151,7 +176,9 @@
             </div>
           </label>
         </div>
-        <div class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b">
+        <div
+          class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b"
+        >
           <label
             for="option4"
             :class="{ 'pointer-events-none': status === 'done' }"
@@ -172,7 +199,9 @@
             </div>
           </label>
         </div>
-        <div class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b">
+        <div
+          class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b"
+        >
           <label
             for="option5"
             :class="{ 'pointer-events-none': status === 'done' }"
@@ -357,7 +386,6 @@ export default {
       ballonKey,
       nextStep,
       prevStep,
-      restartAnimation
     };
   },
 };
@@ -371,12 +399,13 @@ input:checked + div div {
   --tw-bg-opacity: 1;
   background-color: rgb(96 165 250 / var(--tw-bg-opacity));
 }
+
 .text-ballon {
   position: absolute;
   left: calc(50% + 100px);
   width: 190px;
-  border: 1px solid #F0F0F0;
-  background-color: #F0F0F0;
+  border: 1px solid #f0f0f0;
+  background-color: #f0f0f0;
   border-radius: 10px;
   z-index: 9999;
   text-align: left;
@@ -385,12 +414,12 @@ input:checked + div div {
   animation-duration: 30s;
 }
 .text-ballon::after {
-  content: "";
+  content: '';
   position: absolute;
-  top: 31px; 
-  left: -30px; 
-  border-right: 30px solid #F0F0F0; 
-  border-top: 7px solid transparent; 
+  top: 31px;
+  left: -30px;
+  border-right: 30px solid #f0f0f0;
+  border-top: 7px solid transparent;
   border-bottom: 9px solid transparent;
 }
 @media (max-width: 640px) {

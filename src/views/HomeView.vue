@@ -50,7 +50,13 @@
           @update:selectedOption="handleSelection"
         />
       </div>
-      <AppCardItem :options="1" :list="topList" />
+      <AppCardItem
+        :options="1"
+        :list="topList"
+        @_goReportNotice="goReportNotice"
+        @_copyURL="copyURL"
+        @_openQRCodePopup="openQRCodePopup"
+      />
 
       <!-- 목록2 -->
       <div
@@ -69,7 +75,13 @@
           </div>
         </div>
       </div>
-      <AppCardItem :options="2" :list="bottomList" />
+      <AppCardItem
+        :options="2"
+        :list="bottomList"
+        @_goReportNotice="goReportNotice"
+        @_copyURL="copyURL"
+        @_openQRCodePopup="openQRCodePopup"
+      />
     </div>
   </div>
 </template>
@@ -108,7 +120,7 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      // todo : api - 메인페이지
+      // 메인페이지
       const reportList = await ReportService.reportMainList();
       const resData = reportList.data;
 
@@ -117,8 +129,8 @@ export default defineComponent({
         return;
       }
 
-      topList.value = resData[0];
-      bottomList.value = resData[1];
+      topList.value = resData.todo;
+      bottomList.value = resData.done;
     });
 
     const goReportNotice = (type = 1) => {
@@ -160,6 +172,8 @@ export default defineComponent({
       showAlert,
       textAlert,
       qrURL,
+      topList,
+      bottomList,
 
       handleSelection,
       goReportNotice,

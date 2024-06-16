@@ -14,7 +14,9 @@
       <article
         class="flex flex-col grow shrink-0 self-end mt-9 font-medium text-black basis-0 w-fit max-md:max-w-full"
       >
-      <div class="self-end text-base leading-8 max-lg:text-sm max-md:text-xs">기간 : {{ dateRange }}</div>
+        <div class="self-end text-base leading-8 max-lg:text-sm max-md:text-xs">
+          기간 : {{ dateRange }}
+        </div>
       </article>
     </div>
     <div
@@ -26,7 +28,9 @@
         alt="speaker"
         class="shrink-0 aspect-square w-[25px] max-lg:w-[20px]"
       />
-      <p class="flex-auto my-auto max-md:max-w-full max-lg:text-sm max-md:text-xs">
+      <p
+        class="flex-auto my-auto max-md:max-w-full max-lg:text-sm max-md:text-xs"
+      >
         클릭시 안내음성을 들을 수 있습니다. 단, 안내음성은 1회만 들을 수
         있습니다.
       </p>
@@ -54,7 +58,9 @@
           <div
             class="flex flex-col justify-center p-2 rounded-3xl border border-blue-400 border-solid bg-white"
           >
-            <div class="shrink-0 w-8 h-8 max-sm:w-6 max-sm:h-6 bg-blue-400 rounded-2xl"></div>
+            <div
+              class="shrink-0 w-8 h-8 max-sm:w-6 max-sm:h-6 bg-blue-400 rounded-2xl"
+            ></div>
           </div>
           <span class="self-center mt-4 text-base text-center text-black">{{
             n
@@ -64,19 +70,23 @@
           class="flex flex-col px-2 pt-2 text-base text-center whitespace-nowrap"
           v-else
         >
-          <div class="shrink-0 w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-2xl bg-neutral-200"></div>
+          <div
+            class="shrink-0 w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-2xl bg-neutral-200"
+          ></div>
           <span class="mt-6">{{ n }}</span>
         </div>
       </template>
     </div>
     <div class="flex flex-col items-end w-full max-md:max-w-full max-lg:pl-0">
       <section
-      class="flex flex-col self-center py-8 mt-5 w-full font-medium text-black rounded-xl border border-solid border-neutral-300 max-md:max-w-full"
+        class="flex flex-col self-center py-8 mt-5 w-full font-medium text-black rounded-xl border border-solid border-neutral-300 max-md:max-w-full"
       >
         <div
           class="flex flex-col px-9 text-base leading-8 max-md:px-5 max-md:max-w-full"
         >
-          <p class="text-left max-md:mr-1.5 max-md:max-w-full max-lg:text-sm max-md:text-xs">
+          <p
+            class="text-left max-md:mr-1.5 max-md:max-w-full max-lg:text-sm max-md:text-xs"
+          >
             네 개의 단어 중에서 사진 속의 사람이 생각하거나 느끼는 것을 가장 잘
             묘사하는 단어는 무엇일까요?
           </p>
@@ -87,7 +97,7 @@
           />
         </div>
         <div
-        class="flex gap-5 px-9 justify-between self-center mt-9 w-full text-xl leading-8 whitespace-nowrap max-md:flex-wrap max-md:max-w-full"
+          class="flex gap-5 px-9 justify-between self-center mt-9 w-full text-xl leading-8 whitespace-nowrap max-md:flex-wrap max-md:max-w-full"
         >
           <label
             for="option1"
@@ -102,7 +112,7 @@
               v-model="score"
             />
             <div
-            class="justify-center px-36 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs max-2xl:px-28 max-xl:px-14"
+              class="justify-center px-36 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs max-2xl:px-28 max-xl:px-14"
             >
               {{ metadata[nowStep + 1].A[0] }}
             </div>
@@ -120,7 +130,7 @@
               v-model="score"
             />
             <div
-            class="justify-center px-36 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs max-2xl:px-28 max-xl:px-14"
+              class="justify-center px-36 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs max-2xl:px-28 max-xl:px-14"
             >
               {{ metadata[nowStep + 1].A[1] }}
             </div>
@@ -138,7 +148,7 @@
               v-model="score"
             />
             <div
-            class="justify-center px-36 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs max-2xl:px-28 max-xl:px-14"
+              class="justify-center px-36 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs max-2xl:px-28 max-xl:px-14"
             >
               {{ metadata[nowStep + 1].A[2] }}
             </div>
@@ -156,7 +166,7 @@
               v-model="score"
             />
             <div
-            class="justify-center px-36 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs max-2xl:px-28 max-xl:px-14"
+              class="justify-center px-36 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs max-2xl:px-28 max-xl:px-14"
             >
               {{ metadata[nowStep + 1].A[3] }}
             </div>
@@ -188,9 +198,8 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/store/userStore.js';
 
 export default {
   name: 'ReportQuestion3',
@@ -246,8 +255,6 @@ export default {
   setup(props) {
     const route = useRoute();
     const router = useRouter();
-    const userStore = useUserStore();
-    const userId = computed(() => userStore.id);
     const type = ref(route.params.type || 1);
     const score = ref(
       (props.stepAnswer && props.stepAnswer[props.startStep || 0]) || null
