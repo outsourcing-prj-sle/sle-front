@@ -17,22 +17,22 @@
       <article
         class="flex flex-col grow shrink-0 self-end mt-9 font-medium text-black basis-0 w-fit max-md:max-w-full"
       >
-        <div class="self-end text-base leading-8">
+        <div class="self-end text-base leading-8 max-lg:text-sm max-md:text-xs">
           기간 : YYYY년 MM월 DD일 ~ MM월 DD일
         </div>
         <div class="flex gap-2.5 self-start mt-1.5 max-md:flex-wrap">
           <img
             src="@/assets/img/speaker.png"
             alt="speaker"
-            class="shrink-0 aspect-square w-[25px]"
+            class="shrink-0 aspect-square w-[25px] max-lg:w-[20px]"
           />
-          <p class="flex-auto my-auto max-md:max-w-full">
+          <p class="flex-auto my-auto max-md:max-w-full max-lg:text-sm max-md:text-xs text-left">
             클릭시 안내음성을 들을 수 있습니다. 단, 안내음성은 1회만 들을 수
             있습니다.
           </p>
         </div>
         <section
-          class="justify-center items-start px-9 py-6 text-left text-base leading-8 rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:mt-10 max-md:max-w-full mt-1"
+          class="justify-center items-start px-9 py-6 text-left text-base leading-8 rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:mt-10 max-md:max-w-full mt-1 max-lg:text-sm max-md:text-xs"
         >
           다음 지시를 따라 주시기 바랍니다.<br /><br />이 화면에는 사람의 눈
           그림과 각 모서리에 쓰여진 단어 4개를 볼 수 있습니다.<br />사진을 보고
@@ -42,14 +42,14 @@
         </section>
       </article>
     </div>
-    <div class="pl-[154px] flex flex-col items-end w-full max-md:max-w-full">
+    <div class="pl-[154px] flex flex-col items-end w-full max-md:max-w-full max-lg:pl-0">
       <section
-        class="flex flex-col self-center py-8 mt-5 w-full font-medium text-black rounded-xl border border-solid border-neutral-300 max-w-[1117px] max-md:max-w-full"
+        class="flex flex-col self-center py-8 mt-5 w-full font-medium text-black rounded-xl border border-solid border-neutral-300 max-md:max-w-full"
       >
         <div
           class="flex flex-col px-9 text-base leading-8 max-md:px-5 max-md:max-w-full"
         >
-          <p class="text-left max-md:mr-1.5 max-md:max-w-full">
+          <p class="text-left max-md:mr-1.5 max-md:max-w-full max-lg:text-sm max-md:text-xs">
             네 개의 단어 중에서 사진 속의 사람이 생각하거나 느끼는 것을 가장 잘
             묘사하는 단어는 무엇일까요?
           </p>
@@ -60,11 +60,11 @@
           />
         </div>
         <div
-          class="flex gap-5 px-9 justify-between self-center mt-9 w-full text-xl leading-8 whitespace-nowrap max-w-[997px] max-md:flex-wrap max-md:max-w-full"
+          class="flex gap-5 px-9 justify-between self-center mt-9 w-full text-xl leading-8 whitespace-nowrap max-md:flex-wrap max-md:max-w-full"
         >
           <label
             for="option1"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center cursor-pointer"
           >
             <input
               class="hidden"
@@ -75,14 +75,14 @@
               v-model="score"
             />
             <div
-              class="justify-center px-16 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-6"
+              class="justify-center px-16 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-6 max-lg:text-sm max-md:text-xs 2xl:px-24 max-xl:px-12"
             >
               슬픈
             </div>
           </label>
           <label
             for="option2"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center cursor-pointer"
           >
             <input
               class="hidden"
@@ -93,14 +93,14 @@
               v-model="score"
             />
             <div
-              class="justify-center px-16 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-6"
+              class="justify-center px-16 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-6 max-lg:text-sm max-md:text-xs 2xl:px-24 max-xl:px-12"
             >
               기쁜
             </div>
           </label>
           <label
             for="option3"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center cursor-pointer"
           >
             <input
               class="hidden"
@@ -111,14 +111,14 @@
               v-model="score"
             />
             <div
-              class="justify-center px-16 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-6"
+              class="justify-center px-16 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-6 max-lg:text-sm max-md:text-xs 2xl:px-24 max-xl:px-12"
             >
               무서운
             </div>
           </label>
           <label
             for="option4"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center cursor-pointer"
           >
             <input
               class="hidden"
@@ -129,7 +129,7 @@
               v-model="score"
             />
             <div
-              class="justify-center px-16 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-6"
+              class="justify-center px-16 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-6 max-lg:text-sm max-md:text-xs 2xl:px-24 max-xl:px-12"
             >
               화난
             </div>
@@ -137,7 +137,7 @@
         </div>
       </section>
       <section
-        class="justify-center text-left items-start px-7 py-7 mt-8 max-w-full text-base font-medium leading-8 text-black rounded-xl border border-solid border-neutral-300 w-[1117px] max-md:px-5 max-md:max-w-full"
+        class="justify-center text-left items-start px-7 py-7 mt-8 max-w-full text-base font-medium leading-8 text-black rounded-xl border border-solid border-neutral-300 w-[1117px] max-md:px-5 max-md:max-w-full max-lg:text-sm max-md:text-xs w-full"
         v-if="score"
       >
         질문에서 맞거나 틀린 답은 없습니다. 솔직하게 모든 질문에 답해주세요.<br />결정하기

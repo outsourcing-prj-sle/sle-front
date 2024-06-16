@@ -47,7 +47,7 @@
           </label>
         </div>
         <div class="text-blue-500" @click="downloadExcel">
-          엑셀 다운로드
+          <img class="h-[38px]" src="../assets/img/btn_excel_download.png" alt="엑셀_다운로드">
         </div>
       </div>
     <div

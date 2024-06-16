@@ -1,20 +1,22 @@
 <template>
   <div class="flex flex-col bg-white">
     <header
-      class="flex gap-5 justify-between py-1.5 pr-9 pl-20 w-full border border-solid border-neutral-200 max-md:flex-wrap max-md:px-5 max-md:max-w-full"
+      class="flex gap-5 justify-between py-1.5 pr-9 pl-20 w-full border border-solid border-neutral-200 max-md:flex-wrap max-md:px-5 max-md:max-w-full items-center"
       v-if="showHeader"
     >
-      <div class="flex gap-2 my-auto" @click="goMain">
-        <img
-          src="@/assets/img/logo_header.png"
-          alt="logo_header"
-          class="shrink-0 max-w-full aspect-[3.45] w-[129px]"
-        />
-        <div class="flex gap-px self-start mt-5">
-          <div class="grow text-sm text-neutral-500">과 함께하는</div>
-          <div class="flex-auto text-base font-bold text-violet-950">
-            SEL 사회정서학습
+      <div class="cursor-pointer" @click="goMain">
+        <div class="flex gap-2 my-auto">
+          <img
+            src="@/assets/img/logo_header.png"
+            alt="logo_header"
+            class="shrink-0 max-w-full aspect-[3.45] w-[65px]"
+          />
+          <div class="flex gap-[3px] items-end">
+            <div class="grow text-sm text-neutral-500">과 함께하는</div>
           </div>
+        </div>
+        <div class="flex-auto text-2xl font-bold text-violet-950 text-left">
+            SEL 사회정서학습
         </div>
       </div>
       <!-- 헤더 우측 버튼 -->
@@ -24,14 +26,14 @@
           <img
             src="@/assets/img/isMyInfo_icn.png"
             alt="isMyInfo_icn"
-            class="shrink-0 max-w-full aspect-[1]"
+            class="shrink-0 max-w-full aspect-[1] cursor-pointer"
           />
         </div>
         <div class="w-[40px]" @click="goMyInfoBtn" v-else>
           <img
             src="@/assets/img/myInfo_icn.png"
             alt="myInfo_icn"
-            class="shrink-0 max-w-full aspect-[1]"
+            class="shrink-0 max-w-full aspect-[1] cursor-pointer"
           />
         </div>
 
@@ -40,17 +42,17 @@
           <img
             src="@/assets/img/logout_icn.png"
             alt="logout_icn"
-            class="shrink-0 max-w-full aspect-[1]"
+            class="shrink-0 max-w-full aspect-[1] cursor-pointer"
           />
         </div>
       </div>
     </header>
     <div
-      class="items-start cursor-pointer text-left gap-2 py-5 flex pr-16 pl-20 w-full text-base font-medium text-black bg-white max-md:pr-5 max-md:pl-8 max-md:max-w-full"
+      class="items-start cursor-pointer text-left gap-2 py-5 flex pr-16 pl-20 w-full text-base font-medium text-black bg-white max-md:pr-5 max-md:pl-5 max-md:max-w-full"
       v-if="userId"
     >
       <div
-        class="px-2 text-center items-center max-w-max"
+        class="px-2 text-center items-center max-w-max font-bold text-lg"
         :class="isMySELView && 'text-blue-500'"
         v-if="loginType === 'student'"
         @click="goStudentSEL"
@@ -58,7 +60,7 @@
         나의 SEL 알기
       </div>
       <div
-        class="px-2 text-center items-center max-w-max"
+        class="px-2 text-center items-center max-w-max font-bold text-lg"
         :class="isAllSELView && 'text-blue-500'"
         v-if="loginType !== 'student'"
         @click="goTeacherSEL"
@@ -66,7 +68,7 @@
         학생 SEL 알기
       </div>
       <div
-        class="px-2 text-center items-center max-w-max"
+        class="px-2 text-center items-center max-w-max font-bold text-lg"
         v-if="loginType !== 'student'"
         @click="goTeacherID"
       >

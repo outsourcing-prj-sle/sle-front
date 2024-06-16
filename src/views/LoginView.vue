@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-full max-w-md p-8 space-y-8 bg-white rounded shadow-md">
+    <div class="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2" style="transform: translate(-50%, -50%);">
       <div class="flex justify-center">
         <img src="@/assets/img/logo_sel.png" alt="Logo" class="h-24" />
       </div>

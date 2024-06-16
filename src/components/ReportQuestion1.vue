@@ -14,7 +14,7 @@
       <article
         class="flex flex-col grow shrink-0 self-end mt-9 font-medium text-black basis-0 w-fit max-md:max-w-full"
       >
-        <div class="self-end text-base leading-8">기간 : {{ dateRange }}</div>
+        <div class="self-end text-base leading-8 max-lg:text-sm max-md:text-xs">기간 : {{ dateRange }}</div>
       </article>
     </div>
     <div
@@ -26,18 +26,21 @@
         alt="Survey illustration"
         class="shrink-0 max-w-full aspect-[0.99] w-[127px]"
       />
-      <!-- todo : 30초 뒤에 말풍성 보여줘야됨 -->
+      <div :key="ballonKey" class="text-ballon flex gap-[5px] items-start">
+        <img src="../assets/img/ballon-prev.png" class="w-[18px] h-[18px] mt-[2px]">
+        <p>1개의 답안을 선택해주세요.</p>
+      </div>
     </div>
 
     <div
-      class="flex relative gap-20 justify-center mt-12 max-w-full w-full max-md:flex-wrap max-md:mt-10"
+      class="flex relative gap-20 justify-center mt-12 max-w-full w-full max-md:flex-wrap max-md:mt-10 max-lg:gap-12 max-md:gap-8"
     >
       <template v-for="n in 6" :key="`blueball${n}`">
         <div class="flex flex-col" v-if="nowStep + 1 >= n">
           <div
             class="flex flex-col justify-center p-2 rounded-3xl border border-blue-400 border-solid bg-white"
           >
-            <div class="shrink-0 w-8 h-8 bg-blue-400 rounded-2xl"></div>
+            <div class="shrink-0 w-8 h-8 max-sm:w-6 max-sm:h-6 bg-blue-400 rounded-2xl"></div>
           </div>
           <span class="self-center mt-4 text-base text-center text-black">{{
             n
@@ -47,52 +50,49 @@
           class="flex flex-col px-2 pt-2 text-base text-center whitespace-nowrap"
           v-else
         >
-          <div class="shrink-0 w-8 h-8 rounded-2xl bg-neutral-200"></div>
+          <div class="shrink-0 w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-2xl bg-neutral-200"></div>
           <span class="mt-6">{{ n }}</span>
         </div>
       </template>
     </div>
     <div class="flex flex-col items-end w-full max-md:max-w-full">
       <section
-        class="flex gap-0 self-end mt-8 w-full text-base font-bold text-cyan-900 max-w-[1117px] max-md:flex-wrap max-md:max-w-full"
+        class="flex gap-0 self-end mt-8 w-full text-base font-bold text-cyan-900 max-md:max-w-full"
       >
         <div
-          class="justify-center flex items-center p-2.5 ml-px flex-1 bg-indigo-50 max-md:px-5 max-md:max-w-full"
+          class="justify-center flex items-center p-2.5 ml-px flex-1 bg-indigo-50 max-md:px-5 max-md:max-w-full min-w-96 max-2xl:min-w-72 max-xl:min-w-40 max-lg:min-w-32 max-lg:text-sm max-md:text-xs"
         >
           응답 문항
         </div>
-        <div class="justify-center w-[125px] py-2.5 text-center bg-blue-100">
+        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
           절대로<br />바꿀 수 없어요
         </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
+        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
           약간<br />바꿀 수 있어요
         </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
+        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
           어느 정도<br />바꿀 수 있어요
         </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
+        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
           대체로<br />바꿀 수 있어요
         </div>
-        <div class="justify-center w-[125px] py-2 text-center bg-blue-100">
+        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
           완전히<br />바꿀 수 있어요
         </div>
       </section>
 
       <section
-        class="flex justify-between items-center max-w-full border-b border-solid border-stone-200 w-[1117px] max-md:flex-wrap max-md:pr-5"
+        class="flex gap-0 self-end w-full text-base font-bold text-cyan-900 max-md:max-w-full"
       >
         <div
-          class="flex py-7 justify-between items-center max-w-full border-b border-solid border-stone-200 w-[1117px] max-md:flex-wrap max-md:pr-5"
+          class="flex items-center p-2.5 ml-px flex-1 max-md:px-5 max-md:max-w-full min-w-96 border-stone-200 border-solid border-b font-medium leading-6 text-left pl-5 max-2xl:min-w-72 max-xl:min-w-40 max-lg:min-w-32 max-lg:text-sm max-md:text-xs"
         >
-          <div
-            class="self-stretch pl-5 text-base font-medium leading-6 text-neutral-700 flex-1 text-left"
-          >
-            {{ metadata[nowStep + 1].Q }}
-          </div>
+          {{ metadata[nowStep + 1].Q }}
+        </div>
+        <div class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b">
           <label
             for="option1"
-            :class="{ 'pointer-events-none': status === 'done' }"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center"
           >
             <input
               class="hidden"
@@ -103,15 +103,17 @@
               v-model="score"
             />
             <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
+              class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
             >
-              <div class="w-5 h-5 rounded-full"></div>
+              <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
             </div>
           </label>
+        </div>
+        <div class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b">
           <label
             for="option2"
             :class="{ 'pointer-events-none': status === 'done' }"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center"
           >
             <input
               class="hidden"
@@ -122,15 +124,17 @@
               v-model="score"
             />
             <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
+              class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
             >
-              <div class="w-5 h-5 rounded-full"></div>
+              <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
             </div>
           </label>
+        </div>
+        <div class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b">
           <label
             for="option3"
             :class="{ 'pointer-events-none': status === 'done' }"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center"
           >
             <input
               class="hidden"
@@ -141,15 +145,17 @@
               v-model="score"
             />
             <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
+              class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
             >
-              <div class="w-5 h-5 rounded-full"></div>
+              <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
             </div>
           </label>
+        </div>
+        <div class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b">
           <label
             for="option4"
             :class="{ 'pointer-events-none': status === 'done' }"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center"
           >
             <input
               class="hidden"
@@ -160,15 +166,17 @@
               v-model="score"
             />
             <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
+              class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
             >
-              <div class="w-5 h-5 rounded-full"></div>
+              <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
             </div>
           </label>
+        </div>
+        <div class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b">
           <label
             for="option5"
             :class="{ 'pointer-events-none': status === 'done' }"
-            class="shrink-0 self-stretch my-auto w-[125px] flex justify-center items-center"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center"
           >
             <input
               class="hidden"
@@ -179,9 +187,9 @@
               v-model="score"
             />
             <div
-              class="w-7 h-7 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px]"
+              class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
             >
-              <div class="w-5 h-5 rounded-full"></div>
+              <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
             </div>
           </label>
         </div>
@@ -272,6 +280,7 @@ export default {
     );
     const userAnswer = ref(props.stepAnswer || []);
     const nowStep = ref(props.startStep || 0);
+    const ballonKey = ref(Date.now());
 
     onMounted(() => {});
 
@@ -305,6 +314,8 @@ export default {
         // 저장된 값 입력
         score.value = userAnswer.value[nowStep.value] || null;
       }
+
+      restartAnimation();
     };
 
     const prevStep = () => {
@@ -331,14 +342,22 @@ export default {
         nowStep.value -= 1;
         score.value = userAnswer.value[nowStep.value] || null;
       }
+
+      restartAnimation();
+    };
+
+    const restartAnimation = () => {
+      ballonKey.value = Date.now();
     };
 
     return {
       type,
       nowStep,
       score,
+      ballonKey,
       nextStep,
       prevStep,
+      restartAnimation
     };
   },
 };
@@ -351,5 +370,43 @@ export default {
 input:checked + div div {
   --tw-bg-opacity: 1;
   background-color: rgb(96 165 250 / var(--tw-bg-opacity));
+}
+.text-ballon {
+  position: absolute;
+  left: calc(50% + 100px);
+  width: 190px;
+  border: 1px solid #F0F0F0;
+  background-color: #F0F0F0;
+  border-radius: 10px;
+  z-index: 9999;
+  text-align: left;
+  padding: 20px 10px;
+  animation-name: showBallon;
+  animation-duration: 30s;
+}
+.text-ballon::after {
+  content: "";
+  position: absolute;
+  top: 31px; 
+  left: -30px; 
+  border-right: 30px solid #F0F0F0; 
+  border-top: 7px solid transparent; 
+  border-bottom: 9px solid transparent;
+}
+@media (max-width: 640px) {
+  .text-ballon {
+    width: 130px;
+  }
+}
+@keyframes showBallon {
+  0% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>

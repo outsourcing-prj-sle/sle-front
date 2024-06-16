@@ -6,7 +6,7 @@
     </AppQRPopup>
     <!-- 배너 공간 -->
     <section
-      class="flex overflow-hidden relative flex-col items-center px-16 pt-12 w-full min-h-[341px] max-md:px-5 max-md:max-w-full"
+      class="flex overflow-hidden relative flex-col items-center px-16 pt-12 w-full min-h-[341px] max-md:px-5 max-md:max-w-full max-xl:hidden"
     >
       <img
         src="https://cdn.builder.io/api/v1/image/assets/TEMP/44bfc0d261b637f96d1b3558a47aa8b6cb710eb930d38c33def5e5deb0ee6a03?apiKey=ce28460f29bb4fafa8e3905252f0ef12&"
@@ -37,26 +37,30 @@
                     class="flex relative flex-col max-md:mt-10 max-md:max-w-full"
                   >
                     <div
-                      class="flex gap-2 items-end self-center max-md:flex-wrap"
+                      class="flex gap-2 items-end self-center max-md:flex-wrap max-xl:flex-col max-xl:self-start max-xl:items-start"
                     >
-                      <img
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/b3ed17ae2ab2e87d33130431b62d706c917ce8d9218066ae847400e5150f8759?apiKey=ce28460f29bb4fafa8e3905252f0ef12&"
-                        alt=""
-                        class="self-stretch aspect-[3.45] w-[235px]"
-                      />
                       <div
-                        class="mt-12 text-lg font-medium text-black max-md:mt-10"
+                        class="flex"
                       >
-                        과 함께하는
+                        <img
+                          src="https://cdn.builder.io/api/v1/image/assets/TEMP/b3ed17ae2ab2e87d33130431b62d706c917ce8d9218066ae847400e5150f8759?apiKey=ce28460f29bb4fafa8e3905252f0ef12&"
+                          alt=""
+                          class="self-stretch aspect-[3.45] w-[235px]"
+                        />
+                        <div
+                          class="mt-12 text-lg font-medium text-black max-md:mt-10"
+                        >
+                          과 함께하는
+                        </div>
                       </div>
                       <div
-                        class="flex-auto mt-11 text-2xl font-bold text-violet-950 max-md:mt-10"
+                        class="flex-auto mt-11 text-2xl font-bold text-violet-950 max-md:mt-10 max-xl:mt-0"
                       >
                         SEL 사회정서학습
                       </div>
                     </div>
                     <div
-                      class="mt-12 text-lg font-medium leading-6 text-center text-red-600 max-md:mt-10 max-md:max-w-full"
+                      class="mt-12 text-lg font-semibold leading-6 text-center text-600 max-md:mt-10 max-md:max-w-full text-inherit max-xl:mt-[0.5rem]"
                     >
                       ‘ID’란 자신의
                       <span class="font-bold text-red-600">고유한 정체성</span
@@ -91,12 +95,77 @@
       </div>
     </section>
 
+    <section
+      class="hidden overflow-hidden relative flex-col items-center pt-[4rem] w-full min-h-[341px] max-md:px-5 max-md:max-w-full max-md:hidden max-xl:block"
+    >
+      <img
+        src="https://cdn.builder.io/api/v1/image/assets/TEMP/44bfc0d261b637f96d1b3558a47aa8b6cb710eb930d38c33def5e5deb0ee6a03?apiKey=ce28460f29bb4fafa8e3905252f0ef12&"
+        alt=""
+        class="object-cover absolute inset-0 size-full"
+      />
+      <div class="relative w-full max-md:max-w-full flex justify-center">
+        <div class="flex flex-col w-full max-md:ml-0 max-md:w-full">
+          <div
+            class="flex relative flex-col max-md:mt-10 max-md:max-w-full"
+          >
+            <div
+              class="flex gap-2 items-end self-center max-md:flex-wrap"
+            >
+              <div
+                class="flex"
+              >
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/b3ed17ae2ab2e87d33130431b62d706c917ce8d9218066ae847400e5150f8759?apiKey=ce28460f29bb4fafa8e3905252f0ef12&"
+                  alt=""
+                  class="self-stretch aspect-[3.45] w-[235px]"
+                />
+                <div
+                  class="mt-12 text-lg font-medium text-black max-md:mt-10"
+                >
+                  과 함께하는
+                </div>
+              </div>
+              <div
+                class="flex-auto mt-11 text-2xl font-bold text-violet-950 max-md:mt-10 max-xl:mt-0"
+              >
+                SEL 사회정서학습
+              </div>
+            </div>
+            <div
+              class="mt-12 text-lg font-semibold leading-6 text-center text-600 max-md:mt-10 max-md:max-w-full text-inherit"
+            >
+              ‘ID’란 자신의
+              <span class="font-bold text-red-600">고유한 정체성</span
+              >(Identity)으로
+              <span class="font-bold text-red-600"
+                >‘SEL 사회정서학습’ </span
+              >학습분석 결과를 통해
+              <br />
+              <span class="text-gray-500">스스로 관찰하고 원하는 </span>
+              목표<span class="text-gray-500">와 꿈을 발견</span>하여,
+              <br />
+              이를 실현하기 위해 반응하는
+              <span class="font-bold text-red-600"
+                >아동으로 성장하는 것을 의미</span
+              >합니다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="hidden overflow-hidden relative flex-col items-center w-full max-md:max-w-full max-md:flex"
+    >
+      <img class="w-full" src="../../src/assets/img/banner_mobile.png" alt="모바일_배너">
+    </section>
+
     <div
       class="flex flex-col px-14 mt-24 w-full max-md:px-5 max-md:mt-10 max-md:max-w-full"
     >
       <!-- 목록1 -->
       <div
-        class="flex gap-5 justify-between items-start w-full max-md:flex-wrap max-md:max-w-full"
+        class="flex gap-5 justify-between items-start w-full max-md:max-w-full z-10"
       >
         <div class="flex flex-col mt-2.5 text-neutral-700">
           <div class="text-xl text-left font-bold">미참여 활동</div>
@@ -114,7 +183,7 @@
 
       <!-- 목록2 -->
       <div
-        class="flex gap-5 justify-between items-start w-full max-md:flex-wrap max-md:max-w-full"
+        class="flex gap-5 justify-between items-start w-full max-md:max-w-full mt-24"
       >
         <div class="flex flex-col mt-2.5 text-neutral-700">
           <div class="text-xl text-left font-bold">참여 활동</div>

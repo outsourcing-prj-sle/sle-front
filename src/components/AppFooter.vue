@@ -12,10 +12,10 @@
           <div class="my-auto max-md:max-w-full text-left">
             <div>개인정보처리방침</div>
             <div>
-              세종특별자치시 남세종로 446 스마트허브4차 504호 TEL : 044-715-7915
+              세종특별자치시 남세종로 446 스마트허브4차 504호<br>TEL : 044-715-7915
             </div>
             <div>
-              FAX : 070-4324-7900COPYRIGHT© DATAEUM 2024. ALL RIGHT RESERVED.
+              FAX : 070-4324-7900<br>COPYRIGHT© DATAEUM 2024. ALL RIGHT RESERVED.
             </div>
           </div>
           <img
