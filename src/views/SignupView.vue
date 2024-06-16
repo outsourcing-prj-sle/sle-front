@@ -3,7 +3,7 @@
     <h1 class="text-2xl font-semibold mb-4">회원가입</h1>
 
     <form @submit.prevent="handleSignUp">
-      <div class="mb-4 flex items-center">
+      <div class="mb-1 flex items-center">
         <label
           for="username"
           class="block text-sm font-medium text-gray-700 mr-1.5 min-w-20"
@@ -29,11 +29,17 @@
         </div>
       </div>
 
-      <span v-if="usernameCheckResult" class="text-sm text-green-500">{{
-        usernameCheckResult
-      }}</span>
+      <span
+        v-if="usernameCheckResult"
+        class="text-sm text-green-500"
+        :class="{
+          'text-red-500 ':
+            usernameCheckResult === '사용 불가능한 아이디입니다.',
+        }"
+        >{{ usernameCheckResult }}</span
+      >
 
-      <div class="mb-4 flex items-center">
+      <div class="mb-4 mt-4 flex items-center">
         <label
           for="password"
           class="block text-sm font-medium text-gray-700 mr-1.5 min-w-20"
@@ -239,9 +245,13 @@ export default {
     const usernameCheckResult = ref('');
 
     const checkUsername = async () => {
+      if (!username.value) {
+        return;
+      }
+
       // 아이디 체크
       const signupResponse = await UserService.checkId({
-        id: username,
+        id: username.value,
       });
       const resData = signupResponse.data;
 
@@ -249,9 +259,12 @@ export default {
         alert(resData.error);
         return;
       }
-
-      usernameCheckResult.value = '사용 가능한 아이디입니다.';
-      usernameCheckData.value = username.value;
+      if (!resData) {
+        usernameCheckResult.value = '사용 가능한 아이디입니다.';
+        usernameCheckData.value = username.value;
+      } else {
+        usernameCheckResult.value = '사용 불가능한 아이디입니다.';
+      }
     };
 
     const handleSignUp = async () => {
