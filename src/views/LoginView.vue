@@ -69,7 +69,6 @@ export default {
     const password = ref('');
 
     const handleSubmit = async () => {
-      // todo : api - 로그인
       const loginResponse = await UserService.login({
         id: email.value,
         password: password.value,
