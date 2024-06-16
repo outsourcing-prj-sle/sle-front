@@ -89,13 +89,13 @@
 
         <div class="flex items-center">
           <label class="mr-4"
-            ><input type="radio" value="1" v-model="gender" class="mr-1" />
+            ><input type="radio" value="M" v-model="gender" class="mr-1" />
 
             남</label
           >
 
           <label
-            ><input type="radio" value="2" v-model="gender" class="mr-1" />
+            ><input type="radio" value="F" v-model="gender" class="mr-1" />
 
             여</label
           >
@@ -143,23 +143,13 @@
 
         <div class="flex items-center">
           <label class="mr-4"
-            ><input
-              type="radio"
-              value="student"
-              v-model="userType"
-              class="mr-1"
-            />
+            ><input type="radio" value="N" v-model="userType" class="mr-1" />
 
             학생</label
           >
 
           <label
-            ><input
-              type="radio"
-              value="teacher"
-              v-model="userType"
-              class="mr-1"
-            />
+            ><input type="radio" value="Y" v-model="userType" class="mr-1" />
 
             선생님</label
           >
@@ -237,7 +227,7 @@ export default {
     const usernameCheckData = ref('');
     const password = ref('');
     const confirmPassword = ref('');
-    const gender = ref();
+    const gender = ref('');
     const name = ref('');
     const birthdate = ref('');
     const email = ref('');
@@ -249,7 +239,7 @@ export default {
     const usernameCheckResult = ref('');
 
     const checkUsername = async () => {
-      // todo : api - 아이디 체크
+      // 아이디 체크
       const signupResponse = await UserService.checkId({
         id: username,
       });
@@ -312,26 +302,27 @@ export default {
       }
 
       if (!grade.value) {
-        alert('학년을 입력해주세요');
+        alert('학년을 숫자로 입력해주세요');
         return;
       }
 
       if (!classroom.value) {
-        alert('반을 입력해주세요');
+        alert('반을 숫자로 입력해주세요');
         return;
       }
 
-      // todo : api - 회원가입
+      // 회원가입
       const signupResponse = await UserService.signup({
-        id: username, // 아이디
-        name: name, // 사용자명
-        password: password, // 비밀번호
+        id: username.value, // 아이디
+        name: name.value, // 사용자명
+        password: password.value, // 비밀번호
         profileImageId: 'asdf', // 프로필 이미지 아이디
-        userEmail: email, // 이메일
-        gradeNm: gender, // 성별 - todo : 구분자 알아야함 - f / m
-        userType: userType, // 사용자 구분 - todo : 구분자 알아야함 - student, teacher?
-        userSpaceInfo: school, // 소속 스페이스 정보
-        userSpaceOrgInfo: [grade, classroom], // 소속 조직 정보 - todo : 구분 - 학년 반
+        userEmail: email.value, // 이메일
+        sex: gender.value, // 성별 - todo : 구분자 알아야함 - f / m
+        userType: userType.value, // 사용자 구분 - todo : 구분자 알아야함 - student, teacher?
+        userSpaceInfo: school.value, // 소속 스페이스 정보
+        gradeNm: grade.value,
+        classNm: classroom.value,
         relationInfo: 'asdf', // 관계 정보 - ?..
       });
 
