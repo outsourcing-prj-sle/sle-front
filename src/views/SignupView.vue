@@ -89,13 +89,13 @@
 
         <div class="flex items-center">
           <label class="mr-4"
-            ><input type="radio" value="m" v-model="gender" class="mr-1" />
+            ><input type="radio" value="1" v-model="gender" class="mr-1" />
 
             남</label
           >
 
           <label
-            ><input type="radio" value="f" v-model="gender" class="mr-1" />
+            ><input type="radio" value="2" v-model="gender" class="mr-1" />
 
             여</label
           >
@@ -237,7 +237,7 @@ export default {
     const usernameCheckData = ref('');
     const password = ref('');
     const confirmPassword = ref('');
-    const gender = ref('');
+    const gender = ref();
     const name = ref('');
     const birthdate = ref('');
     const email = ref('');
@@ -248,13 +248,23 @@ export default {
     const classroom = ref('');
     const usernameCheckResult = ref('');
 
-    const checkUsername = () => {
-      // todo : 아이디 중복 체크 api
+    const checkUsername = async () => {
+      // todo : api - 아이디 체크
+      const signupResponse = await UserService.checkId({
+        id: username,
+      });
+      const resData = signupResponse.data;
+
+      if (resData.error) {
+        alert(resData.error);
+        return;
+      }
+
       usernameCheckResult.value = '사용 가능한 아이디입니다.';
       usernameCheckData.value = username.value;
     };
 
-    const handleSignUp = () => {
+    const handleSignUp = async () => {
       if (!usernameCheckResult.value) {
         alert('아이디 중복체크를 해주세요');
         return;
@@ -311,23 +321,29 @@ export default {
         return;
       }
 
-      const resultSignup = UserService.signup({
+      // todo : api - 회원가입
+      const signupResponse = await UserService.signup({
         id: username, // 아이디
         name: name, // 사용자명
         password: password, // 비밀번호
         profileImageId: 'asdf', // 프로필 이미지 아이디
         userEmail: email, // 이메일
-        sex: gender, // 성별 - todo : 구분자 알아야함 - f / m
+        gradeNm: gender, // 성별 - todo : 구분자 알아야함 - f / m
         userType: userType, // 사용자 구분 - todo : 구분자 알아야함 - student, teacher?
         userSpaceInfo: school, // 소속 스페이스 정보
         userSpaceOrgInfo: [grade, classroom], // 소속 조직 정보 - todo : 구분 - 학년 반
         relationInfo: 'asdf', // 관계 정보 - ?..
       });
 
-      alert('회원가입 성공');
-      console.log(resultSignup);
+      const resData = signupResponse.data;
 
-      // router.back();
+      if (resData.error) {
+        alert(resData.error);
+        return;
+      }
+
+      alert('회원가입 성공');
+      router.back();
     };
 
     return {
