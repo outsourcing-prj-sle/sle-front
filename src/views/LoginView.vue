@@ -82,14 +82,14 @@ export default {
       }
 
       userStore.init({
-        token: 'token',
-        id: email.value,
-        type: 'student',
-        // type: 'teacher',
-        extra: {},
+        token: resData.token,
+        id: resData.id,
+        type: resData.type,
+        school: resData.school,
+        extra: resData.extra,
       });
 
-      router.back();
+      // router.back();
     };
 
     return {

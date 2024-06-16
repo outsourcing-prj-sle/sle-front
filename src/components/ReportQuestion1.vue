@@ -386,7 +386,6 @@ export default {
       ballonKey,
       nextStep,
       prevStep,
-      restartAnimation,
     };
   },
 };
@@ -400,6 +399,7 @@ input:checked + div div {
   --tw-bg-opacity: 1;
   background-color: rgb(96 165 250 / var(--tw-bg-opacity));
 }
+
 .text-ballon {
   position: absolute;
   left: calc(50% + 100px);
