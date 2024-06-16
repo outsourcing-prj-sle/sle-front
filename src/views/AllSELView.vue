@@ -46,7 +46,7 @@
             <span class="flex-auto my-auto">미참여 학생만 보기</span>
           </label>
         </div>
-        <div class="text-blue-500" @click="downloadExcel">
+        <div class="text-blue-500 cursor-pointer" @click="downloadExcel">
           <img class="h-[38px]" src="../assets/img/btn_excel_download.png" alt="엑셀_다운로드">
         </div>
       </div>
@@ -78,7 +78,7 @@
             >
             <tr
               class="w-full border-b border-solid border-stone-200"
-              v-if="!showOnlyNon || (showOnlyNon && info.stateList[selectedReport])"
+              v-if="!showOnlyNon || (showOnlyNon && !info.stateList[selectedReport])"
             >
               <td class="my-auto text-neutral-700 px-2 py-2.5 w-[50px]">{{ i+1 }}</td>
               <td class="my-auto text-zinc-800 px-2">{{ info.name }}</td>
@@ -142,6 +142,8 @@ import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js'
 import AppDropdown from '../components/AppDropdown.vue';
+import UserService from '@/service/UserService';
+import { _mixDate } from '@/utils/utils';
 
 export default {
   components: {
@@ -154,9 +156,9 @@ export default {
     const infoArr = ref([]);
     const titleArr = ref([]);
     const titleReportArr = ref([]);
-    const showOnlyNon = ref(false)
+    const showOnlyNon = ref(false);
 
-    const reportList = ref(['전체', '마음읽기1', '마음읽기2']);
+    const reportList = ref(['전체']);
     const selectedReport = ref('전체');
     const reportMetadata = ref({});
 
@@ -165,61 +167,38 @@ export default {
     
     onMounted(() => {
       fetchReportList();
-      fetchData();
     });
 
     const handleSelection = (option) => {
       selectedOption.value = option;
     };
 
-    const fetchReportList = () => {
-      // todo : api 호출하여 데이터 가져오기
-      reportList.value = ['전체', '마음읽기1', '마음읽기2', '마음읽기3'];
-      reportMetadata.value = {
-        '마음읽기1': {
-          'dateRange': '2023년 1월 1일 ~ 6월 1일까지',
-          'state': true,
-        },
-        '마음읽기2': {
-          'dateRange': '2023년 2월 2일 ~ 6월 1일까지',
-          'state': false,
-        },
-        '마음읽기3': {
-          'dateRange': '2023년 2월 2일 ~ 6월 1일까지',
-          'state': true,
-        },
-      }
-    }
+    const fetchReportList = async () => {
+      const mySelReponse = await UserService.mysel({});
+      const resData = mySelReponse.data;
 
-    const fetchData = () => {
-      // todo : api 호출하여 데이터 가져오기
-      // userId.value이용
+      resData.reportList.map((item) => {
+        const pollNm = item.pollNm;
+        reportList.value.push(pollNm);
+        titleReportArr.value.push(pollNm);
 
-      infoArr.value = [
-        {
-          name: '홍길동',
-          email: 'testmail@gmail.com',
-          grade: '3학년 1반',
-          gender: '남',
-          stateList: {
-            '마음읽기1': false,
-            '마음읽기2': false,
-            '마음읽기3': true,
-          },
-        },
-        {
-          name: '길동이',
-          email: 'testmail2@gmail.com',
-          grade: '3학년 1반',
-          gender: '여',
-          stateList: {
-            '마음읽기1': true,
-            '마음읽기2': false,
-            '마음읽기3': true,
-          },
-        },
-      ]
-      titleReportArr.value = ['마음읽기1', '마음읽기2', '마음읽기3',]
+        reportMetadata.value[pollNm] = {
+          dateRange: _mixDate(item.startDate, item.endDate) + '까지',
+          state: item.expired === '0'
+        };
+      })
+
+      resData.infoArr.map((item) => {
+        const info = {
+          name: item.name,
+          email: item.email,
+          grade: item.classInfo,
+          gender: item.sex === 'M' ? '남' : '여',
+          stateList: item.stateList,
+        }
+
+        infoArr.value.push(info);
+      });
       
       setTitleList();
     }
