@@ -56,13 +56,14 @@
 
 <script>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 import UserService from '@/service/UserService.js';
 
 export default {
   name: 'LoginView',
   setup() {
+    const route = useRoute();
     const router = useRouter();
     const userStore = useUserStore();
     const email = ref('');
@@ -88,7 +89,8 @@ export default {
         extra: resData.extra,
       });
 
-      router.back();
+      const redirectPath = route.query.redirect || '/';
+      router.push(redirectPath);
     };
 
     return {
