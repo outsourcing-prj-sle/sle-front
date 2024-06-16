@@ -11,6 +11,8 @@ const baseURL = '/users';
  * }
  *
  * 프론트 사용 예시
+import UserService from '@/service/UserService.js';
+
 // todo : api - 회원가입
 const signupResponse = await UserService.checkId({
 id: username,
@@ -24,7 +26,7 @@ return;
  */
 
 const login = (data = {}) => {
-  return apiClient.get(baseURL, data);
+  return apiClient.post('/login', data);
 };
 
 // 회원가입
@@ -34,7 +36,7 @@ const signup = (data = {}) => {
 
 // 아이디 중복 체크
 const checkId = (data = {}) => {
-  return apiClient.get(baseURL + '/checkId', data);
+  return apiClient.get(baseURL + '/checkId', { params: data });
 };
 
 export default {

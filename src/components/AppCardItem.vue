@@ -293,6 +293,10 @@ export default {
     options: {
       type: String,
     },
+    list: {
+      type: Array,
+      default: () => [],
+    },
   },
   setup(props) {
     const userStore = useUserStore();

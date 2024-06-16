@@ -1,4 +1,5 @@
 import apiClient from './index';
+const baseURL = '/reports';
 
 /**
  * 예제
@@ -10,21 +11,25 @@ import apiClient from './index';
  * }
  *
  * 프론트 사용 예시
- * const signupResponse = await UserService.checkId({
- * id: username,
- * });
- * const resData = signupResponse.data;
- *
- * if (resData.error) {
- * alert(resData.error);
- * return;
- * }
+import ReportService from '@/service/ReportService.js';
+
+// todo : api - 회원가입
+const signupResponse = await ReportService.checkId({
+id: username,
+});
+const resData = signupResponse.data;
+
+if (resData.error) {
+alert(resData.error);
+return;
+}
  */
 
-const login = (data = {}) => {
-  return apiClient.get('/users', data);
+// 메인페이지 설문 목록 확인
+const reportMainList = (data = {}) => {
+  return apiClient.get(baseURL + '/status');
 };
 
 export default {
-  login,
+  reportMainList,
 };

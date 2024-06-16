@@ -70,11 +70,11 @@ export default {
 
     const handleSubmit = async () => {
       // todo : api - 로그인
-      const signupResponse = await UserService.login({
+      const loginResponse = await UserService.login({
         id: email,
         password: password,
       });
-      const resData = signupResponse.data;
+      const resData = loginResponse.data;
 
       if (resData.error) {
         alert(resData.error);
