@@ -20,6 +20,19 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
+    if (error.response) {
+      // 에러 응답이 존재할 경우
+      const status = error.response.status;
+      const errorMessage = error.response.statusText || 'An error occurred';
+
+      // 404 에러인 경우
+      if (status === 404) {
+        return { data: { status: 404, error: 'Not Found' } };
+      }
+
+      // 그 외의 에러인 경우
+      return { data: { status, error: errorMessage } };
+    }
     // 오류 응답을 처리
     return Promise.reject(error);
   }
