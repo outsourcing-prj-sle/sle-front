@@ -6,7 +6,7 @@
       class="flex gap-1 items-start self-stretch max-md:flex-wrap max-md:max-w-full"
     >
       <div class="flex flex-col self-start font-bold min-w-[150px]">
-        <h1 class="text-xl text-blue-500 text-left">마음알기 설문3</h1>
+        <h1 class="text-xl text-blue-500 text-left">{{ title }}</h1>
         <h2 class="mt-1 text-2xl text-neutral-700 text-left">안내사항</h2>
         <img
           src="@/assets/img/minichar.png"
@@ -18,7 +18,7 @@
         class="flex flex-col grow shrink-0 self-end mt-9 font-medium text-black basis-0 w-fit max-md:max-w-full"
       >
         <div class="self-end text-base leading-8 max-lg:text-sm max-md:text-xs">
-          기간 : YYYY년 MM월 DD일 ~ MM월 DD일
+          기간 : {{ date }}
         </div>
         <div class="flex gap-2.5 self-start mt-1.5 max-md:flex-wrap">
           <img
@@ -26,7 +26,9 @@
             alt="speaker"
             class="shrink-0 aspect-square w-[25px] max-lg:w-[20px]"
           />
-          <p class="flex-auto my-auto max-md:max-w-full max-lg:text-sm max-md:text-xs text-left">
+          <p
+            class="flex-auto my-auto max-md:max-w-full max-lg:text-sm max-md:text-xs text-left"
+          >
             클릭시 안내음성을 들을 수 있습니다. 단, 안내음성은 1회만 들을 수
             있습니다.
           </p>
@@ -42,14 +44,18 @@
         </section>
       </article>
     </div>
-    <div class="pl-[154px] flex flex-col items-end w-full max-md:max-w-full max-lg:pl-0">
+    <div
+      class="pl-[154px] flex flex-col items-end w-full max-md:max-w-full max-lg:pl-0"
+    >
       <section
         class="flex flex-col self-center py-8 mt-5 w-full font-medium text-black rounded-xl border border-solid border-neutral-300 max-md:max-w-full"
       >
         <div
           class="flex flex-col px-9 text-base leading-8 max-md:px-5 max-md:max-w-full"
         >
-          <p class="text-left max-md:mr-1.5 max-md:max-w-full max-lg:text-sm max-md:text-xs">
+          <p
+            class="text-left max-md:mr-1.5 max-md:max-w-full max-lg:text-sm max-md:text-xs"
+          >
             네 개의 단어 중에서 사진 속의 사람이 생각하거나 느끼는 것을 가장 잘
             묘사하는 단어는 무엇일까요?
           </p>
@@ -156,34 +162,34 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/store/userStore.js';
 
 export default {
   name: 'LoginView',
   components: {},
-  setup() {
+  props: {
+    title: {
+      type: String,
+    },
+    date: {
+      type: String,
+    },
+    expired: {
+      type: Boolean,
+    },
+  },
+  setup(props) {
     const route = useRoute();
     const router = useRouter();
-    const userStore = useUserStore();
-    const userId = computed(() => userStore.id);
     const type = ref(route.params.type || 1);
-    const title = ref('마음알기 설문3');
-    const date = ref('YYYY년 MM월 DD일 ~ MM월 DD일');
     const score = ref();
 
-    onMounted(() => {
-      fetchData();
-    });
-
-    const fetchData = async () => {
-      // todo : 설문 문제 확인 api호출. with type, 만약 필요하면 userId
-      title.value = '마음알기 설문3';
-      date.value = 'YYYY년 MM월 DD일 ~ MM월 DD일';
-    };
-
     const startReport = () => {
+      if (props.expired) {
+        alert('기간이 지났습니다.');
+        return;
+      }
       router.push({
         name: 'reportQuestion',
         params: { type: type.value },
@@ -191,8 +197,6 @@ export default {
     };
 
     return {
-      title,
-      date,
       type,
       score,
       startReport,

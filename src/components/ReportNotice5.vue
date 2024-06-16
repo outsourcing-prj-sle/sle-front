@@ -17,7 +17,9 @@
       <article
         class="flex flex-col grow shrink-0 self-end mt-9 font-medium text-black basis-0 w-fit max-md:max-w-full"
       >
-        <div class="self-end text-base leading-8 max-lg:text-sm max-md:text-xs">기간 : {{ date }}</div>
+        <div class="self-end text-base leading-8 max-lg:text-sm max-md:text-xs">
+          기간 : {{ date }}
+        </div>
         <section
           class="justify-center items-start px-9 py-6 text-left text-base leading-8 rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:mt-10 max-md:max-w-full mt-1 max-lg:text-sm max-md:text-xs"
         >
@@ -46,41 +48,38 @@
 <script>
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/store/userStore.js';
 
 export default {
   name: 'LoginView',
   components: {},
-  setup() {
+  props: {
+    title: {
+      type: String,
+    },
+    date: {
+      type: String,
+    },
+    expired: {
+      type: Boolean,
+    },
+  },
+  setup(props) {
     const route = useRoute();
     const router = useRouter();
-    const userStore = useUserStore();
-    const userId = computed(() => userStore.id);
     const type = ref(route.params.type || 1);
-    const title = ref('마음알기 설문5');
-    const date = ref('YYYY년 MM월 DD일 ~ MM월 DD일');
-
-    onMounted(() => {
-      fetchData();
-    });
-
-    const fetchData = async () => {
-      // todo : 설문 문제 확인 api호출. with type, 만약 필요하면 userId
-      title.value = '마음알기 설문5';
-      date.value = 'YYYY년 MM월 DD일 ~ MM월 DD일';
-    };
 
     const startReport = () => {
+      if (props.expired) {
+        alert('기간이 지났습니다.');
+        return;
+      }
       router.push({
         name: 'reportQuestion',
         params: { type: type.value },
-        // query: { plan: 'private' }
       });
     };
 
     return {
-      title,
-      date,
       type,
       startReport,
     };

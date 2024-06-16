@@ -100,21 +100,27 @@
 <script>
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/store/userStore.js';
 import FaceImg from '@/components/FaceImg.vue';
 import FaceSelectList from '@/components/FaceSelectList.vue';
 
 export default {
   name: 'ReportNotice6',
   components: { FaceImg, FaceSelectList },
-  setup() {
+  props: {
+    title: {
+      type: String,
+    },
+    date: {
+      type: String,
+    },
+    expired: {
+      type: Boolean,
+    },
+  },
+  setup(props) {
     const route = useRoute();
     const router = useRouter();
-    const userStore = useUserStore();
-    const userId = computed(() => userStore.id);
     const type = ref(route.params.type || 6);
-    const title = ref('마음알기 설문6');
-    const date = ref('YYYY년 MM월 DD일 ~ MM월 DD일');
     const score = ref();
     const face = ref([
       require('@/assets/img/6q1.png'),
@@ -142,17 +148,11 @@ export default {
     const eyesIndex = ref(-1);
     const mouthIndex = ref(-1);
 
-    onMounted(() => {
-      fetchData();
-    });
-
-    const fetchData = async () => {
-      // todo : 설문 문제 확인 api호출. with type, 만약 필요하면 userId
-      title.value = '마음알기 설문6';
-      date.value = 'YYYY년 MM월 DD일 ~ MM월 DD일';
-    };
-
     const startReport = () => {
+      if (props.expired) {
+        alert('기간이 지났습니다.');
+        return;
+      }
       router.push({
         name: 'reportQuestion',
         params: { type: type.value },
@@ -165,8 +165,6 @@ export default {
     };
 
     return {
-      title,
-      date,
       type,
       score,
       face,

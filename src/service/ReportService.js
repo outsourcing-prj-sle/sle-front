@@ -30,6 +30,24 @@ const reportMainList = (data = {}) => {
   return apiClient.get(baseURL + '/status');
 };
 
+// 설문 시작 시 호출
+const reportStart = (data = {}) => {
+  return apiClient.put(baseURL + '/start', data);
+};
+
+// 설문 시작 시 호출
+const reportNotice = (data = {}) => {
+  return apiClient.get(baseURL + '/notice', { params: data });
+};
+
+// MySEL 알기 목록 조회
+const mysel = (data = {}) => {
+  return apiClient.get(baseURL + '/mysel', data);
+};
+
 export default {
   reportMainList,
+  reportStart,
+  reportNotice,
+  mysel,
 };

@@ -2,9 +2,7 @@
   <section
     class="flex flex-col items-end px-20 mt-4 w-full max-md:px-5 max-md:mt-10 max-md:max-w-full"
   >
-    <div
-      class="flex gap-1 items-start self-stretch max-md:max-w-full"
-    >
+    <div class="flex gap-1 items-start self-stretch max-md:max-w-full">
       <div class="flex flex-col self-start font-bold min-w-[150px]">
         <h1 class="text-xl text-blue-500 text-left">{{ title }}</h1>
         <h2 class="mt-1 text-2xl text-neutral-700 text-left">안내사항</h2>
@@ -18,7 +16,7 @@
         class="flex flex-col grow shrink-0 self-end mt-9 font-medium text-black basis-0 w-fit max-md:max-w-full"
       >
         <div class="self-end text-base leading-8 max-lg:text-sm max-md:text-xs">
-          기간 : YYYY년 MM월 DD일 ~ MM월 DD일
+          기간 : {{ date }}
         </div>
         <section
           class="justify-center items-start px-9 py-6 text-left text-base leading-8 rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:mt-10 max-md:max-w-full max-lg:text-sm max-md:text-xs"
@@ -34,8 +32,9 @@
         </section>
       </article>
     </div>
-    <div class="pl-[154px] flex flex-col items-end w-full max-md:max-w-full max-lg:pl-0">
-
+    <div
+      class="pl-[154px] flex flex-col items-end w-full max-md:max-w-full max-lg:pl-0"
+    >
       <section
         class="flex gap-0 self-end mt-8 w-full text-base font-bold text-cyan-900 max-md:max-w-full"
       >
@@ -44,16 +43,24 @@
         >
           예시 문장
         </div>
-        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
+        <div
+          class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
+        >
           절대로<br />그렇지 않아요
         </div>
-        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
+        <div
+          class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
+        >
           가끔<br />그래요
         </div>
-        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
+        <div
+          class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
+        >
           자주<br />그래요
         </div>
-        <div class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs">
+        <div
+          class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
+        >
           거의 항상<br />그래요
         </div>
       </section>
@@ -66,7 +73,9 @@
         >
           수영장에서 수영하는 것을<br />좋아해요.
         </div>
-        <div class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b">
+        <div
+          class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b"
+        >
           <label
             for="option1"
             class="shrink-0 self-stretch my-auto flex justify-center items-center"
@@ -86,7 +95,9 @@
             </div>
           </label>
         </div>
-        <div class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b">
+        <div
+          class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b"
+        >
           <label
             for="option2"
             class="shrink-0 self-stretch my-auto flex justify-center items-center"
@@ -106,7 +117,9 @@
             </div>
           </label>
         </div>
-        <div class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b">
+        <div
+          class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b"
+        >
           <label
             for="option3"
             class="shrink-0 self-stretch my-auto flex justify-center items-center"
@@ -126,7 +139,9 @@
             </div>
           </label>
         </div>
-        <div class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b">
+        <div
+          class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b"
+        >
           <label
             for="option4"
             class="shrink-0 self-stretch my-auto flex justify-center items-center"
@@ -170,42 +185,39 @@
 <script>
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/store/userStore.js';
 
 export default {
   name: 'LoginView',
   components: {},
-  setup() {
+  props: {
+    title: {
+      type: String,
+    },
+    date: {
+      type: String,
+    },
+    expired: {
+      type: Boolean,
+    },
+  },
+  setup(props) {
     const route = useRoute();
     const router = useRouter();
-    const userStore = useUserStore();
-    const userId = computed(() => userStore.id);
     const type = ref(route.params.type || 1);
-    const title = ref('마음알기 설문2');
-    const date = ref('YYYY년 MM월 DD일 ~ MM월 DD일');
     const score = ref();
 
-    onMounted(() => {
-      fetchData();
-    });
-
-    const fetchData = async () => {
-      // todo : 설문 문제 확인 api호출. with type, 만약 필요하면 userId
-      title.value = '마음알기 설문2';
-      date.value = 'YYYY년 MM월 DD일 ~ MM월 DD일';
-    };
-
     const startReport = () => {
+      if (props.expired) {
+        alert('기간이 지났습니다.');
+        return;
+      }
       router.push({
         name: 'reportQuestion',
         params: { type: type.value },
-        // query: { plan: 'private' }
       });
     };
 
     return {
-      title,
-      date,
       type,
       score,
       startReport,
