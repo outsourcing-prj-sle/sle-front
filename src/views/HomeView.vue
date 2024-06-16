@@ -123,7 +123,6 @@ export default defineComponent({
       // 메인페이지
       const reportList = await ReportService.reportMainList();
       const resData = reportList.data;
-      console.log(resData);
 
       if (resData.error) {
         alert(resData.error);
