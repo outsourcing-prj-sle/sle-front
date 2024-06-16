@@ -83,7 +83,7 @@
           바꿀 수 있나요?
         </div>
         <div
-          class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b"
+          class="justify-center min-h-[120px] py-2.5 text-center flex grow border-stone-200 border-solid border-b"
         >
           <label
             for="option1"

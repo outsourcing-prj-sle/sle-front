@@ -1,36 +1,36 @@
 <template>
   <ReportNotice1
-    v-if="type === '1' || type === 1"
+    v-if="title === '마음알기 설문1'"
     :title="title"
     :expired="expired"
     :date="date"
   />
   <ReportNotice2
-    v-if="type === '2' || type === 2"
+    v-if="title === '마음알기 설문2'"
     :title="title"
     :expired="expired"
     :date="date"
   />
   <ReportNotice3
-    v-if="type === '3' || type === 3"
+    v-if="title === '마음알기 설문3'"
     :title="title"
     :expired="expired"
     :date="date"
   />
   <ReportNotice4
-    v-if="type === '4' || type === 4"
+    v-if="title === '마음알기 설문4'"
     :title="title"
     :expired="expired"
     :date="date"
   />
   <ReportNotice5
-    v-if="type === '5' || type === 5"
+    v-if="title === '마음알기 설문5'"
     :title="title"
     :expired="expired"
     :date="date"
   />
   <ReportNotice6
-    v-if="type === '6' || type === 6"
+    v-if="title === '마음알기 설문6'"
     :title="title"
     :expired="expired"
     :date="date"

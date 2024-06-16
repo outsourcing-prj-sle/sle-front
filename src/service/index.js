@@ -52,7 +52,10 @@ apiClient.interceptors.request.use(
 );
 
 apiClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log(response);
+    return response;
+  },
   (error) => {
     if (error.response) {
       // 에러 응답이 존재할 경우

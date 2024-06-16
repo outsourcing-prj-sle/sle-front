@@ -66,7 +66,7 @@
       </section>
 
       <section
-        class="flex gap-0 self-end w-full text-base font-bold text-cyan-900 max-md:max-w-full"
+        class="flex gap-0 min-h-[120px] self-end w-full text-base font-bold text-cyan-900 max-md:max-w-full"
       >
         <div
           class="flex items-center p-2.5 ml-px flex-1 max-md:px-5 max-md:max-w-full min-w-96 border-stone-200 border-solid border-b font-medium leading-6 text-left pl-5 max-2xl:min-w-72 max-xl:min-w-40 max-lg:min-w-32 max-lg:text-sm max-md:text-xs"
