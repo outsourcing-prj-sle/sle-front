@@ -52,35 +52,37 @@
                 <td class="my-auto text-neutral-700 px-2 py-2.5 w-[50px]">
                   {{ i + 1 }}
                 </td>
-                <td class="my-auto text-zinc-800 px-2">{{ info.title }}</td>
+                <td class="my-auto text-zinc-800 px-2">{{ info.pollNm }}</td>
                 <td class="my-auto text-zinc-800 px-2 w-[260px] text-center">
-                  {{ info.date }}
+                  {{ mixDate(info.startDate, info.endDate) }}
                 </td>
                 <td class="my-auto text-zinc-800 px-2 w-[200px] text-center">
-                  <div v-if="info.state === 'fin'">완료</div>
-                  <div v-if="info.state === 'closed'">미참여-마감</div>
-                  <div v-if="info.state === 'start'">
+                  <div v-if="info.status === 'done'">완료</div>
+                  <div v-else-if="info.status === 'todo' && !info.expired">
+                    미참여-마감
+                  </div>
+                  <div v-else-if="info.status === 'todo'">
                     <button
                       class="justify-center self-stretch px-4 py-1 font-medium text-white whitespace-nowrap bg-blue-400 rounded-[999px]"
-                      @click="() => goReportNoticePage(1)"
+                      @click="() => goReportNoticePage(info.pollId)"
                     >
                       시작하기
                     </button>
                   </div>
-                  <div v-if="info.state === 'restart'">
+                  <div v-else>
                     <button
                       class="justify-center self-stretch px-4 py-1 font-medium text-white bg-blue-600 rounded-[999px]"
-                      @click="() => goReportQuestionPage(1)"
+                      @click="() => goReportQuestionPage(info.pollId)"
                     >
                       이어서 진행하기
                     </button>
                   </div>
                 </td>
                 <td class="my-auto text-zinc-800 px-2 w-[130px] text-center">
-                  <div v-if="info.state === 'fin'">
+                  <div v-if="info.status === 'done'">
                     <button
                       class="justify-center self-stretch px-4 py-1 font-medium text-white bg-slate-400 rounded-[999px]"
-                      @click="() => goReportQuestionPage(1)"
+                      @click="() => goReportQuestionPage(info.pollId)"
                     >
                       내 답안 보기
                     </button>
@@ -105,8 +107,9 @@
 <script>
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useUserStore } from '@/store/userStore.js';
+import UserService from '@/service/UserService.js';
 import AppDropdown from '../components/AppDropdown.vue';
+import { _mixDate } from '@/utils/utils.js';
 
 export default {
   components: {
@@ -114,8 +117,6 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const userStore = useUserStore();
-    const userId = computed(() => userStore.id);
     const infoArr = ref([]);
 
     const options = ref(['마감순', '마감순 2', '마감순 3']);
@@ -125,37 +126,16 @@ export default {
       fetchData();
     });
 
-    const fetchData = () => {
-      // todo : api 호출하여 데이터 가져오기
-      // userId.value이용
+    const fetchData = async () => {
+      const mySELResponse = await UserService.getMySEL();
+      const resData = mySELResponse.data;
 
-      infoArr.value = [
-        {
-          title: '마음열기 설문1',
-          date: '2023-09-01 ~ 2023-10-31',
-          state: 'closed',
-        },
-        {
-          title: '마음열기 설문2',
-          date: '2023-09-01 ~ 2023-10-31',
-          state: 'fin',
-        },
-        {
-          title: '마음열기 설문2',
-          date: '2023-09-01 ~ 2023-10-31',
-          state: 'start',
-        },
-        {
-          title: '마음열기 설문2',
-          date: '2023-09-01 ~ 2023-10-31',
-          state: 'restart',
-        },
-        {
-          title: '마음열기 설문2',
-          date: '2023-09-01 ~ 2023-10-31',
-          state: 'fin',
-        },
-      ];
+      if (resData.error) {
+        alert(resData.error);
+        return;
+      }
+
+      infoArr.value = resData;
     };
 
     const handleSelection = (option) => {
@@ -176,6 +156,10 @@ export default {
       });
     };
 
+    const mixDate = (s, e) => {
+      return _mixDate(s, e);
+    };
+
     return {
       options,
       selectedOption,
@@ -183,6 +167,7 @@ export default {
       handleSelection,
       goReportNoticePage,
       goReportQuestionPage,
+      mixDate,
     };
   },
 };
