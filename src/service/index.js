@@ -28,12 +28,20 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
+    let userStore;
+    try {
+      userStore = getUserStore();
+    } catch (error) {
+      console.error(error.message);
+    }
+
     // userStore가 존재할 경우에만 헤더 설정
     if (userStore) {
       // config.headers.Authorization = userStore.id || 'USRCNFRM_00000000004';
       config.headers.Authorization = 'USRCNFRM_00000000004';
     }
     config.headers.role = 'ROLE_STUDENT';
+    // config.headers.role = 'ROLE_TEACHER';
     config.headers.spaceInfo = 'COM1';
     config.headers.grade = '1';
     config.headers.class = '3';
