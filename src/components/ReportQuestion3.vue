@@ -44,12 +44,8 @@
         alt="Survey illustration"
         class="shrink-0 max-w-full aspect-[0.99] w-[127px]"
       />
-
       <div :key="ballonKey" class="text-ballon flex gap-[5px] items-start">
-        <img
-          src="../assets/img/ballon-prev.png"
-          class="w-[18px] h-[18px] mt-[2px]"
-        />
+        <img src="../assets/img/ballon-prev.png" class="w-[18px] h-[18px] mt-[2px]">
         <p>1개의 답안을 선택해주세요.</p>
       </div>
     </div>
@@ -333,10 +329,6 @@ export default {
       restartAnimation();
     };
 
-    const restartAnimation = () => {
-      ballonKey.value = Date.now();
-    };
-
     const useTTS = () => {
       if (!canTTS.value) return;
       canTTS.value = false;
@@ -360,6 +352,10 @@ export default {
       }
     };
 
+    const restartAnimation = () => {
+      ballonKey.value = Date.now();
+    };
+
     return {
       type,
       nowStep,
@@ -368,6 +364,7 @@ export default {
       nextStep,
       prevStep,
       useTTS,
+      restartAnimation
     };
   },
 };
@@ -388,13 +385,12 @@ input:checked + div {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
-
 .text-ballon {
   position: absolute;
   left: calc(50% + 100px);
   width: 190px;
-  border: 1px solid #f0f0f0;
-  background-color: #f0f0f0;
+  border: 1px solid #F0F0F0;
+  background-color: #F0F0F0;
   border-radius: 10px;
   z-index: 9999;
   text-align: left;
@@ -403,12 +399,12 @@ input:checked + div {
   animation-duration: 30s;
 }
 .text-ballon::after {
-  content: '';
+  content: "";
   position: absolute;
-  top: 31px;
-  left: -30px;
-  border-right: 30px solid #f0f0f0;
-  border-top: 7px solid transparent;
+  top: 31px; 
+  left: -30px; 
+  border-right: 30px solid #F0F0F0; 
+  border-top: 7px solid transparent; 
   border-bottom: 9px solid transparent;
 }
 @media (max-width: 640px) {
