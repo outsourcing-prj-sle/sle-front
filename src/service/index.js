@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { useUserStore } from '@/store/userStore.js';
+const userStore = useUserStore();
 
 const apiClient = axios.create({
   // baseURL: 'https://domain/api',
@@ -11,7 +13,7 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     // const currentUserId =
-    // config.headers.Authorization = currentUserId
+    config.headers.Authorization = userStore.id;
     return config;
   },
   (error) => Promise.reject(error)
