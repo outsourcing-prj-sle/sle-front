@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="flex-auto text-2xl font-bold text-violet-950 text-left">
-            SEL 사회정서학습
+          SEL 사회정서학습
         </div>
       </div>
       <!-- 헤더 우측 버튼 -->
@@ -126,7 +126,8 @@ export default {
     };
 
     const goTeacherID = () => {
-      router.push({ name: 'home' });
+      // router.push({ name: 'home' });
+      alert('준비중입니다.');
     };
 
     return {
