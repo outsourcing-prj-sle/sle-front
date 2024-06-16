@@ -1,6 +1,22 @@
 import axios from 'axios';
 import { useUserStore } from '@/store/userStore.js';
-const userStore = useUserStore();
+import { getActivePinia } from 'pinia';
+
+// Pinia가 활성화될 때까지 기다리기
+function getUserStore() {
+  if (!getActivePinia()) {
+    throw new Error('Pinia has not been initialized');
+  }
+  return useUserStore();
+}
+
+// Pinia가 초기화된 후에 userStore를 사용
+let userStore;
+try {
+  userStore = getUserStore();
+} catch (error) {
+  console.error(error.message);
+}
 
 const apiClient = axios.create({
   // baseURL: 'https://domain/api',
@@ -12,8 +28,16 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    // const currentUserId =
-    config.headers.Authorization = userStore.id;
+    // userStore가 존재할 경우에만 헤더 설정
+    if (userStore) {
+      // config.headers.Authorization = userStore.id || 'USRCNFRM_00000000004';
+      config.headers.Authorization = 'USRCNFRM_00000000004';
+    }
+    config.headers.role = 'ROLE_STUDENT';
+    config.headers.spaceInfo = 'COM1';
+    config.headers.grade = '1';
+    config.headers.class = '3';
+
     return config;
   },
   (error) => Promise.reject(error)

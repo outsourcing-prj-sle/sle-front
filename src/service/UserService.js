@@ -42,4 +42,5 @@ const checkId = (data = {}) => {
 export default {
   login,
   signup,
+  checkId,
 };
