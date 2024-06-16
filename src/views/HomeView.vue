@@ -110,9 +110,7 @@
           @update:selectedOption="handleSelection"
         />
       </div>
-      <AppCardItem 
-        :options="1"
-      />
+      <AppCardItem :options="1" />
 
       <!-- 목록2 -->
       <div
@@ -125,9 +123,7 @@
           </div>
         </div>
       </div>
-      <AppCardItem 
-        :options="2"
-      />
+      <AppCardItem :options="2" />
     </div>
   </div>
 </template>
@@ -138,7 +134,7 @@ import { useUserStore } from '@/store/userStore.js';
 import AppDropdown from '../components/AppDropdown.vue';
 import AppTopAlert from '../components/AppTopAlert.vue';
 import AppQRPopup from '../components/AppQRPopup.vue';
-import AppCardItem from '../components/AppCardItem';
+import AppCardItem from '../components/AppCardItem.vue';
 
 export default defineComponent({
   name: 'HomeView',
@@ -146,7 +142,7 @@ export default defineComponent({
     AppDropdown,
     AppTopAlert,
     AppQRPopup,
-    AppCardItem
+    AppCardItem,
   },
   setup() {
     const router = useRouter();
@@ -165,8 +161,7 @@ export default defineComponent({
       selectedOption.value = option;
     };
 
-    onMounted(async () => {
-    });
+    onMounted(async () => {});
 
     const goReportNotice = (type = 1) => {
       router.push({
@@ -191,7 +186,7 @@ export default defineComponent({
       }
     };
 
-    const openQRCodePopup = (type = 1) => { 
+    const openQRCodePopup = (type = 1) => {
       const url = `${window.location.host}/report/notice/${type}`;
       qrURL.value = `https://quickchart.io/qr?text=${url}&size=250`;
     };
@@ -207,13 +202,12 @@ export default defineComponent({
       showAlert,
       textAlert,
       qrURL,
-      
 
       handleSelection,
       goReportNotice,
       copyURL,
       openQRCodePopup,
-      closePopup
+      closePopup,
     };
   },
 });
@@ -228,5 +222,4 @@ export default defineComponent({
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
 }
-
 </style>
