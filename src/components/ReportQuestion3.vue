@@ -40,7 +40,10 @@
         alt="Survey illustration"
         class="shrink-0 max-w-full aspect-[0.99] w-[127px]"
       />
-      <!-- todo : 30초 뒤에 말풍성 보여줘야됨 -->
+      <div :key="ballonKey" class="text-ballon flex gap-[5px] items-start">
+        <img src="../assets/img/ballon-prev.png" class="w-[18px] h-[18px] mt-[2px]">
+        <p>1개의 답안을 선택해주세요.</p>
+      </div>
     </div>
 
     <div
@@ -252,6 +255,7 @@ export default {
     const userAnswer = ref(props.stepAnswer || []);
     const nowStep = ref(props.startStep || 0);
     const canTTS = ref(true);
+    const ballonKey = ref(Date.now());
 
     onMounted(() => {});
 
@@ -286,6 +290,8 @@ export default {
         // 저장된 값 입력
         score.value = userAnswer.value[nowStep.value] || null;
       }
+
+      restartAnimation();
     };
 
     const prevStep = () => {
@@ -312,6 +318,8 @@ export default {
         nowStep.value -= 1;
         score.value = userAnswer.value[nowStep.value] || null;
       }
+
+      restartAnimation();
     };
 
     const useTTS = () => {
@@ -337,13 +345,19 @@ export default {
       }
     };
 
+    const restartAnimation = () => {
+      ballonKey.value = Date.now();
+    };
+
     return {
       type,
       nowStep,
       score,
+      ballonKey,
       nextStep,
       prevStep,
       useTTS,
+      restartAnimation
     };
   },
 };
@@ -363,5 +377,43 @@ input:checked + div {
 
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.text-ballon {
+  position: absolute;
+  left: calc(50% + 100px);
+  width: 190px;
+  border: 1px solid #F0F0F0;
+  background-color: #F0F0F0;
+  border-radius: 10px;
+  z-index: 9999;
+  text-align: left;
+  padding: 20px 10px;
+  animation-name: showBallon;
+  animation-duration: 30s;
+}
+.text-ballon::after {
+  content: "";
+  position: absolute;
+  top: 31px; 
+  left: -30px; 
+  border-right: 30px solid #F0F0F0; 
+  border-top: 7px solid transparent; 
+  border-bottom: 9px solid transparent;
+}
+@media (max-width: 640px) {
+  .text-ballon {
+    width: 130px;
+  }
+}
+@keyframes showBallon {
+  0% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>
