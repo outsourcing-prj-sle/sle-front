@@ -7,7 +7,7 @@
         class="flex flex-col px-20 py-9 w-full bg-sky-800 border-t border-solid border-zinc-100 max-md:px-5 max-md:max-w-full"
       >
         <div
-          class="flex justify-between gap-5 mt-2 max-md:flex-wrap max-md:max-w-full"
+          class="flex justify-between gap-5 mt-2 max-md:flex-wrap max-md:max-w-full items-center"
         >
           <div class="my-auto max-md:max-w-full text-left">
             <div>개인정보처리방침</div>
@@ -21,7 +21,7 @@
           <img
             src="./../assets/img/logo_company.png"
             alt="logo"
-            class="shrink-0 max-w-full aspect-[3.57] w-[164px]"
+            class="shrink-0 max-w-full aspect-[3.57] h-[65px]"
           />
         </div>
       </div>
