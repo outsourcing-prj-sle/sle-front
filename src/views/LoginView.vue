@@ -85,8 +85,8 @@ export default {
       userStore.init({
         token: resData.uniqId,
         id: resData.id,
-        type: resData.type,
-        school: resData.school,
+        type: resData.userRole,
+        school: resData.userSpaceInfo,
         extra: resData.extra,
       });
 

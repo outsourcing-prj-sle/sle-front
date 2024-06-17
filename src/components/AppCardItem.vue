@@ -146,6 +146,7 @@ export default {
   setup(props, { emit }) {
     const userStore = useUserStore();
     const loginType = computed(() => userStore.type);
+
     const type = props.options;
     const cardSlider = ref(null);
     const nowScrollX = ref(0);
