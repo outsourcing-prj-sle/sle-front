@@ -28,16 +28,23 @@
         <div class="mt-8 max-md:mr-2.5">
           {{ mixDate(data.startDate, data.endDate) || '2023. 09. 01 ~ 12. 01' }}
         </div>
-        <div class="self-center mt-3.5 text-red-600">
-          D-{{ leftDate(data.endDate) || '70' }}
+        <div class="self-center mt-3.5 text-red-600" :class="{ 'h-[24px]' : !leftDate(data.endDate) }">
+          {{ leftDate(data.endDate) }}
         </div>
         <div class="w-[206px] flex gap-1.5">
           <button
             class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-blue-500 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis"
-            v-if="loginType === 'student'"
+            :class="data.status === 'todo' ? 'bg-blue-500' : 'bg-blue-800' "
+            v-if="loginType === 'student' && leftDate(data.endDate)"
             @click="() => goReportNotice(data.pollId)"
           >
             {{ data.status === 'todo' ? '시작하기' : '이어서 진행하기' }}
+          </button>
+          <button
+            class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-gray-600 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis cursor-not-allowed"
+            v-if="loginType === 'student' && !leftDate(data.endDate)"
+          >
+            {{ '이미 기간이 마감되었어요!' }}
           </button>
           <button
             class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-blue-500 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis"
@@ -179,7 +186,13 @@ export default {
     };
 
     const leftDate = (e) => {
-      return _leftDate(e);
+      if(_leftDate(e) === false) {
+
+        return '';
+      } else {
+
+        return `D-${_leftDate(e)}`;
+      }
     };
 
     const goReportNotice = (type) => {

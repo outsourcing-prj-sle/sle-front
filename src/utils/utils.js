@@ -18,8 +18,11 @@ const _mixDate = (startDate, endDate) => {
 
 const _leftDate = (e) => {
   const today = new Date();
-  const specificDate = new Date('2023-09-01');
-  const differenceInMilliseconds = today - specificDate;
+  const specificDate = new Date(`${e.substring(0,4)}-${e.substring(4,6)}-${e.substring(6)}`);
+
+  if(today > specificDate) return false;
+
+  const differenceInMilliseconds = specificDate - today;
   const millisecondsPerDay = 1000 * 60 * 60 * 24;
   const differenceInDays = Math.floor(
     differenceInMilliseconds / millisecondsPerDay
