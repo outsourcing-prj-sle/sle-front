@@ -93,12 +93,14 @@
     >
       <article
         class="flex flex-col relative pt-10 px-6 bg-white rounded-xl border-2 border-zinc-600 border-solid pb-[124px]"
+        v-for="(data, index) in list"
+        :key="`${data.pollNm}${index}`"
       >
         <div class="self-center text-xl font-bold text-center text-neutral-700">
-          마음알기 설문5
+          {{ data.pollNm }}
         </div>
         <div class="mt-8 text-base font-medium text-neutral-700 max-md:mr-2.5">
-          2023. 09. 01 ~ 12. 01
+          {{ mixDate(data.startDate, data.endDate) || '2023. 09. 01 ~ 12. 01' }}
         </div>
         <button
           class="justify-center w-[206px] items-center px-5 py-3 mt-8 text-white whitespace-nowrap bg-zinc-600 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden"
