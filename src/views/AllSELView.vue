@@ -187,7 +187,7 @@ export default {
     };
 
     const fetchReportList = async () => {
-      const mySelReponse = await UserService.mysel({});
+      const mySelReponse = await UserService.getMySEL({});
       const resData = mySelReponse.data;
 
       resData.reportList.map((item) => {
