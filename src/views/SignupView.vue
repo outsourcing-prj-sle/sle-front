@@ -1,5 +1,7 @@
 <template>
-  <div class="max-w-md mx-auto p-6 bg-white border border-gray-300 rounded-md">
+  <div class="max-w-[30rem] mx-auto p-6 bg-white border border-gray-300 rounded-md"
+  :class = "{ 'absolute top-1/2 left-1/2 transform-center' : isSignUp }"
+  >
     <h1 class="text-2xl font-semibold mb-4">회원가입</h1>
 
     <form @submit.prevent="handleSignUp">
@@ -22,7 +24,7 @@
           <button
             type="button"
             @click="checkUsername"
-            class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md"
+            class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md min-w-[96px]"
           >
             중복체크
           </button>
@@ -33,7 +35,7 @@
         v-if="usernameCheckResult"
         class="text-sm text-green-500"
         :class="{
-          'text-red-500 ':
+          'text-red-500 pr-[75px]':
             usernameCheckResult === '사용 불가능한 아이디입니다.',
         }"
         >{{ usernameCheckResult }}</span
@@ -59,7 +61,7 @@
         <label
           for="confirmPassword"
           class="block text-sm font-medium text-gray-700 mr-1.5 min-w-20"
-          >비밀번호 확인:</label
+          >비밀번호<br>확인:</label
         >
 
         <input
@@ -82,7 +84,7 @@
           type="text"
           id="name"
           v-model="name"
-          placeholder="홍길드오"
+          placeholder="홍길동"
           class="w-full px-3 py-2 border border-gray-300 rounded-md"
           required
         />
@@ -94,13 +96,13 @@
         >
 
         <div class="flex items-center">
-          <label class="mr-4"
+          <label class="mr-4 cursor-pointer"
             ><input type="radio" value="M" v-model="gender" class="mr-1" />
 
             남</label
           >
 
-          <label
+          <label class="cursor-pointer"
             ><input type="radio" value="F" v-model="gender" class="mr-1" />
 
             여</label
@@ -119,9 +121,10 @@
           type="text"
           id="birthdate"
           v-model="birthdate"
-          placeholder="YYMMDD"
+          placeholder="YYYYMMDD"
           class="w-full px-3 py-2 border border-gray-300 rounded-md"
           required
+          maxlength="8"
         />
       </div>
 
@@ -148,13 +151,13 @@
         >
 
         <div class="flex items-center">
-          <label class="mr-4"
+          <label class="mr-4 cursor-pointer"
             ><input type="radio" value="N" v-model="userType" class="mr-1" />
 
             학생</label
           >
 
-          <label
+          <label class="cursor-pointer"
             ><input type="radio" value="Y" v-model="userType" class="mr-1" />
 
             선생님</label
@@ -221,7 +224,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import UserService from '@/service/UserService';
 
@@ -243,6 +246,11 @@ export default {
 
     const classroom = ref('');
     const usernameCheckResult = ref('');
+
+    const isSignUp = computed(() => {
+
+      return location.pathname === '/signup';
+    })
 
     const checkUsername = async () => {
       if (!username.value) {
@@ -362,6 +370,7 @@ export default {
       school,
       grade,
       classroom,
+      isSignUp,
       usernameCheckResult,
       checkUsername,
       handleSignUp,
@@ -371,5 +380,7 @@ export default {
 </script>
 
 <style scoped>
-/* 필요한 경우 추가적인 스타일을 여기에 추가할 수 있습니다 */
+  .transform-center {
+    transform: translate(-50%, -50%)
+  }
 </style>
