@@ -21,6 +21,7 @@ try {
 const apiClient = axios.create({
   // baseURL: 'https://domain/api',
   baseURL: 'http://localhost:8080/api',
+  // baseURL: 'http://1.213.164.252:60080/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -37,8 +38,10 @@ apiClient.interceptors.request.use(
 
     // userStore가 존재할 경우에만 헤더 설정
     if (userStore) {
-      // config.headers.Authorization = userStore.token || 'USRCNFRM_00000000004';
-      config.headers.Authorization = 'USRCNFRM_00000000004';
+      console.log(userStore);
+      console.log(userStore.token);
+      config.headers.Authorization = userStore.token || 'USRCNFRM_00000000004';
+      // config.headers.Authorization = 'USRCNFRM_00000000004';
     }
     config.headers.role = 'ROLE_STUDENT';
     // config.headers.role = 'ROLE_TEACHER';

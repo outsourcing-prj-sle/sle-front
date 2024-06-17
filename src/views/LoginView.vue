@@ -81,8 +81,9 @@ export default {
         return;
       }
 
+      console.log(resData);
       userStore.init({
-        token: resData.token,
+        token: resData.uniqId,
         id: resData.id,
         type: resData.type,
         school: resData.school,
