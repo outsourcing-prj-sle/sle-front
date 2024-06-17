@@ -1,6 +1,7 @@
 <template>
   <section
     class="flex flex-col items-end px-20 mt-4 w-full max-md:px-5 max-md:mt-10 max-md:max-w-full"
+    v-if="metadata.length"
   >
     <div
       class="flex gap-1 items-start self-stretch max-md:flex-wrap max-md:max-w-full"
@@ -45,7 +46,10 @@
         class="shrink-0 max-w-full aspect-[0.99] w-[127px]"
       />
       <div :key="ballonKey" class="text-ballon flex gap-[5px] items-start">
-        <img src="../assets/img/ballon-prev.png" class="w-[18px] h-[18px] mt-[2px]">
+        <img
+          src="../assets/img/ballon-prev.png"
+          class="w-[18px] h-[18px] mt-[2px]"
+        />
         <p>1개의 답안을 선택해주세요.</p>
       </div>
     </div>
@@ -91,17 +95,20 @@
             묘사하는 단어는 무엇일까요?
           </p>
           <img
-            src="@/assets/img/3q1.png"
+            :src="require(`@/assets/img/3q${step[nowStep]}.png`)"
             alt="3q1"
             class="self-center mt-6 max-w-full aspect-[2.5] w-[371px]"
           />
         </div>
         <div
           class="flex gap-5 px-9 justify-between self-center mt-9 w-full text-xl leading-8 whitespace-nowrap max-md:flex-wrap max-md:max-w-full"
+          :class="{
+            'pointer-events-none': status === 'done',
+          }"
         >
           <label
             for="option1"
-            class="shrink-0 self-stretch my-auto flex justify-center items-center cursor-pointer"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center cursor-pointer flex-1"
           >
             <input
               class="hidden"
@@ -112,14 +119,14 @@
               v-model="score"
             />
             <div
-              class="justify-center px-36 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs max-2xl:px-28 max-xl:px-14"
+              class="justify-center px-3 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs w-full"
             >
-              {{ metadata[nowStep + 1].A[0] }}
+              {{ metadata[nowStep].AT[0] }}
             </div>
           </label>
           <label
             for="option2"
-            class="shrink-0 self-stretch my-auto flex justify-center items-center cursor-pointer"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center cursor-pointer flex-1"
           >
             <input
               class="hidden"
@@ -130,14 +137,14 @@
               v-model="score"
             />
             <div
-              class="justify-center px-36 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs max-2xl:px-28 max-xl:px-14"
+              class="justify-center px-3 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs w-full"
             >
-              {{ metadata[nowStep + 1].A[1] }}
+              {{ metadata[nowStep].AT[1] }}
             </div>
           </label>
           <label
             for="option3"
-            class="shrink-0 self-stretch my-auto flex justify-center items-center cursor-pointer"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center cursor-pointer flex-1"
           >
             <input
               class="hidden"
@@ -148,14 +155,14 @@
               v-model="score"
             />
             <div
-              class="justify-center px-36 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs max-2xl:px-28 max-xl:px-14"
+              class="justify-center px-3 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs w-full"
             >
-              {{ metadata[nowStep + 1].A[2] }}
+              {{ metadata[nowStep].AT[2] }}
             </div>
           </label>
           <label
             for="option4"
-            class="shrink-0 self-stretch my-auto flex justify-center items-center cursor-pointer"
+            class="shrink-0 self-stretch my-auto flex justify-center items-center cursor-pointer flex-1"
           >
             <input
               class="hidden"
@@ -166,9 +173,9 @@
               v-model="score"
             />
             <div
-              class="justify-center px-36 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs max-2xl:px-28 max-xl:px-14"
+              class="justify-center px-3 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs w-full"
             >
-              {{ metadata[nowStep + 1].A[3] }}
+              {{ metadata[nowStep].AT[3] }}
             </div>
           </label>
         </div>
@@ -198,8 +205,10 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import ReportService from '@/service/ReportService.js';
+import ttsText from '@/utils/ttsText.js';
 
 export default {
   name: 'ReportQuestion3',
@@ -214,9 +223,9 @@ export default {
       default: 'progress', // done
     },
     metadata: {
-      type: Object,
+      type: Array,
       default: () => {
-        return {};
+        return [];
       },
     },
     isSave: {
@@ -264,19 +273,42 @@ export default {
     const canTTS = ref(true);
     const ballonKey = ref(Date.now());
 
-    onMounted(() => {});
+    watch(
+      () => [userAnswer?.value?.length],
+      ([length]) => {
+        console.log(userAnswer.value[0]);
+        console.log(userAnswer.value[0]);
+        console.log(nowStep.value);
+        if (!score.value && userAnswer.value.length) {
+          score.value =
+            userAnswer.value && userAnswer.value[nowStep.value || 0];
+        }
+      },
+      { immediate: true } // 초기 실행을 위해 immediate: true 설정
+    );
 
     const nextStep = () => {
       // 마지막일때 완료 페이지로
       if (props.step.length === nowStep.value + 1) {
-        if (props.isSave && props.status !== 'done') {
-          // todo : 만약 저장해야하면 저장 - userId 이용
+        if (props.status !== 'done') {
+          ReportService.reportComplete({
+            pollId: type.value,
+            qesitmSn: props.step[nowStep.value],
+            qesitmAnswer: score.value,
+          });
         }
         router.push({ name: 'reportFin' });
         return;
       }
 
       if (props.status !== 'done') {
+        if (props.isSave) {
+          ReportService.reportSave({
+            pollId: type.value,
+            qesitmSn: props.step[nowStep.value],
+            qesitmAnswer: score.value,
+          });
+        }
         // 초기화
         userAnswer.value[nowStep.value] = score.value;
         score.value = null;
@@ -285,12 +317,8 @@ export default {
         // nowStep 다음으로
         nowStep.value += 1;
 
-        if (props.isSave) {
-          // todo : 만약 저장해야하면 저장 - userId 이용
-
-          // 임시저장된 값 있으면 입력해줌
-          score.value = userAnswer.value[nowStep.value] || null;
-        }
+        // 임시저장된 값 있으면 입력해줌
+        score.value = userAnswer.value[nowStep.value] || null;
       } else {
         // nowStep 다음으로
         nowStep.value += 1;
@@ -316,7 +344,7 @@ export default {
         nowStep.value -= 1;
 
         if (props.isSave) {
-          // todo : 만약 저장해야하면 저장 - userId 이용
+          // 만약 저장해야하면 저장
           // 값 입력
           score.value = userAnswer.value[nowStep.value] || null;
         }
@@ -332,24 +360,12 @@ export default {
     const useTTS = () => {
       if (!canTTS.value) return;
       canTTS.value = false;
-      const questionData = props.metadata[nowStep.value + 1];
-      const questionDefault = '다음은 문제입니다.';
-      const utterancequestionDefault = new SpeechSynthesisUtterance(
-        questionDefault
-      );
-      window.speechSynthesis.speak(utterancequestionDefault);
-      const utteranceQ = new SpeechSynthesisUtterance(questionData.Q);
-      window.speechSynthesis.speak(utteranceQ);
 
-      const answerDefault = '다음은 답변의 보기입니다.';
-      const utteranceanswerDefault = new SpeechSynthesisUtterance(
-        answerDefault
-      );
-      window.speechSynthesis.speak(utteranceanswerDefault);
-      for (let i = 0; i < questionData.A.length; i++) {
-        const utteranceA = new SpeechSynthesisUtterance(questionData.A[i]);
-        window.speechSynthesis.speak(utteranceA);
-      }
+      let s = props.step[nowStep.value];
+      let text = ttsText[3][s];
+      const utterancequestionDefault = new SpeechSynthesisUtterance(text);
+
+      window.speechSynthesis.speak(utterancequestionDefault);
     };
 
     const restartAnimation = () => {
@@ -364,7 +380,7 @@ export default {
       nextStep,
       prevStep,
       useTTS,
-      restartAnimation
+      restartAnimation,
     };
   },
 };
@@ -389,8 +405,8 @@ input:checked + div {
   position: absolute;
   left: calc(50% + 100px);
   width: 190px;
-  border: 1px solid #F0F0F0;
-  background-color: #F0F0F0;
+  border: 1px solid #f0f0f0;
+  background-color: #f0f0f0;
   border-radius: 10px;
   z-index: 9999;
   text-align: left;
@@ -399,12 +415,12 @@ input:checked + div {
   animation-duration: 30s;
 }
 .text-ballon::after {
-  content: "";
+  content: '';
   position: absolute;
-  top: 31px; 
-  left: -30px; 
-  border-right: 30px solid #F0F0F0; 
-  border-top: 7px solid transparent; 
+  top: 31px;
+  left: -30px;
+  border-right: 30px solid #f0f0f0;
+  border-top: 7px solid transparent;
   border-bottom: 9px solid transparent;
 }
 @media (max-width: 640px) {

@@ -1,6 +1,7 @@
 <template>
   <section
     class="flex flex-col items-end px-20 mt-4 w-full max-md:px-5 max-md:mt-10 max-md:max-w-full"
+    v-if="metadata.length"
   >
     <div
       class="flex gap-1 items-start self-stretch max-md:flex-wrap max-md:max-w-full"
@@ -89,13 +90,16 @@
           class="flex flex-col px-9 text-base leading-8 max-md:px-5 max-md:max-w-full"
         >
           <img
-            src="@/assets/img/5q1.png"
+            :src="require(`@/assets/img/5q${step[nowStep]}.png`)"
             alt="5q1"
             class="self-center mt-6 max-w-full max-h-[360px]"
           />
         </div>
         <div
           class="flex gap-5 px-9 justify-between self-center mt-9 w-full text-xl leading-8 whitespace-nowrap max-md:flex-wrap max-md:max-w-full"
+          :class="{
+            'pointer-events-none': status === 'done',
+          }"
         >
           <label
             for="option1"
@@ -115,7 +119,7 @@
               1
             </div>
             <img
-              src="@/assets/img/5a1.png"
+              :src="require(`@/assets/img/5a${step[nowStep]}1.png`)"
               alt="5a1"
               class="self-center mt-6 object-contain max-w-full h-[224px]"
             />
@@ -139,7 +143,7 @@
               2
             </div>
             <img
-              src="@/assets/img/5a2.png"
+              :src="require(`@/assets/img/5a${step[nowStep]}2.png`)"
               alt="5a2"
               class="self-center mt-6 object-contain max-w-full h-[224px]"
             />
@@ -163,7 +167,7 @@
               3
             </div>
             <img
-              src="@/assets/img/5a3.png"
+              :src="require(`@/assets/img/5a${step[nowStep]}3.png`)"
               alt="5a3"
               class="self-center mt-6 object-contain max-w-full h-[224px]"
             />
@@ -187,7 +191,7 @@
               4
             </div>
             <img
-              src="@/assets/img/5a4.png"
+              :src="require(`@/assets/img/5a${step[nowStep]}4.png`)"
               alt="5a4"
               class="self-center mt-6 object-contain max-w-full h-[224px]"
             />
@@ -214,12 +218,13 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/store/userStore.js';
+import ttsText from '@/utils/ttsText.js';
+import ReportService from '@/service/ReportService.js';
 
 export default {
-  name: 'ReportQuestion3',
+  name: 'ReportQuestion5',
   components: {},
   props: {
     startStep: {
@@ -231,9 +236,9 @@ export default {
       default: 'progress', // done
     },
     metadata: {
-      type: Object,
+      type: Array,
       default: () => {
-        return {};
+        return [];
       },
     },
     isSave: {
@@ -272,8 +277,6 @@ export default {
   setup(props) {
     const route = useRoute();
     const router = useRouter();
-    const userStore = useUserStore();
-    const userId = computed(() => userStore.id);
     const type = ref(route.params.type || 1);
     const score = ref(
       (props.stepAnswer && props.stepAnswer[props.startStep || 0]) || null
@@ -285,17 +288,38 @@ export default {
 
     onMounted(() => {});
 
+    watch(
+      () => [props.stepAnswer, props.startStep],
+      ([newStepAnswer, newStartStep]) => {
+        if (!score.value && newStartStep) {
+          score.value = newStepAnswer && newStepAnswer[newStartStep - 1 || 0];
+        }
+      },
+      { immediate: true } // 초기 실행을 위해 immediate: true 설정
+    );
+
     const nextStep = () => {
       // 마지막일때 완료 페이지로
       if (props.step.length === nowStep.value + 1) {
-        if (props.isSave && props.status !== 'done') {
-          // todo : 만약 저장해야하면 저장 - userId 이용
+        if (props.status !== 'done') {
+          ReportService.reportComplete({
+            pollId: type.value,
+            qesitmSn: props.step[nowStep.value],
+            qesitmAnswer: score.value,
+          });
         }
         router.push({ name: 'reportFin' });
         return;
       }
 
       if (props.status !== 'done') {
+        if (props.isSave) {
+          ReportService.reportSave({
+            pollId: type.value,
+            qesitmSn: props.step[nowStep.value],
+            qesitmAnswer: score.value,
+          });
+        }
         // 초기화
         userAnswer.value[nowStep.value] = score.value;
         score.value = null;
@@ -304,12 +328,8 @@ export default {
         // nowStep 다음으로
         nowStep.value += 1;
 
-        if (props.isSave) {
-          // todo : 만약 저장해야하면 저장 - userId 이용
-
-          // 임시저장된 값 있으면 입력해줌
-          score.value = userAnswer.value[nowStep.value] || null;
-        }
+        // 임시저장된 값 있으면 입력해줌
+        score.value = userAnswer.value[nowStep.value] || null;
       } else {
         // nowStep 다음으로
         nowStep.value += 1;
@@ -335,7 +355,7 @@ export default {
         nowStep.value -= 1;
 
         if (props.isSave) {
-          // todo : 만약 저장해야하면 저장 - userId 이용
+          // 만약 저장해야하면 저장
           // 값 입력
           score.value = userAnswer.value[nowStep.value] || null;
         }
@@ -355,24 +375,15 @@ export default {
     const useTTS = () => {
       if (!canTTS.value) return;
       canTTS.value = false;
-      const questionData = props.metadata[nowStep.value + 1];
-      const questionDefault = '다음은 문제입니다.';
+
+      let s = props.step[nowStep.value];
+      let text = ttsText[5][s];
+
+      const questionDefault = text;
       const utterancequestionDefault = new SpeechSynthesisUtterance(
         questionDefault
       );
       window.speechSynthesis.speak(utterancequestionDefault);
-      const utteranceQ = new SpeechSynthesisUtterance(questionData.Q);
-      window.speechSynthesis.speak(utteranceQ);
-
-      const answerDefault = '다음은 답변의 보기입니다.';
-      const utteranceanswerDefault = new SpeechSynthesisUtterance(
-        answerDefault
-      );
-      window.speechSynthesis.speak(utteranceanswerDefault);
-      for (let i = 0; i < questionData.A.length; i++) {
-        const utteranceA = new SpeechSynthesisUtterance(questionData.A[i]);
-        window.speechSynthesis.speak(utteranceA);
-      }
     };
 
     return {

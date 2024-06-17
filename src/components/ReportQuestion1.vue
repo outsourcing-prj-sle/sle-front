@@ -1,6 +1,7 @@
 <template>
   <section
     class="flex flex-col items-end px-20 mt-4 w-full max-md:px-5 max-md:mt-10 max-md:max-w-full"
+    v-if="metadata.length"
   >
     <div
       class="flex gap-1 items-start self-stretch max-md:flex-wrap max-md:max-w-full"
@@ -101,15 +102,18 @@
       </section>
 
       <section
-        class="flex gap-0 self-end w-full text-base font-bold text-cyan-900 max-md:max-w-full"
+        class="flex min-h-[120px] gap-0 self-end w-full text-base font-bold text-cyan-900 max-md:max-w-full"
       >
         <div
           class="flex items-center p-2.5 ml-px flex-1 max-md:px-5 max-md:max-w-full min-w-96 border-stone-200 border-solid border-b font-medium leading-6 text-left pl-5 max-2xl:min-w-72 max-xl:min-w-40 max-lg:min-w-32 max-lg:text-sm max-md:text-xs"
         >
-          {{ metadata[nowStep + 1].Q }}
+          {{ metadata[parseInt(step[nowStep]) - 1].Q }}
         </div>
         <div
           class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b"
+          :class="{
+            'pointer-events-none': status === 'done',
+          }"
         >
           <label
             for="option1"
@@ -243,9 +247,9 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/store/userStore.js';
+import ReportService from '@/service/ReportService.js';
 
 export default {
   name: 'ReportQuestion1',
@@ -260,9 +264,9 @@ export default {
       default: 'progress', // done
     },
     metadata: {
-      type: Object,
+      type: Array,
       default: () => {
-        return {};
+        return [];
       },
     },
     isSave: {
@@ -301,8 +305,6 @@ export default {
   setup(props) {
     const route = useRoute();
     const router = useRouter();
-    const userStore = useUserStore();
-    const userId = computed(() => userStore.id);
     const type = ref(route.params.type || 1);
     const score = ref(
       (props.stepAnswer && props.stepAnswer[props.startStep || 0]) || null
@@ -313,17 +315,39 @@ export default {
 
     onMounted(() => {});
 
+    watch(
+      () => [props.stepAnswer, props.startStep],
+      ([newStepAnswer, newStartStep]) => {
+        if (!score.value && newStartStep) {
+          score.value = newStepAnswer && newStepAnswer[newStartStep - 1 || 0];
+        }
+      },
+      { immediate: true } // 초기 실행을 위해 immediate: true 설정
+    );
+
     const nextStep = () => {
       // 마지막일때 완료 페이지로
       if (props.step.length === nowStep.value + 1) {
-        if (props.isSave && props.status !== 'done') {
-          // todo : 만약 저장해야하면 저장 - userId 이용
+        if (props.status !== 'done') {
+          ReportService.reportComplete({
+            pollId: type.value,
+            qesitmSn: props.step[nowStep.value],
+            qesitmAnswer: score.value,
+          });
         }
         router.push({ name: 'reportFin' });
         return;
       }
 
       if (props.status !== 'done') {
+        if (props.isSave) {
+          ReportService.reportSave({
+            pollId: type.value,
+            qesitmSn: props.step[nowStep.value],
+            qesitmAnswer: score.value,
+          });
+        }
+
         // 초기화
         userAnswer.value[nowStep.value] = score.value;
         score.value = null;
@@ -331,12 +355,8 @@ export default {
         // nowStep 다음으로
         nowStep.value += 1;
 
-        if (props.isSave) {
-          // todo : 만약 저장해야하면 저장 - userId 이용
-
-          // 임시저장된 값 있으면 입력해줌
-          score.value = userAnswer.value[nowStep.value] || null;
-        }
+        // 임시저장된 값 있으면 입력해줌
+        score.value = userAnswer.value[nowStep.value] || null;
       } else {
         // nowStep 다음으로
         nowStep.value += 1;
@@ -362,7 +382,7 @@ export default {
         nowStep.value -= 1;
 
         if (props.isSave) {
-          // todo : 만약 저장해야하면 저장 - userId 이용
+          // 만약 저장해야하면 저장
           // 값 입력
           score.value = userAnswer.value[nowStep.value] || null;
         }

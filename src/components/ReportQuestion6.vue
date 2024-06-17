@@ -1,6 +1,7 @@
 <template>
   <section
     class="flex flex-col items-end px-20 mt-4 w-full max-md:px-5 max-md:mt-10 max-md:max-w-full"
+    v-if="metadata.length"
   >
     <div
       class="flex gap-1 items-start self-stretch max-md:flex-wrap max-md:max-w-full"
@@ -80,21 +81,26 @@
           class="flex flex-col px-9 text-base leading-8 max-md:px-5 max-md:max-w-full"
         >
           <p class="text-left max-md:mr-1.5 max-md:max-w-full">
-            {{ metadata[nowStep + 1].Q }}
+            {{ metadata[parseInt(step[nowStep]) - 1].Q }}
           </p>
-          <div class="flex gap-5 max-md:flex-col max-md:gap-0">
+          <div
+            class="flex gap-5 max-md:flex-col max-md:gap-0"
+            :class="{
+              'pointer-events-none': status === 'done',
+            }"
+          >
             <div class="flex flex-col w-[44%] max-md:ml-0 max-md:w-full">
               <FaceImg
                 :face="face[faceIndex]"
-                :eyes="eyesIndex >= 0 && eyes[eyesIndex]"
-                :mouth="mouthIndex >= 0 && mouth[mouthIndex]"
+                :eyes="score >= 0 && eyes[score]"
+                :mouth="score2 >= 0 && mouth[score2]"
               />
             </div>
             <div class="flex ml-5 w-[56%] max-md:ml-0 max-md:w-full">
               <FaceSelectList
                 :title="'눈'"
                 :itemList="eyes"
-                :selected="eyesIndex"
+                :selected="score"
                 @selectItem="(index) => selectIndex(index, 'eyes')"
               />
               <div
@@ -103,7 +109,7 @@
               <FaceSelectList
                 :title="'코와 입'"
                 :itemList="mouth"
-                :selected="mouthIndex"
+                :selected="score2"
                 @selectItem="(index) => selectIndex(index, 'mouth')"
               />
             </div>
@@ -116,7 +122,9 @@
         결정하기 어렵더라도 각 질문마다 최선을 다해 답해주세요.
       </section>
     </div>
-    <div class="flex gap-4" v-if="eyesIndex > -1 && mouthIndex > -1">
+    <!-- <div class="flex gap-4" v-if="eyesIndex > -1 && mouthIndex > -1"> -->
+
+    <div class="flex gap-4" v-if="score > -1 && score2 > -1">
       <button
         class="justify-center px-10 py-3 mt-6 text-base text-center text-white whitespace-nowrap bg-neutral-500 rounded-3xl max-md:px-5"
         v-if="nowStep !== 0 && status === 'done'"
@@ -135,11 +143,12 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 import FaceImg from '@/components/FaceImg.vue';
 import FaceSelectList from '@/components/FaceSelectList.vue';
+import ReportService from '@/service/ReportService.js';
 
 export default {
   name: 'ReportQuestion6',
@@ -154,9 +163,9 @@ export default {
       default: 'progress', // done
     },
     metadata: {
-      type: Object,
+      type: Array,
       default: () => {
-        return {};
+        return [];
       },
     },
     isSave: {
@@ -179,6 +188,12 @@ export default {
         return [];
       },
     },
+    stepAnswer2: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
     isPrev: {
       type: Boolean,
       default: true,
@@ -195,13 +210,15 @@ export default {
   setup(props) {
     const route = useRoute();
     const router = useRouter();
-    const userStore = useUserStore();
-    const userId = computed(() => userStore.id);
     const type = ref(route.params.type || 1);
     const score = ref(
       (props.stepAnswer && props.stepAnswer[props.startStep || 0]) || null
     );
+    const score2 = ref(
+      (props.stepAnswer2 && props.stepAnswer2[props.startStep || 0]) || null
+    );
     const userAnswer = ref(props.stepAnswer || []);
+    const userAnswer2 = ref(props.stepAnswer2 || []);
     const nowStep = ref(props.startStep || 0);
     const canTTS = ref(true);
     const face = ref([
@@ -233,36 +250,61 @@ export default {
 
     onMounted(() => {});
 
+    watch(
+      () => [props.stepAnswer, props.startStep],
+      ([newStepAnswer, newStartStep]) => {
+        if (!score.value && newStartStep) {
+          score.value = newStepAnswer && newStepAnswer[newStartStep - 1 || 0];
+          score2.value =
+            props.stepAnswer2 && props.stepAnswer2[newStartStep - 1 || 0];
+        }
+      },
+      { immediate: true } // 초기 실행을 위해 immediate: true 설정
+    );
+
     const nextStep = () => {
       // 마지막일때 완료 페이지로
       if (props.step.length === nowStep.value + 1) {
-        if (props.isSave && props.status !== 'done') {
-          // todo : 만약 저장해야하면 저장 - userId 이용
+        if (props.status !== 'done') {
+          ReportService.reportComplete({
+            pollId: type.value,
+            qesitmSn: props.step[nowStep.value],
+            qesitmAnswer: score.value,
+          });
         }
         router.push({ name: 'reportFin' });
         return;
       }
 
       if (props.status !== 'done') {
+        if (props.isSave) {
+          ReportService.reportSave({
+            pollId: type.value,
+            qesitmSn: props.step[nowStep.value],
+            qesitmAnswer: score.value,
+          });
+        }
+
         // 초기화
         userAnswer.value[nowStep.value] = score.value;
         score.value = null;
+        score2.value = null;
         canTTS.value = true;
 
         // nowStep 다음으로
         nowStep.value += 1;
 
-        if (props.isSave) {
-          // todo : 만약 저장해야하면 저장 - userId 이용
-
-          // 임시저장된 값 있으면 입력해줌
-          score.value = userAnswer.value[nowStep.value] || null;
-        }
+        // 임시저장된 값 있으면 입력해줌
+        score.value = userAnswer.value[nowStep.value] || null;
+        // 임시저장된 값 있으면 입력해줌
+        score2.value = userAnswer2.value[nowStep.value] || null;
       } else {
         // nowStep 다음으로
         nowStep.value += 1;
         // 저장된 값 입력
         score.value = userAnswer.value[nowStep.value] || null;
+        // 임시저장된 값 있으면 입력해줌
+        score2.value = userAnswer2.value[nowStep.value] || null;
       }
     };
 
@@ -279,14 +321,16 @@ export default {
         // score.value 보고 화깅ㄴ하기
         userAnswer.value[nowStep.value] = score.value;
         faceIndex.value = nowStep.value;
-        eyesIndex.value = null;
-        mouthIndex.value = null;
+        // eyesIndex.value = null;
+        // mouthIndex.value = null;
+        score.value = null;
+        score2.value = null;
 
         // nowStep 이전으로
         nowStep.value -= 1;
 
         if (props.isSave) {
-          // todo : 만약 저장해야하면 저장 - userId 이용
+          // 만약 저장해야하면 저장
           // 값 입력
           score.value = userAnswer.value[nowStep.value] || null;
         }
@@ -321,14 +365,15 @@ export default {
     };
 
     const selectIndex = (index, type) => {
-      if (type === 'eyes') eyesIndex.value = index;
-      if (type === 'mouth') mouthIndex.value = index;
+      if (type === 'eyes') score.value = index;
+      if (type === 'mouth') score2.value = index;
     };
 
     return {
       type,
       nowStep,
       score,
+      score2,
       face,
       eyes,
       mouth,

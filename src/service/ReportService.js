@@ -35,9 +35,19 @@ const reportStart = (data = {}) => {
   return apiClient.put(baseURL + '/start', data);
 };
 
-// 설문 시작 시 호출
+// 설문 안내 시 호출
 const reportNotice = (data = {}) => {
   return apiClient.get(baseURL + '/notice', { params: data });
+};
+
+// 설문 완료 시 호출
+const reportComplete = (data = {}) => {
+  return apiClient.put(baseURL + '/complete', data);
+};
+
+// 설문 중간 저장 시 호출
+const reportSave = (data = {}) => {
+  return apiClient.put(baseURL + '/save', data);
 };
 
 // MySEL 알기 목록 조회
@@ -50,4 +60,6 @@ export default {
   reportStart,
   reportNotice,
   mysel,
+  reportComplete,
+  reportSave,
 };
