@@ -276,9 +276,6 @@ export default {
     watch(
       () => [userAnswer?.value?.length],
       ([length]) => {
-        console.log(userAnswer.value[0]);
-        console.log(userAnswer.value[0]);
-        console.log(nowStep.value);
         if (!score.value && userAnswer.value.length) {
           score.value =
             userAnswer.value && userAnswer.value[nowStep.value || 0];

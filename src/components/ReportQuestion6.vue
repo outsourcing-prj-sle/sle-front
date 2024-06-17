@@ -251,12 +251,13 @@ export default {
     onMounted(() => {});
 
     watch(
-      () => [props.stepAnswer, props.startStep],
-      ([newStepAnswer, newStartStep]) => {
-        if (!score.value && newStartStep) {
-          score.value = newStepAnswer && newStepAnswer[newStartStep - 1 || 0];
+      () => [userAnswer?.value?.length],
+      ([length]) => {
+        if (!score.value && userAnswer.value.length) {
+          score.value =
+            userAnswer.value && userAnswer.value[nowStep.value || 0];
           score2.value =
-            props.stepAnswer2 && props.stepAnswer2[newStartStep - 1 || 0];
+            userAnswer2.value && userAnswer2.value[nowStep.value || 0];
         }
       },
       { immediate: true } // 초기 실행을 위해 immediate: true 설정
