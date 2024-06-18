@@ -307,7 +307,7 @@ export default {
       require('@/assets/img/4qThree.png'),
       require('@/assets/img/4qTwo.png'),
       require('@/assets/img/4qOne.png'),
-      require('@/assets/img/4q1.png'),
+      require(`@/assets/img/4q1.png`),
       require('@/assets/img/4qBlack.png'),
     ]);
     const questionImgIndex = ref(0);
@@ -323,6 +323,9 @@ export default {
         if (!score.value && userAnswer.value.length) {
           score.value =
             userAnswer.value && userAnswer.value[nowStep.value || 0];
+          questionImgList.value[3] = require(
+            `@/assets/img/4q${props.step[0]}.png`
+          );
         }
       },
       { immediate: true } // 초기 실행을 위해 immediate: true 설정
@@ -382,6 +385,10 @@ export default {
         nowStep.value += 1;
 
         let flag = props.step[nowStep.value];
+        console.log('flag');
+        console.log(flag);
+        console.log(props.step);
+        console.log(nowStep.value);
         questionImgList.value[3] = require(`@/assets/img/4q${flag}.png`);
         // 임시저장된 값 있으면 입력해줌
         score.value = userAnswer.value[nowStep.value] || null;
