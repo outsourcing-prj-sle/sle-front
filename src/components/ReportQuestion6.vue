@@ -149,6 +149,7 @@ import { useUserStore } from '@/store/userStore.js';
 import FaceImg from '@/components/FaceImg.vue';
 import FaceSelectList from '@/components/FaceSelectList.vue';
 import ReportService from '@/service/ReportService.js';
+import ttsText from '@/utils/ttsText.js';
 
 export default {
   name: 'ReportQuestion6',
@@ -345,24 +346,12 @@ export default {
     const useTTS = () => {
       if (!canTTS.value) return;
       canTTS.value = false;
-      const questionData = props.metadata[nowStep.value + 1];
-      const questionDefault = '다음은 문제입니다.';
-      const utterancequestionDefault = new SpeechSynthesisUtterance(
-        questionDefault
-      );
-      window.speechSynthesis.speak(utterancequestionDefault);
-      const utteranceQ = new SpeechSynthesisUtterance(questionData.Q);
-      window.speechSynthesis.speak(utteranceQ);
 
-      const answerDefault = '다음은 답변의 보기입니다.';
-      const utteranceanswerDefault = new SpeechSynthesisUtterance(
-        answerDefault
-      );
-      window.speechSynthesis.speak(utteranceanswerDefault);
-      for (let i = 0; i < questionData.A.length; i++) {
-        const utteranceA = new SpeechSynthesisUtterance(questionData.A[i]);
-        window.speechSynthesis.speak(utteranceA);
-      }
+      let s = props.step[nowStep.value];
+      let text = ttsText[3][s];
+      const utterancequestionDefault = new SpeechSynthesisUtterance(text);
+
+      window.speechSynthesis.speak(utterancequestionDefault);
     };
 
     const selectIndex = (index, type) => {
