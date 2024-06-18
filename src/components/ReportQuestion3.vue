@@ -293,7 +293,13 @@ export default {
             qesitmSn: props.step[nowStep.value],
             qesitmAnswer: score.value,
           });
-          router.push({ name: 'reportFin' });
+          router.push({
+            name: 'reportFin',
+            query: {
+              title: props.title,
+              date: props.dateRange,
+            },
+          });
         } else {
           router.push({ name: 'mySEL' });
         }

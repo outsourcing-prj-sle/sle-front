@@ -42,7 +42,7 @@ export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const title = ref(route.query.username || '마음알기 설문1');
+    const title = ref(route.query.title || '마음알기 설문1');
     const date = ref(route.query.date || 'YYYY년 MM월 DD일 ~ MM월 DD일');
 
     const goMain = () => {
