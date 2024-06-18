@@ -161,12 +161,6 @@ export default {
           stepAnswer.value.push(parseInt(sssData[0]) || null);
           stepAnswer2.value.push(parseInt(sssData[1]) || null);
         }
-        console.log('yhs :: resData.step');
-        console.log(resData.step);
-        console.log(step.value);
-        console.log(startStep.value);
-        console.log(stepAnswer.value);
-        console.log(metadata.value);
       } catch (e) {
         console.log('yhs :: e');
         console.log(e);
