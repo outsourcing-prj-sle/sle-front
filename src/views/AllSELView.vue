@@ -235,7 +235,8 @@ export default {
       if (infoArr.value.length) {
         const aEl = document.createElement('a');
 
-        let text = titleArr.value.join(',') + '\n';
+        let text = '\uFEFF';
+        text += titleArr.value.join(',') + '\n';
 
         infoArr.value.forEach((info) => {
           text += [info.name, info.email, info.grade, info.gender].join(',');
@@ -253,7 +254,7 @@ export default {
 
         aEl.setAttribute(
           'href',
-          `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`
+          `data:text/csv;charset=utf-8,${encodeURIComponent(text)}`
         );
 
         aEl.setAttribute('download', `${new Date()}_SEL.csv`);
