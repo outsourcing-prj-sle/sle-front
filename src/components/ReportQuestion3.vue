@@ -293,8 +293,10 @@ export default {
             qesitmSn: props.step[nowStep.value],
             qesitmAnswer: score.value,
           });
+          router.push({ name: 'reportFin' });
+        } else {
+          router.push({ name: 'mySEL' });
         }
-        router.push({ name: 'reportFin' });
         return;
       }
 
