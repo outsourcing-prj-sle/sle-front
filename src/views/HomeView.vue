@@ -54,6 +54,7 @@
         :options="1"
         :list="topList"
         @_goReportNotice="goReportNotice"
+        @_goReportQuestionPage="goReportQuestionPage"
         @_copyURL="copyURL"
         @_openQRCodePopup="openQRCodePopup"
       />
@@ -79,6 +80,7 @@
         :options="2"
         :list="bottomList"
         @_goReportNotice="goReportNotice"
+        @_goReportQuestionPage="goReportQuestionPage"
         @_copyURL="copyURL"
         @_openQRCodePopup="openQRCodePopup"
       />
@@ -140,6 +142,13 @@ export default defineComponent({
       });
     };
 
+    const goReportQuestionPage = (type = 1) => {
+      router.push({
+        name: 'reportQuestion',
+        params: { type: type },
+      });
+    };
+
     const copyURL = async (type = 1) => {
       const textToCopy = `${window.location.host}/report/notice/${type}`;
       const textarea = document.createElement('textarea');
@@ -183,6 +192,7 @@ export default defineComponent({
 
       handleSelection,
       goReportNotice,
+      goReportQuestionPage,
       copyURL,
       openQRCodePopup,
       closePopup,
