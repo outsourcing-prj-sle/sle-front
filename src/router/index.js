@@ -8,6 +8,7 @@ import AllSELView from '../views/AllSELView.vue';
 import ReportFinView from '../views/ReportFinView.vue';
 import ReportNoticeView from '../views/ReportNoticeView.vue';
 import ReportQuestionView from '../views/ReportQuestionView.vue';
+import IDTTView from '../views/IDTTView.vue';
 
 const routes = [
   {
@@ -47,6 +48,17 @@ const routes = [
       footerVisible: true,
       headerVisible: true,
       isAllSELView: true,
+      needLogin: true,
+    },
+  },
+  {
+    path: '/idTT',
+    name: 'idTT',
+    component: IDTTView,
+    meta: {
+      footerVisible: true,
+      headerVisible: true,
+      isIDTTView: true,
       needLogin: true,
     },
   },

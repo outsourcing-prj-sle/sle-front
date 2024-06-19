@@ -69,6 +69,7 @@
       </div>
       <div
         class="px-2 text-center items-center max-w-max font-bold text-lg"
+        :class="isIDTTView && 'text-blue-500'"
         v-if="loginType !== 'student'"
         @click="goTeacherID"
       >
@@ -92,6 +93,7 @@ export default {
     const isMyInfoPage = computed(() => route.meta.isMyInfoPage);
     const isMySELView = computed(() => route.meta.isMySELView);
     const isAllSELView = computed(() => route.meta.isAllSELView);
+    const isIDTTView = computed(() => route.meta.isIDTTView);
 
     const userId = computed(() => userStore.id);
     const loginType = computed(() => userStore.type);
@@ -126,8 +128,7 @@ export default {
     };
 
     const goTeacherID = () => {
-      // router.push({ name: 'home' });
-      alert('준비중입니다.');
+      router.push({ name: 'idTT' });
     };
 
     return {
@@ -136,6 +137,7 @@ export default {
       isMyInfoPage,
       isMySELView,
       isAllSELView,
+      isIDTTView,
       loginType,
 
       goStudentSEL,
