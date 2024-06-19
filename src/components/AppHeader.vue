@@ -71,10 +71,29 @@
         class="px-2 text-center items-center max-w-max font-bold text-lg"
         :class="isIDTTView && 'text-blue-500'"
         v-if="loginType !== 'student'"
-        @click="goTeacherID"
       >
         ID 톡톡
       </div>
+    </div>
+  </div>
+  <div
+    class="items-start border-t-2 border-solid border-neutral-300 cursor-pointer text-left gap-2 py-5 flex pr-16 pl-20 w-full text-base font-medium text-black bg-white max-md:pr-5 max-md:pl-5 max-md:max-w-full"
+    v-if="isIDTTView"
+  >
+    <div
+      class="px-2 text-center items-center max-w-max font-bold text-lg"
+      :class="isIDTTView && 'text-blue-500'"
+      v-if="loginType !== 'student'"
+      @click="goTeacherID"
+    >
+      사회정서학습 톡톡
+    </div>
+    <div
+      class="px-2 text-center items-center max-w-max font-bold text-lg"
+      v-if="loginType !== 'student'"
+      @click="waitAlert"
+    >
+      학습성향 톡톡
     </div>
   </div>
 </template>
@@ -131,6 +150,10 @@ export default {
       router.push({ name: 'idTT' });
     };
 
+    const waitAlert = () => {
+      alert('아직 준비중 입니다.');
+    };
+
     return {
       showHeader,
       userId,
@@ -147,6 +170,7 @@ export default {
       logout,
       checkId,
       goMyInfoBtn,
+      waitAlert,
     };
   },
 };
