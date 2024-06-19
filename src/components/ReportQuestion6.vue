@@ -377,14 +377,11 @@ export default {
     };
 
     const selectIndex = (index, type) => {
-      console.log(index);
       if (type === 'eyes') {
         score.value = index;
-        console.log(eyes.value[index]);
       }
       if (type === 'mouth') {
         score2.value = index;
-        console.log(mouth.value[index]);
       }
     };
 
