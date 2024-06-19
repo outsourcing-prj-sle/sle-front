@@ -307,7 +307,10 @@ export default {
     const router = useRouter();
     const type = ref(route.params.type || 1);
     const score = ref(
-      (props.isSave && props.stepAnswer && props.stepAnswer[props.startStep || 0]) || null
+      (props.isSave &&
+        props.stepAnswer &&
+        props.stepAnswer[props.startStep || 0]) ||
+        null
     );
     const userAnswer = ref(props.stepAnswer || []);
     const nowStep = ref(props.startStep || 0);
@@ -349,13 +352,13 @@ export default {
       }
 
       if (props.status !== 'done') {
-        if (props.isSave) {
-          ReportService.reportSave({
-            pollId: type.value,
-            qesitmSn: props.step[nowStep.value],
-            qesitmAnswer: score.value,
-          });
-        }
+        // if (props.isSave) {
+        ReportService.reportSave({
+          pollId: type.value,
+          qesitmSn: props.step[nowStep.value],
+          qesitmAnswer: score.value,
+        });
+        // }
 
         // 초기화
         userAnswer.value[nowStep.value] = score.value;
@@ -364,8 +367,10 @@ export default {
         // nowStep 다음으로
         nowStep.value += 1;
 
-        // 임시저장된 값 있으면 입력해줌
-        score.value = userAnswer.value[nowStep.value] || null;
+        if (props.isSave) {
+          // 임시저장된 값 있으면 입력해줌
+          score.value = userAnswer.value[nowStep.value] || null;
+        }
       } else {
         // nowStep 다음으로
         nowStep.value += 1;

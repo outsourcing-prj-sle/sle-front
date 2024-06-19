@@ -213,10 +213,16 @@ export default {
     const router = useRouter();
     const type = ref(route.params.type || 1);
     const score = ref(
-      (props.isSave && props.stepAnswer && props.stepAnswer[props.startStep || 0]) || null
+      (props.isSave &&
+        props.stepAnswer &&
+        props.stepAnswer[props.startStep || 0]) ||
+        null
     );
     const score2 = ref(
-      (props.isSave && props.stepAnswer2 && props.stepAnswer2[props.startStep || 0]) || null
+      (props.isSave &&
+        props.stepAnswer2 &&
+        props.stepAnswer2[props.startStep || 0]) ||
+        null
     );
     const userAnswer = ref(props.stepAnswer || []);
     const userAnswer2 = ref(props.stepAnswer2 || []);
@@ -288,12 +294,12 @@ export default {
 
       if (props.status !== 'done') {
         // if (props.isSave) {
-          ReportService.reportSave({
-            pollId: type.value,
-            qesitmSn: props.step[nowStep.value],
-            qesitmAnswer: score.value,
-            quesitmAnswerImage: score2.value
-          });
+        ReportService.reportSave({
+          pollId: type.value,
+          qesitmSn: props.step[nowStep.value],
+          qesitmAnswer: score.value,
+          quesitmAnswerImage: score2.value,
+        });
         // }
 
         // 초기화
@@ -304,11 +310,12 @@ export default {
 
         // nowStep 다음으로
         nowStep.value += 1;
-
-        // 임시저장된 값 있으면 입력해줌
-        score.value = userAnswer.value[nowStep.value] || null;
-        // 임시저장된 값 있으면 입력해줌
-        score2.value = userAnswer2.value[nowStep.value] || null;
+        if (props.isSave) {
+          // 임시저장된 값 있으면 입력해줌
+          score.value = userAnswer.value[nowStep.value] || null;
+          // 임시저장된 값 있으면 입력해줌
+          score2.value = userAnswer2.value[nowStep.value] || null;
+        }
       } else {
         // nowStep 다음으로
         nowStep.value += 1;
