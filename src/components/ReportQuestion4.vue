@@ -298,7 +298,7 @@ export default {
     const router = useRouter();
     const type = ref(route.params.type || 1);
     const score = ref(
-      (props.stepAnswer && props.stepAnswer[props.startStep || 0]) || null
+      (props.isSave && props.stepAnswer && props.stepAnswer[props.startStep || 0]) || null
     );
     const userAnswer = ref(props.stepAnswer || []);
     const nowStep = ref(props.startStep || 0);
@@ -320,7 +320,7 @@ export default {
     watch(
       () => [userAnswer?.value?.length],
       ([length]) => {
-        if (!score.value && userAnswer.value.length) {
+        if (props.isSave && !score.value && userAnswer.value.length) {
           score.value =
             userAnswer.value && userAnswer.value[nowStep.value || 0];
           questionImgList.value[3] = require(
@@ -368,13 +368,13 @@ export default {
       }
 
       if (props.status !== 'done') {
-        if (props.isSave) {
+        // if (props.isSave) {
           ReportService.reportSave({
             pollId: type.value,
             qesitmSn: props.step[nowStep.value],
             qesitmAnswer: score.value,
           });
-        }
+        // }
 
         // 초기화
         userAnswer.value[nowStep.value] = score.value;
