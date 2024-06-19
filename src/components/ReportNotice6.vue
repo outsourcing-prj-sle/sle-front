@@ -53,8 +53,8 @@
             <div class="flex flex-col w-[44%] max-md:ml-0 max-md:w-full">
               <FaceImg
                 :face="face[faceIndex]"
-                :eyes="eyesIndex >= 0 && eyes[eyesIndex]"
-                :mouth="mouthIndex >= 0 && mouth[mouthIndex]"
+                :eyes="eyesIndex >= 0 && eyes[eyesIndex - 1]"
+                :mouth="mouthIndex >= 0 && mouth[mouthIndex - 1]"
               />
             </div>
             <div class="flex ml-5 w-[56%] max-md:ml-0 max-md:w-full">

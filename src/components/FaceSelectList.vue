@@ -12,8 +12,8 @@
         v-for="(item, index) in itemList"
         :key="`${title}list${index}`"
         class="w-full h-full border-2 border-solid border-green-400 flex justify-center items-center cursor-pointer"
-        :class="selected === index && 'border-red-600'"
-        @click="selectItem(index)"
+        :class="selected === index + 1 && 'border-red-600'"
+        @click="selectItem(index + 1)"
       >
         <img :src="item" class="w-full h-full" alt="item" />
       </div>

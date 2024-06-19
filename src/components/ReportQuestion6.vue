@@ -92,8 +92,8 @@
             <div class="flex flex-col w-[44%] max-md:ml-0 max-md:w-full">
               <FaceImg
                 :face="face[faceIndex]"
-                :eyes="score >= 0 && eyes[score]"
-                :mouth="score2 >= 0 && mouth[score2]"
+                :eyes="score > 0 && eyes[score - 1]"
+                :mouth="score2 > 0 && mouth[score2 - 1]"
               />
             </div>
             <div class="flex ml-5 w-[56%] max-md:ml-0 max-md:w-full">
@@ -342,6 +342,7 @@ export default {
         // todo : 어떻게 저장할지
         // score.value 보고 화깅ㄴ하기
         userAnswer.value[nowStep.value] = score.value;
+        userAnswer2.value[nowStep.value] = score2.value;
         faceIndex.value = nowStep.value;
         // eyesIndex.value = null;
         // mouthIndex.value = null;
@@ -360,6 +361,7 @@ export default {
         // nowStep 이전으로
         nowStep.value -= 1;
         score.value = userAnswer.value[nowStep.value] || null;
+        score2.value = userAnswer2.value[nowStep.value] || null;
       }
     };
 
@@ -375,8 +377,15 @@ export default {
     };
 
     const selectIndex = (index, type) => {
-      if (type === 'eyes') score.value = index;
-      if (type === 'mouth') score2.value = index;
+      console.log(index);
+      if (type === 'eyes') {
+        score.value = index;
+        console.log(eyes.value[index]);
+      }
+      if (type === 'mouth') {
+        score2.value = index;
+        console.log(mouth.value[index]);
+      }
     };
 
     return {
