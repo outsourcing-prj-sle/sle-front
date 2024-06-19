@@ -149,7 +149,6 @@ export default defineComponent({
         textarea.select();
         textarea.setSelectionRange(0, 99999); // For mobile devices
         document.execCommand('copy');
-        alert('Text copied to clipboard!');
 
         showAlert.value = true;
         textAlert.value = 'URL이 복사되었습니다.';
