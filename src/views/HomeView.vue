@@ -141,10 +141,16 @@ export default defineComponent({
     };
 
     const copyURL = async (type = 1) => {
+      const textToCopy = `${window.location.host}/report/notice/${type}`;
+      const textarea = document.createElement('textarea');
+      textarea.value = textToCopy;
       try {
-        await navigator.clipboard.writeText(
-          `${window.location.host}/report/notice/${type}`
-        );
+        document.body.appendChild(textarea);
+        textarea.select();
+        textarea.setSelectionRange(0, 99999); // For mobile devices
+        document.execCommand('copy');
+        alert('Text copied to clipboard!');
+
         showAlert.value = true;
         textAlert.value = 'URL이 복사되었습니다.';
         setTimeout(() => {
@@ -154,11 +160,12 @@ export default defineComponent({
       } catch (err) {
         console.error('Failed to copy text: ', err);
       }
+      document.body.removeChild(textarea);
     };
 
     const openQRCodePopup = (type = 1) => {
       const url = `${window.location.host}/report/notice/${type}`;
-      qrURL.value = `https://quickchart.io/qr?text=${url}&size=250`;
+      qrURL.value = `https://quickchart.io/qr?text=${encodeURIComponent(url)}&size=250`;
     };
 
     const closePopup = () => {
