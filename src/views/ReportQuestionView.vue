@@ -126,6 +126,7 @@ export default {
           pollId: type.value,
         });
         const resData = reportRespose.data;
+        console.log(resData);
 
         if (resData.error) {
           alert(resData.error);

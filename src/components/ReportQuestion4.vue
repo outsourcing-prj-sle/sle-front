@@ -298,7 +298,7 @@ export default {
     const router = useRouter();
     const type = ref(route.params.type || 1);
     const score = ref(
-      (props.isSave &&
+      ((props.isSave || props.status === 'done') &&
         props.stepAnswer &&
         props.stepAnswer[props.startStep || 0]) ||
         null
@@ -323,7 +323,11 @@ export default {
     watch(
       () => [userAnswer?.value?.length],
       ([length]) => {
-        if (props.isSave && !score.value && userAnswer.value.length) {
+        if (
+          (props.isSave || props.status === 'done') &&
+          !score.value &&
+          userAnswer.value.length
+        ) {
           score.value =
             userAnswer.value && userAnswer.value[nowStep.value || 0];
           questionImgList.value[3] = require(
