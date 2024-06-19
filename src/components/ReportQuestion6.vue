@@ -282,6 +282,7 @@ export default {
             pollId: type.value,
             qesitmSn: props.step[nowStep.value],
             qesitmAnswer: score.value,
+            quesitmAnswerImage: score2.value,
           });
           router.push({
             name: 'reportFin',
