@@ -121,7 +121,7 @@
             <div
               class="justify-center px-3 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs w-full"
             >
-              {{ metadata[nowStep].AT[0] }}
+              {{ metadata[parseInt(step[nowStep]) - 1].AT[0] }}
             </div>
           </label>
           <label
@@ -139,7 +139,7 @@
             <div
               class="justify-center px-3 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs w-full"
             >
-              {{ metadata[nowStep].AT[1] }}
+              {{ metadata[parseInt(step[nowStep]) - 1].AT[1] }}
             </div>
           </label>
           <label
@@ -157,7 +157,7 @@
             <div
               class="justify-center px-3 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs w-full"
             >
-              {{ metadata[nowStep].AT[2] }}
+              {{ metadata[parseInt(step[nowStep]) - 1].AT[2] }}
             </div>
           </label>
           <label
@@ -175,7 +175,7 @@
             <div
               class="justify-center px-3 py-3 rounded-xl border border-solid border-neutral-300 max-md:px-8 max-lg:text-sm max-md:text-xs w-full"
             >
-              {{ metadata[nowStep].AT[3] }}
+              {{ metadata[parseInt(step[nowStep]) - 1].AT[3] }}
             </div>
           </label>
         </div>
