@@ -133,7 +133,7 @@ export default {
 
     const goMyInfoBtn = () => {
       if (userId.value) {
-        router.push({ name: 'myInfo' });
+        router.push({ name: 'userInfo' });
       } else {
         router.push({ name: 'login' });
       }
