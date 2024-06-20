@@ -67,14 +67,14 @@
       >
         학생 SEL 알기
       </div>
-      <!-- <div
+      <div
         class="px-2 text-center items-center max-w-max font-bold text-lg"
         :class="isIDTTView && 'text-blue-500'"
         v-if="loginType !== 'student'"
         @click="goTeacherID"
       >
         ID 톡톡
-      </div> -->
+      </div>
     </div>
   </div>
   <div
