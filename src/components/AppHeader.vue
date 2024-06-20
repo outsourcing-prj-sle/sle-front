@@ -71,6 +71,7 @@
         class="px-2 text-center items-center max-w-max font-bold text-lg"
         :class="isIDTTView && 'text-blue-500'"
         v-if="loginType !== 'student'"
+        @click="goTeacherID"
       >
         ID 톡톡
       </div>
