@@ -76,7 +76,7 @@
             </p>
           </div>
           <div
-            class="w-full border border-gray-300 px-[20px] py-[10px] rounded-xl"
+            class="w-full border border-gray-300 px-[21px] py-[20px] rounded-xl"
           >
             <p class="font-semibold">
               {{ data[stdColorAry[index]] }}
@@ -87,32 +87,10 @@
           </div>
 
           <div
-            class="w-full border border-gray-300 px-[20px] py-[10px] rounded-xl mb-[50px]"
+            class="w-full font-semibold border border-gray-300 px-[21px] py-[20px] rounded-xl mb-[50px]"
             v-if="stdColorAry[index] === 'red'"
-          >
-            <p class="font-semibold mb-[30px]">
-              현실적으로 달성가능한 작은 목표를 설정하여 큰 목표 달성을 위한
-              단계 밟기
-            </p>
-            <p class="font-semibold mb-[30px]">
-              중기 목표: 수학 성적 향상<br />
-              중기목표를 달성을 위한 단기 목표 설정:<br />
-              단기 목표 1: 매일 수학 문제 5개씩 풀기.<br />
-              단기 목표 2: 주 2회 수학 보충 수업 1시간씩 듣기.<br />
-              단기 목표 3: 매주 틀린 문제 10개 이상 다시 풀어보기.<br />
-              실천 예시: 영희는 매일 30분씩 시간을 정해 수학 문제 5개를 풉니다.
-              주 2회 학교에서 제공하는 수학 보충 수업(1시간)에 참석합니다. 매주
-              주말에는 그 주에 틀린 문제를 10개이상 다시 풀어보며 복습합니다.
-              이러한 작은 목표들을 달성하는 과정을 통해 큰 목표를 달성할 수
-              있습니다.
-            </p>
-            <p>• 주체성과 자기효능감 키우기</p>
-            <p class="ml-[10px]">- 스스로 결정하기</p>
-            <p>
-              교사는 학생이 스스로 주간 학습 계획을 세우도록 지도합니다. 스스로
-              결정한 계획을 따라서 학습하면서, 주체성과 자기효능감을 느낍니다.
-            </p>
-          </div>
+            v-html="data.tip"
+          ></div>
           <div class="mb-20"></div>
         </template>
 
@@ -199,6 +177,14 @@
               ></textarea>
             </div>
           </div>
+          <section class="flex justify-center items-center py-5">
+            <button
+              class="px-12 py-4 text-base font-medium text-center text-white bg-blue-500 rounded-xl border border-blue-500 border-solid max-w-[191px]"
+              tabindex="0"
+            >
+              의견 제출
+            </button>
+          </section>
         </div>
       </div>
     </section>
