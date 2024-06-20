@@ -46,6 +46,7 @@
             :options="options"
             :startText="selectedOption"
             @update:selectedOption="handleSelection"
+            v-if="selectedReport !== '전체'"
           />
           <label
             class="flex gap-2.5 my-auto text-base font text-neutral-700"
@@ -175,7 +176,7 @@ export default {
     const selectedReport = ref('전체');
     const reportMetadata = ref({});
 
-    const options = ref(['마감순', '마감순 2', '마감순 3']);
+    const options = ref(['마감순', '최신순']);
     const selectedOption = ref('마감순');
 
     onMounted(() => {
@@ -189,6 +190,7 @@ export default {
     const fetchReportList = async () => {
       const mySelReponse = await UserService.getMySEL({});
       const resData = mySelReponse.data;
+      console.log(resData);
 
       resData.reportList.map((item) => {
         const pollNm = item.pollNm;
