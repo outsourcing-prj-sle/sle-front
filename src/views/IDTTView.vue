@@ -29,6 +29,7 @@
     >
       <div class="w-[300px] flex justify-start">
         <AppDropdown
+          v-if="selectedOption"
           :options="options"
           :startText="options[0]"
           :openWay="'left'"
@@ -257,7 +258,7 @@ export default {
           pointRadius: 5,
         },
         {
-          label: '홍길동 학생',
+          label: '학생',
           data: [65, 59, 90, 81],
           fill: true,
           backgroundColor: 'rgba(179,181,198,0.2)',
