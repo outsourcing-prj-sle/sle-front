@@ -39,9 +39,13 @@ const checkId = (data = {}) => {
   return apiClient.get(baseURL + '/checkId', { params: data });
 };
 
-// 나의 SEL 알기
+// 나의 SEL 알기 (교사, 학생)
 const getMySEL = (data = {}) => {
   return apiClient.get(baseURL + '/mysel');
+};
+
+const userIDTT = (data = {}) => {
+  return apiClient.get(baseURL + '/idTokTok', { params: data });
 };
 
 // 회원정보 수정
@@ -54,4 +58,5 @@ export default {
   signup,
   checkId,
   getMySEL,
+  userIDTT,
 };

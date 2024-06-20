@@ -89,13 +89,13 @@
     >
       사회정서학습 톡톡
     </div>
-    <div
+    <!-- <div
       class="px-2 text-center items-center max-w-max font-bold text-lg"
       v-if="loginType !== 'student'"
       @click="waitAlert"
     >
       학습성향 톡톡
-    </div>
+    </div> -->
   </div>
 </template>
 
