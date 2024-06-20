@@ -30,7 +30,7 @@
       <div class="w-[300px] flex justify-start">
         <AppDropdown
           :options="options"
-          :startText="selectedOption"
+          :startText="options[0]"
           :openWay="'left'"
           @update:selectedOption="handleSelection"
         />
@@ -38,16 +38,17 @@
 
       <div class="mt-4 w-full text-left">
         <b class="text-xl">
-          <span class="text-blue-500">홍길동 학생</span>의 사회정서학습 역량
+          <span class="text-blue-500">{{ name }} 학생</span>의 사회정서학습 역량
         </b>
         <div class="w-full text-center items-center flex justify-center">
           <Radar
-            :data="chartData"
-            :options="chartOptions"
+            :data="_chartData"
+            :options="_chartOptions"
             :style="{
               height: '400px',
               position: 'relative',
             }"
+            @chart:render="handleChartRender"
           />
         </div>
         <b class="text-xl">*역량별 상세 안내</b>
@@ -313,7 +314,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, watch, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import UserService from '@/service/UserService.js';
 import AppDropdown from '../components/AppDropdown.vue';
@@ -346,8 +347,10 @@ export default {
   setup() {
     const router = useRouter();
     const infoArr = ref([]);
+    const optionsObj = ref({});
+    const name = ref('');
 
-    const chartData = {
+    const chartData = ref({
       labels: [
         '내면화 행동 문제',
         '감정지식',
@@ -361,10 +364,11 @@ export default {
           fill: true,
           backgroundColor: 'rgba(255,99,132,0.2)',
           borderColor: 'rgb(255, 99, 132)',
-          pointBackgroundColor: 'rgb(255, 99, 132)',
+          pointBackgroundColor: 'orange',
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
           pointHoverBorderColor: 'rgb(255, 99, 132)',
+          pointRadius: 5,
         },
         {
           label: '홍길동 학생',
@@ -376,11 +380,12 @@ export default {
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
           pointHoverBorderColor: 'rgb(54, 162, 235)',
+          pointRadius: 5,
         },
       ],
-    };
+    });
 
-    const chartOptions = {
+    const chartOptions = ref({
       responsive: false,
       maintainAspectRatio: false,
       plugins: {
@@ -397,30 +402,147 @@ export default {
           borderWidth: 3,
         },
       },
-    };
+    });
+
+    const _chartData = computed(() => {
+      return chartData.value;
+    });
+    const _chartOptions = computed(() => {
+      return chartOptions.value;
+    });
 
     const options = ref([
       '홍길동(dlwkr01@gne.go.kr)',
       '홍길동(dlwkr01@gne.go.kr)',
       '홍길동(dlwkr01@gne.go.kr)',
     ]);
-    const selectedOption = ref('홍길동(dlwkr01@gne.go.kr)');
+    const selectedOption = ref('');
+    const EBP = ref();
+    const EK = ref();
+    const GM = ref();
+    const IBP = ref();
+    const avgAry = ref([]); // 평균
+    const stdAry = ref([]); // 계산값
+    const stdAddAry = ref([]); // 평균 + 계산값 (표)
+    const stdColorAry = ref([]); // 계산값 표에넣을 색깔로
 
-    onMounted(() => {
-      fetchData();
+    onMounted(async () => {
+      await fetchData();
     });
 
+    // 학생 리스트
     const fetchData = async () => {
       const mySELResponse = await UserService.getMySEL();
       const resData = mySELResponse.data;
+
+      console.log(resData);
 
       if (resData.error) {
         alert(resData.error);
         return;
       }
 
-      infoArr.value = resData;
+      const infoArr = resData.infoArr;
+
+      let tmpAry = [];
+      let tmpObj = {};
+      for (let i in infoArr) {
+        let d = infoArr[i];
+        let stateList = d.stateList;
+        if (!stateList['마음알기 설문1']) continue;
+        if (!stateList['마음알기 설문2']) continue;
+        if (!stateList['마음알기 설문3']) continue;
+
+        tmpAry.push(`${d.name}(${d.email})`);
+        tmpObj[`${d.name}(${d.email})`] = d;
+      }
+      options.value = tmpAry;
+      optionsObj.value = tmpObj;
+
+      selectedOption.value = tmpAry[0];
+      console.log(selectedOption.value);
+      // todo :selectopton.value[현재학생 `${d.name}(${d.email})`] 로 userId얻고 그거로 데이터 호출
     };
+
+    watch(
+      () => [selectedOption.value],
+      async () => {
+        if (selectedOption.value) {
+          name.value = optionsObj.value[selectedOption.value].name;
+          const resUserIDTT = await UserService.userIDTT({
+            id: optionsObj.value[selectedOption.value].userId,
+          });
+          const resData = resUserIDTT.data;
+          console.log(resData);
+
+          // if(resData === {}) alert('설문을 완료하지 못한 한색입니다.')
+          EBP.value = resData.EBP;
+          EK.value = resData.EK;
+          GM.value = resData.GM;
+          IBP.value = resData.IBP;
+
+          let _EBP = EBP.value;
+          let _EBPValue = (_EBP.score - _EBP.mean) / _EBP.stddev;
+          let _EK = EK.value;
+          let _EKValue = (_EK.score - _EK.mean) / _EK.stddev;
+          let _GM = GM.value;
+          let _GMValue = (_GM.score - _GM.mean) / _GM.stddev;
+          let _IBP = IBP.value;
+          let _IBPValue = (_IBP.score - _IBP.mean) / _IBP.stddev;
+
+          stdAry.value = [_EBPValue, _EKValue, _GMValue, _IBPValue];
+          avgAry.value = [_EBP.mean, _EK.mean, _GM.mean, _IBP.mean];
+
+          for (let i in stdAry.value) {
+            const _std = parseFloat(stdAry.value[i]);
+            const _avg = parseFloat(avgAry.value[i]);
+            const add = (_std + _avg).toFixed(2);
+            let color = 'red';
+            if (_std > -1) color = 'orange';
+            if (_std > 1) color = 'green';
+
+            stdAddAry.value[i] = add;
+            stdColorAry.value[i] = color;
+          }
+
+          // 표 데이터 초기화
+          const tmpChartData = chartData.value;
+          tmpChartData.datasets[1].pointBackgroundColor = stdColorAry.value;
+          chartData.value = {
+            ...tmpChartData,
+            datasets: [
+              {
+                ...tmpChartData.datasets[0],
+                data: avgAry.value,
+              },
+              {
+                ...tmpChartData.datasets[1],
+                label: name.value,
+                data: stdAddAry.value,
+                pointBackgroundColor: stdColorAry.value,
+              },
+            ],
+          };
+
+          const maxCeil =
+            parseInt(Math.max(...stdAddAry.value, ...avgAry.value)) + 1;
+
+          // 표 범위 초기화
+          chartOptions.value = {
+            ...chartOptions,
+            scales: {
+              r: {
+                max: maxCeil,
+                ticks: {
+                  stepSize: 1,
+                },
+              },
+            },
+          };
+        }
+      },
+      { immediate: true } // 초기 실행을 위해 immediate: true 설정
+    );
 
     const handleSelection = (option) => {
       selectedOption.value = option;
@@ -444,6 +566,10 @@ export default {
       return _mixDate(s, e);
     };
 
+    const handleChartRender = (chart) => {
+      console.log(chart);
+    };
+
     return {
       options,
       selectedOption,
@@ -452,8 +578,10 @@ export default {
       goReportNoticePage,
       goReportQuestionPage,
       mixDate,
-      chartData,
-      chartOptions,
+      _chartData,
+      _chartOptions,
+      handleChartRender,
+      name,
     };
   },
 };
