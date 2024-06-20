@@ -119,7 +119,7 @@ export default {
     const router = useRouter();
     const infoArr = ref([]);
 
-    const options = ref(['마감순', '마감순 2', '마감순 3']);
+    const options = ref(['마감순', '최신순']);
     const selectedOption = ref('마감순');
 
     onMounted(() => {
@@ -135,11 +135,67 @@ export default {
         return;
       }
 
-      infoArr.value = resData;
+      infoArr.value = sortArrEnd(resData);
+    };
+
+    const extractNumber = (name) => {
+      const match = name.match(/(\d+)$/); // 이름 끝에서 숫자 추출
+      return match ? parseInt(match[1], 10) : Infinity; // 숫자가 없으면 무한대 반환
+    };
+
+    const sortArrEnd = (arr) => {
+      return arr.sort((a, b) => {
+        const dateA = new Date(
+          a.endDate.slice(0, 4),
+          a.endDate.slice(4, 6) - 1,
+          a.endDate.slice(6, 8)
+        );
+        const dateB = new Date(
+          b.endDate.slice(0, 4),
+          b.endDate.slice(4, 6) - 1,
+          b.endDate.slice(6, 8)
+        );
+        if (dateA - dateB !== 0) {
+          return dateA - dateB;
+        } else {
+          // endDate가 같은 경우 name에서 숫자를 비교
+          const numA = extractNumber(a.pollNm);
+          const numB = extractNumber(b.pollNm);
+          return numA - numB;
+        }
+      });
+    };
+    const sortArrStart = (arr) => {
+      return arr.sort((a, b) => {
+        const dateA = new Date(
+          a.startDate.slice(0, 4),
+          a.startDate.slice(4, 6) - 1,
+          a.startDate.slice(6, 8)
+        );
+        const dateB = new Date(
+          b.startDate.slice(0, 4),
+          b.startDate.slice(4, 6) - 1,
+          b.startDate.slice(6, 8)
+        );
+        if (dateA - dateB !== 0) {
+          return dateB - dateA;
+        } else {
+          // endDate가 같은 경우 name에서 숫자를 비교
+          const numA = extractNumber(a.pollNm);
+          const numB = extractNumber(b.pollNm);
+          return numA - numB;
+        }
+      });
     };
 
     const handleSelection = (option) => {
       selectedOption.value = option;
+      if (option === '최신순') {
+        sortArrStart(infoArr.value);
+      }
+      if (option === '마감순') {
+        sortArrEnd(infoArr.value);
+      }
     };
 
     const goReportNoticePage = (type = 1) => {
