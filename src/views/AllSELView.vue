@@ -40,14 +40,14 @@
       </div>
       <div class="w-full flex justify-between items-center mt-2">
         <div class="flex gap-4">
-          <AppDropdown
+          <!-- <AppDropdown
             :openWay="'left'"
             :openFull="true"
             :options="options"
             :startText="selectedOption"
             @update:selectedOption="handleSelection"
             v-if="selectedReport !== '전체'"
-          />
+          /> -->
           <label
             class="flex gap-2.5 my-auto text-base font text-neutral-700"
             v-if="selectedReport !== '전체'"
@@ -185,6 +185,14 @@ export default {
 
     const handleSelection = (option) => {
       selectedOption.value = option;
+      sortList(option);
+    };
+
+    const sortList = (option = '마감순') => {
+      // if (option === '마감순') {
+      // }
+      // if (option === '최신순') {
+      // }
     };
 
     const fetchReportList = async () => {
