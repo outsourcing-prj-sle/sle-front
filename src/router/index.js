@@ -9,6 +9,7 @@ import ReportFinView from '../views/ReportFinView.vue';
 import ReportNoticeView from '../views/ReportNoticeView.vue';
 import ReportQuestionView from '../views/ReportQuestionView.vue';
 import IDTTView from '../views/IDTTView.vue';
+import UpdateUserView from '../views/UpdateUserView.vue';
 
 const routes = [
   {
@@ -89,8 +90,19 @@ const routes = [
       headerVisible: true,
       isMyInfoPage: true,
       needLogin: true,
-    },
+    }
   },
+  {
+    path: '/userInfo',
+    name: 'userInfo',
+    component: UpdateUserView,  // 이 부분을 추가하세요.
+    meta: {
+      footerVisible: true,
+      headerVisible: true,
+      isMyInfoPage: true,
+      needLogin: true,
+    },
+  }
 ];
 
 const router = createRouter({

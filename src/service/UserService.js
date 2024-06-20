@@ -44,6 +44,11 @@ const getMySEL = (data = {}) => {
   return apiClient.get(baseURL + '/mysel');
 };
 
+// 회원정보 수정
+const updateUserInfo = (data = {}) => {
+  return apiClient.put(baseURL + '/update', data);
+};
+
 export default {
   login,
   signup,
