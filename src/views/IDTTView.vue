@@ -82,13 +82,19 @@
               {{ data[stdColorAry[index]] }}
             </p>
           </div>
-          <div class="my-[10px]" v-if="stdColorAry[index] === 'red'">
+          <div
+            class="my-[10px] flex justify-between"
+            @click="() => openTip(index)"
+          >
             <p class="font-bold text-xl text-amber-500">교사의 생활지도 tip</p>
+            <p class="text-blue-500 pr-2">
+              {{ !isOpen[index] ? '열기' : '닫기' }}
+            </p>
           </div>
 
           <div
             class="w-full font-semibold border border-gray-300 px-[21px] py-[20px] rounded-xl mb-[50px]"
-            v-if="stdColorAry[index] === 'red'"
+            v-if="isOpen[index]"
             v-html="data.tip"
           ></div>
           <div class="mb-20"></div>
@@ -181,6 +187,7 @@
             <button
               class="px-12 py-4 text-base font-medium text-center text-white bg-blue-500 rounded-xl border border-blue-500 border-solid max-w-[191px]"
               tabindex="0"
+              @click="submitInfo"
             >
               의견 제출
             </button>
@@ -305,6 +312,8 @@ export default {
     const stdAddAry = ref([]); // 평균 + 계산값 (표)
     const stdColorAry = ref([]); // 계산값 표에넣을 색깔로
 
+    const isOpen = ref([false, false, false, false]);
+
     onMounted(async () => {
       await fetchData();
     });
@@ -347,6 +356,7 @@ export default {
       () => [selectedOption.value],
       async () => {
         if (selectedOption.value) {
+          isOpen.value = [false, false, false, false];
           name.value = optionsObj.value[selectedOption.value].name;
           const resUserIDTT = await UserService.userIDTT({
             id: optionsObj.value[selectedOption.value].userId,
@@ -456,6 +466,14 @@ export default {
       return result;
     };
 
+    const submitInfo = () => {
+      alert('제출 완료되었습니다!');
+    };
+
+    const openTip = (i) => {
+      isOpen.value[i] = !isOpen.value[i];
+    };
+
     return {
       options,
       selectedOption,
@@ -474,6 +492,9 @@ export default {
       stdAry,
       stdAddAry,
       stdColorAry,
+      submitInfo,
+      isOpen,
+      openTip,
     };
   },
 };
