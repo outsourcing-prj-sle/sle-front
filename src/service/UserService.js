@@ -29,6 +29,10 @@ const login = (data = {}) => {
   return apiClient.post('/login', data);
 };
 
+const myInfo = (data = {}) => {
+  return apiClient.get(baseURL, data);
+};
+
 // 회원가입
 const signup = (data = {}) => {
   return apiClient.put(baseURL + '/insert', data);
@@ -55,8 +59,10 @@ const updateUserInfo = (data = {}) => {
 
 export default {
   login,
+  myInfo,
   signup,
   checkId,
   getMySEL,
   userIDTT,
+  updateUserInfo,
 };
