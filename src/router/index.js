@@ -109,10 +109,10 @@ const routes = [
     name: 'NaverCallBackPage',
     component: NaverCallBackPage,
     meta: {
-      footerVisible: true,
-      headerVisible: true,
-      isMyInfoPage: true,
-      needLogin: true,
+      // footerVisible: true,
+      // headerVisible: true,
+      // isMyInfoPage: true,
+      // needLogin: true,
     },
   },
 ];

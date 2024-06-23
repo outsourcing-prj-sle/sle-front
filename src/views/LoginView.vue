@@ -74,7 +74,7 @@ export default {
         const { type, code, state } = event.data;
         if (type === 'naverLogin') {
           if (code && state) {
-            this.handleNaverCallback(code, state);
+            handleNaverCallback(code, state);
           }
         }
       });
