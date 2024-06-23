@@ -31,7 +31,6 @@ import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 import UserService from '@/service/UserService.js';
 import { methods_naverLogin, handleNaverCallback } from '@/utils/naverUtils';
-import axios from 'axios';
 
 export default {
   name: 'LoginView',

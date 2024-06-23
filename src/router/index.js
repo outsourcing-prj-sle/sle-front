@@ -96,7 +96,7 @@ const routes = [
   {
     path: '/userInfo',
     name: 'userInfo',
-    component: UpdateUserView, // 이 부분을 추가하세요.
+    component: UpdateUserView,
     meta: {
       footerVisible: true,
       headerVisible: true,

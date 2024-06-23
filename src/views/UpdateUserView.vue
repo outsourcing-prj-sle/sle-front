@@ -12,12 +12,8 @@
     <p class="text-gray-500">{{ userType }}</p>
     <button
       type="button"
-      @click="
-        () => {
-          isUpdate = !isUpdate;
-        }
-      "
       class="my-[10px] px-4 py-2 bg-gray-600 text-white rounded-md min-w-[96px]"
+      @click="openWhale"
     >
       회원정보 수정하기
     </button>
@@ -27,37 +23,8 @@
         <b>조직</b>
       </div>
       <div class="flex flex-col gap-[30px] items-start">
-        <p v-if="!isUpdate">{{ school }}</p>
-        <input
-          v-if="isUpdate"
-          class="w-full border border-gray-500"
-          type="text"
-          id="school"
-          v-model="school"
-          required
-        />
-        <p v-if="!isUpdate">{{ grade }}학년 {{ classroom }}반</p>
-        <div v-if="isUpdate" class="flex gap-[20px]">
-          <div class="flex gap-[10px]">
-            <input
-              class="w-[35px] border border-gray-500"
-              type="text"
-              id="grade"
-              v-model="grade"
-              required
-            />
-            <p>학년</p>
-          </div>
-          <div class="flex gap-[20px]">
-            <input
-              class="w-[35px] border border-gray-500"
-              type="text"
-              id="classroom"
-              v-model="classroom"
-            />
-            <p>반</p>
-          </div>
-        </div>
+        <p>{{ school }}</p>
+        <p>{{ grade }}학년 {{ classroom }}반</p>
       </div>
     </div>
     <template v-if="userType !== '선생님'">
@@ -104,6 +71,7 @@
       </div>
     </template>
     <button
+      v-if="userType !== '선생님'"
       type="button"
       @click="submitInfo"
       class="my-[10px] px-4 py-2 mt-[50px] bg-blue-600 text-white rounded-md min-w-[96px]"
@@ -148,8 +116,6 @@ export default {
     const options3 = ref(['01']);
     const selectedOption3 = ref('');
 
-    const isUpdate = ref(false);
-
     const gender = ref('');
     const school = ref('');
     const grade = ref('');
@@ -186,29 +152,10 @@ export default {
     });
 
     const submitInfo = async (e) => {
-      console.log(e);
-      if (!school.value) {
-        alert('학교를 입력해주세요');
-        return;
-      }
-
-      if (!grade.value) {
-        alert('학년을 입력해주세요');
-        return;
-      }
-
-      if (!classroom.value) {
-        alert('반을 입력해주세요');
-        return;
-      }
-
       // 회원정보 수정
       const updateUserInfoResponse = await UserService.updateUserInfo({
         profileImageId: 'asdf', // 프로필 이미지 아이디
         sex: gender.value, // 성별 - todo : 구분자 알아야함 - f / m
-        userSpaceInfo: school.value, // 소속 스페이스 정보
-        gradeNm: grade.value,
-        classNm: classroom.value,
         brthdy: birthdate.value,
       });
 
@@ -264,6 +211,12 @@ export default {
       selectedOption3.value = option;
     };
 
+    const openWhale = () => {
+      const url = 'https://account.whalespace.io/s/profile';
+      window.open(url);
+      UserService.myInfoInterval();
+    };
+
     return {
       options,
       selectedOption,
@@ -271,7 +224,6 @@ export default {
       selectedOption2,
       options3,
       selectedOption3,
-      isUpdate,
       userType,
       email,
       gender,
@@ -284,6 +236,7 @@ export default {
       handleSelection2,
       handleSelection3,
       submitInfo,
+      openWhale,
     };
   },
 };

@@ -29,8 +29,19 @@ const login = (data = {}) => {
   return apiClient.post('/login', data);
 };
 
+// 내정보 조회
 const myInfo = (data = {}) => {
   return apiClient.get(baseURL, data);
+};
+
+// 내정보 서버 업데이트
+const myInfoInterval = () => {
+  let cnt = 20;
+  const myInterval = setInterval(() => {
+    if (!cnt) clearInterval(myInterval);
+    cnt--;
+    myInfo();
+  }, 1000 * 60);
 };
 
 // 회원가입
@@ -70,5 +81,6 @@ export default {
   getMySEL,
   userIDTT,
   updateUserInfo,
-  insertReseachResult
+  insertReseachResult,
+  myInfoInterval,
 };
