@@ -45,6 +45,15 @@
           </button>
         </div>
       </form>
+
+      <div class="text-center">
+        <button
+          class="text-sm text-blue-500 hover:underline"
+          @click="methods_naverLogin"
+        >
+          웨일스페이스 로그인
+        </button>
+      </div>
       <div class="text-center">
         <router-link to="/signup">
           <div class="text-sm text-blue-500 hover:underline">회원가입</div>
@@ -55,10 +64,12 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 import UserService from '@/service/UserService.js';
+import { methods_naverLogin, handleNaverCallback } from '@/utils/naverUtils';
+import axios from 'axios';
 
 export default {
   name: 'LoginView',
@@ -93,10 +104,25 @@ export default {
       router.push(redirectPath);
     };
 
+    onBeforeMount(async () => {
+      window.addEventListener('message', (event) => {
+        if (event.origin !== window.location.origin) {
+          return;
+        }
+        const { type, code, state } = event.data;
+        if (type === 'naverLogin') {
+          if (code && state) {
+            this.handleNaverCallback(code, state);
+          }
+        }
+      });
+    });
+
     return {
       email,
       password,
       handleSubmit,
+      methods_naverLogin,
     };
   },
 };
