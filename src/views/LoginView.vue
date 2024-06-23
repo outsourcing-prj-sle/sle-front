@@ -52,29 +52,36 @@ export default {
         alert(resData.error);
         return;
       }
-
-      userStore.init({
-        token: resData.uniqId,
-        id: resData.id,
-        type: resData.userRole,
-        school: resData.userSpaceInfo,
-        isRegistered: resData.isRegistered,
-        extra: resData.extra,
-      });
-
-      const redirectPath = route.query.redirect || '/';
-      router.push(redirectPath);
     };
 
-    onBeforeMount(async () => {
-      window.addEventListener('message', (event) => {
+    onBeforeMount(() => {
+      // 웨일스페이스 팝업 핸들링
+      window.addEventListener('message', async (event) => {
         if (event.origin !== window.location.origin) {
           return;
         }
         const { type, code, state } = event.data;
         if (type === 'naverLogin') {
           if (code && state) {
-            handleNaverCallback(code, state);
+            const callbackRes = await handleNaverCallback(code, state);
+            const resData = callbackRes?.data;
+
+            if (resData?.accessToken) {
+              userStore.init({
+                accessToken: resData.accessToken,
+                token: resData.uniqId,
+                id: resData.id,
+                type: resData.userRole,
+                school: resData.userSpaceInfo,
+                isRegistered: !!resData.sex,
+                extra: resData.extra,
+              });
+
+              const redirectPath = route.query.redirect || '/';
+              router.push(redirectPath);
+            } else {
+              console.log(callbackRes);
+            }
           }
         }
       });
