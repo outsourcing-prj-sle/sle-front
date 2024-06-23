@@ -2,72 +2,143 @@
   <div
     class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center"
   >
-    <div class="bg-white h-[428px] w-[488px] p-6 rounded-lg shadow-lg">
+    <div
+      class="bg-white h-[428px] w-[488px] px-4 py-6 rounded-lg shadow-lg flex relative"
+    >
       <div
-        class="flex flex-col pr-4 pl-12 mt-3 w-full font-medium max-md:pl-5 max-md:max-w-full"
+        class="flex flex-col my-auto font-medium whitespace-nowrap hover:text-blue-200"
+        :style="{ visibility: needPrev ? 'hidden' : 'visible' }"
+        @click="stepPrev"
       >
-        <div class="flex gap-5 text-base max-md:flex-wrap">
-          <p class="flex-auto text-blue-500">
-            안녕하세요!<br />
-            SEL 사회정서분석에 오신 여러분 반갑습니다.<br />
-            사회정서분석에 입장하기 앞서, 자신의 정보를 선택해주세요.<br />
-            최초 1회만 참여해주시면 됩니다.<br /><span class="text-blue-500"
-              >이작초등학교 1학년 2반 홍길동</span
-            >이 맞습니까?<br />
-            회원 정보와 다르다면 아래의 버튼을 눌러 수정해주세요.
-          </p>
-          <nav
-            class="flex justify-center items-center self-end px-4 mt-20 text-white whitespace-nowrap bg-blue-200 rounded-full h-[34px] w-[34px] max-md:mt-10"
-          >
-            <a href="#" aria-label="Next Page" tabindex="0">&gt;</a>
-          </nav>
-        </div>
-        <div class="self-end text-xs text-blue-500">다음</div>
+        <button
+          class="justify-center hover:bg-blue-200 mr-2 items-center px-3 text-base text-white rounded-full bg-stone-300 h-[34px] w-[34px]"
+          aria-label="이전"
+        >
+          &lt;
+        </button>
+        <span class="mt-1 text-xs text-zinc-500">이전</span>
+      </div>
+      <div class="flex-1">
+        <TeacherResigtPopup1
+          v-if="loginType === 'teacher' && step === 1"
+          :userInfo="userInfo"
+          @openWhaleProfile="openWhaleProfile"
+        />
+        <TeacherResigtPopup2
+          v-if="loginType === 'teacher' && step === 2"
+          @finRegist="finRegist"
+        />
       </div>
 
-      <form
-        class="self-center px-px mt-4 w-full max-w-[423px] max-md:max-w-full"
-        aria-labelledby="update-info"
+      <div
+        class="flex flex-col ml-2 my-auto font-medium whitespace-nowrap hover:text-blue-200"
+        :style="{ visibility: needNext ? 'hidden' : 'visible' }"
+        @click="stepNext"
       >
-        <fieldset class="flex gap-5 max-md:flex-col max-md:gap-0">
-          <legend id="update-info" class="sr-only">Update Information</legend>
-          <div class="flex flex-col w-[61%] max-md:ml-0 max-md:w-full">
-            <button
-              class="justify-center px-11 py-3 w-full text-base font-medium text-white bg-blue-500 max-md:px-5 max-md:mt-10"
-              type="submit"
-            >
-              회원정보 수정하기
-            </button>
-          </div>
-          <aside
-            class="flex flex-col ml-5 w-[39%] max-md:ml-0 max-md:w-full"
-          ></aside>
-        </fieldset>
-      </form>
+        <button
+          class="justify-center hover:bg-blue-200 items-center px-3 text-base text-white rounded-full bg-stone-300 h-[34px] w-[34px]"
+          aria-label="다음"
+        >
+          &gt;
+        </button>
+        <span class="mt-1 text-xs text-zinc-500">다음</span>
+      </div>
+
+      <img
+        src="./../assets/img/person_regist_icn.png"
+        alt="person_regist_icn"
+        class="self-end max-w-full h-[128px] w-[121px] absolute bottom-0 right-1.5"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useUserStore } from '@/store/userStore.js';
+import UserService from '@/service/UserService';
+import TeacherResigtPopup1 from './TeacherResigtPopup1.vue';
+import TeacherResigtPopup2 from './TeacherResigtPopup2.vue';
 
 export default {
+  components: {
+    TeacherResigtPopup1,
+    TeacherResigtPopup2,
+  },
   props: {},
   setup(props, { emit }) {
     const userStore = useUserStore();
-    const loginType = computed(() => userStore.type);
+    const loginType = computed(() => userStore.type || 'teacher');
+    const step = ref(1);
+    const name = ref('김톡톡톡');
+    const school = ref('이작초등학교');
+    const grade = ref('1');
+    const classroom = ref('2');
 
-    const closePopup = () => {
-      emit('closePopup');
-    };
+    onMounted(() => {
+      fetchData();
+    });
 
-    const openNewTab = () => {
+    const needPrev = computed(() => {
+      return step.value === 1;
+    });
+
+    const needNext = computed(() => {
+      return (
+        (loginType.value === 'student' && step.value === 4) ||
+        (loginType.value === 'teacher' && step.value === 2)
+      );
+    });
+
+    const userInfo = computed(() => {
+      return `${school.value} ${grade.value}학년 ${classroom.value}반 ${name.value}`;
+    });
+
+    const openWhaleProfile = () => {
       const url = 'https://account.whalespace.io/s/profile';
-      window.open(url, '_blank');
+      window.open(url);
     };
 
-    return { closePopup, openNewTab };
+    const stepNext = () => {
+      step.value += 1;
+    };
+
+    const stepPrev = () => {
+      step.value -= 1;
+    };
+
+    const fetchData = async () => {
+      const myInfoRes = await UserService.myInfo();
+      const resData = myInfoRes.data;
+      if (!resData) return;
+      if (resData.error) return;
+      console.log(resData);
+
+      name.value = resData.name;
+      school.value = resData.userSpaceInfo;
+      let tmp =
+        resData?.userSpaceOrgInfo?.replace('반', '').split('학년 ') || [];
+      grade.value = tmp[0];
+      classroom.value = tmp[1];
+    };
+
+    const finRegist = async () => {
+      console.log('가입완료 후 에러확인 그다음에 아래 코드 ㄱㄱ');
+      // userStore.finRegistered();
+    };
+
+    return {
+      loginType,
+      needPrev,
+      needNext,
+      step,
+      userInfo,
+
+      openWhaleProfile,
+      stepNext,
+      stepPrev,
+      finRegist,
+    };
   },
 };
 </script>

@@ -4,6 +4,11 @@
     <AppQRPopup @closePopup="() => closePopup()" v-if="qrURL" class="z-50">
       <img class="aspect-[1]" :src="qrURL" alt="qrcode" />
     </AppQRPopup>
+    <AppRegistPopup
+      v-if="!isRegistered"
+      class="z-50"
+      @closePopup="() => closePopup()"
+    />
     <!-- 배너 공간 -->
     <section
       class="flex overflow-hidden relative flex-col items-center px-16 pt-12 w-full min-h-[341px] max-md:px-5 max-md:max-w-full max-xl:hidden"
@@ -96,6 +101,7 @@ import AppDropdown from '../components/AppDropdown.vue';
 import AppTopAlert from '../components/AppTopAlert.vue';
 import AppQRPopup from '../components/AppQRPopup.vue';
 import AppCardItem from '../components/AppCardItem.vue';
+import AppRegistPopup from '@/components/AppRegistPopup.vue';
 
 export default defineComponent({
   name: 'HomeView',
@@ -104,11 +110,13 @@ export default defineComponent({
     AppTopAlert,
     AppQRPopup,
     AppCardItem,
+    AppRegistPopup,
   },
   setup() {
     const router = useRouter();
     const userStore = useUserStore();
     const loginType = computed(() => userStore.type);
+    const isRegistered = computed(() => userStore.isRegistered);
     const options = ref(['마감순', '최신순']);
     const selectedOption = ref('마감순');
     const showAlert = ref(false);
@@ -240,6 +248,7 @@ export default defineComponent({
       options,
       selectedOption,
       loginType,
+      isRegistered,
       showAlert,
       textAlert,
       qrURL,
