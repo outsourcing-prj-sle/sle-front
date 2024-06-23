@@ -58,6 +58,7 @@ export default {
         id: resData.id,
         type: resData.userRole,
         school: resData.userSpaceInfo,
+        isRegistered: resData.isRegistered,
         extra: resData.extra,
       });
 

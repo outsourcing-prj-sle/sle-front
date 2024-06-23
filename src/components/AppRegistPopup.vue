@@ -25,8 +25,27 @@
           @openWhaleProfile="openWhaleProfile"
         />
         <TeacherResigtPopup2
-          v-if="loginType === 'teacher' && step === 2"
+          v-else-if="loginType === 'teacher' && step === 2"
           @finRegist="finRegist"
+        />
+        <StudentResigtPopup1
+          v-else-if="loginType === 'student' && step === 1"
+          :userInfo="userInfo"
+          @openWhaleProfile="openWhaleProfile"
+        />
+        <StudentResigtPopup2
+          v-else-if="loginType === 'student' && step === 2"
+          @changeGender="changeGender"
+        />
+        <StudentResigtPopup3
+          v-else-if="loginType === 'student' && step === 3"
+          @changeYear="changeYear"
+          @changeMonth="changeMonth"
+        />
+        <StudentResigtPopup4
+          v-else-if="loginType === 'student' && step === 4"
+          :userInfo="userInfo"
+          @openWhaleProfile="openWhaleProfile"
         />
       </div>
 
@@ -59,21 +78,32 @@ import { useUserStore } from '@/store/userStore.js';
 import UserService from '@/service/UserService';
 import TeacherResigtPopup1 from './TeacherResigtPopup1.vue';
 import TeacherResigtPopup2 from './TeacherResigtPopup2.vue';
+import StudentResigtPopup1 from './StudentResigtPopup1.vue';
+import StudentResigtPopup2 from './StudentResigtPopup2.vue';
+import StudentResigtPopup3 from './StudentResigtPopup3.vue';
+import StudentResigtPopup4 from './StudentResigtPopup4.vue';
 
 export default {
   components: {
     TeacherResigtPopup1,
     TeacherResigtPopup2,
+    StudentResigtPopup1,
+    StudentResigtPopup2,
+    StudentResigtPopup3,
+    StudentResigtPopup4,
   },
   props: {},
   setup(props, { emit }) {
     const userStore = useUserStore();
-    const loginType = computed(() => userStore.type || 'teacher');
+    const loginType = computed(() => userStore.type || 'student');
     const step = ref(1);
     const name = ref('김톡톡톡');
     const school = ref('이작초등학교');
     const grade = ref('1');
     const classroom = ref('2');
+    const gender = ref();
+    const year = ref();
+    const month = ref();
 
     onMounted(() => {
       fetchData();
@@ -100,6 +130,25 @@ export default {
     };
 
     const stepNext = () => {
+      let flag = '';
+
+      if (loginType.value === 'student' && step.value === 2 && !gender.value) {
+        flag = '성별을 선택해주세요.';
+      }
+
+      if (
+        loginType.value === 'student' &&
+        step.value === 3 &&
+        !year.value &&
+        !month.value
+      ) {
+        flag = '태어난 년도와 월을 선택해주세요.';
+      }
+
+      if (flag) {
+        alert(flag);
+        return;
+      }
       step.value += 1;
     };
 
@@ -123,8 +172,27 @@ export default {
     };
 
     const finRegist = async () => {
-      console.log('가입완료 후 에러확인 그다음에 아래 코드 ㄱㄱ');
-      // userStore.finRegistered();
+      const _gender = gender.value || 'F';
+      const _birthday = `${year.value || '2000'}${month.value || '01'}01`;
+
+      // 회원정보 수정
+      UserService.updateUserInfo({
+        profileImageId: 'asdf', // 프로필 이미지 아이디
+        sex: _gender, // 성별 - todo : 구분자 알아야함 - f / m
+        brthdy: _birthday,
+      });
+    };
+
+    const changeGender = (v) => {
+      gender.value = v;
+    };
+
+    const changeYear = (v) => {
+      year.value = v;
+    };
+
+    const changeMonth = (v) => {
+      month.value = v;
     };
 
     return {
@@ -138,6 +206,9 @@ export default {
       stepNext,
       stepPrev,
       finRegist,
+      changeGender,
+      changeYear,
+      changeMonth,
     };
   },
 };
