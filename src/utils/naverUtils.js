@@ -1,4 +1,5 @@
 import axios from 'axios';
+import UserService from '@/service/UserService.js';
 
 /**
  * 웨일스페이스 인증코드 발급
@@ -11,18 +12,6 @@ async function methods_naverLogin() {
   const clientId = 'iymVHli6FerqTAKqTnNV';
   const apiUrl = `https://auth.whalespace.io/oauth2/v1.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${state}`;
   const popup = window.open(apiUrl, 'NaverLogin', 'width=600,height=700');
-
-  window.addEventListener('message', (event) => {
-    if (event.origin !== window.location.origin) {
-      return;
-    }
-    const { type, code, state } = event.data;
-    if (type === 'naverLogin') {
-      if (code && state) {
-        handleNaverCallback(code, state);
-      }
-    }
-  });
 }
 
 /**
@@ -36,16 +25,8 @@ async function handleNaverCallback(code, state) {
     code: code,
     state: state,
   };
-  await axios
+  return await axios
     .post('/api/naver/oauth2/token', param)
-    .then(async function (response) {
-      var data = response.data;
-      if (data.code === 'S000') {
-        alert('연동 되었습니다.');
-      } else {
-        console.log(response);
-      }
-    })
     .catch(function (error) {
       console.log(error);
     });
