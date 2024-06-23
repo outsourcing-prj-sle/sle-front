@@ -113,7 +113,7 @@
             </p>
             <div class="flex gap-[20px] p-[20px]">
               <div class="flex gap-[10px]">
-                <input type="radio" id="question01_1" name="question01" />
+                <input type="radio" id="question01_1" name="question01" v-model="qesAnswer1" value="1" required />
                 <label for="question01_1" class="pr-[50px] cursor-pointer">
                   <img
                     class="w-[170px] h-[32px]"
@@ -123,7 +123,7 @@
                 </label>
               </div>
               <div class="flex gap-[10px]">
-                <input type="radio" id="question01_2" name="question01" />
+                <input type="radio" id="question01_2" name="question01" v-model="qesAnswer1" value="2" required />
                 <label for="question01_2" class="pr-[50px] cursor-pointer">
                   <img
                     class="w-[170px] h-[32px]"
@@ -133,7 +133,7 @@
                 </label>
               </div>
               <div class="flex gap-[10px]">
-                <input type="radio" id="question01_3" name="question01" />
+                <input type="radio" id="question01_3" name="question01" v-model="qesAnswer1" value="3" required />
                 <label for="question01_3" class="pr-[50px] cursor-pointer">
                   <img
                     class="w-[170px] h-[32px]"
@@ -150,25 +150,25 @@
               </p>
               <div class="flex flex-col gap-[20px] p-[20px]">
                 <div>
-                  <input type="checkbox" id="question02_1" name="question02" />
+                  <input type="checkbox" id="question02_1" name="question02" v-model="qesAnswer2" value="1" required />
                   <label for="question02_1" class="pr-[50px] cursor-pointer">
                     내면화 행동 문제
                   </label>
                 </div>
                 <div>
-                  <input type="checkbox" id="question02_2" name="question02" />
+                  <input type="checkbox" id="question02_2" name="question02" v-model="qesAnswer2" value="2" required />
                   <label for="question02_2" class="pr-[50px] cursor-pointer">
                     외현화 행동 문제
                   </label>
                 </div>
                 <div>
-                  <input type="checkbox" id="question02_3" name="question02" />
+                  <input type="checkbox" id="question02_3" name="question02" v-model="qesAnswer2" value="3" required />
                   <label for="question02_3" class="pr-[50px] cursor-pointer">
                     감정지식
                   </label>
                 </div>
                 <div>
-                  <input type="checkbox" id="question02_4" name="question02" />
+                  <input type="checkbox" id="question02_4" name="question02" v-model="qesAnswer2" value="4" required />
                   <label for="question02_4" class="pr-[50px] cursor-pointer">
                     성장 마인드 셋
                   </label>
@@ -181,6 +181,7 @@
                 class="w-full border border-gray-300 px-[20px] py-[10px] mt-[20px] h-[136px]"
                 name="question03"
                 id="question03"
+                v-model="qesAnswer3" required
               ></textarea>
             </div>
           </div>
@@ -312,7 +313,9 @@ export default {
     const stdAry = ref([]); // 계산값
     const stdAddAry = ref([]); // 평균 + 계산값 (표)
     const stdColorAry = ref([]); // 계산값 표에넣을 색깔로
-
+    const qesAnswer1 = ref();
+    const qesAnswer2 = ref([]);
+    const qesAnswer3 = ref();
     const isOpen = ref([false, false, false, false]);
 
     onMounted(async () => {
@@ -324,7 +327,7 @@ export default {
       const mySELResponse = await UserService.getMySEL();
       const resData = mySELResponse.data;
 
-      console.log(resData);
+      // console.log(resData);
 
       if (resData.error) {
         alert(resData.error);
@@ -349,7 +352,7 @@ export default {
       optionsObj.value = tmpObj;
 
       selectedOption.value = tmpAry[0];
-      console.log(selectedOption.value);
+      // console.log(selectedOption.value);
       // todo :selectopton.value[현재학생 `${d.name}(${d.email})`] 로 userId얻고 그거로 데이터 호출
     };
 
@@ -363,7 +366,7 @@ export default {
             id: optionsObj.value[selectedOption.value].userId,
           });
           const resData = resUserIDTT.data;
-          console.log(resData);
+          // console.log(resData);
 
           // if(resData === {}) alert('설문을 완료하지 못한 한색입니다.')
           EBP.value = resData.EBP;
@@ -457,7 +460,7 @@ export default {
     };
 
     const handleChartRender = (chart) => {
-      console.log(chart);
+      // console.log(chart);
     };
 
     const colorToKor1 = (color) => {
@@ -467,8 +470,35 @@ export default {
       return result;
     };
 
-    const submitInfo = () => {
-      alert('제출 완료되었습니다!');
+    const submitInfo = async () => {
+      if(!qesAnswer1.value) {
+        alert('Q1번을 선택해주세요.');
+        return;
+      }
+
+      if(!qesAnswer2.value.length) {
+        alert('Q2번을 선택해주세요.');
+        return;
+      }
+
+      if(!qesAnswer3.value) {
+        alert('Q3번을 선택해주세요.');
+        return;
+      }
+
+      const submitReponse = await UserService.insertReseachResult({
+        id : optionsObj.value[selectedOption.value].userId,
+        qesAnswer : `${qesAnswer1.value}/${qesAnswer2.value}/${qesAnswer3.value}`,
+      });
+
+      const resData = submitReponse.data;
+
+      if(resData.error) {
+        alert(resData.error);
+        return;
+      }
+
+      alert('설문이 저장되었습니다!');
     };
 
     const openTip = (i) => {
@@ -476,6 +506,9 @@ export default {
     };
 
     return {
+      qesAnswer1,
+      qesAnswer2,
+      qesAnswer3,
       options,
       selectedOption,
       infoArr,

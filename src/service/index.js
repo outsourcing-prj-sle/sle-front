@@ -19,7 +19,7 @@ try {
 }
 
 const apiClient = axios.create({
-  // baseURL: 'https://domain/api1234',
+  // baseURL: 'https://domain/api',
   baseURL: 'http://localhost:5173/api',
   // baseURL: 'http://1.213.164.252:60080/api',
   headers: {

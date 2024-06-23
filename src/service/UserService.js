@@ -57,6 +57,11 @@ const updateUserInfo = (data = {}) => {
   return apiClient.put(baseURL + '/update', data);
 };
 
+// AI분석 의견조사 결과 등록
+const insertReseachResult = (data = {}) => {
+  return apiClient.put(baseURL + '/research', data);
+};
+
 export default {
   login,
   myInfo,
@@ -65,4 +70,5 @@ export default {
   getMySEL,
   userIDTT,
   updateUserInfo,
+  insertReseachResult
 };
