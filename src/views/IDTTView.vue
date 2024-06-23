@@ -36,8 +36,25 @@
           @update:selectedOption="handleSelection"
         />
       </div>
-
-      <div class="mt-4 w-full text-left">
+      <div class="mt-4 w-full text-left" v-if="!needReport">
+        <b class="text-xl">
+          <span class="text-blue-500">{{ name }} 학생</span>의 사회정서학습 역량
+        </b>
+        <div
+          class="flex flex-col flex-1 justify-center text-center items-center mt-20"
+        >
+          <img
+            class="w-[181px] h-[181px]"
+            src="../assets/img/no_data.png"
+            alt="no_data"
+          />
+          <span class="mt-20">
+            해당 학생은 SEL활동에 참여하지 않아 불러올 데이터가 없습니다.<br />
+            참여 유도 후 재시도 바랍니다.
+          </span>
+        </div>
+      </div>
+      <div class="mt-4 w-full text-left" v-else>
         <b class="text-xl">
           <span class="text-blue-500">{{ name }} 학생</span>의 사회정서학습 역량
         </b>
@@ -54,7 +71,6 @@
         </div>
         <b class="text-xl">*역량별 상세 안내</b>
 
-        <!-- 반복인듯 -->
         <template
           v-for="(data, index) in IDTTDic.text"
           :key="`${index}${data.title}`"
@@ -113,7 +129,14 @@
             </p>
             <div class="flex gap-[20px] p-[20px]">
               <div class="flex gap-[10px]">
-                <input type="radio" id="question01_1" name="question01" v-model="qesAnswer1" value="1" required />
+                <input
+                  type="radio"
+                  id="question01_1"
+                  name="question01"
+                  v-model="qesAnswer1"
+                  value="1"
+                  required
+                />
                 <label for="question01_1" class="pr-[50px] cursor-pointer">
                   <img
                     class="w-[170px] h-[32px]"
@@ -123,7 +146,14 @@
                 </label>
               </div>
               <div class="flex gap-[10px]">
-                <input type="radio" id="question01_2" name="question01" v-model="qesAnswer1" value="2" required />
+                <input
+                  type="radio"
+                  id="question01_2"
+                  name="question01"
+                  v-model="qesAnswer1"
+                  value="2"
+                  required
+                />
                 <label for="question01_2" class="pr-[50px] cursor-pointer">
                   <img
                     class="w-[170px] h-[32px]"
@@ -133,7 +163,14 @@
                 </label>
               </div>
               <div class="flex gap-[10px]">
-                <input type="radio" id="question01_3" name="question01" v-model="qesAnswer1" value="3" required />
+                <input
+                  type="radio"
+                  id="question01_3"
+                  name="question01"
+                  v-model="qesAnswer1"
+                  value="3"
+                  required
+                />
                 <label for="question01_3" class="pr-[50px] cursor-pointer">
                   <img
                     class="w-[170px] h-[32px]"
@@ -150,25 +187,53 @@
               </p>
               <div class="flex flex-col gap-[20px] p-[20px]">
                 <div>
-                  <input type="checkbox" id="question02_1" name="question02" v-model="qesAnswer2" value="1" required />
+                  <input
+                    type="checkbox"
+                    id="question02_1"
+                    name="question02"
+                    v-model="qesAnswer2"
+                    value="1"
+                    required
+                  />
                   <label for="question02_1" class="pr-[50px] cursor-pointer">
                     내면화 행동 문제
                   </label>
                 </div>
                 <div>
-                  <input type="checkbox" id="question02_2" name="question02" v-model="qesAnswer2" value="2" required />
+                  <input
+                    type="checkbox"
+                    id="question02_2"
+                    name="question02"
+                    v-model="qesAnswer2"
+                    value="2"
+                    required
+                  />
                   <label for="question02_2" class="pr-[50px] cursor-pointer">
                     외현화 행동 문제
                   </label>
                 </div>
                 <div>
-                  <input type="checkbox" id="question02_3" name="question02" v-model="qesAnswer2" value="3" required />
+                  <input
+                    type="checkbox"
+                    id="question02_3"
+                    name="question02"
+                    v-model="qesAnswer2"
+                    value="3"
+                    required
+                  />
                   <label for="question02_3" class="pr-[50px] cursor-pointer">
                     감정지식
                   </label>
                 </div>
                 <div>
-                  <input type="checkbox" id="question02_4" name="question02" v-model="qesAnswer2" value="4" required />
+                  <input
+                    type="checkbox"
+                    id="question02_4"
+                    name="question02"
+                    v-model="qesAnswer2"
+                    value="4"
+                    required
+                  />
                   <label for="question02_4" class="pr-[50px] cursor-pointer">
                     성장 마인드 셋
                   </label>
@@ -181,7 +246,8 @@
                 class="w-full border border-gray-300 px-[20px] py-[10px] mt-[20px] h-[136px]"
                 name="question03"
                 id="question03"
-                v-model="qesAnswer3" required
+                v-model="qesAnswer3"
+                required
               ></textarea>
             </div>
           </div>
@@ -317,9 +383,14 @@ export default {
     const qesAnswer2 = ref([]);
     const qesAnswer3 = ref();
     const isOpen = ref([false, false, false, false]);
+    const needReportAry = ref([]); // 설문 안한사람들 저장
 
     onMounted(async () => {
       await fetchData();
+    });
+
+    const needReport = computed(() => {
+      return needReportAry.value.includes(selectedOption.value);
     });
 
     // 학생 리스트
@@ -336,20 +407,26 @@ export default {
 
       const infoArr = resData.infoArr;
 
+      let tmpNeedReportAry = [];
       let tmpAry = [];
       let tmpObj = {};
       for (let i in infoArr) {
         let d = infoArr[i];
         let stateList = d.stateList;
-        if (!stateList['마음알기 설문1']) continue;
-        if (!stateList['마음알기 설문2']) continue;
-        if (!stateList['마음알기 설문3']) continue;
+        if (
+          !stateList['마음알기 설문1'] ||
+          !stateList['마음알기 설문2'] ||
+          !stateList['마음알기 설문3']
+        ) {
+          tmpNeedReportAry.push(`${d.name}(${d.email})`);
+        }
 
         tmpAry.push(`${d.name}(${d.email})`);
         tmpObj[`${d.name}(${d.email})`] = d;
       }
       options.value = tmpAry;
       optionsObj.value = tmpObj;
+      needReportAry.value = tmpNeedReportAry;
 
       selectedOption.value = tmpAry[0];
       // console.log(selectedOption.value);
@@ -471,29 +548,29 @@ export default {
     };
 
     const submitInfo = async () => {
-      if(!qesAnswer1.value) {
+      if (!qesAnswer1.value) {
         alert('Q1번을 선택해주세요.');
         return;
       }
 
-      if(!qesAnswer2.value.length) {
+      if (!qesAnswer2.value.length) {
         alert('Q2번을 선택해주세요.');
         return;
       }
 
-      if(!qesAnswer3.value) {
+      if (!qesAnswer3.value) {
         alert('Q3번을 선택해주세요.');
         return;
       }
 
       const submitReponse = await UserService.insertReseachResult({
-        id : optionsObj.value[selectedOption.value].userId,
-        qesAnswer : `${qesAnswer1.value}/${qesAnswer2.value}/${qesAnswer3.value}`,
+        id: optionsObj.value[selectedOption.value].userId,
+        qesAnswer: `${qesAnswer1.value}/${qesAnswer2.value}/${qesAnswer3.value}`,
       });
 
       const resData = submitReponse.data;
 
-      if(resData.error) {
+      if (resData.error) {
         alert(resData.error);
         return;
       }
@@ -529,6 +606,7 @@ export default {
       submitInfo,
       isOpen,
       openTip,
+      needReport,
     };
   },
 };
