@@ -437,15 +437,22 @@ export default {
       () => [selectedOption.value],
       async () => {
         if (selectedOption.value) {
+          if (!optionsObj.value[selectedOption.value].userId) {
+            alert('설문을 완료하지 못한 학생입니다.');
+            return;
+          }
           isOpen.value = [false, false, false, false];
           name.value = optionsObj.value[selectedOption.value].name;
           const resUserIDTT = await UserService.userIDTT({
             id: optionsObj.value[selectedOption.value].userId,
           });
           const resData = resUserIDTT.data;
-          // console.log(resData);
+          console.log(resData);
 
-          // if(resData === {}) alert('설문을 완료하지 못한 한색입니다.')
+          if (!resData.EBP || !resData.EK || !resData.GM || !resData.IBP) {
+            alert('설문을 완료하지 못한 학생입니다.');
+            return;
+          }
           EBP.value = resData.EBP;
           EK.value = resData.EK;
           GM.value = resData.GM;
