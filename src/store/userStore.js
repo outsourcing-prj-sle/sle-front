@@ -10,6 +10,7 @@ export const useUserStore = defineStore('user', {
   }),
   actions: {
     init(data) {
+      this.accessToken = data.accessToken;
       this.token = data.token;
       this.id = data.id;
       this.type = data.type;
