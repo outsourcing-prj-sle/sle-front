@@ -19,9 +19,10 @@ try {
 }
 
 const apiClient = axios.create({
-  // baseURL: 'https://domain/api1234',
-  baseURL: 'http://localhost:5173/api',
-  // baseURL: 'http://1.213.164.252:60080/api',
+  baseURL:
+    process.env.VUE_APP_PRODUCTION === 'live'
+      ? 'http://1.213.164.252:60080/api'
+      : 'http://localhost:5173/api',
   headers: {
     'Content-Type': 'application/json',
   },

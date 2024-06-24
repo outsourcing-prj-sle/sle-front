@@ -6,9 +6,13 @@ import UserService from '@/service/UserService.js';
  * @returns {Promise<void>}
  */
 async function methods_naverLogin() {
-  const redirectUri = process.env.VUE_APP_REDIRECT_URI;
+  const redirectUri =
+    process.env.VUE_APP_PRODUCTION === 'live'
+      ? process.env.VUE_APP_REDIRECT_URI
+      : 'http://localhost:5173/naver/callback';
   const state = process.env.VUE_APP_STATE;
   const clientId = process.env.VUE_APP_CLIENT_ID;
+
   const apiUrl = `https://auth.whalespace.io/oauth2/v1.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${state}`;
   const popup = window.open(apiUrl, 'NaverLogin', 'width=600,height=700');
 }
