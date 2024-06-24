@@ -44,8 +44,7 @@
         />
         <StudentResigtPopup4
           v-else-if="loginType === 'student' && step === 4"
-          :userInfo="userInfo"
-          @openWhaleProfile="openWhaleProfile"
+          @finRegist="finRegist"
         />
       </div>
 
@@ -172,6 +171,7 @@ export default {
     };
 
     const finRegist = async () => {
+      console.log('yhs :: finRegist');
       const _gender = gender.value || 'F';
       const _birthday = `${year.value || '2000'}${month.value || '01'}01`;
 
@@ -181,6 +181,7 @@ export default {
         sex: _gender, // 성별 - todo : 구분자 알아야함 - f / m
         brthdy: _birthday,
       });
+      userStore.finRegistered();
     };
 
     const changeGender = (v) => {
