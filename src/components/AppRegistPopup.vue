@@ -141,8 +141,7 @@ export default {
       if (
         loginType.value === 'student' &&
         step.value === 3 &&
-        !year.value &&
-        !month.value
+        !(year.value && month.value)
       ) {
         flag = '태어난 년도와 월을 선택해주세요.';
       }
