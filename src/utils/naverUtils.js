@@ -6,8 +6,8 @@ import UserService from '@/service/UserService.js';
  * @returns {Promise<void>}
  */
 async function methods_naverLogin() {
-  // const redirectUri = 'http://1.213.164.252:60080/naver/callback';
-  const redirectUri = 'http://localhost:5173/naver/callback';
+  const redirectUri = 'http://1.213.164.252:60080/naver/callback'; // todo  << 적용
+  // const redirectUri = 'http://localhost:5173/naver/callback';
   const state = 'RANDOM_STATE_STRING';
   const clientId = 'iymVHli6FerqTAKqTnNV';
   const apiUrl = `https://auth.whalespace.io/oauth2/v1.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${state}`;
