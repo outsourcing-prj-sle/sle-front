@@ -5,7 +5,7 @@ export const useUserStore = defineStore('user', {
     token: '',
     id: '',
     type: '',
-    isRegistered: false,
+    isRegistered: true,
     extra: {},
   }),
   actions: {

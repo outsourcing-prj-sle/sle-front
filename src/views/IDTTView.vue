@@ -390,7 +390,7 @@ export default {
     });
 
     const needReport = computed(() => {
-      return needReportAry.value.includes(selectedOption.value);
+      return !needReportAry.value.includes(selectedOption.value);
     });
 
     // 학생 리스트
