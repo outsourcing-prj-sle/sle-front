@@ -35,10 +35,13 @@
         />
         <StudentResigtPopup2
           v-else-if="loginType === 'student' && step === 2"
+          :_gender="gender"
           @changeGender="changeGender"
         />
         <StudentResigtPopup3
           v-else-if="loginType === 'student' && step === 3"
+          :_year="year"
+          :_month="month"
           @changeYear="changeYear"
           @changeMonth="changeMonth"
         />
@@ -171,7 +174,6 @@ export default {
     };
 
     const finRegist = async () => {
-      console.log('yhs :: finRegist');
       const _gender = gender.value || 'F';
       const _birthday = `${year.value || '2000'}${month.value || '01'}01`;
 
@@ -202,6 +204,9 @@ export default {
       needNext,
       step,
       userInfo,
+      gender,
+      month,
+      year,
 
       openWhaleProfile,
       stepNext,

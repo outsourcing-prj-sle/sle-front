@@ -29,12 +29,22 @@ export default {
   components: {
     AppDropdown,
   },
+  props: {
+    _year: {
+      type: String,
+      default: '',
+    },
+    _month: {
+      type: String,
+      default: '',
+    },
+  },
   setup(props, { emit }) {
     const year = ref();
     const month = ref();
 
     const options = ref(['2014', '2015', '2016']);
-    const selectedOption = ref('');
+    const selectedOption = ref(props._year || '년도');
 
     const options2 = ref([
       '01',
@@ -50,7 +60,7 @@ export default {
       '11',
       '12',
     ]);
-    const selectedOption2 = ref('');
+    const selectedOption2 = ref(props._month || '월');
 
     onMounted(() => {
       const currentYear = new Date().getFullYear();
@@ -59,11 +69,6 @@ export default {
         yearsArray.push(i.toString());
       }
       options.value = yearsArray.reverse();
-      selectedOption.value = options.value[0];
-      emit('changeYear', options.value[0]);
-
-      selectedOption2.value = options2.value[0];
-      emit('changeMonth', options2.value[0]);
     });
 
     const handleSelection1 = (v) => {

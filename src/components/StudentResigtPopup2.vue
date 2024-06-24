@@ -40,10 +40,20 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 export default {
+  props: {
+    _gender: {
+      type: String,
+      default: '',
+    },
+  },
   setup(props, { emit }) {
-    const gender = ref();
+    const gender = ref(props._gender);
+    onMounted(() => {
+      console.log('props._gender');
+      console.log(props._gender);
+    });
     watch(gender, (newValue, oldValue) => {
       emit('changeGender', newValue);
     });
