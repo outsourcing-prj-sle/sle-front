@@ -47,7 +47,7 @@ function logoutWhalespace() {
   const popup = window.open(apiUrl, 'NaverLogin', 'width=600,height=700');
   setTimeout(() => {
     popup.close();
-  }, 250);
+  }, 500);
 }
 
 export { methods_naverLogin, handleNaverCallback, logoutWhalespace };
