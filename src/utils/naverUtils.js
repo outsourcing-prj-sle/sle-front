@@ -35,4 +35,19 @@ async function handleNaverCallback(code, state) {
     });
 }
 
-export { methods_naverLogin, handleNaverCallback };
+function logoutWhalespace() {
+  const redirectUri =
+    process.env.VUE_APP_PRODUCTION === 'live'
+      ? process.env.VUE_APP_REDIRECT_URI
+      : 'http://localhost:5173/naver/callback';
+  const state = process.env.VUE_APP_STATE;
+  const clientId = process.env.VUE_APP_CLIENT_ID;
+
+  const apiUrl = `https://auth.whalespace.io/logout?response_type=code&client_id=${clientId}&state=${state}`;
+  const popup = window.open(apiUrl, 'NaverLogin', 'width=600,height=700');
+  setTimeout(() => {
+    popup.close();
+  }, 250);
+}
+
+export { methods_naverLogin, handleNaverCallback, logoutWhalespace };

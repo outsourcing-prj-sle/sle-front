@@ -103,6 +103,7 @@
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
+import { logoutWhalespace } from '@/utils/naverUtils';
 
 export default {
   setup() {
@@ -123,6 +124,8 @@ export default {
     };
 
     const logout = () => {
+      logoutWhalespace();
+
       userStore.logout();
       router.push({ name: 'login' });
     };
