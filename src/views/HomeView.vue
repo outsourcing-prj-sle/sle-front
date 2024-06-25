@@ -67,6 +67,7 @@
       <!-- 목록2 -->
       <div
         class="flex gap-5 justify-between items-start w-full max-md:max-w-full mt-24"
+        v-if="bottomList.length"
       >
         <div class="flex flex-col mt-2.5 text-neutral-700">
           <div class="text-xl text-left font-bold">
@@ -82,6 +83,7 @@
         </div>
       </div>
       <AppCardItem
+        v-if="bottomList.length"
         :options="2"
         :list="bottomList"
         @_goReportNotice="goReportNotice"
