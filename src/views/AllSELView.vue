@@ -116,7 +116,7 @@
             </tbody>
             <tbody class="" v-else>
               <template v-for="(info, i) in infoArr" :key="`${info.name}${i}`">
-                <tr class="w-full border-b border-solid border-stone-200">
+                <tr v-if="i < idx" class="w-full border-b border-solid border-stone-200">
                   <td class="my-auto text-neutral-700 px-2 py-2.5 w-[50px]">
                     {{ i + 1 }}
                   </td>
@@ -171,6 +171,9 @@ export default {
     const titleArr = ref([]);
     const titleReportArr = ref([]);
     const showOnlyNon = ref(false);
+    const idx = ref(10);
+    const max = ref(0);
+    const height = ref(0);
 
     const reportList = ref(['전체']);
     const selectedReport = ref('전체');
@@ -181,6 +184,9 @@ export default {
 
     onMounted(() => {
       fetchReportList();
+
+      height.value = window.innerHeight;
+      window.addEventListener('scroll', infiniteScroll);
     });
 
     const handleSelection = (option) => {
@@ -221,7 +227,18 @@ export default {
         };
 
         infoArr.value.push(info);
+        infoArr.value.push(info);
+        infoArr.value.push(info);
+        infoArr.value.push(info);
+        infoArr.value.push(info);
+        infoArr.value.push(info);
+        infoArr.value.push(info);
+        infoArr.value.push(info);
+        infoArr.value.push(info);
+        infoArr.value.push(info);
       });
+
+      max.value = infoArr.value.length;
 
       setTitleList();
     };
@@ -278,6 +295,20 @@ export default {
       }
     };
 
+    const infiniteScroll = () => {
+      if(idx.value > max.value) {
+        return;
+      }
+
+      console.log(window.scrollY);
+      console.log(height.value);
+
+      if(window.scrollY >= height.value - 500) {
+        idx.value += 10;
+        height.value += 500;
+      }
+    }
+
     return {
       reportList,
       selectedReport,
@@ -287,11 +318,15 @@ export default {
       titleReportArr,
       handleReportSelection,
       showOnlyNon,
+      idx,
+      max,
+      height,
 
       options,
       selectedOption,
       handleSelection,
       downloadExcel,
+      infiniteScroll
     };
   },
 };
