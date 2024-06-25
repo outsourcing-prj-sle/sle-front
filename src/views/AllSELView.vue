@@ -144,7 +144,7 @@
           </div>
         </div>
         <div class="flex justify-center m-2">
-          <button class="m-2 p-2 w-full bg-blue-500 text-white rounded-lg" @click="infiniteScroll">더보기</button>
+          <button v-if="idx < max" class="m-2 p-2 w-full bg-blue-500 text-white rounded-lg" @click="infiniteScroll">더보기</button>
         </div>
       </div>
       <div
@@ -228,15 +228,6 @@ export default {
           stateList: item.stateList,
         };
 
-        infoArr.value.push(info);
-        infoArr.value.push(info);
-        infoArr.value.push(info);
-        infoArr.value.push(info);
-        infoArr.value.push(info);
-        infoArr.value.push(info);
-        infoArr.value.push(info);
-        infoArr.value.push(info);
-        infoArr.value.push(info);
         infoArr.value.push(info);
       });
 
