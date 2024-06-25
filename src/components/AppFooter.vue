@@ -1,27 +1,35 @@
 <template>
     <footer
-      class="flex flex-col justify-center mt-10 w-full text-base text-white bg-zinc-500 max-md:mt-10 max-md:max-w-full"
+      class="flex flex-col justify-center mt-10 w-full text-base text-black max-md:mt-10 max-md:max-w-full"
       v-if="showFooter"
     >
       <div
-        class="flex flex-col px-20 py-9 w-full bg-sky-800 border-t border-solid border-zinc-100 max-md:px-5 max-md:max-w-full"
+        class="flex flex-col px-20 py-9 w-full border-t border-solid border-zinc-100 max-md:px-5 max-md:max-w-full"
       >
         <div
           class="flex justify-between gap-5 mt-2 max-md:flex-wrap max-md:max-w-full items-center"
         >
-          <div class="my-auto max-md:max-w-full text-left">
-            <div>개인정보처리방침</div>
+          <div class="my-auto max-md:max-w-full text-left font-bold">
+            <div class="mb-[20px]">개인정보처리방침</div>
             <div>
-              세종특별자치시 남세종로 446 스마트허브4차 504호<br>TEL : 044-715-7915
+              (51430) 경남 창원시 성산구 중앙대로 241
+            </div>
+            <div class="flex gap-[10px]">
+              <div>
+                대표전화 055)268-1004
+              </div>
+              <div>
+                팩스 055)268-1400)
+              </div>
             </div>
             <div>
-              FAX : 070-4324-7900<br>COPYRIGHT© DATAEUM 2024. ALL RIGHT RESERVED.
+              Copyright© Gyeongsangnamdo office of education all rights reserved.
             </div>
           </div>
           <img
             src="./../assets/img/logo_company.png"
             alt="logo"
-            class="shrink-0 max-w-full aspect-[3.57] h-[65px]"
+            class="h-full"
           />
         </div>
       </div>
