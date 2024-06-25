@@ -6,16 +6,9 @@
     >
       <div class="flex flex-col my-auto">
         <p class="mt-4 text-base font-medium text-left">
-          <span class="font-bold text-xl">사회정서학습</span>은 미국 ‘학업 및
-          사회정서학습협회‘(Collaborative for Academic, Social, and Emotional
-          Learning: CASEL)가 제안한 자기인식, 자기관리, 사회적 인식, 관계기술,
-          책임 있는 의사결정 5가지 사회정서학습 역량과 우리나라 2015 개정
-          교육과정의 6가지 핵심역량과 연관성이 있는 역량인 자기관리, 의사소통,
-          심미적 감성, 공동체 역량 4가지로 구성되어 있고, 일부의 개념요소가
-          반영되어 있습니다. 사회정서학습은 자신의 감정과 느낌을 이해하고
-          다루며, 긍정적인 목표를 설정하여 성취하고, 타인을 공감하며 긍정적인
-          관계를 맺고 유지하며 공동체 구성원으로서 더불어 살아가는데 필요한
-          역량입니다.
+          <span class="font-bold text-xl">학습성향</span>은 학생 개개의 성격적 특성에 따라 학습을 수행하는 태도, 
+          습관 및 특징 등이 고려된 고유한 개념입니다. 본 학습성향은 Big 5 성격이론 등을 기반으로 구성되었으며 각 특성은 고유한 학습적 성향이고, 
+          좋고 나쁨의 개념이 아닙니다. 학습성향에 따라 학습적 성향의 특성과 지도 Tip를 제안하고 있으니 이를 참고하여 주시기 바랍니다.
         </p>
       </div>
       <img
@@ -36,9 +29,59 @@
           @update:selectedOption="handleSelection"
         />
       </div>
-      <div class="mt-4 w-full text-left" v-if="!needReport">
+      <!-- <div class="mt-4 w-full text-left" v-if="!needReport"> -->
+      <div class="mt-4 w-full text-left">
         <b class="text-xl">
-          <span class="text-blue-500">{{ name }} 학생</span>의 사회정서학습 역량
+          <span class="text-blue-500">학급</span> 학습성향
+        </b>
+        <div
+          class="flex flex-col flex-1 justify-center text-center items-center mt-20"
+        >
+          <img
+            class="w-[181px] h-[181px]"
+            src="@/assets/img/no_data.png"
+            alt="no_data"
+          />
+          <span class="mt-20">
+            해당 학급은 SEL활동에 참여하지 않아 불러올 데이터가 없습니다.<br />
+            참여 유도 후 재시도 바랍니다.
+          </span>
+        </div>
+      </div>
+      <!-- <div class="mt-4 w-full text-left" v-else> -->
+      <div class="mt-4 w-full text-left">
+        <b class="text-xl">
+          <span class="text-blue-500">학급</span> 학습성향
+        </b>
+        <div class="w-full text-center items-center flex justify-center">
+          <Radar
+            :data="_chartData"
+            :options="_chartOptions"
+            :style="{
+              height: '400px',
+              position: 'relative',
+            }"
+            @chart:render="handleChartRender"
+          />
+        </div>
+      </div>
+    </section>
+    <section
+      class="flex flex-col px-20 mt-7 w-full text-base max-md:px-5 max-md:max-w-full"
+    >
+      <div class="w-[300px] flex justify-start">
+        <AppDropdown
+          v-if="selectedOption"
+          :options="options"
+          :startText="options[0]"
+          :openWay="'left'"
+          @update:selectedOption="handleSelection"
+        />
+      </div>
+      <!-- <div class="mt-4 w-full text-left" v-if="!needReport"> -->
+      <div class="mt-4 w-full text-left">
+        <b class="text-xl">
+          <span class="text-blue-500">{{ name }} 학생</span>의 학습성향 그래프
         </b>
         <div
           class="flex flex-col flex-1 justify-center text-center items-center mt-20"
@@ -54,9 +97,10 @@
           </span>
         </div>
       </div>
-      <div class="mt-4 w-full text-left" v-else>
+      <!-- <div class="mt-4 w-full text-left" v-else> -->
+      <div class="mt-4 w-full text-left">
         <b class="text-xl">
-          <span class="text-blue-500">{{ name }} 학생</span>의 사회정서학습 역량
+          <span class="text-blue-500">{{ name }} 학생</span>의 학습성향 그래프
         </b>
         <div class="w-full text-center items-center flex justify-center">
           <Radar
@@ -69,63 +113,33 @@
             @chart:render="handleChartRender"
           />
         </div>
-        <b class="text-xl">*역량별 상세 안내</b>
-
-        <template
-          v-for="(data, index) in IDTTDic.text"
-          :key="`${index}${data.title}`"
-        >
-          <p>
-            <span class="text-blue-500 font-medium">{{ data.title }}</span
-            >{{ data.description }}
-          </p>
-          <div class="flex gap-[5px] items-end my-[20px]">
-            <img
-              v-if="stdColorAry[index]"
-              class="w-[72px] h-[72px]"
-              :src="
-                require(`@/assets/img/idtt-result-${stdColorAry[index]}.png`)
-              "
-              alt="평균"
-            />
-            <p class="text-xl font-semibold">
-              분석결과:{{ colorToKor1(stdColorAry[index]) }}
-            </p>
+        <b class="text-xl my-[20px]">*성향별 상세 안내</b>
+        <div class="mb-[40px]">
+          <p class="my-[10px] font-medium text-xl">학습 콘텐츠를 건너뛰며 점검하는 성향</p>
+          <div class="p-[10px] border-gray-300 border-2 rounded-xl mb-[10px]">
+            <p>이 학생들은 학습 활동의 순서에 얽매이지 않고 스스로 자유롭게 학습하고자 하는 성향입니다 이 유형이 높을수록 학습내용을 대충 넘기거나 훑어보기 때문에 학습을 건너뛰거나 요점을 파악하는데 어려움이 있을 수 있습니다. 스스로 흥미가 있는 분야에서는 집중력 있게 높은 수행을 보일 수도 있습니다. 학생이 흥미가 있는 영역부터 단계적으로 학습할 수 있도록 도와주세요.</p>
           </div>
-          <div
-            class="w-full border border-gray-300 px-[21px] py-[20px] rounded-xl"
-          >
-            <p class="font-semibold">
-              {{ data[stdColorAry[index]] }}
-            </p>
+        </div>
+        <div class="mb-[40px]">
+          <p class="my-[10px] font-medium text-xl">신속하게 과제를 수행하는 성향</p>
+          <div class="p-[10px] border-gray-300 border-2 rounded-xl mb-[10px]">
+            <p>이 학생들은 자신이 계획한 목표를 실행하기 위해서 과제의 제출 마감시간을 잘 지키고 신속하게 학업을 수행하려고 하는 성향입니다. 이 유형이 높을수록 목표지향적이고 학습 효율이 높을 수 있으나 너무 급하게 학업을 진행하여서 학업 완성도가 낮아질 수 있습니다. 학업을 수행할 때 학습진도나 학습 목차를 찬찬히 살펴보고 단계적 계획을 실천할 수 있도록 도와주세요. 또한, 스스로 생각하는 시간을 충분히 가지도록 돕는 것도 좋은 방법입니다.</p>
           </div>
-          <div
-            class="my-[10px] flex justify-between"
-            @click="() => openTip(index)"
-          >
-            <p class="font-bold text-xl text-amber-500">교사의 생활지도 tip</p>
-            <p class="text-blue-500 pr-2">
-              {{ !isOpen[index] ? '열기' : '닫기' }}
-            </p>
+        </div>
+        <div class="mb-[40px]">
+          <p class="my-[10px] font-medium text-xl">독립적으로 학습하는 성향</p>
+          <div class="p-[10px] border-gray-300 border-2 rounded-xl mb-[10px]">
+            <p>이 학생들은 혼자 학습하는 것을 선호하는 성향입니다. 이 유형이 높을수록 타인의 시선을 의식하지 않고 자기 주도적이며 독립적 학습이 가능한 반면 협동과제나 그룹활동에서는 어려움을 경험할 수 있습니다. 이야기방 활동이나 톡톡 AI도움쌤 등의 기능을 적극적으로 활용하여 소통적 참여를 할 수 있도록 도와주세요.</p>
           </div>
-
-          <div
-            class="w-full font-semibold border border-gray-300 px-[21px] py-[20px] rounded-xl mb-[50px]"
-            v-if="isOpen[index]"
-            v-html="data.tip"
-          ></div>
-          <div class="mb-20"></div>
-        </template>
-
+        </div>
         <div>
           <p>
             <span class="text-blue-500 font-medium">{{ name }} 학생</span>의
-            사회정서학습 AI분석 의견조사
+            학습성향 AI분석 의견조사
           </p>
           <div class="my-[20px]">
             <p>
-              Q1. AI가 진단한 피드백 내용과 오프라인에서 살펴본 학생에 대한
-              선생님의 의견이 얼마나 일치하였나요?*
+              Q1. AI가 진단한 피드백 내용과 오프라인에서 살펴본 학생에 대한 선생님의 의견이 얼마나 일치하였나요?*
             </p>
             <div class="flex gap-[20px] p-[20px]">
               <div class="flex gap-[10px]">
@@ -182,8 +196,7 @@
             </div>
             <div class="my-[20px]">
               <p>
-                Q2. 일치하지 않는다면 어느 유형이 일치하지 않았나요?* (중복선택
-                가능)
+                Q2. 일치하지 않는다면 어느 유형이 일치하지 않았나요?* (중복선택 가능)
               </p>
               <div class="flex flex-col gap-[20px] p-[20px]">
                 <div>
@@ -196,7 +209,7 @@
                     required
                   />
                   <label for="question02_1" class="pr-[50px] cursor-pointer">
-                    내면화 행동 문제
+                    학습 콘텐츠를 자주 보고 점검하는 성향/학습 콘텐츠를 건너뛰며 점검하는 성향
                   </label>
                 </div>
                 <div>
@@ -209,7 +222,7 @@
                     required
                   />
                   <label for="question02_2" class="pr-[50px] cursor-pointer">
-                    외현화 행동 문제
+                    신속하게 과제를 수행하는 성향/느긋하게 과제를 수행하는 성향
                   </label>
                 </div>
                 <div>
@@ -222,20 +235,7 @@
                     required
                   />
                   <label for="question02_3" class="pr-[50px] cursor-pointer">
-                    감정지식
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="question02_4"
-                    name="question02"
-                    v-model="qesAnswer2"
-                    value="4"
-                    required
-                  />
-                  <label for="question02_4" class="pr-[50px] cursor-pointer">
-                    성장 마인드 셋
+                    소통을 활발하게 하며 학습하는 성향/독립적으로 학습하는 성향
                   </label>
                 </div>
               </div>
@@ -438,7 +438,7 @@ export default {
       async () => {
         if (selectedOption.value) {
           if (!optionsObj.value[selectedOption.value].userId) {
-            alert('설문을 완료하지 못한 학생입니다.');
+            // alert('설문을 완료하지 못한 학생입니다.');
             return;
           }
           isOpen.value = [false, false, false, false];
@@ -450,7 +450,7 @@ export default {
           console.log(resData);
 
           if (!resData.EBP || !resData.EK || !resData.GM || !resData.IBP) {
-            alert('설문을 완료하지 못한 학생입니다.');
+            // alert('설문을 완료하지 못한 학생입니다.'
             return;
           }
           EBP.value = resData.EBP;

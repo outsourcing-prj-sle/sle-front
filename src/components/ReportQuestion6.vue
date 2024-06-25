@@ -43,7 +43,7 @@
       />
       <div :key="ballonKey" class="text-ballon flex gap-[5px] items-start">
         <img
-          src="../assets/img/ballon-prev.png"
+          src="@/assets/img/ballon-prev.png"
           class="w-[18px] h-[18px] mt-[2px]"
         />
         <p>눈에서 1개, 코와 입에서 1개를 각각 선택해주세요.</p>

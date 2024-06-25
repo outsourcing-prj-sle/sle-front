@@ -60,7 +60,7 @@
             묘사하는 단어는 무엇일까요?
           </p>
           <img
-            src="./../assets/img/3qexample.png"
+            src="@/assets/img/3qexample.png"
             alt="Example Image"
             class="self-center mt-6 max-w-full aspect-[2.5] w-[371px]"
           />

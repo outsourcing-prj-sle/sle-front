@@ -1,15 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
-import HomeView from '../views/HomeView.vue';
-import LoginView from '../views/LoginView.vue';
-import SignupView from '../views/SignupView.vue';
-import MySELView from '../views/MySELView.vue';
-import AllSELView from '../views/AllSELView.vue';
-import ReportFinView from '../views/ReportFinView.vue';
-import ReportNoticeView from '../views/ReportNoticeView.vue';
-import ReportQuestionView from '../views/ReportQuestionView.vue';
-import IDTTView from '../views/IDTTView.vue';
-import UpdateUserView from '../views/UpdateUserView.vue';
+import HomeView from '@/views/HomeView.vue';
+import LoginView from '@/views/LoginView.vue';
+import SignupView from '@/views/SignupView.vue';
+import MySELView from '@/views/MySELView.vue';
+import AllSELView from '@/views/AllSELView.vue';
+import ReportFinView from '@/views/ReportFinView.vue';
+import ReportNoticeView from '@/views/ReportNoticeView.vue';
+import ReportQuestionView from '@/views/ReportQuestionView.vue';
+import IDTTView from '@/views/IDTTView.vue';
+import LearnTTView from '@/views/LearnTTView.vue';
+import UpdateUserView from '@/views/UpdateUserView.vue';
 import NaverCallBackPage from '@/views/NaverCallBackPage.vue';
 
 const routes = [
@@ -60,7 +61,18 @@ const routes = [
     meta: {
       footerVisible: true,
       headerVisible: true,
-      isIDTTView: true,
+      isSocialTTView: true,
+      needLogin: true,
+    },
+  },
+  {
+    path: '/learnTT',
+    name: 'learnTT',
+    component: LearnTTView,
+    meta: {
+      footerVisible: true,
+      headerVisible: true,
+      isLearnTTView: true,
       needLogin: true,
     },
   },

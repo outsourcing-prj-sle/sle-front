@@ -27,7 +27,7 @@
             </div>
           </div>
           <img
-            src="./../assets/img/logo_company.png"
+            src="@/assets/img/logo_company.png"
             alt="logo"
             class="h-full"
           />

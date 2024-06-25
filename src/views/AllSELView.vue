@@ -63,7 +63,7 @@
         <div class="text-blue-500 cursor-pointer" @click="downloadExcel">
           <img
             class="h-[38px]"
-            src="../assets/img/btn_excel_download.png"
+            src="@/assets/img/btn_excel_download.png"
             alt="엑셀_다운로드"
           />
         </div>
@@ -161,7 +161,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
-import AppDropdown from '../components/AppDropdown.vue';
+import AppDropdown from '@/components/AppDropdown.vue';
 import UserService from '@/service/UserService';
 import { _mixDate } from '@/utils/utils';
 

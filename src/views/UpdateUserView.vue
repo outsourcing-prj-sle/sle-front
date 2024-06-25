@@ -3,7 +3,7 @@
     <div class="w-full flex justify-center my-[20px]">
       <img
         class="w-[154px] h-[154px]"
-        src="../assets/img/profile-example.png"
+        src="@/assets/img/profile-example.png"
         alt=""
       />
     </div>
