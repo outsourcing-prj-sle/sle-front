@@ -66,7 +66,7 @@
       </div>
 
       <img
-        src="./../assets/img/person_regist_icn.png"
+        src="@/assets/img/person_regist_icn.png"
         alt="person_regist_icn"
         class="self-end max-w-full h-[128px] w-[121px] absolute bottom-0 right-1.5"
       />

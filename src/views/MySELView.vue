@@ -108,7 +108,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import UserService from '@/service/UserService.js';
-import AppDropdown from '../components/AppDropdown.vue';
+import AppDropdown from '@/components/AppDropdown.vue';
 import { _mixDate } from '@/utils/utils.js';
 
 export default {

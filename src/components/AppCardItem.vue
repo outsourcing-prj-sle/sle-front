@@ -8,7 +8,7 @@
       class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5"
     >
       <img
-        src="./../assets/img/left_arrow.png"
+        src="@/assets/img/left_arrow.png"
         alt="left_arrow1"
         class="shrink-0 max-w-full"
       />
@@ -65,7 +65,7 @@
           </button>
         </div>
         <img
-          src="./../assets/img/person_icn.png"
+          src="@/assets/img/person_icn.png"
           alt="person_icn"
           class="self-end max-w-full aspect-[1.28] w-[116px] absolute bottom-0 right-1.5"
         />
@@ -77,7 +77,7 @@
       class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5"
     >
       <img
-        src="./../assets/img/right_arrow.png"
+        src="@/assets/img/right_arrow.png"
         alt="right_arrow1"
         class="shrink-0 max-w-full"
       />
@@ -92,7 +92,7 @@
       class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5"
     >
       <img
-        src="./../assets/img/left_arrow.png"
+        src="@/assets/img/left_arrow.png"
         alt="left_arrow2"
         class="shrink-0 max-w-full"
       />
@@ -118,7 +118,7 @@
           활동 참여가 완료되었어요!
         </button>
         <img
-          src="./../assets/img/person_bubble_icn.png"
+          src="@/assets/img/person_bubble_icn.png"
           alt="person_icn"
           class="self-end max-w-full aspect-[1.6] w-[170px] absolute bottom-0 right-1.5"
         />
@@ -129,7 +129,7 @@
       class="justify-center flex items-center px-5 my-auto bg-black rounded-full h-[55px] w-[55px] max-md:pr-5"
     >
       <img
-        src="./../assets/img/right_arrow.png"
+        src="@/assets/img/right_arrow.png"
         alt="right_arrow2"
         class="shrink-0 max-w-full"
       />

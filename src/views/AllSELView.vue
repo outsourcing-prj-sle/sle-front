@@ -63,82 +63,88 @@
         <div class="text-blue-500 cursor-pointer" @click="downloadExcel">
           <img
             class="h-[38px]"
-            src="../assets/img/btn_excel_download.png"
+            src="@/assets/img/btn_excel_download.png"
             alt="엑셀_다운로드"
           />
         </div>
       </div>
-      <div class="mt-4 w-full overflow-x-scroll" v-if="infoArr.length">
-        <div class="w-full">
-          <table
-            class="table-auto border-collapse w-full"
-            style="white-space: nowrap"
-          >
-            <thead>
-              <tr class="mt-5 font-semibold text-cyan-900">
-                <th class="p-2 bg-blue-100 max-md:px-5">번호</th>
-                <th
-                  class="p-2 bg-blue-100 max-md:px-5"
-                  v-for="(title, i) in titleArr"
-                  :key="`${title}${i}`"
-                >
-                  {{ title }}
-                </th>
-              </tr>
-            </thead>
-            <tbody class="" v-if="selectedReport !== '전체'">
-              <template v-for="(info, i) in infoArr" :key="`${info.name}${i}`">
-                <tr
-                  class="w-full border-b border-solid border-stone-200"
-                  v-if="
-                    !showOnlyNon ||
-                    (showOnlyNon && !info.stateList[selectedReport])
-                  "
-                >
-                  <td class="my-auto text-neutral-700 px-2 py-2.5 w-[50px]">
-                    {{ i + 1 }}
-                  </td>
-                  <td class="my-auto text-zinc-800 px-2">{{ info.name }}</td>
-                  <td class="my-auto text-zinc-800 px-2">{{ info.email }}</td>
-                  <td class="my-auto text-zinc-800 px-2">{{ info.grade }}</td>
-                  <td class="my-auto text-zinc-800 px-2">{{ info.gender }}</td>
-                  <td
-                    class="my-auto px-2"
-                    :class="{
-                      'text-red-600': !info.stateList[selectedReport],
-                      'text-zinc-800': info.stateList[selectedReport],
-                    }"
+      <div v-if="infoArr.length">
+        <div class="mt-4 w-full overflow-x-scroll">
+          <div class="w-full">
+            <table
+              class="table-auto border-collapse w-full"
+              style="white-space: nowrap"
+            >
+              <thead>
+                <tr class="mt-5 font-semibold text-cyan-900">
+                  <th class="p-2 bg-blue-100 max-md:px-5">번호</th>
+                  <th
+                    class="p-2 bg-blue-100 max-md:px-5"
+                    v-for="(title, i) in titleArr"
+                    :key="`${title}${i}`"
                   >
-                    {{ info.stateList[selectedReport] ? '참여' : '미참여' }}
-                  </td>
+                    {{ title }}
+                  </th>
                 </tr>
-              </template>
-            </tbody>
-            <tbody class="" v-else>
-              <template v-for="(info, i) in infoArr" :key="`${info.name}${i}`">
-                <tr class="w-full border-b border-solid border-stone-200">
-                  <td class="my-auto text-neutral-700 px-2 py-2.5 w-[50px]">
-                    {{ i + 1 }}
-                  </td>
-                  <td class="my-auto text-zinc-800 px-2">{{ info.name }}</td>
-                  <td class="my-auto text-zinc-800 px-2">{{ info.email }}</td>
-                  <td class="my-auto text-zinc-800 px-2">{{ info.grade }}</td>
-                  <td class="my-auto text-zinc-800 px-2">{{ info.gender }}</td>
-                  <td
-                    class="my-auto px-2"
-                    v-for="title in titleReportArr"
-                    :key="`${title}${info.name}${i}`"
-                    :class="{
-                      'text-red-600': !info.stateList[title],
-                      'text-zinc-800': info.stateList[title],
-                    }"
+              </thead>
+              <tbody class="" v-if="selectedReport !== '전체'">
+                <template v-for="(info, i) in infoArr" :key="`${info.name}${i}`">
+                  <tr
+                    class="w-full border-b border-solid border-stone-200"
+                    v-if="
+                      (!showOnlyNon ||
+                      (showOnlyNon && !info.stateList[selectedReport])) &&
+                      i < idx
+                    "
                   >
-                    {{ info.stateList[title] ? '참여' : '미참여' }}
-                  </td>
-                </tr>
-              </template>
-            </tbody>
-          </table>
+                    <td class="my-auto text-neutral-700 px-2 py-2.5 w-[50px]">
+                      {{ i + 1 }}
+                    </td>
+                    <td class="my-auto text-zinc-800 px-2">{{ info.name }}</td>
+                    <td class="my-auto text-zinc-800 px-2">{{ info.email }}</td>
+                    <td class="my-auto text-zinc-800 px-2">{{ info.grade }}</td>
+                    <td class="my-auto text-zinc-800 px-2">{{ info.gender }}</td>
+                    <td
+                      class="my-auto px-2"
+                      :class="{
+                        'text-red-600': !info.stateList[selectedReport],
+                        'text-zinc-800': info.stateList[selectedReport],
+                      }"
+                    >
+                      {{ info.stateList[selectedReport] ? '참여' : '미참여' }}
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+              <tbody class="" v-else>
+                <template v-for="(info, i) in infoArr" :key="`${info.name}${i}`">
+                  <tr v-if="i < idx" class="w-full border-b border-solid border-stone-200">
+                    <td class="my-auto text-neutral-700 px-2 py-2.5 w-[50px]">
+                      {{ i + 1 }}
+                    </td>
+                    <td class="my-auto text-zinc-800 px-2">{{ info.name }}</td>
+                    <td class="my-auto text-zinc-800 px-2">{{ info.email }}</td>
+                    <td class="my-auto text-zinc-800 px-2">{{ info.grade }}</td>
+                    <td class="my-auto text-zinc-800 px-2">{{ info.gender }}</td>
+                    <td
+                      class="my-auto px-2"
+                      v-for="title in titleReportArr"
+                      :key="`${title}${info.name}${i}`"
+                      :class="{
+                        'text-red-600': !info.stateList[title],
+                        'text-zinc-800': info.stateList[title],
+                      }"
+                    >
+                      {{ info.stateList[title] ? '참여' : '미참여' }}
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="flex justify-center m-2">
+          <button v-if="idx < max" class="m-2 p-2 w-full bg-blue-500 text-white rounded-lg" @click="infiniteScroll">더보기</button>
         </div>
       </div>
       <div
@@ -155,7 +161,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
-import AppDropdown from '../components/AppDropdown.vue';
+import AppDropdown from '@/components/AppDropdown.vue';
 import UserService from '@/service/UserService';
 import { _mixDate } from '@/utils/utils';
 
@@ -171,6 +177,8 @@ export default {
     const titleArr = ref([]);
     const titleReportArr = ref([]);
     const showOnlyNon = ref(false);
+    const idx = ref(10);
+    const max = ref(0);
 
     const reportList = ref(['전체']);
     const selectedReport = ref('전체');
@@ -223,6 +231,8 @@ export default {
         infoArr.value.push(info);
       });
 
+      max.value = infoArr.value.length;
+
       setTitleList();
     };
 
@@ -239,6 +249,7 @@ export default {
     const handleReportSelection = (option) => {
       selectedReport.value = option;
       setTitleList();
+      idx.value = 10;
     };
 
     const downloadExcel = () => {
@@ -278,6 +289,14 @@ export default {
       }
     };
 
+    const infiniteScroll = () => {
+      if(idx.value > max.value) {
+        return;
+      }
+
+      idx.value += 10;
+    }
+
     return {
       reportList,
       selectedReport,
@@ -287,11 +306,14 @@ export default {
       titleReportArr,
       handleReportSelection,
       showOnlyNon,
+      idx,
+      max,
 
       options,
       selectedOption,
       handleSelection,
       downloadExcel,
+      infiniteScroll
     };
   },
 };

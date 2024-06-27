@@ -83,19 +83,20 @@
   >
     <div
       class="px-2 text-center items-center max-w-max font-bold text-lg"
-      :class="isIDTTView && 'text-blue-500'"
+      :class="isSocialTTView && 'text-blue-500'"
       v-if="loginType !== 'student'"
       @click="goTeacherID"
     >
       사회정서학습 톡톡
     </div>
-    <!-- <div
+    <div
       class="px-2 text-center items-center max-w-max font-bold text-lg"
+      :class="isLearnTTView && 'text-blue-500'"
       v-if="loginType !== 'student'"
-      @click="waitAlert"
+      @click="goTeacherLearnId"
     >
       학습성향 톡톡
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -114,7 +115,9 @@ export default {
     const isMyInfoPage = computed(() => route.meta.isMyInfoPage);
     const isMySELView = computed(() => route.meta.isMySELView);
     const isAllSELView = computed(() => route.meta.isAllSELView);
-    const isIDTTView = computed(() => route.meta.isIDTTView);
+    const isIDTTView = computed(() => route.meta.isSocialTTView || route.meta.isLearnTTView);
+    const isSocialTTView = computed(() => route.meta.isSocialTTView);
+    const isLearnTTView = computed(() => route.meta.isLearnTTView);
 
     const userId = computed(() => userStore.id);
     const loginType = computed(() => userStore.type);
@@ -154,6 +157,10 @@ export default {
       router.push({ name: 'idTT' });
     };
 
+    const goTeacherLearnId = () => {
+      router.push({ name: 'learnTT' });
+    };
+
     const waitAlert = () => {
       alert('아직 준비중 입니다.');
     };
@@ -165,11 +172,14 @@ export default {
       isMySELView,
       isAllSELView,
       isIDTTView,
+      isSocialTTView,
+      isLearnTTView,
       loginType,
 
       goStudentSEL,
       goTeacherSEL,
       goTeacherID,
+      goTeacherLearnId,
       goMain,
       logout,
       checkId,

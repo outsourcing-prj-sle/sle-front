@@ -25,7 +25,7 @@
     >
       <img
         class="w-full"
-        src="../../src/assets/img/banner_mobile.png"
+        src="@/assets/img/banner_mobile.png"
         alt="모바일_배너"
       />
     </section>
@@ -99,10 +99,10 @@ import { defineComponent, ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 import ReportService from '@/service/ReportService.js';
-import AppDropdown from '../components/AppDropdown.vue';
-import AppTopAlert from '../components/AppTopAlert.vue';
-import AppQRPopup from '../components/AppQRPopup.vue';
-import AppCardItem from '../components/AppCardItem.vue';
+import AppDropdown from '@/components/AppDropdown.vue';
+import AppTopAlert from '@/components/AppTopAlert.vue';
+import AppQRPopup from '@/components/AppQRPopup.vue';
+import AppCardItem from '@/components/AppCardItem.vue';
 import AppRegistPopup from '@/components/AppRegistPopup.vue';
 
 export default defineComponent({
