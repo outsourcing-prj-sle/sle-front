@@ -12,15 +12,32 @@
             class="shrink-0 max-w-full aspect-[3.45] w-[65px]"
           />
           <div class="flex gap-[3px] items-end">
-            <div class="grow text-sm text-neutral-500">과 함께하는</div>
+            <div class="grow text-sm text-neutral-500">
+              {{ $t('header.with') }}
+            </div>
           </div>
         </div>
         <div class="flex-auto text-2xl font-bold text-violet-950 text-left">
-          SEL 사회정서학습
+          {{ $t('header.sel_logo') }}
         </div>
       </div>
       <!-- 헤더 우측 버튼 -->
       <div class="flex gap-1">
+        <div class="flex gap-2 content-center font-medium">
+          <button
+            @click="changeLanguage('ko')"
+            :class="{ 'text-blue-600': locale === 'ko' }"
+          >
+            한국어
+          </button>
+          <div class="text-center content-center">|</div>
+          <button
+            @click="changeLanguage('en')"
+            :class="{ 'text-blue-600': locale === 'en' }"
+          >
+            English
+          </button>
+        </div>
         <!-- 내정보 버튼 -->
         <div class="w-[40px]" v-if="isMyInfoPage">
           <img
@@ -57,7 +74,7 @@
         v-if="loginType === 'student'"
         @click="goStudentSEL"
       >
-        나의 SEL 알기
+        {{ $t('header.my_sel') }}
       </div>
       <div
         class="px-2 text-center items-center max-w-max font-bold text-lg"
@@ -65,7 +82,7 @@
         v-if="loginType !== 'student'"
         @click="goTeacherSEL"
       >
-        학생 SEL 알기
+        {{ $t('header.student_sel') }}
       </div>
       <div
         class="px-2 text-center items-center max-w-max font-bold text-lg"
@@ -73,7 +90,7 @@
         v-if="loginType !== 'student'"
         @click="goTeacherID"
       >
-        ID 톡톡
+        {{ $t('header.ID_tt') }}
       </div>
     </div>
   </div>
@@ -87,7 +104,7 @@
       v-if="loginType !== 'student'"
       @click="goTeacherID"
     >
-      사회정서학습 톡톡
+      {{ $t('header.social_tt') }}
     </div>
     <div
       class="px-2 text-center items-center max-w-max font-bold text-lg"
@@ -95,7 +112,7 @@
       v-if="loginType !== 'student'"
       @click="goTeacherLearnId"
     >
-      학습성향 톡톡
+      {{ $t('header.lean_tt') }}
     </div>
   </div>
 </template>
@@ -105,17 +122,21 @@ import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 import { logoutWhalespace } from '@/utils/naverUtils';
+import { useI18n } from 'vue-i18n';
 
 export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
     const userStore = useUserStore();
+    const { locale } = useI18n();
     const showHeader = computed(() => route.meta.headerVisible);
     const isMyInfoPage = computed(() => route.meta.isMyInfoPage);
     const isMySELView = computed(() => route.meta.isMySELView);
     const isAllSELView = computed(() => route.meta.isAllSELView);
-    const isIDTTView = computed(() => route.meta.isSocialTTView || route.meta.isLearnTTView);
+    const isIDTTView = computed(
+      () => route.meta.isSocialTTView || route.meta.isLearnTTView
+    );
     const isSocialTTView = computed(() => route.meta.isSocialTTView);
     const isLearnTTView = computed(() => route.meta.isLearnTTView);
 
@@ -165,6 +186,10 @@ export default {
       alert('아직 준비중 입니다.');
     };
 
+    const changeLanguage = (lang) => {
+      locale.value = lang;
+    };
+
     return {
       showHeader,
       userId,
@@ -175,6 +200,7 @@ export default {
       isSocialTTView,
       isLearnTTView,
       loginType,
+      locale,
 
       goStudentSEL,
       goTeacherSEL,
@@ -185,6 +211,7 @@ export default {
       checkId,
       goMyInfoBtn,
       waitAlert,
+      changeLanguage,
     };
   },
 };
