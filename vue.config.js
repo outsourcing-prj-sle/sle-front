@@ -8,7 +8,7 @@ module.exports = defineConfig({
     plugins: [
       new ESLintPlugin({
         // 플러그인 생성자를 사용하여 extensions 옵션 설정
-        extensions: ['js', 'vue'],
+        extensions: ['js', 'vue', 'json'],
       }),
     ],
     resolve: {

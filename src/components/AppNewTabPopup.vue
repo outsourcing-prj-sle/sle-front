@@ -31,7 +31,8 @@ import { ref } from 'vue';
 export default {
   setup(props, { emit }) {
     const openNewTab = () => {
-      const url = 'https://newtab.itt.link';
+      // const url = 'https://newtab.itt.link';
+      const url = 'https://devnewtab.itt.link';
       window.open(url, '_blank');
     };
 
