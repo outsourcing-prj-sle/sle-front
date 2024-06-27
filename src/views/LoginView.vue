@@ -1,5 +1,10 @@
 <template>
   <div class="flex justify-center">
+    <AppNewTabPopup
+      v-if="showPopup"
+      class="z-50"
+      @closePopup="() => closePopup()"
+    />
     <div
       class="w-full max-w-md content-center p-8 space-y-8 min-h-[350px] bg-white rounded-[20px] shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2"
       style="transform: translate(-50%, -50%)"
@@ -31,15 +36,20 @@ import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 import UserService from '@/service/UserService.js';
 import { methods_naverLogin, handleNaverCallback } from '@/utils/naverUtils';
+import AppNewTabPopup from '@/components/AppNewTabPopup.vue';
 
 export default {
   name: 'LoginView',
+  components: {
+    AppNewTabPopup,
+  },
   setup() {
     const route = useRoute();
     const router = useRouter();
     const userStore = useUserStore();
     const email = ref('');
     const password = ref('');
+    const showPopup = ref(false);
 
     const handleSubmit = async () => {
       const loginResponse = await UserService.login({
@@ -81,17 +91,24 @@ export default {
               router.push(redirectPath);
             } else {
               console.log(callbackRes);
+              showPopup.value = true;
             }
           }
         }
       });
     });
 
+    const closePopup = () => {
+      showPopup.value = false;
+    };
+
     return {
       email,
       password,
+      showPopup,
       handleSubmit,
       methods_naverLogin,
+      closePopup,
     };
   },
 };
