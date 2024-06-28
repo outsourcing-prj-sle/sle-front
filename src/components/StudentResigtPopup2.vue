@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col flex-1 text-base font-medium">
-    <span class="text-left mt-10"> 성별을 선택해주세요. </span>
+    <span class="text-left mt-10"> {{ $t('login_popup.gender_title') }} </span>
 
     <div class="mt-4 flex gap-6 justify-center items-center">
       <label class="cursor-pointer"

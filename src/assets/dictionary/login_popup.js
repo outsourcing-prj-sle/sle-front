@@ -40,7 +40,7 @@ export default {
     en: 'YES',
   },
   cant_login: {
-    ko: '계정을 확인할 수 없습니다.<br />뉴탭에서 계정 정보를 확인해주세요.',
+    ko: '계정을 확인할 수 없습니다.<br/>뉴탭에서 계정 정보를 확인해주세요.',
     en: 'Cannot find account.<br />Please check account on NewTab.',
   },
 };

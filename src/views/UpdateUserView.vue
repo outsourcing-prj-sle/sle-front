@@ -15,36 +15,43 @@
       class="my-[10px] px-4 py-2 bg-gray-600 text-white rounded-md min-w-[96px]"
       @click="openWhale"
     >
-      회원정보 수정하기
+      {{ $t('myinfo.update_info') }}
     </button>
     <div class="flex gap-[20px] items-center justify-start my-[20px]">
       <div class="flex w-[80px] flex-col gap-[30px] items-start">
-        <b>소속</b>
-        <b>조직</b>
+        <b>{{ $t('myinfo.school') }}</b>
+        <b>{{ $t('myinfo.grade') }}</b>
       </div>
       <div class="flex flex-col gap-[30px] items-start">
         <p>{{ school }}</p>
-        <p>{{ grade }}학년 {{ classroom }}반</p>
+        <p>
+          {{ grade }}{{ $t('common.grade') }} {{ classroom
+          }}{{ $t('common.class') }}
+        </p>
       </div>
     </div>
-    <template v-if="userType !== '선생님'">
+    <template v-if="userType !== $t('common.teacher')">
       <div class="flex justify-start pt-[20px]">
-        <b class="text-blue-500">추가회원 정보</b>
+        <b class="text-blue-500">{{ $t('myinfo.more_info') }}</b>
       </div>
       <div class="flex gap-[20px] items-center justify-start my-[20px]">
         <div class="flex w-[80px] flex-col gap-[30px] items-start">
-          <b>성별</b>
-          <b>생년월일</b>
+          <b>{{ $t('myinfo.gender') }}</b>
+          <b>{{ $t('myinfo.birthday') }}</b>
         </div>
         <div class="flex flex-col gap-[30px] items-start">
           <div class="flex gap-[20px]">
             <div class="flex gap-[10px]">
               <input type="radio" id="sex-m" v-model="gender" value="M" />
-              <label class="cursor-pointer" for="sex-m">남자</label>
+              <label class="cursor-pointer" for="sex-m">{{
+                $t('myinfo.M')
+              }}</label>
             </div>
             <div class="flex gap-[10px]">
               <input type="radio" id="sex-w" v-model="gender" value="F" />
-              <label class="cursor-pointer" for="sex-w">여자</label>
+              <label class="cursor-pointer" for="sex-w">{{
+                $t('myinfo.F')
+              }}</label>
             </div>
           </div>
           <div class="flex gap-[20px]">
@@ -71,18 +78,19 @@
       </div>
     </template>
     <button
-      v-if="userType !== '선생님'"
+      v-if="userType !== $t('common.teacher')"
       type="button"
       @click="submitInfo"
       class="my-[10px] px-4 py-2 mt-[50px] bg-blue-600 text-white rounded-md min-w-[96px]"
     >
-      저장
+      {{ $t('common.save') }}
     </button>
   </div>
 </template>
 
 <script>
 import { ref, onMounted, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import UserService from '@/service/UserService';
 import AppDropdown from '@/components/AppDropdown.vue';
@@ -92,6 +100,7 @@ export default {
     AppDropdown,
   },
   setup() {
+    const { t } = useI18n();
     const router = useRouter();
 
     const options = ref(['2014', '2015', '2016']);
@@ -138,7 +147,8 @@ export default {
       const resData = myInfoRes.data;
       console.log(resData);
 
-      userType.value = resData.userType === 'Y' ? '선생님' : '학생';
+      userType.value =
+        resData.userType === 'Y' ? t('common.teacher') : t('common.student');
       email.value = resData.userEmail;
       gender.value = resData.sex;
       name.value = resData.name;
@@ -166,7 +176,7 @@ export default {
         return;
       }
 
-      alert('회원수정 성공');
+      alert(t('myinfo.update_success'));
       router.back();
     };
 

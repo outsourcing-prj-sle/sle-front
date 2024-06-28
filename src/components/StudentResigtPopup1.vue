@@ -1,24 +1,19 @@
 <template>
   <div class="flex flex-col flex-1 text-base font-medium">
-    <span class="text-left mt-10">
-      안녕하세요!<br />
-      SEL 사회정서학습에 오신 여러분 반갑습니다.<br />
-      SEL 사회정서학습에 입장하기 앞서, 자신의 정보를 선택해주세요.<br />
-      최초 1회만 참여해주시면 됩니다.<br />
-      <span class="text-blue-400">{{ userInfo }}</span
-      >이 맞습니까?<br />
-      회원 정보와 다르다면 아래의 버튼을 눌러 수정해주세요.<br />
-    </span>
+    <span class="text-left mt-10" v-html="hello_student"> </span>
     <button
       @click="openWhaleProfile"
       class="w-[192px] py-2 bg-blue-500 text-white mt-4"
     >
-      회원정보 수정하기
+      {{ $t('login_popup.hello_btn') }}
     </button>
   </div>
 </template>
 
 <script>
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+
 export default {
   props: {
     userInfo: {
@@ -27,10 +22,19 @@ export default {
     },
   },
   setup(props, { emit }) {
+    const { t } = useI18n();
+
+    const hello_student = computed(() => {
+      return t('login_popup.hello_student').replace(
+        '__userInfo__',
+        `<span class="text-blue-400">${props.userInfo}</span>`
+      );
+    });
+
     const openWhaleProfile = () => {
       emit('openWhaleProfile');
     };
-    return { openWhaleProfile };
+    return { openWhaleProfile, hello_student };
   },
 };
 </script>

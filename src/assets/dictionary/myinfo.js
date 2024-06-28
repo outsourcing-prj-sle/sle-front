@@ -31,4 +31,12 @@ export default {
     ko: '여자',
     en: 'Woman',
   },
+  save: {
+    ko: '저장',
+    en: 'save',
+  },
+  update_success: {
+    ko: '회원수정 성공',
+    en: 'Success Modify membership information',
+  },
 };

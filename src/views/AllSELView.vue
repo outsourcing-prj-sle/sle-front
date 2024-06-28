@@ -3,9 +3,11 @@
     <div
       class="flex justify-start flex-col px-20 w-full text-base max-md:px-5 max-md:max-w-full"
     >
-      <h1 class="text-xl text-left font-bold text-neutral-700">학생 SEL알기</h1>
+      <h1 class="text-xl text-left font-bold text-neutral-700">
+        {{ $t('sel.title_sel_teacher') }}
+      </h1>
       <h2 class="mt-2 text-left text-lg font-semibold text-neutral-700">
-        학생들의 SEL 활동 참여 상태를 확인할 수 있습니다.
+        {{ $t('sel.subtitle_sel_teacher') }}
       </h2>
     </div>
     <section
@@ -26,7 +28,8 @@
         v-if="reportMetadata[selectedReport]"
       >
         <span class="font-medium"
-          >활동 기간 : {{ reportMetadata[selectedReport].dateRange }} (</span
+          >{{ $t('sel.activity_term') }} :
+          {{ reportMetadata[selectedReport].dateRange }} (</span
         >
         <span
           class="font-medium text-blue-500"
@@ -34,7 +37,11 @@
             'text-red-600': !reportMetadata[selectedReport].state,
           }"
         >
-          {{ reportMetadata[selectedReport].state ? '진행중' : '미진행중' }}
+          {{
+            reportMetadata[selectedReport].state
+              ? $t('sel.ing')
+              : $t('sel.non_ing')
+          }}
         </span>
         <span class="font-medium">)</span>
       </div>
@@ -46,18 +53,18 @@
             :options="options"
             :startText="selectedOption"
             @update:selectedOption="handleSelection"
-            v-if="selectedReport !== '전체'"
+            v-if="selectedReport !== $t('sel.all')"
           /> -->
           <label
             class="flex gap-2.5 my-auto text-base font text-neutral-700"
-            v-if="selectedReport !== '전체'"
+            v-if="selectedReport !== $t('sel.all')"
           >
             <input
               type="checkbox"
               class="shrink-0 w-6 h-6 bg-white border border-solid border-neutral-400"
               v-model="showOnlyNon"
             />
-            <span class="flex-auto my-auto">미참여 학생만 보기</span>
+            <span class="flex-auto my-auto">{{ $t('sel.only_non_ing') }}</span>
           </label>
         </div>
         <div class="text-blue-500 cursor-pointer" @click="downloadExcel">
@@ -77,7 +84,9 @@
             >
               <thead>
                 <tr class="mt-5 font-semibold text-cyan-900">
-                  <th class="p-2 bg-blue-100 max-md:px-5">번호</th>
+                  <th class="p-2 bg-blue-100 max-md:px-5">
+                    {{ $t('sel.number') }}
+                  </th>
                   <th
                     class="p-2 bg-blue-100 max-md:px-5"
                     v-for="(title, i) in titleArr"
@@ -87,13 +96,16 @@
                   </th>
                 </tr>
               </thead>
-              <tbody class="" v-if="selectedReport !== '전체'">
-                <template v-for="(info, i) in infoArr" :key="`${info.name}${i}`">
+              <tbody class="" v-if="selectedReport !== $t('sel.all')">
+                <template
+                  v-for="(info, i) in infoArr"
+                  :key="`${info.name}${i}`"
+                >
                   <tr
                     class="w-full border-b border-solid border-stone-200"
                     v-if="
                       (!showOnlyNon ||
-                      (showOnlyNon && !info.stateList[selectedReport])) &&
+                        (showOnlyNon && !info.stateList[selectedReport])) &&
                       i < idx
                     "
                   >
@@ -103,7 +115,9 @@
                     <td class="my-auto text-zinc-800 px-2">{{ info.name }}</td>
                     <td class="my-auto text-zinc-800 px-2">{{ info.email }}</td>
                     <td class="my-auto text-zinc-800 px-2">{{ info.grade }}</td>
-                    <td class="my-auto text-zinc-800 px-2">{{ info.gender }}</td>
+                    <td class="my-auto text-zinc-800 px-2">
+                      {{ info.gender }}
+                    </td>
                     <td
                       class="my-auto px-2"
                       :class="{
@@ -111,21 +125,33 @@
                         'text-zinc-800': info.stateList[selectedReport],
                       }"
                     >
-                      {{ info.stateList[selectedReport] ? '참여' : '미참여' }}
+                      {{
+                        info.stateList[selectedReport]
+                          ? $t('sel.ing')
+                          : $t('sel.non_ing')
+                      }}
                     </td>
                   </tr>
                 </template>
               </tbody>
               <tbody class="" v-else>
-                <template v-for="(info, i) in infoArr" :key="`${info.name}${i}`">
-                  <tr v-if="i < idx" class="w-full border-b border-solid border-stone-200">
+                <template
+                  v-for="(info, i) in infoArr"
+                  :key="`${info.name}${i}`"
+                >
+                  <tr
+                    v-if="i < idx"
+                    class="w-full border-b border-solid border-stone-200"
+                  >
                     <td class="my-auto text-neutral-700 px-2 py-2.5 w-[50px]">
                       {{ i + 1 }}
                     </td>
                     <td class="my-auto text-zinc-800 px-2">{{ info.name }}</td>
                     <td class="my-auto text-zinc-800 px-2">{{ info.email }}</td>
                     <td class="my-auto text-zinc-800 px-2">{{ info.grade }}</td>
-                    <td class="my-auto text-zinc-800 px-2">{{ info.gender }}</td>
+                    <td class="my-auto text-zinc-800 px-2">
+                      {{ info.gender }}
+                    </td>
                     <td
                       class="my-auto px-2"
                       v-for="title in titleReportArr"
@@ -135,7 +161,11 @@
                         'text-zinc-800': info.stateList[title],
                       }"
                     >
-                      {{ info.stateList[title] ? '참여' : '미참여' }}
+                      {{
+                        info.stateList[title]
+                          ? $t('sel.ing')
+                          : $t('sel.non_ing')
+                      }}
                     </td>
                   </tr>
                 </template>
@@ -144,14 +174,20 @@
           </div>
         </div>
         <div class="flex justify-center m-2">
-          <button v-if="idx < max" class="m-2 p-2 w-full bg-blue-500 text-white rounded-lg" @click="infiniteScroll">더보기</button>
+          <button
+            v-if="idx < max"
+            class="m-2 p-2 w-full bg-blue-500 text-white rounded-lg"
+            @click="infiniteScroll"
+          >
+            {{ $t('sel.more') }}
+          </button>
         </div>
       </div>
       <div
         class="mt-4 w-full overflow-x-scroll border border-current pb-4"
         v-else
       >
-        설문이 없습니다.
+        {{ $t('sel.no_reports') }}
       </div>
     </section>
   </div>
@@ -159,6 +195,7 @@
 
 <script>
 import { ref, computed, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 import AppDropdown from '@/components/AppDropdown.vue';
@@ -170,6 +207,7 @@ export default {
     AppDropdown,
   },
   setup() {
+    const { t } = useI18n();
     const router = useRouter();
     const userStore = useUserStore();
     const userId = computed(() => userStore.id);
@@ -180,12 +218,12 @@ export default {
     const idx = ref(10);
     const max = ref(0);
 
-    const reportList = ref(['전체']);
-    const selectedReport = ref('전체');
+    const reportList = ref([t('sel.all')]);
+    const selectedReport = ref(t('sel.all'));
     const reportMetadata = ref({});
 
-    const options = ref(['마감순', '최신순']);
-    const selectedOption = ref('마감순');
+    const options = ref([t('common.sort_dead'), t('common.sort_new')]);
+    const selectedOption = ref(t('common.sort_dead'));
 
     onMounted(() => {
       fetchReportList();
@@ -214,7 +252,7 @@ export default {
         titleReportArr.value.push(pollNm);
 
         reportMetadata.value[pollNm] = {
-          dateRange: _mixDate(item.startDate, item.endDate) + '까지',
+          dateRange: _mixDate(item.startDate, item.endDate) + t('sel.until'),
           state: item.expired === '0',
         };
       });
@@ -224,7 +262,7 @@ export default {
           name: item.name,
           email: item.email,
           grade: item.classInfo,
-          gender: item.sex === 'M' ? '남' : '여',
+          gender: item.sex === 'M' ? t('sel.M') : t('sel.F'),
           stateList: item.stateList,
         };
 
@@ -237,12 +275,17 @@ export default {
     };
 
     const setTitleList = () => {
-      titleArr.value = ['이름', '계정', '학년-반', '성별'];
-      if (selectedReport.value === '전체') {
+      titleArr.value = [
+        t('sel.name'),
+        t('sel.email'),
+        t('sel.grade') + '-' + t('sel.class'),
+        t('sel.gender'),
+      ];
+      if (selectedReport.value === t('sel.all')) {
         // todo : 이거 API 받는거대로 수정
         titleArr.value.push(...titleReportArr.value);
       } else {
-        titleArr.value.push('상태');
+        titleArr.value.push(t('sel.state'));
       }
     };
 
@@ -261,14 +304,16 @@ export default {
 
         infoArr.value.forEach((info) => {
           text += [info.name, info.email, info.grade, info.gender].join(',');
-          if (selectedReport.value === '전체') {
+          if (selectedReport.value === t('sel.all')) {
             for (let i in titleReportArr.value) {
               text += info.stateList[titleReportArr.value[i]]
-                ? ',참여'
-                : ',미참여';
+                ? ',' + t('sel.ing')
+                : ',' + t('sel.non_ing');
             }
           } else {
-            text += info.stateList[selectedReport.value] ? ',참여' : ',미참여';
+            text += info.stateList[selectedReport.value]
+              ? ',' + t('sel.ing')
+              : ',' + t('sel.non_ing');
           }
           text += '\n';
         });
@@ -285,17 +330,17 @@ export default {
         aEl.click();
         document.body.removeChild(aEl);
       } else {
-        alert('데이터가 없습니다.');
+        alert(t('sel.no_data'));
       }
     };
 
     const infiniteScroll = () => {
-      if(idx.value > max.value) {
+      if (idx.value > max.value) {
         return;
       }
 
       idx.value += 10;
-    }
+    };
 
     return {
       reportList,
@@ -313,7 +358,7 @@ export default {
       selectedOption,
       handleSelection,
       downloadExcel,
-      infiniteScroll
+      infiniteScroll,
     };
   },
 };

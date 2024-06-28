@@ -39,13 +39,17 @@
       >
         <div class="flex flex-col mt-2.5 text-neutral-700">
           <div class="text-xl text-left font-bold">
-            {{ loginType === 'student' ? '미참여 활동' : '진행중인 학생 SEL' }}
+            {{
+              loginType === 'student'
+                ? $t('home.top_title_student')
+                : $t('home.top_title_teacher')
+            }}
           </div>
           <div class="mt-3 text-base font-semibold">
             {{
               loginType === 'student'
-                ? '마감 기감에 맞춰 참여해주세요.'
-                : '마감기간에 맞춰 학생들에게 안내해주세요.'
+                ? $t('home.top_subtitle_student')
+                : $t('home.top_subtitle_teacher')
             }}
           </div>
         </div>
@@ -71,13 +75,17 @@
       >
         <div class="flex flex-col mt-2.5 text-neutral-700">
           <div class="text-xl text-left font-bold">
-            {{ loginType === 'student' ? '참여 활동' : '마감된 학생 SEL' }}
+            {{
+              loginType === 'student'
+                ? $t('home.bottom_title_student')
+                : $t('home.bottom_title_teacher')
+            }}
           </div>
           <div class="mt-3 text-base font-semibold">
             {{
               loginType === 'student'
-                ? '참여한 활동 목록입니다.'
-                : '활동 기간이 마감되어 만료되었습니다.'
+                ? $t('home.bottom_subtitle_student')
+                : $t('home.bottom_subtitle_teacher')
             }}
           </div>
         </div>
@@ -96,6 +104,7 @@
 </template>
 <script>
 import { defineComponent, ref, computed, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 import ReportService from '@/service/ReportService.js';
@@ -115,12 +124,13 @@ export default defineComponent({
     AppRegistPopup,
   },
   setup() {
+    const { t } = useI18n();
     const router = useRouter();
     const userStore = useUserStore();
     const loginType = computed(() => userStore.type);
     const isRegistered = computed(() => userStore.isRegistered);
-    const options = ref(['마감순', '최신순']);
-    const selectedOption = ref('마감순');
+    const options = ref([t('common.sort_dead'), t('common.sort_new')]);
+    const selectedOption = ref(t('common.sort_dead'));
     const showAlert = ref(false);
     const textAlert = ref('');
     const qrURL = ref('');
@@ -129,10 +139,10 @@ export default defineComponent({
 
     const handleSelection = (option) => {
       selectedOption.value = option;
-      if (option === '최신순') {
+      if (option === t('common.sort_new')) {
         sortArrStart(topList.value);
       }
-      if (option === '마감순') {
+      if (option === t('common.sort_dead')) {
         sortArrEnd(topList.value);
       }
     };
@@ -146,6 +156,22 @@ export default defineComponent({
         alert(resData.error);
         return;
       }
+
+      topList.value = topList.value.map((v) => {
+        const num = v.pollNm.slice(-1);
+        return {
+          ...v,
+          num,
+        };
+      });
+
+      bottomList.value = bottomList.value.map((v) => {
+        const num = v.pollNm.slice(-1);
+        return {
+          ...v,
+          num,
+        };
+      });
 
       topList.value = sortArrEnd(resData.todo);
       bottomList.value = resData.done;
@@ -176,7 +202,7 @@ export default defineComponent({
         document.execCommand('copy');
 
         showAlert.value = true;
-        textAlert.value = 'URL이 복사되었습니다.';
+        textAlert.value = t('home.copied_url');
         setTimeout(() => {
           showAlert.value = false;
           textAlert.value = '';

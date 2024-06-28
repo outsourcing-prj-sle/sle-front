@@ -16,7 +16,9 @@
         >
           &lt;
         </button>
-        <span class="mt-1 text-xs text-zinc-500">이전</span>
+        <span class="mt-1 text-xs text-zinc-500">{{
+          $t('login_popup.left_btn')
+        }}</span>
       </div>
       <div class="flex-1">
         <TeacherResigtPopup1
@@ -62,7 +64,9 @@
         >
           &gt;
         </button>
-        <span class="mt-1 text-xs text-zinc-500">다음</span>
+        <span class="mt-1 text-xs text-zinc-500">{{
+          $t('login_popup.right_btn')
+        }}</span>
       </div>
 
       <img
@@ -76,6 +80,7 @@
 
 <script>
 import { ref, computed, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useUserStore } from '@/store/userStore.js';
 import UserService from '@/service/UserService';
 import TeacherResigtPopup1 from './TeacherResigtPopup1.vue';
@@ -96,6 +101,7 @@ export default {
   },
   props: {},
   setup(props, { emit }) {
+    const { t } = useI18n();
     const userStore = useUserStore();
     const loginType = computed(() => userStore.type || 'student');
     const step = ref(1);
@@ -123,7 +129,7 @@ export default {
     });
 
     const userInfo = computed(() => {
-      return `${school.value} ${grade.value}학년 ${classroom.value}반 ${name.value}`;
+      return `${school.value} ${grade.value}${t('common.grade')} ${classroom.value}${t('common.class')} ${name.value}`;
     });
 
     const openWhaleProfile = () => {
@@ -135,7 +141,7 @@ export default {
       let flag = '';
 
       if (loginType.value === 'student' && step.value === 2 && !gender.value) {
-        flag = '성별을 선택해주세요.';
+        flag = t('common.gender_title');
       }
 
       if (
@@ -143,7 +149,7 @@ export default {
         step.value === 3 &&
         !(year.value && month.value)
       ) {
-        flag = '태어난 년도와 월을 선택해주세요.';
+        flag = t('common.birth_title');
       }
 
       if (flag) {

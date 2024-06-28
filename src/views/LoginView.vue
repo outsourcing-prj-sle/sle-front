@@ -23,7 +23,7 @@
             alt="whale_icn"
             class="h-4 mr-1"
           />
-          경남교육청 로그인
+          {{ $t('login.login_rudska') }}
         </button>
       </div>
     </div>

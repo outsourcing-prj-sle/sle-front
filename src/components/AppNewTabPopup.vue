@@ -6,15 +6,16 @@
     <div
       class="bg-white h-[268px] w-[488px] justify-center px-10 py-6 rounded-lg shadow-lg flex flex-col relative"
     >
-      <div class="w-full text-left mt-8 font-medium text-base">
-        계정을 확인알 수 없습니다.<br />뉴탭에서 계정 정보를 확인해주세요.
-      </div>
+      <div
+        class="w-full text-left mt-8 font-medium text-base"
+        v-html="$t('login_popup.cant_login')"
+      ></div>
       <div class="w-full mt-8">
         <button
           @click="openNewTab"
           class="w-[90px] py-2 bg-blue-500 text-white mt-4"
         >
-          확인
+          {{ $t('login_popup.submit_btn') }}
         </button>
       </div>
       <img

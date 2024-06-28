@@ -31,9 +31,61 @@ export default {
     ko: '미진행중',
     en: 'Closed',
   },
+  all: {
+    ko: '전체',
+    en: 'All',
+  },
+  number: {
+    ko: '번호',
+    en: 'No',
+  },
+  name: {
+    ko: '이름',
+    en: 'Name',
+  },
+  email: {
+    ko: '계정',
+    en: 'ID Account',
+  },
+  grade: {
+    ko: '학년',
+    en: 'Grade',
+  },
+  class: {
+    ko: '반',
+    en: 'Class',
+  },
+  gender: {
+    ko: '성별',
+    en: 'Gender',
+  },
+  report_term: {
+    ko: '시행기간',
+    en: 'Period',
+  },
+  state: {
+    ko: '상태',
+    en: 'Situation',
+  },
   activity_term: {
     ko: '활동 기간',
     en: 'period',
+  },
+  F: {
+    ko: '여',
+    en: 'Woman',
+  },
+  M: {
+    ko: '남',
+    en: 'Man',
+  },
+  report_name: {
+    ko: '활동명',
+    en: 'Activity name',
+  },
+  func: {
+    ko: '기능',
+    en: 'Function',
   },
   until: {
     ko: '까지',
@@ -66,5 +118,17 @@ export default {
   see_my_report: {
     ko: '내 답안 보기',
     en: 'View My Answers',
+  },
+  no_reports: {
+    ko: '설문이 없습니다.',
+    en: 'No Reports',
+  },
+  no_data: {
+    ko: '데이터가 없습니다.',
+    en: 'No Data',
+  },
+  more: {
+    ko: '더보기',
+    en: 'more',
   },
 };

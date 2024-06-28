@@ -4,11 +4,13 @@
       class="flex gap-5 justify-between px-16 py-6 w-full bg-blue-200 text-neutral-700 max-md:flex-wrap max-md:px-5 max-md:max-w-full"
     >
       <div class="flex flex-col my-auto">
-        <h2 class="text-xl font-bold text-left">나의 SEL 알기</h2>
-        <p class="mt-4 text-base font-medium text-left">
-          활동 참여를 통해 나의 SEL을 자세히 알아볼 수 있습니다.<br />기간 내
-          맞춰서 참여할 수 있도록 해주세요.
-        </p>
+        <h2 class="text-xl font-bold text-left">
+          {{ $t('sel.title_sel_student') }}
+        </h2>
+        <p
+          class="mt-4 text-base font-medium text-left"
+          v-html="$t('sel.subtitle_sel_student')"
+        ></p>
       </div>
       <img
         src="@/assets/img/logo_sel.png"
@@ -36,11 +38,21 @@
           >
             <thead>
               <tr class="mt-5 font-semibold text-cyan-900">
-                <th class="p-2 bg-blue-100 max-md:px-5">번호</th>
-                <th class="p-2 bg-blue-100 max-md:px-5">활동명</th>
-                <th class="p-2 bg-blue-100 max-md:px-5">시행기간</th>
-                <th class="p-2 bg-blue-100 max-md:px-5">상태</th>
-                <th class="p-2 bg-blue-100 max-md:px-5">기능</th>
+                <th class="p-2 bg-blue-100 max-md:px-5">
+                  {{ $t('sel.number') }}
+                </th>
+                <th class="p-2 bg-blue-100 max-md:px-5">
+                  {{ $t('sel.report_name') }}
+                </th>
+                <th class="p-2 bg-blue-100 max-md:px-5">
+                  {{ $t('sel.report_term') }}
+                </th>
+                <th class="p-2 bg-blue-100 max-md:px-5">
+                  {{ $t('sel.state') }}
+                </th>
+                <th class="p-2 bg-blue-100 max-md:px-5">
+                  {{ $t('sel.func') }}
+                </th>
               </tr>
             </thead>
             <tbody class="">
@@ -52,21 +64,23 @@
                 <td class="my-auto text-neutral-700 px-2 py-2.5 w-[50px]">
                   {{ i + 1 }}
                 </td>
-                <td class="my-auto text-zinc-800 px-2">{{ info.pollNm }}</td>
+                <td class="my-auto text-zinc-800 px-2">
+                  {{ $t(`report${info.num}.title`) }}
+                </td>
                 <td class="my-auto text-zinc-800 px-2 w-[260px] text-center">
                   {{ mixDate(info.startDate, info.endDate) }}
                 </td>
                 <td class="my-auto text-zinc-800 px-2 w-[200px] text-center">
-                  <div v-if="info.status === 'done'">완료</div>
+                  <div v-if="info.status === 'done'">{{ $t('sel.fin') }}</div>
                   <div v-else-if="info.status === 'todo' && !info.expired">
-                    미참여-마감
+                    {{ $t('sel.non_fin') }}
                   </div>
                   <div v-else-if="info.status === 'todo'">
                     <button
                       class="justify-center self-stretch px-4 py-1 font-medium text-white whitespace-nowrap bg-blue-400 rounded-[999px]"
                       @click="() => goReportNoticePage(info.pollId)"
                     >
-                      시작하기
+                      {{ $t('sel.todo') }}
                     </button>
                   </div>
                   <div v-else>
@@ -74,7 +88,7 @@
                       class="justify-center self-stretch px-4 py-1 font-medium text-white bg-blue-600 rounded-[999px]"
                       @click="() => goReportQuestionPage(info.pollId)"
                     >
-                      이어서 진행하기
+                      {{ $t('sel.progress') }}
                     </button>
                   </div>
                 </td>
@@ -84,7 +98,7 @@
                       class="justify-center self-stretch px-4 py-1 font-medium text-white bg-slate-400 rounded-[999px]"
                       @click="() => goReportQuestionPage(info.pollId)"
                     >
-                      내 답안 보기
+                      {{ $t('sel.see_my_report') }}
                     </button>
                   </div>
                   <div v-else>-</div>
@@ -98,7 +112,7 @@
         class="mt-4 w-full overflow-x-scroll border border-current pb-4"
         v-else
       >
-        설문이 없습니다.
+        {{ $t('sel.no_reports') }}
       </div>
     </section>
   </div>
@@ -106,6 +120,7 @@
 
 <script>
 import { ref, computed, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import UserService from '@/service/UserService.js';
 import AppDropdown from '@/components/AppDropdown.vue';
@@ -116,11 +131,12 @@ export default {
     AppDropdown,
   },
   setup() {
+    const { t } = useI18n();
     const router = useRouter();
     const infoArr = ref([]);
 
-    const options = ref(['마감순', '최신순']);
-    const selectedOption = ref('마감순');
+    const options = ref([t('common.sort_dead'), t('common.sort_new')]);
+    const selectedOption = ref(t('common.sort_dead'));
 
     onMounted(() => {
       fetchData();
@@ -135,6 +151,13 @@ export default {
         return;
       }
 
+      resData.value = resData.value.map((v) => {
+        const num = v.pollNm.slice(-1);
+        return {
+          ...v,
+          num,
+        };
+      });
       infoArr.value = sortArrEnd(resData);
     };
 
@@ -190,10 +213,10 @@ export default {
 
     const handleSelection = (option) => {
       selectedOption.value = option;
-      if (option === '최신순') {
+      if (option === 'common.sort_new') {
         sortArrStart(infoArr.value);
       }
-      if (option === '마감순') {
+      if (option === t('common.sort_dead')) {
         sortArrEnd(infoArr.value);
       }
     };

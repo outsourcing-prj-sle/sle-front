@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col flex-1 text-base font-medium">
-    <span class="text-left mt-10"> 태어난 년도와 월을 선택해주세요. </span>
+    <span class="text-left mt-10"> {{ $t('login_popup.birth_title') }} </span>
 
     <div class="mt-[65px] flex gap-7 justify-center items-center">
       <div class="flex gap-[20px]">
@@ -23,6 +23,7 @@
 
 <script>
 import { onMounted, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AppDropdown from '@/components/AppDropdown.vue';
 
 export default {
@@ -40,11 +41,12 @@ export default {
     },
   },
   setup(props, { emit }) {
+    const { t } = useI18n();
     const year = ref();
     const month = ref();
 
     const options = ref(['2014', '2015', '2016']);
-    const selectedOption = ref(props._year || '년도');
+    const selectedOption = ref(props._year || t('common.birth_year'));
 
     const options2 = ref([
       '01',
@@ -60,7 +62,7 @@ export default {
       '11',
       '12',
     ]);
-    const selectedOption2 = ref(props._month || '월');
+    const selectedOption2 = ref(props._month || t('common.birth_month'));
 
     onMounted(() => {
       const currentYear = new Date().getFullYear();
