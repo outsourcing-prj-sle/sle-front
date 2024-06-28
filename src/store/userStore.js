@@ -21,6 +21,7 @@ export const useUserStore = defineStore('user', {
       this.isRegistered = true;
     },
     logout() {
+      this.accessToken = '';
       this.token = '';
       this.id = '';
       this.type = '';
