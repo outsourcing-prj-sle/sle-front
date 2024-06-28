@@ -91,4 +91,12 @@ export default {
     ko: '완료',
     en: 'complete',
   },
+  open: {
+    ko: '열기',
+    en: 'open',
+  },
+  close: {
+    ko: '닫기',
+    en: 'close',
+  },
 };
