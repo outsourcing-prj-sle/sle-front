@@ -18,6 +18,7 @@
           class="w-full"
           :options="reportList"
           :startText="selectedReport"
+          :updateText="updateText"
           :openWay="'left'"
           :openFull="true"
           @update:selectedOption="handleReportSelection"
@@ -53,11 +54,11 @@
             :options="options"
             :startText="selectedOption"
             @update:selectedOption="handleSelection"
-            v-if="selectedReport !== $t('sel.all')"
+            v-if="selectedReport !== all"
           /> -->
           <label
             class="flex gap-2.5 my-auto text-base font text-neutral-700"
-            v-if="selectedReport !== $t('sel.all')"
+            v-if="selectedReport !== all"
           >
             <input
               type="checkbox"
@@ -96,7 +97,7 @@
                   </th>
                 </tr>
               </thead>
-              <tbody class="" v-if="selectedReport !== $t('sel.all')">
+              <tbody class="" v-if="selectedReport !== all">
                 <template
                   v-for="(info, i) in infoArr"
                   :key="`${info.name}${i}`"
@@ -194,7 +195,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
@@ -211,19 +212,30 @@ export default {
     const router = useRouter();
     const userStore = useUserStore();
     const userId = computed(() => userStore.id);
-    const infoArr = ref([]);
+    const _infoArr = ref([]);
     const titleArr = ref([]);
     const titleReportArr = ref([]);
     const showOnlyNon = ref(false);
     const idx = ref(10);
     const max = ref(0);
 
-    const reportList = ref([t('sel.all')]);
-    const selectedReport = ref(t('sel.all'));
+    const all = computed(() => {
+      return t('sel.all');
+    });
+    const reportList = ref([all.value]);
+    const selectedReport = ref(all.value);
+    const updateText = ref(all.value);
     const reportMetadata = ref({});
 
     const options = ref([t('common.sort_dead'), t('common.sort_new')]);
     const selectedOption = ref(t('common.sort_dead'));
+
+    watch(
+      () => [all.value],
+      () => {
+        fetchReportList();
+      }
+    );
 
     onMounted(() => {
       fetchReportList();
@@ -246,8 +258,19 @@ export default {
       const resData = mySelReponse.data;
       console.log(resData);
 
+      reportList.value = [all.value];
+      titleReportArr.value.length = 0;
+
+      if (selectedReport.value === '전체' || selectedReport.value === 'All') {
+        updateText.value = all.value;
+      } else {
+        const n = selectedReport.value.slice(-1);
+        updateText.value = t(`report${n}.title`);
+      }
+
       resData.reportList.map((item) => {
-        const pollNm = item.pollNm;
+        const num = item.pollNm.slice(-1);
+        const pollNm = t(`report${num}.title`);
         reportList.value.push(pollNm);
         titleReportArr.value.push(pollNm);
 
@@ -257,6 +280,7 @@ export default {
         };
       });
 
+      _infoArr.value.length = 0;
       resData.infoArr.map((item) => {
         const info = {
           name: item.name,
@@ -266,13 +290,17 @@ export default {
           stateList: item.stateList,
         };
 
-        infoArr.value.push(info);
+        _infoArr.value.push(info);
       });
 
-      max.value = infoArr.value.length;
+      max.value = _infoArr.value.length;
 
       setTitleList();
     };
+
+    const infoArr = computed(() => {
+      return _infoArr.value;
+    });
 
     const setTitleList = () => {
       titleArr.value = [
@@ -281,7 +309,7 @@ export default {
         t('sel.grade') + '-' + t('sel.class'),
         t('sel.gender'),
       ];
-      if (selectedReport.value === t('sel.all')) {
+      if (selectedReport.value === all.value) {
         // todo : 이거 API 받는거대로 수정
         titleArr.value.push(...titleReportArr.value);
       } else {
@@ -304,7 +332,7 @@ export default {
 
         infoArr.value.forEach((info) => {
           text += [info.name, info.email, info.grade, info.gender].join(',');
-          if (selectedReport.value === t('sel.all')) {
+          if (selectedReport.value === all.value) {
             for (let i in titleReportArr.value) {
               text += info.stateList[titleReportArr.value[i]]
                 ? ',' + t('sel.ing')
@@ -353,6 +381,8 @@ export default {
       showOnlyNon,
       idx,
       max,
+      all,
+      updateText,
 
       options,
       selectedOption,

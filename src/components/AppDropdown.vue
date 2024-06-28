@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 export default {
   name: 'AppDropdown',
@@ -54,6 +54,9 @@ export default {
       required: true,
     },
     startText: {
+      type: String,
+    },
+    updateText: {
       type: String,
     },
     openWay: {
@@ -68,6 +71,13 @@ export default {
   setup(props, { emit }) {
     const isOpen = ref(false);
     const selectedOption = ref(props.startText || null);
+
+    watch(
+      () => [props.updateText],
+      ([t]) => {
+        selectOption(t);
+      }
+    );
 
     const toggleDropdown = () => {
       isOpen.value = !isOpen.value;

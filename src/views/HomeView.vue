@@ -157,7 +157,7 @@ export default defineComponent({
         return;
       }
 
-      topList.value = topList.value.map((v) => {
+      topList.value = resData.todo.map((v) => {
         const num = v.pollNm.slice(-1);
         return {
           ...v,
@@ -165,7 +165,7 @@ export default defineComponent({
         };
       });
 
-      bottomList.value = bottomList.value.map((v) => {
+      bottomList.value = resData.done.map((v) => {
         const num = v.pollNm.slice(-1);
         return {
           ...v,
@@ -173,8 +173,7 @@ export default defineComponent({
         };
       });
 
-      topList.value = sortArrEnd(resData.todo);
-      bottomList.value = resData.done;
+      topList.value = sortArrEnd(topList.value);
     });
 
     const goReportNotice = (type = 1) => {
