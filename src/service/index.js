@@ -40,15 +40,7 @@ apiClient.interceptors.request.use(
     // userStore가 존재할 경우에만 헤더 설정
     if (userStore) {
       config.headers.Authorization = userStore.token || 'USRCNFRM_00000000004';
-      config.headers.accessToken =
-        userStore.accessToken || 'USRCNFRM_00000000004';
-      // config.headers.Authorization = 'USRCNFRM_00000000004';
     }
-    config.headers.role = 'ROLE_STUDENT';
-    // config.headers.role = 'ROLE_TEACHER';
-    config.headers.spaceInfo = 'COM1';
-    config.headers.grade = '1';
-    config.headers.class = '3';
 
     return config;
   },

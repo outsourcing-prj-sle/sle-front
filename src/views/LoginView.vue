@@ -78,11 +78,8 @@ export default {
 
             if (resData?.accessToken) {
               userStore.init({
-                accessToken: resData.accessToken,
-                token: resData.uniqId,
-                id: resData.id,
+                token: resData.authorization,
                 type: resData.userRole,
-                school: resData.userSpaceInfo,
                 isRegistered: !!resData.sex,
                 extra: resData.extra,
               });
