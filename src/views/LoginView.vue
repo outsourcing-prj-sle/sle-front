@@ -76,7 +76,7 @@ export default {
             const callbackRes = await handleNaverCallback(code, state);
             const resData = callbackRes?.data;
 
-            if (resData?.accessToken) {
+            if (resData?.authorization) {
               userStore.init({
                 token: resData.authorization,
                 type: resData.userRole,
