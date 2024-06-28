@@ -43,6 +43,14 @@ export default {
     ko: '성별',
     en: 'Gender',
   },
+  report_term: {
+    ko: '시행기간',
+    en: 'Period',
+  },
+  state: {
+    ko: '상태',
+    en: 'Situation',
+  },
   F: {
     ko: '여',
     en: 'Woman',
@@ -54,14 +62,6 @@ export default {
   report_name: {
     ko: '활동명',
     en: 'Activity name',
-  },
-  report_term: {
-    ko: '시행기간',
-    en: 'Period',
-  },
-  state: {
-    ko: '상태',
-    en: 'Situation',
   },
   func: {
     ko: '기능',
