@@ -6,16 +6,17 @@
     >
       <div class="flex flex-col my-auto">
         <p class="mt-4 text-base font-medium text-left">
-          <span class="font-bold text-xl">사회정서학습</span>은 미국 ‘학업 및
-          사회정서학습협회‘(Collaborative for Academic, Social, and Emotional
-          Learning: CASEL)가 제안한 자기인식, 자기관리, 사회적 인식, 관계기술,
-          책임 있는 의사결정 5가지 사회정서학습 역량과 우리나라 2015 개정
-          교육과정의 6가지 핵심역량과 연관성이 있는 역량인 자기관리, 의사소통,
-          심미적 감성, 공동체 역량 4가지로 구성되어 있고, 일부의 개념요소가
-          반영되어 있습니다. 사회정서학습은 자신의 감정과 느낌을 이해하고
-          다루며, 긍정적인 목표를 설정하여 성취하고, 타인을 공감하며 긍정적인
-          관계를 맺고 유지하며 공동체 구성원으로서 더불어 살아가는데 필요한
-          역량입니다.
+          <span class="font-bold text-xl">{{
+            $t('social.social_learn_title')
+          }}</span>
+          <span
+            v-html="
+              $t('social.social_learn_title_detail').replace(
+                '__social_learn_title__',
+                ''
+              )
+            "
+          ></span>
         </p>
       </div>
       <img
@@ -38,7 +39,9 @@
       </div>
       <div class="mt-4 w-full text-left" v-if="!needReport">
         <b class="text-xl">
-          <span class="text-blue-500">{{ name }} 학생</span>의 사회정서학습 역량
+          <span class="text-blue-500"
+            >{{ name }} {{ $t('common.student') }}</span
+          >{{ $t('social.student_title').replace('__student__', '') }}
         </b>
         <div
           class="flex flex-col flex-1 justify-center text-center items-center mt-20"
@@ -48,15 +51,14 @@
             src="@/assets/img/no_data.png"
             alt="no_data"
           />
-          <span class="mt-20">
-            해당 학생은 SEL활동에 참여하지 않아 불러올 데이터가 없습니다.<br />
-            참여 유도 후 재시도 바랍니다.
-          </span>
+          <span class="mt-20" v-html="$t('social.no_data')"> </span>
         </div>
       </div>
       <div class="mt-4 w-full text-left" v-else>
         <b class="text-xl">
-          <span class="text-blue-500">{{ name }} 학생</span>의 사회정서학습 역량
+          <span class="text-blue-500"
+            >{{ name }} {{ $t('common.student') }}</span
+          >{{ $t('social.student_title').replace('__student__', '') }}
         </b>
         <div class="w-full text-center items-center flex justify-center">
           <Radar
@@ -76,8 +78,10 @@
           :key="`${index}${data.title}`"
         >
           <p>
-            <span class="text-blue-500 font-medium">{{ data.title }}</span
-            >{{ data.description }}
+            <span class="text-blue-500 font-medium">{{
+              $t(`social.title${index}`)
+            }}</span
+            >{{ $t(`social.description${index}`) }}
           </p>
           <div class="flex gap-[5px] items-end my-[20px]">
             <img
@@ -96,7 +100,8 @@
             class="w-full border border-gray-300 px-[21px] py-[20px] rounded-xl"
           >
             <p class="font-semibold">
-              {{ data[stdColorAry[index]] }}
+              <!-- social.red0, social.orange, social.green0 -->
+              {{ $t(`social.${data[stdColorAry[index]]}${index}`) }}
             </p>
           </div>
           <div
@@ -105,7 +110,7 @@
           >
             <p class="font-bold text-xl text-amber-500">교사의 생활지도 tip</p>
             <p class="text-blue-500 pr-2">
-              {{ !isOpen[index] ? '열기' : '닫기' }}
+              {{ !isOpen[index] ? $t('common.open') : $t('common.close') }}
             </p>
           </div>
 
@@ -437,12 +442,14 @@ export default {
       () => [selectedOption.value],
       async () => {
         if (selectedOption.value) {
+          isOpen.value = [false, false, false, false];
+          name.value = optionsObj.value[selectedOption.value].name;
+
           if (!optionsObj.value[selectedOption.value].userId) {
             alert('설문을 완료하지 못한 학생입니다.');
             return;
           }
-          isOpen.value = [false, false, false, false];
-          name.value = optionsObj.value[selectedOption.value].name;
+
           const resUserIDTT = await UserService.userIDTT({
             id: optionsObj.value[selectedOption.value].userId,
           });
