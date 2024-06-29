@@ -140,7 +140,7 @@ export default {
     const isSocialTTView = computed(() => route.meta.isSocialTTView);
     const isLearnTTView = computed(() => route.meta.isLearnTTView);
 
-    const userId = computed(() => userStore.id);
+    const userId = computed(() => userStore.token);
     const loginType = computed(() => userStore.type);
 
     const goMain = () => {

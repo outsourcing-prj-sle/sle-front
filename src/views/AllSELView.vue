@@ -211,7 +211,6 @@ export default {
     const { t } = useI18n();
     const router = useRouter();
     const userStore = useUserStore();
-    const userId = computed(() => userStore.id);
     const _infoArr = ref([]);
     const titleArr = ref([]);
     const titleReportArr = ref([]);

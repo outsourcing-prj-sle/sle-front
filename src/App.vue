@@ -20,7 +20,7 @@ export default defineComponent({
     const router = useRouter();
     const userStore = useUserStore();
     const needLogin = computed(() => route.meta.needLogin);
-    const userId = computed(() => userStore.id);
+    const userId = computed(() => userStore.token);
 
     watchEffect(() => {
       if (needLogin.value && !userId.value) {
