@@ -157,23 +157,8 @@ export default defineComponent({
         return;
       }
 
-      topList.value = resData.todo.map((v) => {
-        const num = v.pollNm.slice(-1);
-        return {
-          ...v,
-          num,
-        };
-      });
-
-      bottomList.value = resData.done.map((v) => {
-        const num = v.pollNm.slice(-1);
-        return {
-          ...v,
-          num,
-        };
-      });
-
-      topList.value = sortArrEnd(topList.value);
+      topList.value = sortArrEnd(resData.todo);
+      bottomList.value = resData.done;
     });
 
     const goReportNotice = (type = 1) => {

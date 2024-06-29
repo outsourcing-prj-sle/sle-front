@@ -25,7 +25,7 @@
       >
         <!-- 제목 -->
         <div class="self-center text-xl font-bold">
-          {{ $t(`report${data.num}.title`) }}
+          {{ $t(`report${data.nttNo}.title`) }}
         </div>
         <div class="mt-8 max-md:mr-2.5">
           {{ mixDate(data.startDate, data.endDate) || '2023. 09. 01 ~ 12. 01' }}
@@ -109,7 +109,7 @@
         :key="`${data.pollNm}${index}`"
       >
         <div class="self-center text-xl font-bold text-center text-neutral-700">
-          {{ $t(`report${data.num}.title`) }}
+          {{ $t(`report${data.nttNo}.title`) }}
         </div>
         <div class="mt-8 text-base font-medium text-neutral-700 max-md:mr-2.5">
           {{ mixDate(data.startDate, data.endDate) || '2023. 09. 01 ~ 12. 01' }}
