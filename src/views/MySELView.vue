@@ -65,7 +65,7 @@
                   {{ i + 1 }}
                 </td>
                 <td class="my-auto text-zinc-800 px-2">
-                  {{ $t(`report${info.num}.title`) }}
+                  {{ $t(`report${info.nttNo}.title`) }}
                 </td>
                 <td class="my-auto text-zinc-800 px-2 w-[260px] text-center">
                   {{ mixDate(info.startDate, info.endDate) }}
@@ -151,13 +151,6 @@ export default {
         return;
       }
 
-      resData.value = resData.value.map((v) => {
-        const num = v.pollNm.slice(-1);
-        return {
-          ...v,
-          num,
-        };
-      });
       infoArr.value = sortArrEnd(resData);
     };
 
