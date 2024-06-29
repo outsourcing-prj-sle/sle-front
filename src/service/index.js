@@ -46,10 +46,7 @@ apiClient.interceptors.request.use(
     }
 
     // 사용자 페이지 헤더 설정
-    if (
-      (url.startsWith('/api/users') || url.startsWith('/api/reports')) &&
-      userStore
-    ) {
+    if ((url.startsWith('/users') || url.startsWith('/reports')) && userStore) {
       config.headers.Authorization = userStore.token || 'USRCNFRM_00000000004';
     }
 
