@@ -147,7 +147,7 @@ router.beforeEach((to, from, next) => {
   }
 
   const userStore = useUserStore();
-  const userId = userStore.id;
+  const userId = userStore.token;
   // 로그인 안했으면 로그인페이지로
   if (to.meta?.needLogin && !userId) {
     next({ name: 'login', query: { redirect: to.fullPath } });

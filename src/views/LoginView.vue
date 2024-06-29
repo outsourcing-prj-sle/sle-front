@@ -87,6 +87,7 @@ export default {
               const redirectPath = route.query.redirect || '/';
               router.push(redirectPath);
             } else {
+              console.log('wtf?');
               console.log(callbackRes);
               showPopup.value = true;
             }
