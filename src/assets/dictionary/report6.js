@@ -1,7 +1,7 @@
 export default {
   title: {
-    ko: '마음알기 설문4',
-    en: 'Activity 4',
+    ko: '마음알기 설문6',
+    en: 'Activity 6',
   },
   period: {
     ko: '기간 : 2024. 03. 01 ~ 07. 31',
