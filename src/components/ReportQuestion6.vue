@@ -159,8 +159,6 @@ export default {
     watch(
       () => props._currentStep,
       (newVal) => {
-        console.log('newVal');
-        console.log(newVal);
         currentStep.value = newVal || null;
       }
     );
