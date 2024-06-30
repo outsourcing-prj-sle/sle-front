@@ -251,7 +251,7 @@ export default {
     );
 
     watch(
-      () => score,
+      () => score.value,
       (newVal) => {
         emit('handleAnswer', newVal);
       }
