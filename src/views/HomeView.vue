@@ -56,6 +56,7 @@
         <AppDropdown
           :options="options"
           :startText="selectedOption"
+          :updateText="updateText"
           @update:selectedOption="handleSelection"
         />
       </div>
@@ -103,7 +104,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref, computed, onMounted } from 'vue';
+import { defineComponent, ref, computed, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
@@ -136,6 +137,17 @@ export default defineComponent({
     const qrURL = ref('');
     const topList = ref([]);
     const bottomList = ref([]);
+    const updateText = ref('');
+    const all = computed(() => {
+      return t('sel.all');
+    });
+    watch(
+      () => [all.value],
+      () => {
+        options.value = [t('common.sort_dead'), t('common.sort_new')];
+        updateText.value = t('common.sort_dead');
+      }
+    );
 
     const handleSelection = (option) => {
       selectedOption.value = option;
@@ -266,6 +278,7 @@ export default defineComponent({
       qrURL,
       topList,
       bottomList,
+      updateText,
 
       handleSelection,
       goReportNotice,

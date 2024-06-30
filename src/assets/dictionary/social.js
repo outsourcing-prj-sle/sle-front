@@ -15,6 +15,38 @@ export default {
     ko: '해당 학생은 SEL활동에 참여하지 않아 불러올 데이터가 없습니다.<br />참여 유도 후 재시도 바랍니다.',
     en: 'This study does not participate in SEL activities, so there is no data to load.<br />Please encourage participation and try again.',
   },
+  detail_notice: {
+    ko: '역량별 상세 안내',
+    en: 'Detailed Information by Competency',
+  },
+  result_title: {
+    ko: '분석결과',
+    en: 'Analysis Results',
+  },
+  tips_title: {
+    ko: '교사의 생활지도 tip',
+    en: 'Tips for Teachers on Management',
+  },
+  no_risk: {
+    ko: '위험없음',
+    en: 'Tips for Teachers on Management',
+  },
+  high_risk: {
+    ko: '위험높음',
+    en: 'Tips for Teachers on Management',
+  },
+  normal: {
+    ko: '평균범위',
+    en: 'Normal',
+  },
+  submit: {
+    ko: '의견 제출',
+    en: 'submit',
+  },
+  avg: {
+    ko: '학급 평균',
+    en: 'Class Average',
+  },
   title1: {
     ko: '내면화 행동 문제',
     en: 'Internalizing Behavioral Problems',
@@ -62,7 +94,7 @@ export default {
       <p>"This is a difficult task for me, but I can solve it if I work hard."</p>`,
   },
   title2: {
-    ko: '외현화 행동 문제',
+    ko: '외면화 행동 문제',
     en: 'Externalizing Behavioral Problems',
   },
   description2: {
@@ -215,5 +247,21 @@ export default {
     <p>- Emotion journaling program: Each day, students write about how they felt that day and why in an emotion journal. Teachers go over students’emotion journals with them and talk about ways to manage stress.</p>
     <p>For example, they ask questions like, "What made you feel stressed today? How can you cope with that situation?" to help students understand and manage their emotions.</p>
       `,
+  },
+  ai_title: {
+    ko: '__name__ 학생의 사회정서학습 AI분석 의견조사',
+    en: '',
+  },
+  ai_q1: {
+    ko: 'AI가 진단한 피드백 내용과 오프라인에서 살펴본 학생에 대한 선생님의 의견이 얼마나 일치하였나요?',
+    en: '',
+  },
+  ai_q2: {
+    ko: '일치하지 않는다면 어느 유형이 일치하지 않았나요?* (중복선택 가능)',
+    en: '',
+  },
+  ai_q3: {
+    ko: '개선의견을 자유롭게 적어주세요(선택)',
+    en: '',
   },
 };
