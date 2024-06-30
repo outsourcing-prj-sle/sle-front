@@ -27,7 +27,7 @@ export default {
     const hello_teacher = computed(() => {
       return t('login_popup.hello_teacher').replace(
         '__userInfo__',
-        `<span class="text-blue-400">{{ ${props.userInfo} }}</span>`
+        `<span class="text-blue-400">${props.userInfo}</span>`
       );
     });
 
