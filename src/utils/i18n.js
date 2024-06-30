@@ -7,7 +7,6 @@ import home from '@/assets/dictionary/home';
 import login_popup from '@/assets/dictionary/login_popup';
 import login from '@/assets/dictionary/login';
 import myinfo from '@/assets/dictionary/myinfo';
-import report_common from '@/assets/dictionary/report_common';
 import report from '@/assets/dictionary/report';
 import report1 from '@/assets/dictionary/report1';
 import report2 from '@/assets/dictionary/report2';
@@ -37,7 +36,6 @@ const homeMessages = formatMessages(home, 'home');
 const login_popupMessages = formatMessages(login_popup, 'login_popup');
 const loginMessages = formatMessages(login, 'login');
 const myinfoMessages = formatMessages(myinfo, 'myinfo');
-const report_commonMessages = formatMessages(report_common, 'report_common');
 const reportMessages = formatMessages(report, 'report');
 const report1Messages = formatMessages(report1, 'report1');
 const report2Messages = formatMessages(report2, 'report2');
@@ -58,7 +56,6 @@ const messages = {
     ...login_popupMessages.en,
     ...loginMessages.en,
     ...myinfoMessages.en,
-    ...report_commonMessages.en,
     ...reportMessages.en,
     ...report1Messages.en,
     ...report2Messages.en,
@@ -77,7 +74,6 @@ const messages = {
     ...login_popupMessages.ko,
     ...loginMessages.ko,
     ...myinfoMessages.ko,
-    ...report_commonMessages.ko,
     ...reportMessages.ko,
     ...report1Messages.ko,
     ...report2Messages.ko,
