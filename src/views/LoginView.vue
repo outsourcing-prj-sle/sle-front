@@ -90,8 +90,8 @@ export default {
               router.push(redirectPath);
             } else {
               if (
-                resData === 'no_data_rudska' ||
-                resData === 'no_userId_rudska' ||
+                resData === 'no_userdata' ||
+                resData === 'no_userId' ||
                 resData === 'error_rudska'
               ) {
                 showPopup.value = true;

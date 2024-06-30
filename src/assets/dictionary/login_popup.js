@@ -39,12 +39,12 @@ export default {
     ko: '확인',
     en: 'YES',
   },
-  no_data_rudska: {
-    ko: '경남교육청 서버와의 통신이 실패하였습니다.<br/>뉴탭에서 계정 정보를 확인해주세요.',
-    en: 'Cannot Access Gyeongnam Education Server.<br />Please check account on NewTab.',
+  no_userdata: {
+    ko: '경남교육청 사용자 정보를 가져오는데 실패하였습니다.<br/>뉴탭에서 계정 정보를 확인해주세요.<br/>에러코드 : no_userdata',
+    en: 'Cannot Access Gyeongnam Education Server.<br />Please check account on NewTab.<br/>error : no_userdata',
   },
-  no_userId_rudska: {
-    ko: '경남교육청 사용자 아이디 조회에 실패하였습니다. <br/>뉴탭에서 계정 정보를 확인해주세요.',
-    en: 'Cannot Find Gyeongnam Education UserID.<br />Please check account on NewTab.',
+  no_userId: {
+    ko: '경남교육청 사용자 아이디가 없습니다. <br/>뉴탭에서 계정 정보를 확인해주세요.<br/>에러코드 : no_userId',
+    en: 'Cannot Find Gyeongnam Education UserID.<br />Please check account on NewTab.<br/>error : no_userId',
   },
 };
