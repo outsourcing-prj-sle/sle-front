@@ -83,7 +83,7 @@
       @click="submitInfo"
       class="my-[10px] px-4 py-2 mt-[50px] bg-blue-600 text-white rounded-md min-w-[96px]"
     >
-      {{ $t('common.save') }}
+      {{ $t('save.save') }}
     </button>
   </div>
 </template>

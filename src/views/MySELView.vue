@@ -25,6 +25,7 @@
         <AppDropdown
           :options="options"
           :startText="selectedOption"
+          :updateText="updateText"
           :openWay="'left'"
           @update:selectedOption="handleSelection"
         />
@@ -119,7 +120,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import UserService from '@/service/UserService.js';
@@ -134,9 +135,20 @@ export default {
     const { t } = useI18n();
     const router = useRouter();
     const infoArr = ref([]);
+    const updateText = ref('');
 
     const options = ref([t('common.sort_dead'), t('common.sort_new')]);
     const selectedOption = ref(t('common.sort_dead'));
+    const all = computed(() => {
+      return t('sel.all');
+    });
+    watch(
+      () => [all.value],
+      () => {
+        options.value = [t('common.sort_dead'), t('common.sort_new')];
+        updateText.value = t('common.sort_dead');
+      }
+    );
 
     onMounted(() => {
       fetchData();
@@ -206,7 +218,7 @@ export default {
 
     const handleSelection = (option) => {
       selectedOption.value = option;
-      if (option === 'common.sort_new') {
+      if (option === t('common.sort_new')) {
         sortArrStart(infoArr.value);
       }
       if (option === t('common.sort_dead')) {
@@ -236,6 +248,7 @@ export default {
       options,
       selectedOption,
       infoArr,
+      updateText,
       handleSelection,
       goReportNoticePage,
       goReportQuestionPage,

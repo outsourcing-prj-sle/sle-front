@@ -31,6 +31,7 @@
       <div class="w-[300px] flex justify-start">
         <AppDropdown
           v-if="selectedOption"
+          class="z-50"
           :options="options"
           :startText="options[0]"
           :openWay="'left'"
