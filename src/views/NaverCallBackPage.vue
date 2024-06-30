@@ -1,7 +1,5 @@
 <template>
-  <div>
-    Redirecting...
-  </div>
+  <div>Redirecting...</div>
 </template>
 
 <script>
@@ -16,6 +14,6 @@ export default {
       window.opener.postMessage({ type, code, state }, window.location.origin);
       window.close();
     }
-  }
-}
+  },
+};
 </script>
