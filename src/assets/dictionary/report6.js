@@ -3,10 +3,6 @@ export default {
     ko: '마음알기 설문6',
     en: 'Activity 6',
   },
-  period: {
-    ko: '기간 : 2024. 03. 01 ~ 07. 31',
-    en: 'period : 2024. 05. 30 ~ 07. 31',
-  },
   announce_content: {
     ko: '다음 지시를 따라 주시기 바랍니다.각 질문을 주의 깊게 읽고 질문에 가장 잘 맞는 얼굴 표정을 만들어보세요.다양한 ‘눈’ 그림과 ‘코와 입’ 그림 중에서 ‘눈’ 그림 1개, ‘코와 입’ 그림 1개를 선택해서 표정을 완성할 수 있어요.',
     en: 'In this task, you will choose one of the eyes as well as the nose/mouth pieces to create a facial expression that best matches the given scenario.<br /> For example, to create a happy face, I would choose these two pieces. [demonstrate the choosing of the correct pieces].As you click, you will see your selections on the kid��s face.<br />Pay attention to the scenario. Give the best answer as quickly as possible, even if it is hard to make up your mind.',

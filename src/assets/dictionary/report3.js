@@ -3,10 +3,6 @@ export default {
     ko: '마음알기 설문3',
     en: 'Activity 3',
   },
-  period: {
-    ko: '기간 : 2024. 05. 30 ~ 07. 31',
-    en: 'period : 2024. 05. 30 ~ 07. 31',
-  },
   announce_voice: {
     ko: '클릭시 안내음성을 들을 수 있습니다. 단, 안내음성은 1회만 들을 수 있습니다.',
     en: 'You can hear the announcement voice when you click. However, you can only listen to the guided voice once.',

@@ -3,10 +3,6 @@ export default {
     ko: '마음알기 설문4',
     en: 'Activity 4',
   },
-  period: {
-    ko: '기간 : 2024. 03. 01 ~ 07. 31',
-    en: 'period : 2024. 05. 30 ~ 07. 31',
-  },
   announce_content: {
     ko: '다음 지시를 따라 주시기 바랍니다.활동이 시작되면 검은 화면 안에 사람의 사진이 나타납니다.사진은 1초 동안만 나타납니다. 주의 깊게 보고 사진 속사람이 생각하고 있거나 느끼는 것을 가장 잘 설명하는 단어를 가능한 한 빨리 선택해 주세요.시작을 누르면 화면에 3, 2, 1 순서로 숫자가 나온 후 활동이 시작됩니다.준비되었나요? ‘시작’을 눌러 시작해보세요!',
     en: 'Once we begin, you will see the photo of a person inside this black screen.<br /> Watch carefully as the photo will only be displayed on the screen for a second. Try to see what the person in the phone is thinking or feeling.<br />Always count down so that students will pay attention and not miss the photo being displayed.<br />Ready? On the count of 3, 2, 1!  Press "Start" to get started!',

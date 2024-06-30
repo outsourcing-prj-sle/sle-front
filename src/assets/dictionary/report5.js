@@ -3,10 +3,6 @@ export default {
     ko: '마음알기 설문5',
     en: 'Activity 5',
   },
-  period: {
-    ko: '기간 : 2024. 05. 15 ~ 07. 31',
-    en: 'period : 2024. 05. 30 ~ 07. 31',
-  },
   announce_content: {
     ko: '다음 지시를 따라 주시기 바랍니다.이 화면에는 그림과 감정을 나타내는 단어들이 있습니다. 각 문장을 주의 깊게 듣고 1, 2, 3, 4 보기 중 하나를 선택해주세요.안내음성은 1번만 들을 수 있으니 조용한 장소에서 잘 듣고 선택해주세요.준비되었나요? ‘시작’을 눌러 시작해보세요!',
     en: 'Here are the directions:On this screen, there are words that represent pictures and emotions.Hear each sentence carefully. You will have four answer choices: 1, 2, 3, and 4.<br />You can only listen to the guide voice once, so please listen carefully and choose in a quiet place.<br />Are you ready? Press "Start" to get started!',

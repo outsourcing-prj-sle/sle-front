@@ -106,7 +106,7 @@
                     class="w-full border-b border-solid border-stone-200"
                     v-if="
                       (!showOnlyNon ||
-                        (showOnlyNon && !info.stateList[selectedReport])) &&
+                        (showOnlyNon && !info.stateList[currentNum])) &&
                       i < idx
                     "
                   >
@@ -122,12 +122,13 @@
                     <td
                       class="my-auto px-2"
                       :class="{
-                        'text-red-600': !info.stateList[selectedReport],
-                        'text-zinc-800': info.stateList[selectedReport],
+                        'text-red-600':
+                          info.stateList && !info.stateList[currentNum],
+                        'text-zinc-800': info.stateList[currentNum],
                       }"
                     >
                       {{
-                        info.stateList[selectedReport]
+                        info.stateList[currentNum]
                           ? $t('sel.ing')
                           : $t('sel.non_ing')
                       }}
@@ -158,12 +159,12 @@
                       v-for="title in titleReportArr"
                       :key="`${title}${info.name}${i}`"
                       :class="{
-                        'text-red-600': !info.stateList[title],
-                        'text-zinc-800': info.stateList[title],
+                        'text-red-600': !info.stateList[parseTitleToNum(title)],
+                        'text-zinc-800': info.stateList[parseTitleToNum(title)],
                       }"
                     >
                       {{
-                        info.stateList[title]
+                        info.stateList[parseTitleToNum(title)]
                           ? $t('sel.ing')
                           : $t('sel.non_ing')
                       }}
@@ -297,6 +298,16 @@ export default {
       setTitleList();
     };
 
+    const parseTitleToNum = (title) => {
+      const num = title.slice(-1);
+      return num;
+    };
+
+    const currentNum = computed(() => {
+      const num = selectedReport.value.slice(-1);
+      return num;
+    });
+
     const infoArr = computed(() => {
       return _infoArr.value;
     });
@@ -333,12 +344,12 @@ export default {
           text += [info.name, info.email, info.grade, info.gender].join(',');
           if (selectedReport.value === all.value) {
             for (let i in titleReportArr.value) {
-              text += info.stateList[titleReportArr.value[i]]
+              text += info.stateList[i + 1 + '']
                 ? ',' + t('sel.ing')
                 : ',' + t('sel.non_ing');
             }
           } else {
-            text += info.stateList[selectedReport.value]
+            text += info.stateList[currentNum.value]
               ? ',' + t('sel.ing')
               : ',' + t('sel.non_ing');
           }
@@ -382,9 +393,11 @@ export default {
       max,
       all,
       updateText,
+      currentNum,
 
       options,
       selectedOption,
+      parseTitleToNum,
       handleSelection,
       downloadExcel,
       infiniteScroll,
