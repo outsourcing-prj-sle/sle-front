@@ -8,33 +8,28 @@
       <div
         class="justify-center flex items-center p-2.5 ml-px flex-1 bg-indigo-50 max-md:px-5 max-md:max-w-full min-w-96 max-2xl:min-w-72 max-xl:min-w-40 max-lg:min-w-32 max-lg:text-sm max-md:text-xs"
       >
-        예시 문장
+        {{ $t('report1.ex_sentence') }}
       </div>
       <div
         class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
-      >
-        절대로<br />바꿀 수 없어요
-      </div>
+        v-html="$t('report1.cmmn_response1')"
+      ></div>
       <div
         class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
-      >
-        약간<br />바꿀 수 있어요
-      </div>
+        v-html="$t('report1.cmmn_response2')"
+      ></div>
       <div
         class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
-      >
-        어느 정도<br />바꿀 수 있어요
-      </div>
+        v-html="$t('report1.cmmn_response3')"
+      ></div>
       <div
         class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
-      >
-        대체로<br />바꿀 수 있어요
-      </div>
+        v-html="$t('report1.cmmn_response4')"
+      ></div>
       <div
         class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
-      >
-        완전히<br />바꿀 수 있어요
-      </div>
+        v-html="$t('report1.cmmn_response5')"
+      ></div>
     </section>
 
     <section
@@ -42,13 +37,8 @@
     >
       <div
         class="flex items-center p-2.5 ml-px flex-1 max-md:px-5 max-md:max-w-full min-w-96 border-stone-200 border-solid border-b font-medium leading-6 text-left pl-5 max-2xl:min-w-72 max-xl:min-w-40 max-lg:min-w-32 max-lg:text-sm max-md:text-xs"
-      >
-        학교에서 단짝친구 외에 다른 친구와
-        <br />
-        활동이나 놀이를 해보도록
-        <br />
-        바꿀 수 있나요?
-      </div>
+        v-html="$t('report1.ex_question')"
+      ></div>
       <div
         class="justify-center min-h-[120px] py-2.5 text-center flex grow border-stone-200 border-solid border-b"
       >

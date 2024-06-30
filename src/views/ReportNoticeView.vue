@@ -22,9 +22,24 @@
         <div class="self-end text-base leading-8 max-lg:text-sm max-md:text-xs">
           {{ $t('report.period') }} : {{ date }}
         </div>
+        <div
+          class="flex gap-2.5 self-start mt-1.5 max-md:flex-wrap"
+          v-if="needVoice"
+        >
+          <img
+            src="@/assets/img/speaker.png"
+            alt="speaker"
+            class="shrink-0 aspect-square w-[25px] max-lg:w-[20px]"
+          />
+          <p
+            class="flex-auto my-auto max-md:max-w-full max-lg:text-sm max-md:text-xs text-left"
+          >
+            {{ $t('report.announce_voice') }}
+          </p>
+        </div>
         <section
           class="justify-center items-start px-9 py-6 text-left text-base leading-8 rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:mt-10 max-md:max-w-full max-lg:text-sm max-md:text-xs"
-          v-html="$t(`report${nttNo}.auuounce_content`)"
+          v-html="$t(`report${nttNo}.announce_content`)"
         ></section>
       </article>
     </div>
@@ -32,16 +47,14 @@
     <ReportNotice1 v-if="title === '마음알기 설문1'" @allowNext="allowNext" />
     <ReportNotice2 v-if="title === '마음알기 설문2'" @allowNext="allowNext" />
     <ReportNotice3 v-if="title === '마음알기 설문3'" @allowNext="allowNext" />
-    <ReportNotice4 v-if="title === '마음알기 설문4'" @allowNext="allowNext" />
-    <ReportNotice5 v-if="title === '마음알기 설문5'" @allowNext="allowNext" />
     <ReportNotice6 v-if="title === '마음알기 설문6'" @allowNext="allowNext" />
-
-    <section
-      class="justify-center text-left items-start px-7 py-7 mt-8 max-w-full text-base font-medium leading-8 text-black rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:max-w-full w-full max-lg:text-sm max-md:text-xs"
-      v-if="isAllowed && showAuuounce2"
-    >
-      {{ $t(`report${nttNo}.auuounce_content2`) }}
-    </section>
+    <div class="pl-[154px] items-end w-full max-md:max-w-full max-lg:pl-0">
+      <section
+        class="justify-center text-left items-start px-7 py-7 mt-8 max-w-full text-base font-medium leading-8 text-black rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:max-w-full w-full max-lg:text-sm max-md:text-xs"
+        v-if="isAllowed && showAuuounce2"
+        v-html="$t(`report${nttNo}.announce_content2`)"
+      ></section>
+    </div>
     <button
       class="justify-center px-10 py-3 mt-6 text-base text-center text-white whitespace-nowrap bg-blue-500 rounded-3xl max-md:px-5"
       v-if="isAllowed"
@@ -58,8 +71,6 @@ import { useRoute, useRouter } from 'vue-router';
 import ReportNotice1 from '@/components/ReportNotice1.vue';
 import ReportNotice2 from '@/components/ReportNotice2.vue';
 import ReportNotice3 from '@/components/ReportNotice3.vue';
-import ReportNotice4 from '@/components/ReportNotice4.vue';
-import ReportNotice5 from '@/components/ReportNotice5.vue';
 import ReportNotice6 from '@/components/ReportNotice6.vue';
 import ReportService from '@/service/ReportService.js';
 import { _mixDate } from '@/utils/utils.js';
@@ -70,8 +81,6 @@ export default {
     ReportNotice1,
     ReportNotice2,
     ReportNotice3,
-    ReportNotice4,
-    ReportNotice5,
     ReportNotice6,
   },
   setup() {
@@ -82,7 +91,11 @@ export default {
     const date = ref();
     const expired = ref();
     const nttNo = ref();
-    const isAllowed = ref(false);
+    const nextFlag = ref(false);
+    const isAllowed = computed(() => {
+      const ary = ['4', '5'];
+      return ary.includes(nttNo.value) || nextFlag.value;
+    });
 
     onMounted(async () => {
       const responseNotice = await ReportService.reportNotice({
@@ -100,8 +113,14 @@ export default {
       nttNo.value = resData.nttNo;
     });
 
+    const needVoice = computed(() => {
+      const ary = ['3', '6'];
+      let flag = ary.includes(nttNo.value);
+      return flag;
+    });
+
     const showAuuounce2 = computed(() => {
-      const ary = ['1'];
+      const ary = ['1', '2', '3', '6'];
       let flag = ary.includes(nttNo.value);
       return flag;
     });
@@ -118,9 +137,7 @@ export default {
     };
 
     const allowNext = (flag) => {
-      console.log('1234');
-      console.log(flag);
-      isAllowed.value = flag;
+      nextFlag.value = flag;
     };
 
     return {
@@ -130,6 +147,7 @@ export default {
       date,
       nttNo,
       isAllowed,
+      needVoice,
       showAuuounce2,
       startReport,
       allowNext,

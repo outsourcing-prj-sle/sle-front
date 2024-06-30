@@ -1,226 +1,152 @@
 <template>
-  <section
-    class="flex flex-col items-end px-20 mt-4 w-full max-md:px-5 max-md:mt-10 max-md:max-w-full"
+  <div
+    class="pl-[154px] flex flex-col items-end w-full max-md:max-w-full max-lg:pl-0"
   >
-    <div class="flex gap-1 items-start self-stretch max-md:max-w-full">
-      <div class="flex flex-col self-start font-bold min-w-[150px]">
-        <h1 class="text-xl text-blue-500 text-left">{{ title }}</h1>
-        <h2 class="mt-1 text-2xl text-neutral-700 text-left">안내사항</h2>
-        <img
-          src="@/assets/img/minichar2.png"
-          alt="minichar"
-          class="self-center mt-4 aspect-[1.08] w-[114px]"
-        />
+    <section
+      class="flex gap-0 self-end mt-8 w-full text-base font-bold text-cyan-900 max-md:max-w-full"
+    >
+      <div
+        class="justify-center flex items-center p-2.5 ml-px flex-1 bg-indigo-50 max-md:px-5 max-md:max-w-full min-w-96 max-2xl:min-w-72 max-xl:min-w-40 max-lg:min-w-32 max-lg:text-sm max-md:text-xs"
+      >
+        {{ $t('report2.ex_sentence') }}
       </div>
-      <article
-        class="flex flex-col grow shrink-0 self-end mt-9 font-medium text-black basis-0 w-fit max-md:max-w-full"
-      >
-        <div class="self-end text-base leading-8 max-lg:text-sm max-md:text-xs">
-          기간 : {{ date }}
-        </div>
-        <section
-          class="justify-center items-start px-9 py-6 text-left text-base leading-8 rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:mt-10 max-md:max-w-full max-lg:text-sm max-md:text-xs"
-        >
-          다음 지시를 따라 주시기 바랍니다.<br />이 화면에는 학생들의 생각, 감정
-          그리고 행동을 나타내는 문장들이 있습니다. 각 문장을 주의 깊게 읽고 1,
-          2, 3, 4 보기 중 하나를 선택해주세요.<br /><br />&lt;보기&gt;<br />1번:
-          나에 대한 설명이나 나의 감정이 전혀 그렇지 않다고 생각하는 경우<br />2번:
-          나에 대한 설명이나 나의 감정이 가끔 그렇다고 생각하는 경우<br />3번:
-          나에 대한 설명이나 나의 감정이 자주 그렇다고 생각하는 경우<br />4번:
-          나에 대한 설명이나 감정이 거의 항상 그렇다고 생각하는 경우<br /><br />아래의
-          예시를 한 번 볼까요? 예시 문장을 잘 읽고 1개의 답안을 선택해주세요.
-        </section>
-      </article>
-    </div>
-    <div
-      class="pl-[154px] flex flex-col items-end w-full max-md:max-w-full max-lg:pl-0"
-    >
-      <section
-        class="flex gap-0 self-end mt-8 w-full text-base font-bold text-cyan-900 max-md:max-w-full"
-      >
-        <div
-          class="justify-center flex items-center p-2.5 ml-px flex-1 bg-indigo-50 max-md:px-5 max-md:max-w-full min-w-96 max-2xl:min-w-72 max-xl:min-w-40 max-lg:min-w-32 max-lg:text-sm max-md:text-xs"
-        >
-          예시 문장
-        </div>
-        <div
-          class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
-        >
-          절대로<br />그렇지 않아요
-        </div>
-        <div
-          class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
-        >
-          가끔<br />그래요
-        </div>
-        <div
-          class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
-        >
-          자주<br />그래요
-        </div>
-        <div
-          class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
-        >
-          거의 항상<br />그래요
-        </div>
-      </section>
+      <div
+        class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
+        v-html="$t('report2.cmmn_response1')"
+      ></div>
+      <div
+        class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
+        v-html="$t('report2.cmmn_response2')"
+      ></div>
+      <div
+        class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
+        v-html="$t('report2.cmmn_response3')"
+      ></div>
+      <div
+        class="justify-center py-2.5 text-center bg-blue-100 grow max-lg:text-sm max-md:text-xs"
+        v-html="$t('report2.cmmn_response4')"
+      ></div>
+    </section>
 
-      <section
-        class="flex gap-0 min-h-[120px] self-end w-full text-base font-bold text-cyan-900 max-md:max-w-full"
-      >
-        <div
-          class="flex items-center p-2.5 ml-px flex-1 max-md:px-5 max-md:max-w-full min-w-96 border-stone-200 border-solid border-b font-medium leading-6 text-left pl-5 max-2xl:min-w-72 max-xl:min-w-40 max-lg:min-w-32 max-lg:text-sm max-md:text-xs"
-        >
-          수영장에서 수영하는 것을<br />좋아해요.
-        </div>
-        <div
-          class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b"
-        >
-          <label
-            for="option1"
-            class="shrink-0 self-stretch my-auto flex justify-center items-center"
-          >
-            <input
-              class="hidden"
-              type="radio"
-              name="activityQuestion"
-              id="option1"
-              value="1"
-              v-model="score"
-            />
-            <div
-              class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
-            >
-              <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
-            </div>
-          </label>
-        </div>
-        <div
-          class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b"
-        >
-          <label
-            for="option2"
-            class="shrink-0 self-stretch my-auto flex justify-center items-center"
-          >
-            <input
-              class="hidden"
-              type="radio"
-              name="activityQuestion"
-              id="option2"
-              value="2"
-              v-model="score"
-            />
-            <div
-              class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
-            >
-              <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
-            </div>
-          </label>
-        </div>
-        <div
-          class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b"
-        >
-          <label
-            for="option3"
-            class="shrink-0 self-stretch my-auto flex justify-center items-center"
-          >
-            <input
-              class="hidden"
-              type="radio"
-              name="activityQuestion"
-              id="option3"
-              value="3"
-              v-model="score"
-            />
-            <div
-              class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
-            >
-              <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
-            </div>
-          </label>
-        </div>
-        <div
-          class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b"
-        >
-          <label
-            for="option4"
-            class="shrink-0 self-stretch my-auto flex justify-center items-center"
-          >
-            <input
-              class="hidden"
-              type="radio"
-              name="activityQuestion"
-              id="option4"
-              value="4"
-              v-model="score"
-            />
-            <div
-              class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
-            >
-              <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
-            </div>
-          </label>
-        </div>
-      </section>
-
-      <section
-        class="justify-center text-left items-start px-7 py-7 mt-8 max-w-full text-base font-medium leading-8 text-black rounded-xl border w-full border-solid border-neutral-300 max-md:px-5 max-md:max-w-full max-lg:text-sm max-md:text-xs"
-        v-if="score"
-      >
-        질문에서 맞거나 틀린 답은 없습니다. 솔직하게 모든 질문에 답해주세요.<br />결정하기
-        어렵더라도 각 질문마다 최선을 다해 답해주세요.<br /><br />자,
-        준비되었나요? 준비가 되었다면 ‘시작’을 눌러 시작해보세요!
-      </section>
-    </div>
-    <button
-      class="justify-center px-10 py-3 mt-6 text-base text-center text-white whitespace-nowrap bg-blue-500 rounded-3xl max-md:px-5"
-      v-if="score"
-      @click="startReport"
+    <section
+      class="flex gap-0 min-h-[120px] self-end w-full text-base font-bold text-cyan-900 max-md:max-w-full"
     >
-      시작
-    </button>
-  </section>
+      <div
+        class="flex items-center p-2.5 ml-px flex-1 max-md:px-5 max-md:max-w-full min-w-96 border-stone-200 border-solid border-b font-medium leading-6 text-left pl-5 max-2xl:min-w-72 max-xl:min-w-40 max-lg:min-w-32 max-lg:text-sm max-md:text-xs"
+        v-html="$t('report2.ex_questIon')"
+      ></div>
+      <div
+        class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b"
+      >
+        <label
+          for="option1"
+          class="shrink-0 self-stretch my-auto flex justify-center items-center"
+        >
+          <input
+            class="hidden"
+            type="radio"
+            name="activityQuestion"
+            id="option1"
+            value="1"
+            v-model="score"
+          />
+          <div
+            class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
+          >
+            <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
+          </div>
+        </label>
+      </div>
+      <div
+        class="justify-center py-2.5 text-center flex grow border-stone-200 border-solid border-b"
+      >
+        <label
+          for="option2"
+          class="shrink-0 self-stretch my-auto flex justify-center items-center"
+        >
+          <input
+            class="hidden"
+            type="radio"
+            name="activityQuestion"
+            id="option2"
+            value="2"
+            v-model="score"
+          />
+          <div
+            class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
+          >
+            <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
+          </div>
+        </label>
+      </div>
+      <div
+        class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b"
+      >
+        <label
+          for="option3"
+          class="shrink-0 self-stretch my-auto flex justify-center items-center"
+        >
+          <input
+            class="hidden"
+            type="radio"
+            name="activityQuestion"
+            id="option3"
+            value="3"
+            v-model="score"
+          />
+          <div
+            class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
+          >
+            <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
+          </div>
+        </label>
+      </div>
+      <div
+        class="justify-center py-2 text-center flex grow border-stone-200 border-solid border-b"
+      >
+        <label
+          for="option4"
+          class="shrink-0 self-stretch my-auto flex justify-center items-center"
+        >
+          <input
+            class="hidden"
+            type="radio"
+            name="activityQuestion"
+            id="option4"
+            value="4"
+            v-model="score"
+          />
+          <div
+            class="w-7 h-7 max-sm:w-5 max-sm:h-5 flex justify-center items-center border border-solid border-neutral-400 rounded-[999px] cursor-pointer"
+          >
+            <div class="w-5 h-5 max-sm:w-3 max-sm:h-3 rounded-full"></div>
+          </div>
+        </label>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
 export default {
   name: 'LoginView',
   components: {},
-  props: {
-    title: {
-      type: String,
-    },
-    date: {
-      type: String,
-    },
-    expired: {
-      type: Boolean,
-    },
-  },
-  setup(props) {
+  props: {},
+  setup(props, { emit }) {
     const route = useRoute();
-    const router = useRouter();
     const type = ref(route.params.type || 1);
     const score = ref();
 
-    const startReport = () => {
-      if (props.expired) {
-        alert('기간이 지났습니다.');
-        return;
-      }
-      router.push({
-        name: 'reportQuestion',
-        params: { type: type.value },
-      });
-    };
+    watch(score, (newValue, oldValue) => {
+      emit('allowNext', !!newValue);
+    });
 
     return {
       type,
       score,
-      startReport,
     };
   },
 };
