@@ -244,7 +244,7 @@ export default {
             pollId: type.value,
             qesitmSn: currentStep.value,
             qesitmAnswer: v1,
-            ...(v2 && { qesitmAnswer2: v2 }),
+            ...(v2 && { qesitmAnswerImage: v2 }),
           });
           router.push({
             name: 'reportFin',
@@ -265,7 +265,7 @@ export default {
           pollId: type.value,
           qesitmSn: currentStep.value,
           qesitmAnswer: v1,
-          ...(v2 && { qesitmAnswer2: v2 }),
+          ...(v2 && { qesitmAnswerImage: v2 }),
         });
 
         stepAnswer.value[pageToIndex.value] = v1;
