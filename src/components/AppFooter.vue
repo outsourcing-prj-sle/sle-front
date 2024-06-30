@@ -11,10 +11,10 @@
       >
         <div class="my-auto max-md:max-w-full text-left font-bold">
           <div class="mb-[20px]">{{ $t('footer.policy_title') }}</div>
-          <div>(51430) 경남 창원시 성산구 중앙대로 241</div>
+          <div>{{ $t('footer.addr') }}</div>
           <div class="flex gap-[10px]">
-            <div>대표전화 055)268-1004</div>
-            <div>팩스 055)268-1400)</div>
+            <div>{{ $t('footer.tel') }} 055)268-1004</div>
+            <div>{{ $t('footer.fax') }} 055)268-1400)</div>
           </div>
           <div>
             Copyright© Gyeongsangnamdo office of education all rights reserved.

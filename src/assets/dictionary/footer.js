@@ -4,7 +4,15 @@ export default {
     en: 'Personal Data Processing Policy',
   },
   addr: {
-    ko: '세종특별자치시 남세종로 446 스마트허브4차 504호',
-    en: '446 Namsejong-ro, Sejong Special Self-Governing City, Smart Hub 4th Room 504',
+    ko: '(51430) 경남 창원시 성산구 중앙대로 241',
+    en: '(51430) 241 Jungang-daero, Seongsan-gu, Changwon-si, Gyeongsangnam-do, Republic of Korea',
+  },
+  tel: {
+    ko: '대표전화',
+    en: 'tel',
+  },
+  fax: {
+    ko: '팩스',
+    en: 'fax',
   },
 };
