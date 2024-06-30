@@ -302,7 +302,6 @@ import { ref, computed, onMounted, watch, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import UserService from '@/service/UserService.js';
 import AppDropdown from '@/components/AppDropdown.vue';
-import IDTTDic from '@/utils/IDTTDic.js';
 import { _mixDate } from '@/utils/utils.js';
 import {
   Chart as ChartJS,
@@ -635,7 +634,6 @@ export default {
       _chartOptions,
       handleChartRender,
       name,
-      IDTTDic,
       colorToKor1,
       avgAry,
       stdAry,

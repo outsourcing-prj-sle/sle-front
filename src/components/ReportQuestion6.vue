@@ -1,37 +1,8 @@
 <template>
   <section
     class="flex flex-col items-end px-20 mt-4 w-full max-md:px-5 max-md:mt-10 max-md:max-w-full"
-    v-if="metadata.length"
+    v-if="currentStep"
   >
-    <div
-      class="flex gap-1 items-start self-stretch max-md:flex-wrap max-md:max-w-full"
-    >
-      <div class="flex flex-col self-start font-bold min-w-[150px]">
-        <h1 class="text-xl text-blue-500 text-left">
-          {{ title }}
-        </h1>
-        <h2 class="mt-1 text-2xl text-neutral-700 text-left">안내사항</h2>
-      </div>
-      <article
-        class="flex flex-col grow shrink-0 self-end mt-9 font-medium text-black basis-0 w-fit max-md:max-w-full"
-      >
-        <div class="self-end text-base leading-8">기간 : {{ dateRange }}</div>
-      </article>
-    </div>
-    <div
-      class="flex gap-2.5 self-start mt-1.5 max-md:flex-wrap"
-      @click="useTTS"
-    >
-      <img
-        src="@/assets/img/speaker.png"
-        alt="speaker"
-        class="shrink-0 aspect-square w-[25px]"
-      />
-      <p class="flex-auto my-auto max-md:max-w-full">
-        클릭시 안내음성을 들을 수 있습니다. 단, 안내음성은 1회만 들을 수
-        있습니다.
-      </p>
-    </div>
     <div
       class="flex w-full justify-center gap-4 mt-6 ml-36 text-base font-medium text-neutral-700"
     >
@@ -46,7 +17,7 @@
           src="@/assets/img/ballon-prev.png"
           class="w-[18px] h-[18px] mt-[2px]"
         />
-        <p>눈에서 1개, 코와 입에서 1개를 각각 선택해주세요.</p>
+        <p>{{ $t('report6.announce_content4') }}</p>
       </div>
     </div>
 
@@ -54,7 +25,7 @@
       class="flex relative gap-40 justify-center mt-12 max-w-full w-full max-md:flex-wrap max-md:mt-10"
     >
       <template v-for="n in 4" :key="`blueball${n}`">
-        <div class="flex flex-col" v-if="nowStep + 1 >= n">
+        <div class="flex flex-col" v-if="page >= n">
           <div
             class="flex flex-col justify-center p-2 rounded-3xl border border-blue-400 border-solid bg-white"
           >
@@ -73,15 +44,15 @@
         </div>
       </template>
     </div>
-    <div class="pl-[154px] flex flex-col items-end w-full max-md:max-w-full">
+    <div class="flex flex-col items-end w-full max-md:max-w-full max-lg:pl-0">
       <section
-        class="flex flex-col self-center py-8 mt-5 w-full font-medium text-black rounded-xl border border-solid border-neutral-300 max-w-[1117px] max-md:max-w-full"
+        class="flex flex-col self-center py-8 mt-5 w-full font-medium text-black rounded-xl border border-solid border-neutral-300 max-md:max-w-full"
       >
         <div
           class="flex flex-col px-9 text-base leading-8 max-md:px-5 max-md:max-w-full"
         >
           <p class="text-left max-md:mr-1.5 max-md:max-w-full">
-            {{ metadata[parseInt(step[nowStep]) - 1].Q }}
+            {{ $t(`report6.question${currentStep}`) }}
           </p>
           <div
             class="flex gap-5 max-md:flex-col max-md:gap-0"
@@ -92,15 +63,15 @@
             <div class="flex flex-col w-[44%] max-md:ml-0 max-md:w-full">
               <FaceImg
                 :face="face[faceIndex]"
-                :eyes="score > 0 && eyes[score - 1]"
-                :mouth="score2 > 0 && mouth[score2 - 1]"
+                :eyes="score > 0 ? eyes[score - 1] : ''"
+                :mouth="score2 > 0 ? mouth[score2 - 1] : ''"
               />
             </div>
             <div class="flex ml-5 w-[56%] max-md:ml-0 max-md:w-full">
               <FaceSelectList
                 :title="'눈'"
                 :itemList="eyes"
-                :selected="score"
+                :selected="parseInt(score)"
                 @selectItem="(index) => selectIndex(index, 'eyes')"
               />
               <div
@@ -109,7 +80,7 @@
               <FaceSelectList
                 :title="'코와 입'"
                 :itemList="mouth"
-                :selected="score2"
+                :selected="parseInt(score2)"
                 @selectItem="(index) => selectIndex(index, 'mouth')"
               />
             </div>
@@ -117,117 +88,50 @@
         </div>
       </section>
       <section
-        class="justify-center text-left items-start px-7 py-7 mt-8 max-w-full text-base font-medium leading-8 text-black rounded-xl border border-solid border-neutral-300 w-[1117px] max-md:px-5 max-md:max-w-full"
+        class="justify-center text-left items-start px-7 py-7 mt-8 max-w-full text-base font-medium leading-8 text-black rounded-xl border border-solid border-neutral-300 max-md:px-5 max-md:max-w-full max-lg:text-sm max-md:text-xs w-full"
       >
-        결정하기 어렵더라도 각 질문마다 최선을 다해 답해주세요.
+        {{ $t('report6.announce_content3') }}
       </section>
-    </div>
-    <!-- <div class="flex gap-4" v-if="eyesIndex > -1 && mouthIndex > -1"> -->
-
-    <div class="flex gap-4" v-if="score > -1 && score2 > -1">
-      <button
-        class="justify-center px-10 py-3 mt-6 text-base text-center text-white whitespace-nowrap bg-neutral-500 rounded-3xl max-md:px-5"
-        v-if="nowStep !== 0 && status === 'done'"
-        @click="prevStep"
-      >
-        이전
-      </button>
-      <button
-        class="justify-center px-10 py-3 mt-6 text-base text-center text-white whitespace-nowrap bg-blue-500 rounded-3xl max-md:px-5"
-        @click="nextStep"
-      >
-        {{ step.length === nowStep + 1 ? '완료' : '다음' }}
-      </button>
     </div>
   </section>
 </template>
 
 <script>
 import { ref, onMounted, computed, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/store/userStore.js';
 import FaceImg from '@/components/FaceImg.vue';
 import FaceSelectList from '@/components/FaceSelectList.vue';
-import ReportService from '@/service/ReportService.js';
-import ttsText from '@/utils/ttsText.js';
 
 export default {
   name: 'ReportQuestion6',
   components: { FaceImg, FaceSelectList },
   props: {
-    startStep: {
+    _page: {
       type: Number,
-      default: 0,
+      default: 1,
     },
     status: {
       type: String,
       default: 'progress', // done
     },
-    metadata: {
-      type: Array,
-      default: () => {
-        return [];
-      },
-    },
-    isSave: {
-      type: Boolean,
-      default: true,
-    },
-    isVoice: {
-      type: Boolean,
-      default: false,
-    },
-    step: {
-      type: Array,
-      default: () => {
-        return [];
-      },
-    },
-    stepAnswer: {
-      type: Array,
-      default: () => {
-        return [];
-      },
-    },
-    stepAnswer2: {
-      type: Array,
-      default: () => {
-        return [];
-      },
-    },
-    isPrev: {
-      type: Boolean,
-      default: true,
-    },
-    dateRange: {
+    _currentStep: {
       type: String,
-      defualt: 'YYYY년 MM월 DD일 ~ MM월 DD일',
+      default: '',
     },
-    title: {
+    _currentAnswer: {
       type: String,
-      default: '마음알기 설문6',
+      default: '',
+    },
+    _currentAnswer2: {
+      type: String,
+      default: '',
     },
   },
-  setup(props) {
-    const route = useRoute();
-    const router = useRouter();
-    const type = ref(route.params.type || 1);
-    const score = ref(
-      ((props.isSave || props.status === 'done') &&
-        props.stepAnswer &&
-        props.stepAnswer[props.startStep || 0]) ||
-        null
-    );
-    const score2 = ref(
-      ((props.isSave || props.status === 'done') &&
-        props.stepAnswer2 &&
-        props.stepAnswer2[props.startStep || 0]) ||
-        null
-    );
-    const userAnswer = ref(props.stepAnswer || []);
-    const userAnswer2 = ref(props.stepAnswer2 || []);
-    const nowStep = ref(props.startStep || 0);
-    const canTTS = ref(true);
+  setup(props, { emit }) {
+    const currentStep = ref(props._currentStep);
+    const page = ref(props._page);
+    const score = ref(null);
+    const score2 = ref(null);
+    const ballonKey = ref(Date.now());
     const face = ref([
       require('@/assets/img/6q1.png'),
       require('@/assets/img/6q2.png'),
@@ -251,131 +155,43 @@ export default {
       require('@/assets/img/6a26.png'),
     ]);
     const faceIndex = ref(0);
-    const eyesIndex = ref(-1);
-    const mouthIndex = ref(-1);
-    const ballonKey = ref(Date.now());
-
-    onMounted(() => {});
 
     watch(
-      () => [userAnswer?.value?.length],
-      ([length]) => {
-        if (
-          (props.isSave || props.status === 'done') &&
-          !score.value &&
-          userAnswer.value.length
-        ) {
-          score.value =
-            userAnswer.value && userAnswer.value[nowStep.value || 0];
-          score2.value =
-            userAnswer2.value && userAnswer2.value[nowStep.value || 0];
-        }
-      },
-      { immediate: true } // 초기 실행을 위해 immediate: true 설정
+      () => props._currentStep,
+      (newVal) => {
+        console.log('newVal');
+        console.log(newVal);
+        currentStep.value = newVal || null;
+      }
     );
 
-    const nextStep = () => {
-      // 마지막일때 완료 페이지로
-      if (props.step.length === nowStep.value + 1) {
-        if (props.status !== 'done') {
-          ReportService.reportComplete({
-            pollId: type.value,
-            qesitmSn: props.step[nowStep.value],
-            qesitmAnswer: score.value,
-            qesitmAnswerImage: score2.value,
-          });
-          router.push({
-            name: 'reportFin',
-            query: {
-              title: props.title,
-              date: props.dateRange,
-            },
-          });
-        } else {
-          router.push({ name: 'mySEL' });
-        }
-        return;
+    watch(
+      () => props._currentAnswer,
+      (newVal) => {
+        score.value = newVal || null;
       }
+    );
 
-      if (props.status !== 'done') {
-        // if (props.isSave) {
-        ReportService.reportSave({
-          pollId: type.value,
-          qesitmSn: props.step[nowStep.value],
-          qesitmAnswer: score.value,
-          quesitmAnswerImage: score2.value,
-        });
-        // }
-
-        // 초기화
-        userAnswer.value[nowStep.value] = score.value;
-        score.value = null;
-        score2.value = null;
-        canTTS.value = true;
-
-        // nowStep 다음으로
-        nowStep.value += 1;
-        if (props.isSave) {
-          // 임시저장된 값 있으면 입력해줌
-          score.value = userAnswer.value[nowStep.value] || null;
-          // 임시저장된 값 있으면 입력해줌
-          score2.value = userAnswer2.value[nowStep.value] || null;
-        }
-      } else {
-        // nowStep 다음으로
-        nowStep.value += 1;
-        // 저장된 값 입력
-        score.value = userAnswer.value[nowStep.value] || null;
-        // 임시저장된 값 있으면 입력해줌
-        score2.value = userAnswer2.value[nowStep.value] || null;
+    watch(
+      () => props._currentAnswer2,
+      (newVal) => {
+        score2.value = newVal || null;
       }
-    };
+    );
 
-    const prevStep = () => {
-      // 처음일때 무반응
-      if (nowStep.value === 0) {
-        return;
+    watch(
+      () => props._page,
+      (newVal) => {
+        page.value = newVal;
       }
+    );
 
-      if (props.status !== 'done') {
-        // 초기화
-        // todo : 답을 두개줘야하는 6번, 다음으로갈때나 이전으로 갈떄 어떻게볼지
-        // todo : 어떻게 저장할지
-        // score.value 보고 화깅ㄴ하기
-        userAnswer.value[nowStep.value] = score.value;
-        userAnswer2.value[nowStep.value] = score2.value;
-        faceIndex.value = nowStep.value;
-        // eyesIndex.value = null;
-        // mouthIndex.value = null;
-        score.value = null;
-        score2.value = null;
-
-        // nowStep 이전으로
-        nowStep.value -= 1;
-
-        if (props.isSave) {
-          // 만약 저장해야하면 저장
-          // 값 입력
-          score.value = userAnswer.value[nowStep.value] || null;
-        }
-      } else {
-        // nowStep 이전으로
-        nowStep.value -= 1;
-        score.value = userAnswer.value[nowStep.value] || null;
-        score2.value = userAnswer2.value[nowStep.value] || null;
+    watch(
+      () => [score.value, score2.value],
+      ([s1, s2]) => {
+        emit('handleAnswer', s1, s2);
       }
-    };
-
-    const useTTS = () => {
-      if (!canTTS.value) return;
-      canTTS.value = false;
-
-      let s = props.step[nowStep.value];
-      let text = ttsText[3][s];
-      const utterancequestionDefault = new SpeechSynthesisUtterance(text);
-
-      window.speechSynthesis.speak(utterancequestionDefault);
-    };
+    );
 
     const selectIndex = (index, type) => {
       if (type === 'eyes') {
@@ -387,20 +203,15 @@ export default {
     };
 
     return {
-      type,
-      nowStep,
+      currentStep,
+      page,
       score,
       score2,
       face,
       eyes,
       mouth,
       faceIndex,
-      eyesIndex,
-      mouthIndex,
       ballonKey,
-      nextStep,
-      prevStep,
-      useTTS,
       selectIndex,
     };
   },

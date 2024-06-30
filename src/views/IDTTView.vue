@@ -73,27 +73,22 @@
         </div>
         <b class="text-xl">*역량별 상세 안내</b>
 
-        <template
-          v-for="(data, index) in IDTTDic.text"
-          :key="`${index}${data.title}`"
-        >
+        <template v-for="n in 4" :key="`${$t(`social.title${n}`)}`">
           <p>
             <span class="text-blue-500 font-medium">{{
-              $t(`social.title${index}`)
+              $t(`social.title${n}`)
             }}</span
-            >{{ $t(`social.description${index}`) }}
+            >{{ $t(`social.description${n}`) }}
           </p>
           <div class="flex gap-[5px] items-end my-[20px]">
             <img
-              v-if="stdColorAry[index]"
+              v-if="stdColorAry[n]"
               class="w-[72px] h-[72px]"
-              :src="
-                require(`@/assets/img/idtt-result-${stdColorAry[index]}.png`)
-              "
+              :src="require(`@/assets/img/idtt-result-${stdColorAry[n]}.png`)"
               alt="평균"
             />
             <p class="text-xl font-semibold">
-              분석결과:{{ colorToKor1(stdColorAry[index]) }}
+              분석결과:{{ colorToKor1(stdColorAry[n]) }}
             </p>
           </div>
           <div
@@ -101,23 +96,23 @@
           >
             <p class="font-semibold">
               <!-- social.red0, social.orange, social.green0 -->
-              {{ $t(`social.${data[stdColorAry[index]]}${index}`) }}
+              {{ $t(`social.${stdColorAry[n]}${n}`) }}
             </p>
           </div>
           <div
             class="my-[10px] flex justify-between"
-            @click="() => openTip(index)"
+            @click="() => openTip(n - 1)"
           >
             <p class="font-bold text-xl text-amber-500">교사의 생활지도 tip</p>
             <p class="text-blue-500 pr-2">
-              {{ !isOpen[index] ? $t('common.open') : $t('common.close') }}
+              {{ !isOpen[n - 1] ? $t('common.open') : $t('common.close') }}
             </p>
           </div>
 
           <div
             class="w-full font-semibold border border-gray-300 px-[21px] py-[20px] rounded-xl mb-[50px]"
-            v-if="isOpen[index]"
-            v-html="data.tip"
+            v-if="isOpen[n - 1]"
+            v-html="$t(`social.tip${n}`)"
           ></div>
           <div class="mb-20"></div>
         </template>
@@ -276,7 +271,6 @@ import { ref, computed, onMounted, watch, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import UserService from '@/service/UserService.js';
 import AppDropdown from '@/components/AppDropdown.vue';
-import IDTTDic from '@/utils/IDTTDic.js';
 import { _mixDate } from '@/utils/utils.js';
 import {
   Chart as ChartJS,
@@ -611,7 +605,6 @@ export default {
       _chartOptions,
       handleChartRender,
       name,
-      IDTTDic,
       colorToKor1,
       avgAry,
       stdAry,

@@ -15,10 +15,10 @@ export default {
       default: require('@/assets/img/6q1.png'),
     },
     eyes: {
-      type: [String, Object],
+      type: String,
       default: null,
     },
-    mouth: { type: [String, Object], default: null },
+    mouth: { type: String, default: null },
   },
   setup(props, { emit }) {
     const emitASDF = () => {

@@ -38,6 +38,22 @@ export default {
     ko: '눈에서 1개, 코와 입에서 1개를 각각 선택해주세요.',
     en: 'Choose one from your eyes and one from your nose and mouth.',
   },
+  question1: {
+    ko: '채린이는 음식이 매울 것이라고 생각했어요. 하지만 채린이가 음식 맛을 느꼈을 때<br />그 음식이 굉장히 달콤했어요. 채린이가 지금 느끼는 감정을 가장 잘 표현할 수 있는 얼굴 표정을 만들어볼까요?',
+    en: 'Chaerin thought the food would be spicy.<br />However, when Chaerin tasted the food, it was very sweet.<br />Can you make a facial expression that best represents the emotion Chaerin is feeling right now?',
+  },
+  question2: {
+    ko: '건우는 한밤중에 무서운 꿈을 꾸고 일어났어여요.<br />일어나자마자 건우는 밖에서 이상한 소리를 듣고 창밖으로 이상한 그림자를 보았어요.<br />건우가 지금 느끼는 감정을 가장 잘 표현할 수 있는 얼굴 표정을 만들어볼까요?',
+    en: 'Gunwoo had a scary dream in the middle of the night and woke up.<br />As soon as he woke up, Gunwoo heard strange noises outside and saw a strange shadow outside the window.<br />Can you make a facial expression that best represents the emotion Gunwoo is feeling right now?',
+  },
+  question3: {
+    ko: '누군가 채린이에게 재채기를 해서 콧물이 채린이 얼굴에 잔뜩 묻었어요.<br />채린이가 지금 느끼는 감정을 가장 잘 표현할 수 있는 얼굴 표정을 만들어볼까요?',
+    en: 'Someone sneezed on Chaerin, and now her face is covered with a lot of snot.<br />Can you make a facial expression that best represents the emotion Chaerin is feeling right now?',
+  },
+  question4: {
+    ko: '오늘은 엄청 더운 날이에요. 건우는 아이스크림을 사려고 오랫동안 줄을 서서 기다렸어요. 건우 차례가 되었는데 다른 학생들이 새치기를 했어요.<br />건우가 지금 느끼는 감정을 가장 잘 표현할 수 있는 얼굴 표정을 만들어볼까요?',
+    en: 'Today is a very hot day. Gunwoo waited in line for a long time to buy ice cream.<br />When it was turn of Gunwoo, other students cut in line.<br />Can you make a facial expression that best represents the emotion Gunwoo is feeling right now?',
+  },
   q1_tts: {
     ko: '안내음성은 한 번만 들을 수 있습니다. 질문 시작합니다. 채린이는 음식이 매울 것이라고 생각했어요. 하지만 채린이가 음식 맛을 느꼈을 때 그 음식이 굉장히 달콤했어요. 채린이가 지금 느끼는 감정을 가장 잘 표현할 수 있는 얼굴 표정을 만들어볼까요?',
     en: 'you can only listen to the guided voice once. Here comes the question. Chaerin thought the food would be spicy. However, when Chaerin tasted the food, it was very sweet. Can you make a facial expression that best represents the emotion Chaerin is feeling right now?',

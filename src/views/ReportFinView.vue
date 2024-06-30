@@ -17,7 +17,7 @@
     </section>
     <div
       class="text-2xl text-neutral-700 font-bold mt-4"
-      v-html="$t('reports.final_content')"
+      v-html="$t('report.final_content')"
     ></div>
     <div class="w-full mt-10 flex justify-center">
       <img

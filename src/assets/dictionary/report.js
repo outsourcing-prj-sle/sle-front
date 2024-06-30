@@ -7,6 +7,10 @@ export default {
     ko: '기간',
     en: 'period',
   },
+  chooseOne: {
+    ko: '1개의 답안을 선택해주세요.',
+    en: 'Choice 1 answer',
+  },
   announce_voice: {
     ko: '클릭시 안내음성을 들을 수 있습니다. 단, 안내음성은 1회만 들을 수 있습니다.',
     en: 'You can hear the announcement voice when you click. However, you can only listen to the guided voice once.',
