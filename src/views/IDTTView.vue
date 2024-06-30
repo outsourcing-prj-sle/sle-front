@@ -71,7 +71,7 @@
             @chart:render="handleChartRender"
           />
         </div>
-        <b class="text-xl">*역량별 상세 안내</b>
+        <b class="text-xl">*{{ $t(`social.detail_notice`) }}</b>
         <template v-if="stdColorAry.length">
           <template v-for="n in 4" :key="`${$t(`social.title${n}`)}`">
             <p>
@@ -90,7 +90,9 @@
                 alt="평균"
               />
               <p class="text-xl font-semibold">
-                분석결과:{{ colorToKor1(stdColorAry[n - 1]) }}
+                {{ $t('social.result_title') }}:{{
+                  colorToKor1(stdColorAry[n - 1])
+                }}
               </p>
             </div>
             <div
@@ -106,7 +108,7 @@
               @click="() => openTip(n - 1)"
             >
               <p class="font-bold text-xl text-amber-500">
-                교사의 생활지도 tip
+                {{ $t('social.tips_title') }}
               </p>
               <p class="text-blue-500 pr-2">
                 {{ !isOpen[n - 1] ? $t('common.open') : $t('common.close') }}
@@ -200,7 +202,7 @@
                     required
                   />
                   <label for="question02_1" class="pr-[50px] cursor-pointer">
-                    내면화 행동 문제
+                    {{ $t('social.title1') }}
                   </label>
                 </div>
                 <div>
@@ -213,7 +215,7 @@
                     required
                   />
                   <label for="question02_2" class="pr-[50px] cursor-pointer">
-                    외현화 행동 문제
+                    {{ $t('social.title2') }}
                   </label>
                 </div>
                 <div>
@@ -226,7 +228,7 @@
                     required
                   />
                   <label for="question02_3" class="pr-[50px] cursor-pointer">
-                    감정지식
+                    {{ $t('social.title4') }}
                   </label>
                 </div>
                 <div>
@@ -239,7 +241,7 @@
                     required
                   />
                   <label for="question02_4" class="pr-[50px] cursor-pointer">
-                    성장 마인드 셋
+                    {{ $t('social.title3') }}
                   </label>
                 </div>
               </div>
@@ -261,7 +263,7 @@
               tabindex="0"
               @click="submitInfo"
             >
-              의견 제출
+              {{ $t('social.submit') }}
             </button>
           </section>
         </div>
@@ -272,6 +274,7 @@
 
 <script>
 import { ref, computed, onMounted, watch, reactive } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import UserService from '@/service/UserService.js';
 import AppDropdown from '@/components/AppDropdown.vue';
@@ -302,6 +305,7 @@ export default {
     Radar,
   },
   setup() {
+    const { t } = useI18n();
     const router = useRouter();
     const infoArr = ref([]);
     const optionsObj = ref({});
@@ -309,14 +313,14 @@ export default {
 
     const chartData = ref({
       labels: [
-        '내면화 행동 문제',
-        '감정지식',
-        '성장 마인트 셋',
-        '외면화 행동 문제',
+        t('social.title1'),
+        t('social.title4'),
+        t('social.title3'),
+        t('social.title2'),
       ],
       datasets: [
         {
-          label: '학급 평균',
+          label: t('social.avg'),
           data: [28, 48, 40, 19],
           fill: true,
           backgroundColor: 'rgba(255,99,132,0.2)',
@@ -460,21 +464,25 @@ export default {
           IBP.value = resData.IBP;
 
           let _EBP = EBP.value;
-          let _EBPValue =
-            (parseFloat(_EBP.score) - parseFloat(_EBP.avg)) /
-            (parseFloat(_EBP.stddev) || 0.01);
+          let _EBPValue = !parseFloat(_EBP.stddev)
+            ? 0
+            : (parseFloat(_EBP.score) - parseFloat(_EBP.avg)) /
+              parseFloat(_EBP.stddev);
           let _EK = EK.value;
-          let _EKValue =
-            (parseFloat(_EK.score) - parseFloat(_EK.avg)) /
-            (parseFloat(_EK.stddev) || 0.01);
+          let _EKValue = !parseFloat(_EK.stddev)
+            ? 0
+            : (parseFloat(_EK.score) - parseFloat(_EK.avg)) /
+              parseFloat(_EK.stddev);
           let _GM = GM.value;
-          let _GMValue =
-            (parseFloat(_GM.score) - parseFloat(_GM.avg)) /
-            (parseFloat(_GM.stddev) || 0.01);
+          let _GMValue = !parseFloat(_GM.stddev)
+            ? 0
+            : (parseFloat(_GM.score) - parseFloat(_GM.avg)) /
+              parseFloat(_GM.stddev);
           let _IBP = IBP.value;
-          let _IBPValue =
-            (parseFloat(_IBP.score) - parseFloat(_IBP.avg)) /
-            (parseFloat(_IBP.stddev) || 0.01);
+          let _IBPValue = !parseFloat(_IBP.stddev)
+            ? 0
+            : (parseFloat(_IBP.score) - parseFloat(_IBP.avg)) /
+              parseFloat(_IBP.stddev);
 
           stdAry.value = [_EBPValue, _EKValue, _GMValue, _IBPValue];
           avgAry.value = [_EBP.avg, _EK.avg, _GM.avg, _IBP.avg];
@@ -559,9 +567,9 @@ export default {
     };
 
     const colorToKor1 = (color) => {
-      let result = '위험없음';
-      if (color === 'orange') result = '평균범위';
-      if (color === 'red') result = '위험높음';
+      let result = t('social.no_risk');
+      if (color === 'orange') result = t('social.normal');
+      if (color === 'red') result = t('social.high_risk');
       return result;
     };
 
