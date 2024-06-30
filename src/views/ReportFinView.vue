@@ -4,18 +4,21 @@
   >
     <section class="flex gap-5 max-md:flex-wrap max-md:max-w-full">
       <div class="flex flex-col font-bold">
-        <h1 class="text-xl text-blue-500">{{ title }}</h1>
-        <h2 class="mt-2 text-2xl text-neutral-700 text-left">마무리</h2>
+        <h1 class="text-xl text-blue-500">{{ $t(`report${nttNo}.title`) }}</h1>
+        <h2 class="mt-2 text-2xl text-neutral-700 text-left">
+          {{ $t('report.final') }}
+        </h2>
       </div>
       <p
         class="flex-auto self-end mt-9 text-base font-medium leading-8 text-right text-black"
       >
-        기간 : {{ date }}
+        {{ $t('report.period') }} : {{ date }}
       </p>
     </section>
-    <div class="text-2xl text-neutral-700 font-bold mt-4">
-      짝짝짝! 모든 활동이 끝났어요.<br />다른 활동도 참여해볼까요?
-    </div>
+    <div
+      class="text-2xl text-neutral-700 font-bold mt-4"
+      v-html="$t('reports.final_content')"
+    ></div>
     <div class="w-full mt-10 flex justify-center">
       <img
         src="@/assets/img/reportfinchar.png"
@@ -28,12 +31,13 @@
       tabindex="0"
       @click="goMain"
     >
-      완료
+      {{ $t('report.complete') }}
     </button>
   </div>
 </template>
 
 <script>
+import { computed } from 'vue';
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -44,13 +48,17 @@ export default {
     const router = useRouter();
     const title = ref(route.query.title || '마음알기 설문1');
     const date = ref(route.query.date || 'YYYY년 MM월 DD일 ~ MM월 DD일');
+    const nttNo = computed(() => {
+      const num = title.value.slice(-1);
+      return num;
+    });
 
     const goMain = () => {
       router.push({ name: 'home' });
     };
 
     return {
-      title,
+      nttNo,
       date,
       goMain,
     };
