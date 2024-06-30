@@ -15,27 +15,27 @@ export default {
     ko: '해당 학생은 SEL활동에 참여하지 않아 불러올 데이터가 없습니다.<br />참여 유도 후 재시도 바랍니다.',
     en: 'This study does not participate in SEL activities, so there is no data to load.<br />Please encourage participation and try again.',
   },
-  title0: {
+  title1: {
     ko: '내면화 행동 문제',
     en: 'Internalizing Behavioral Problems',
   },
-  description0: {
+  description1: {
     ko: `란 자신의 감정이나 어려움을 다른 사람에게 표현하지 못하고, 자기 안으로 숨기거나 억누르는 행동 문제를 말합니다. 예를 들면, 다른 친구들보다 못할 것 같아서 움츠러들거나, 나의 능력이 부족하다고 생각해서 혼자 불안해하기도 하고, 나만 혼자인 것 같은 기분에 혼자 울기도 하지만 다른 사람에게 자신의 감정을 말하지 않습니다. 내면화 행동 문제는 우울증이나 불안과 같은 정신 건강과 관련이 있고, 동기부여, 실행기능(주의력, 집중력, 조직력, 계획성), 학업성취도 등 학생의 전반적인 기능에 영향을 미칠 수 있으므로 초등학교 시기에 이러한 행동을 모니터링 하는 것은 매우 중요합니다.`,
     en: `are behavior problems in which a person is unable to express their feelings or difficulties to others and keeps them inside or repressed. For example, you might withdraw because you feel like you can't do as well as your friends, feel anxious because you think you're not good enough, or cry alone because you feel like you're the only one, but you don't tell anyone how you feel. Monitoring these behaviors in elementary years is crucial as they can correlate with mental health factors such as depression and anxiety, as well as impact a student's overall functioning, including motivation, executive functioning (attention, concentration, organization, planning), and academic achievement.`,
   },
-  red0: {
+  red1: {
     ko: `이 학생은 우울하고 불안한 생각을 빈번하게 하는 편입니다. 혼자 앉아 있는 시간이 많거나 기운 없이 앉아있을 수 있습니다. 혹은 두통이나 복통을 호소할 수도 있고, 성적이 갑자기 떨어질 수 있습니다. 정서적 변화의 기복이 심하거나 평소와 다른 행동을 보일 수도 있습니다. 따라서 이 학생의 생각과 감정을 자세히 살펴보고, 보다 근본적인 문제를 찾아 효과적으로 해결하기 위해 종합적인 지원이 필요합니다. 특히 우울이나 불안의 특성을 가진 학생 중에는 자신의 어려움을 적극적으로 드러내지 않을 수 있어 관찰이 어려울 수 있습니다. 이러한 경우에는 전문상담기관이나 전문상담사에게 상담을 받는 것이 좋습니다.`,
     en: `This student is prone to frequent depressive and anxious thoughts; he/she may spend a lot of time sitting alone or sitting lethargically; he/she may have a headache or stomachache; or his/her grades may suddenly drop. The student may experience emotional ups and downs or behave in unusual ways. This student needs comprehensive support to look closely at his/her thoughts and feelings, identify more fundamental issues, and address them effectively. Some students, especially those suffering from depression or anxiety, may be difficult to observe because they are not open about their difficulties. In these cases, it is recommended that these students receive counseling from a professional counseling center or a professional counselor.`,
   },
-  orange0: {
+  orange1: {
     ko: `이 학생은 불안하거나 우울한 생각과 행동이 또래 친구들과 비슷한 수준입니다. 자신의 감정이나 어려움을 다른 사람에게 비교적 잘 표현하고 있는 편입니다. 현재는 교사의 특별한 도움이 필요하지는 않지만, 이 학생이 정서적으로 편안함을 느끼고, 기분 좋게 지낼 수 있는 환경을 만드는 것은 중요합니다. 예를 들어, 친구들과 잘 지낼 수 있는 긍정적인 또래 활동을 하거나 자신을 돌아보는 일기를 쓰면서 내가 힘들었던 일에 대해 긍정적인 부분과 마음을 편안하게 하는 방법을 배울 수 있습니다. 어렵고 힘든 상황에서도 건강하게 대처하는 방법을 배워간다면 행복하고 건강한 학교생활을 할 수 있을 것입니다.`,
     en: `Students in this range are reporting the typical or average number of thoughts and behaviors related to anxiety and depression. This student is relatively good at expressing his/her feelings or difficulties to others; therefore, no formal intervention is necessary. However, it is important to provide an environment that the student feels emotionally comfortable and in a good mood. For example, positive peer activities to get along with friends and reflective journaling can help the student learn to look for the positive in what they've been through and learn how to relax themselves. If this student learns to cope in a healthy way with difficult and challenging situations, the student will be able to stay happy and healthy in school.`,
   },
-  green0: {
+  green1: {
     ko: `이 학생은 불안이나 우울함을 느끼는 정도가 다른 친구들보다 낮고, 건강한 상태입니다. 평소에 너무 불안해하거나 슬퍼하지 않고, 자신에게 해가 되는 나쁜 행동을 하거나 자신을 나쁘게 생각하는 일도 없습니다. 교사의 특별한 도움이 필요하지는 않지만, 이 학생의 감정을 잘 들어주고, 감정을 표현할 수 있는 기회를 주는 것이 중요합니다. 이렇게 하면 학생이 계속해서 행복하고 건강한 학교생활을 할 수 있을 것입니다.`,
     en: `This student feels less anxious or depressed than his peers and is mentally healthy. This student is not showing signs of feeling overly anxious or sad, displaying no withdrawal behaviors, or having negative thoughts about themselves; therefore, no formal intervention is necessary. However, it's important that you understand how this student is feeling and give them opportunities to express their feelings. This will help the student continue to be happy and healthy in school.`,
   },
-  tip0: {
+  tip1: {
     ko: `
       <p>• 부정적인 대화 패턴 바꾸기</p>
       <p>학생들은 부정적인 대화 패턴을 긍정적으로 바꾸는 과정을 통해 자신감을 회복하고 스트레스를 줄일 수 있습니다.</p>
@@ -61,27 +61,27 @@ export default {
       <p>"I might fail, but I can learn from my failures.“</p>
       <p>"This is a difficult task for me, but I can solve it if I work hard."</p>`,
   },
-  title1: {
+  title2: {
     ko: '외현화 행동 문제',
     en: 'Externalizing Behavioral Problems',
   },
-  description1: {
+  description2: {
     ko: `는 다른 사람에게 지장을 줄 수 있는 밖으로 드러나는 행동 문제를 말합니다. 예를 들면, 손발을 가만두지 못하고 계속 움직이거나, 수업 중에 큰 소리로 장난을 치거나 친구를 괴롭히는 행동이 있습니다. 또한, 화가 나서 물건을 던지거나 부수는 행동도 포함됩니다. 이러한 행동들은 친구 관계를 나쁘게 만들거나, 다른 친구들이 공부할 수 없는 상황을 만들 수 있습니다.외현화 행동 문제는 종종 가정과 학교에서의 행동 문제와 관련이 있으므로 초등학생 시기에 이러한 행동을 모니터링하는 것이 매우 중요합니다. 외현화 행동 문제는 주의를 기울이고, 집중하고, 조직화 하거나 계획하는 등의 실행 기능에도 지장을 줄 수 있습니다. 집중력을 유지하거나 과제 완수, 효과적인 시간 관리에 어려움을 느끼며 학업에 어려움을 겪을 수 있습니다.`,
     en: `refer to behaviors that are directed outwardly and disruptive to others. For example, students with externalizing behavior problems may fidget constantly, joke loudly in class, bully friends, or throw or break things when they are angry. These behaviors can hurt friendships or interfere with other friends'studies. Externalizing behavior problems are often related to behavior problems at home and school, so monitoring these behaviors during the elementary school years is very important. Externalizing behaviors can also interfere with executive functioning skills such as attention, concentration, organization, and planning. Students may struggle academically, as they may have trouble staying focused, completing assignments, and managing time effectively.`,
   },
-  red1: {
+  red2: {
     ko: `이 학생은 과잉 행동, 주의력/집중력 부족, 자제력 부족 등 행동이 빈번한 편입니다. 어려움이 많아 주변의 따뜻한 관심이 필요합니다. 손발을 가만두지 못하고 계속 움직이거나 자신의 차례를 기다리는 것이 힘들 수 있습니다. 혹은 세부사항을 놓치거나 물건을 잘 잃어버릴 수 있고, 결과를 고려하지 않고 충동적인 결정을 내릴 수도 있습니다. 교사나 부모가 이 학생의 문제를 더 잘 이해하고 해결하기 위해서는 추가적인 조치와 지원이 필요할 수 있습니다. 이를 위해 학교와 가정에서 환경을 바꾸고, 구조화된 일정과 휴식 시간, 맞춤형 학습 전략을 제공하며, 부모와 협력하여 일관된 행동 관리 방법을 마련하는 것이 좋습니다.`,
     en: `Students in this range are reporting significantly higher levels of thoughts and behaviors associated with hyperactivity, attention/concentration, and self-control. This student has externalizing behavior problems and needs attention from others. This student may have difficulty keeping their hands and feet still, keeping moving or waiting for their turn, missing details or misplacing things, or making impulsive decisions without considering the consequences. Teachers and parents may need additional measures and supports to better understand and address this student's challenges. We recommend providing an organized learning environment, structured schedules and breaks, personalized learning strategies, and working with parents to develop a consistent behavior management plan.`,
   },
-  orange1: {
+  orange2: {
     ko: `이 학생의 외현화 행동문제는 또래 친구들과 비슷한 수준입니다. 산만하거나 부주의한 행동이 간혹 관찰될 수 있지만, 걱정할 정도의 수준은 아닙니다. 현재는 교사의 특별한 도움이 필요하지는 않지만, 행동 문제를 예방하는 기술을 유지하고 보다 강화하는 것이 필요합니다. 예를 들면, 몸과 마음의 건강을 유지하고 증진시키는 활동을 장려하고, 자기관리를 위해 자기조절 전략을 연습하는 것이 좋습니다. 또한, 바람직한 행동에 정적 강화(칭찬, 보상 등)를 제공하고, 사회적 기술들을 배우면 건강하고 행복한 인간관계와 학교생활을 할 수 있을 것입니다.`,
     en: `This student's externalizing behavior problems are similar to those of his peers. Occasional distracting or inattentive behaviors may be observed, but this is not a cause for concern. Although no formal intervention is necessary at this time, but he/she does need to reinforce skills to prevent externalizing behavior problems. For example, encouraging activities that maintain and promote physical and mental health, practicing self-regulation strategies for self-care, providing positive reinforcement (praise, rewards, etc.) for desirable behaviors, and learning social skills will lead to healthy and happy relationships and school.`,
   },
-  green1: {
+  green2: {
     ko: `이 학생은 외현화 행동문제가 평균보다 낮아 매우 건강한 상태입니다. 평소에 산만하거나 부주의한 행동으로 문제를 일으키지도 않습니다. 교사의 특별한 도움이 필요하지는 않지만, 외현화 행동문제가 보이지 않는 학생도 교사의 지속적인 지원과 격려가 필요합니다. 또한, 다른 사람의 입장을 고려하고 배려하는 사회적 기술과 자기조절 전략을 지속적으로 강화하는 것이 중요합니다`,
     en: `This student has lower than average levels of externalizing behavior problems and is mentally healthy. This student is not reporting concerns for externalizing behavior problems, including inattentive or distracted behavior; therefore, no formal intervention is necessary. However, it is important to continue to reinforce and strengthen these skills, as students who exhibit lower levels of externalizing behavioral problems still benefit from ongoing support and encouragement. It's also important to continue to reinforce social skills and self-regulation strategies that encourage consideration and care for others`,
   },
-  tip1: {
+  tip2: {
     ko: `
     <p>• 학습스타일에 맞춘 개별화된 학습 전략 안내하기</p>
     <p>1. 시각적 학습 스타일</p>
@@ -108,27 +108,27 @@ export default {
     <p>Give praise stickers to students who practice the rules you've created together, and give a small reward (e.g., a prize, certificate, praise, or recognition) to the student who earns the most stickers each month.</p>
     <p>- Example: Clearly explain to students the routine of writing a book report as a homework assignment, and hand out praise stickers every time they turn it in on time. At the end of each month, tally up the number of stickers and give a small gift to the student with the most stickers. Students will be motivated to follow the rules.</p>`,
   },
-  title2: {
+  title3: {
     ko: '성장 마인드셋',
     en: 'Growth Mindset',
   },
-  description2: {
+  description3: {
     ko: `은 지금은 부족하더라도 노력하면 더 잘 할 수 있고, 이러한 확신을 가지고 내 생활을 스스로 잘 조절할 수 있다는 믿음과 신념을 말합니다. 예를 들면, 어려운 수학문제를 풀더라도 지금은 어렵지만 더 많이 연습하면 잘 풀 수 있다고 생각하여 도전하는 것을 말합니다. 이러한 성장 마인드셋은 도전을 더 많이 시도하고 더 나은 성과를 얻을 가능성을 높입니다.  성장 마인드셋과 반대되는 개념으로는 고정 마인드셋이 있습니다. 뇌 과학 연구는 우리의 뇌가 도전을 받았을 때 근육처럼 적응하고 성장할 수 있는 능력이 있다 (뇌가소성) 는 사실을 발견했습니다. 따라서 최선의 노력과 연습을 통해 능력과 지능이 발전할 수 있다는 사고방식은 학생의 지적성장을 도울 수 있습니다.`,
     en: `is the belief and conviction that even if you're not good at something right now, you can get better at it with effort, and that you can take control of your life with this conviction. For example, you might tackle a difficult math problem because you believe that even though it's difficult right now, with more practice you'll get better at it. This growth mindset makes you more likely to try more challenges and perform better. The opposite of a growth mindset is a fixed mindset. It is important to nurture this mindset in students, as research in brain science has shown that our brains have the capacity to adapt and grow, much like a muscle, when they are challenged(neuroplasticity). Therefore, the mindset that one's abilities and intelligence can be developed through one's best efforts and practice can help students grow intellectually.`,
   },
-  red2: {
+  red3: {
     ko: `이 학생은 아무리 노력해도 자신의 능력이 나아지지 않을 것이라고 생각하는 편입니다. 이러한 고정 마인드셋을 가진 사람은 대체로 자신의 능력이 제한적이라 생각하고, 어려운 과제나 도전을 피하려고 합니다. 따라서 새로운 지식과 기술을 배우는 것보다 현재 수준에 머무르려고 하는 편이고, 비판이나 피드백을 개인적인 공격으로 받아들이고 이를 무시하거나 회피하려는 경향을 보입니다. 학생이 성장 마인드셋을 갖추기 위해서는 교사와 부모가 학생의 생각과 감정을 이해하며 지속적인 지원과 긍정적인 피드백을 통해 도전과 실패를 학습의 기회로 받아들이도록 도와야 합니다`,
     en: `This student tends to believe that no matter how hard he/she tries, his/her abilities will never improve. People with this fixed mindset typically believe their abilities are limited and try to avoid difficult tasks or challenges. As a result, they are more likely to stay at their current level than to learn new knowledge and skills, and they tend to take criticism or feedback as a personal attack and ignore or avoid it. To help students develop a growth mindset, teachers and parents need to understand their thoughts and feelings and help them see challenges and failures as learning opportunities through ongoing support and positive feedback`,
   },
-  orange2: {
+  orange3: {
     ko: `이 학생은 자신이 더 성장할 수 있다는 믿음과 함께 스스로 행동을 조절할 수 있는 개인 통제 마인드셋이 또래와 비슷한 수준입니다. 현재는 교사의 특별한 도움이 필요하지는 않지만, 노력에 대한 지속적인 격려가 필요합니다. 예를 들면, 노력과 인내심을 칭찬하고 장려하여 뇌가소성(뇌가 경험과 학습에 따라 변하고 적응하는 능력)을 키울 수 있습니다. 또한, 목표 설정과 자기성찰 활동을 통합하고, 언어와 행동을 통해 성장 마인드를 모델링하면 인내심과 회복탄력성을 더욱 강화할 수 있을 것입니다.`,
     en: `This student has a similar level of self-regulation mindset as his peers, believing that he/she can grow further and being able to regulate his own behavior. While follow-up may not be necessary by teachers, but the student needs to provide ongoing encouragement for his/her efforts. For example, praising and encouraging his/her efforts and perseverance can help improve neuroplasticity(the brain's ability to change and adapt with experience and learning). Additionally, incorporating goal-setting and self-reflection activities and modeling a growth mindset through language and actions may further strengthen their perseverance and resilience`,
   },
-  green2: {
+  green3: {
     ko: `이 학생은 자신이 더 성장할 수 있다는 믿음과 함께 스스로 행동을 조절할 수 있는 개인 통제 마인드셋이 아주 높은 수준입니다. 그래서 자신의 삶을 변화시킬 수 있는 높은 수준의 개인 통제력과 자기효능감을 가지고 있습니다. 교사의 특별한 도움이 필요하지는 않지만, 학생의 성실한 태도와 인내심에 격려와 지속적인 지원이 필요합니다. 학생의 노력과 회복탄력성의 가치를 지속적으로 강조하고, 성장 마인드셋을 장려하며 긍정적인 마음가짐을 유지하도록 독려하는 것이 중요합니다.`,
     en: `This student has a very high level of personal control mindset, meaning they believe they can improve and can regulate their own behavior. This student is reporting they have high levels of personal control for changing their lives and resulting in high levels of self-efficacy. As a result, no follow-up is necessary for this student by teachers, but they do need encouragement and ongoing support for their conscientiousness and perseverance. It is important to continue reinforcing the value of effort and resilience, promoting a growth mindset, and encouraging the maintenance of their mindsets.`,
   },
-  tip2: {
+  tip3: {
     ko: `
             <p class="mb-[30px]">
               현실적으로 달성가능한 작은 목표를 설정하여 큰 목표 달성을 위한
@@ -172,27 +172,27 @@ export default {
             </p>
             `,
   },
-  title3: {
+  title4: {
     ko: '감정지식',
     en: 'Emotion Knowledge',
   },
-  description3: {
+  description4: {
     ko: `은 자신의 감정과 다른 사람의 감정을 이해하고 관리하는 능력을 말합니다. 이는 감정을 적절한 단어로 표현하는 것 뿐만 아니라, 다양한 감정을 다루고 적절하게 대처하는 전략을 아는 것도 포함됩니다. 예를 들면, 다양한 감정을 느끼는 사람들을 만나서 적절한 감정단어를 선택해 대화를 이어가는 것, 그리고 공감, 도움주기, 이야기 들어주기 등과 같은 적절한 대처를 하는 것이 감정지식에 포함됩니다. 감정에 대한 지식이 풍부한 학생은 사회적 상호작용을 통해 원만한 관계를 구축하고 갈등을 관리하는 능력이 더 뛰어난 것으로 밝혀졌습니다. 또한, 자신의 감정을 이해하고 관리하는 데 능숙하여 정서적 어려움을 겪더라도 더 잘 극복하고 일상의 행복을 잘 느끼기 때문에 높은 학업성취도를 보입니다.`,
     en: ` is related to the ability to correctly identify, understand, and manage emotions, both within oneself and in others. This includes understanding how someone might feel in a given situation and accurately labeling those emotions, as well as identifying coping strategies for dealing with various emotions. For example, emotional knowledge includes meeting people who feel various emotions, choosing appropriate emotional words to continue the conversation, and responding appropriately, such as empathizing, helping, and listening to their stories. Students with strong emotion knowledge have been found to have better ability to navigate social interactions, build positive relationships, and resolve conflicts effectively. Additionally, they are more adept at understanding and managing their own emotions, leading to greater emotional resilience, general well-being, and high academic achievement.`,
   },
-  red3: {
+  red4: {
     ko: `이 학생은 자신과 다른 사람의 감정을 이해하고 관리하는 데 어려움을 겪는 편입니다. 또래 친구들과 대화를 할 때 오해를 하거나 심각하게 받아들여 상처를 받을 수도 있고, 자신의 감정을 적절하게 표현하지 못해서 친구들과 갈등이 많아질 수도 있습니다. 혹은 예상치 못한 상황이 발생하거나 학생이감정지식을 갖추기 위해서는 교사와 부모가 감정과 대처 방법을 배우는 활동과 토론을 포함한 사회정서학습(SEL) 프로그램을 제공하는 것이 좋습니다. 보다 집중적이고 심화된 프로그램이 필요한 학생은 정신건강 전문가와 개인 또는 그룹상담이 도움이 될 수 있습니다.`,
     en: `This student tends to have difficulty understanding and managing his or her own and others' emotions. When talking to peers, he or she may be misunderstood or taken seriously, which may hurt him or her, and he or she may have many conflicts with his or her friends because he or she is unable to express his or her emotions appropriately. Teachers and parents should provide a Social-Emotional Learning (SEL) program that includes activities and discussions to learn about emotions and coping methods for the student to gain emotional knowledge. Students who need more intensive and in-depth programs may benefit from individual or group counseling with a mental health professional`,
   },
-  orange3: {
+  orange4: {
     ko: `이 학생은 자신과 타인의 감정을 알아차리고 이해하며 관리하는 감정지식이 또래와 비슷한 수준입니다. 이 학생은 다른 사람의 감정을 파악하거나 감정대처전략도 비교적 능숙한 편입니다. 현재는 교사의 특별한 도움이 필요하지는 않지만, 교사나 가족 등 학생의 주변 구성원들이 사회정서학습(SEL)의 이점을 알고 이를 적극적으로 활용해야 합니다. 특히, 자신의 생각과 감정을 포함하여 다양한 상황에서 감정에 대해 사고하게 하는 이야기나 시나리오 기반의 사회정서학습(SEL)은 정서지능과 행복을 증진시킬 수 있습니다. 이 외에도 다양한 감정표현 뿐만 아니라 건강한 감정표현 및 감정조절 기술을 모델링하는 것도 큰 도움이 될 수 있습니다.`,
     en: `This student has similar emotional knowledge to his/her peers in recognizing, understanding, and managing his/her own and others’ emotions. This student is also relatively adept at recognizing other people’s emotions and developing emotional coping strategies. Although he/she does not currently need special help from teachers, teachers and family around the student should be aware of the benefits of social-emotional learning (SEL) and actively utilize it. In particular, story-based or scenario-based social-emotional learning (SEL) that encourages students to think about emotions in various situations, including their own thoughts and feelings, can enhance emotional intelligence and happiness. In addition, modeling healthy emotional expression and emotion regulation skills, as well as various emotional expressions, can also be very helpful.`,
   },
-  green3: {
+  green4: {
     ko: `이 학생은 자신과 타인의 감정을 알아차리고 이해하며 관리하는 감정지식이 아주 높은 수준입니다. 이 학생은 다른 사람의 감정을 정확하게 파악하고, 감정대처전략이 능숙하며 감정조절에 대한 높은 수준의 이해력을 가지고 있습니다. 교사의 특별한 도움이 필요하지는 않지만, 꾸준히 사회정서학습(SEL)에 참여하는 것이 중요합니다. 특히, 다양한 상황에서 감정에 대해 사고하게 하는 이야기나 시나리오 기반의 사회정서학습(SEL)은 높은 수준의 감정지식을 유지하도록 도와줄 수 있습니다.`,
     en: `This student has a very high level of emotional knowledge, which is the ability to recognize, understand, and manage emotions in oneself and others. This student accurately identifies other people’s emotions, is skilled in emotional coping strategies, and has a high level of understanding of emotion regulation. Although this student does not need special help from the teacher, it is important to engage in social-emotional learning (SEL) consistently. In particular, story-based or scenario-based SEL that encourages students to think about emotions in various situations can help maintain a high level of emotional knowledge.`,
   },
-  tip3: {
+  tip4: {
     ko: `
     <p>• 감정 표현 연습하기</p>
     <p>- 감정 단어 수업: 교사는 매주 한 번씩 감정 단어를 배우는 시간을 마련하여 다양한 감정단어를 가르칩니다.</p>

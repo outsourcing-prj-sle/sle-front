@@ -72,50 +72,54 @@
           />
         </div>
         <b class="text-xl">*역량별 상세 안내</b>
+        <template v-if="stdColorAry.length">
+          <template v-for="n in 4" :key="`${$t(`social.title${n}`)}`">
+            <p>
+              <span class="text-blue-500 font-medium">{{
+                $t(`social.title${n}`)
+              }}</span
+              >{{ $t(`social.description${n}`) }}
+            </p>
+            <div class="flex gap-[5px] items-end my-[20px]">
+              <img
+                v-if="stdColorAry[n - 1]"
+                class="w-[72px] h-[72px]"
+                :src="
+                  require(`@/assets/img/idtt-result-${stdColorAry[n - 1]}.png`)
+                "
+                alt="평균"
+              />
+              <p class="text-xl font-semibold">
+                분석결과:{{ colorToKor1(stdColorAry[n - 1]) }}
+              </p>
+            </div>
+            <div
+              class="w-full border border-gray-300 px-[21px] py-[20px] rounded-xl"
+            >
+              <p class="font-semibold">
+                <!-- social.red0, social.orange, social.green0 -->
+                {{ $t(`social.${stdColorAry[n - 1]}${n}`) }}
+              </p>
+            </div>
+            <div
+              class="my-[10px] flex justify-between"
+              @click="() => openTip(n - 1)"
+            >
+              <p class="font-bold text-xl text-amber-500">
+                교사의 생활지도 tip
+              </p>
+              <p class="text-blue-500 pr-2">
+                {{ !isOpen[n - 1] ? $t('common.open') : $t('common.close') }}
+              </p>
+            </div>
 
-        <template v-for="n in 4" :key="`${$t(`social.title${n}`)}`">
-          <p>
-            <span class="text-blue-500 font-medium">{{
-              $t(`social.title${n}`)
-            }}</span
-            >{{ $t(`social.description${n}`) }}
-          </p>
-          <div class="flex gap-[5px] items-end my-[20px]">
-            <img
-              v-if="stdColorAry[n]"
-              class="w-[72px] h-[72px]"
-              :src="require(`@/assets/img/idtt-result-${stdColorAry[n]}.png`)"
-              alt="평균"
-            />
-            <p class="text-xl font-semibold">
-              분석결과:{{ colorToKor1(stdColorAry[n]) }}
-            </p>
-          </div>
-          <div
-            class="w-full border border-gray-300 px-[21px] py-[20px] rounded-xl"
-          >
-            <p class="font-semibold">
-              <!-- social.red0, social.orange, social.green0 -->
-              {{ $t(`social.${stdColorAry[n]}${n}`) }}
-            </p>
-          </div>
-          <div
-            class="my-[10px] flex justify-between"
-            @click="() => openTip(n - 1)"
-          >
-            <p class="font-bold text-xl text-amber-500">교사의 생활지도 tip</p>
-            <p class="text-blue-500 pr-2">
-              {{ !isOpen[n - 1] ? $t('common.open') : $t('common.close') }}
-            </p>
-          </div>
-
-          <div
-            class="w-full font-semibold border border-gray-300 px-[21px] py-[20px] rounded-xl mb-[50px]"
-            v-if="isOpen[n - 1]"
-            v-html="$t(`social.tip${n}`)"
-          ></div>
-          <div class="mb-20"></div>
-        </template>
+            <div
+              class="w-full font-semibold border border-gray-300 px-[21px] py-[20px] rounded-xl mb-[50px]"
+              v-if="isOpen[n - 1]"
+              v-html="$t(`social.tip${n}`)"
+            ></div>
+            <div class="mb-20"></div> </template
+        ></template>
 
         <div>
           <p>
@@ -397,7 +401,7 @@ export default {
       const mySELResponse = await UserService.getMySEL();
       const resData = mySELResponse.data;
 
-      // console.log(resData);
+      console.log(resData);
 
       if (resData.error) {
         alert(resData.error);
@@ -412,11 +416,7 @@ export default {
       for (let i in infoArr) {
         let d = infoArr[i];
         let stateList = d.stateList;
-        if (
-          !stateList['마음알기 설문1'] ||
-          !stateList['마음알기 설문2'] ||
-          !stateList['마음알기 설문3']
-        ) {
+        if (!stateList['1'] || !stateList['2'] || !stateList['3']) {
           tmpNeedReportAry.push(`${d.name}(${d.email})`);
         }
 
@@ -460,16 +460,24 @@ export default {
           IBP.value = resData.IBP;
 
           let _EBP = EBP.value;
-          let _EBPValue = (_EBP.score - _EBP.mean) / _EBP.stddev;
+          let _EBPValue =
+            (parseFloat(_EBP.score) - parseFloat(_EBP.avg)) /
+            (parseFloat(_EBP.stddev) || 0.01);
           let _EK = EK.value;
-          let _EKValue = (_EK.score - _EK.mean) / _EK.stddev;
+          let _EKValue =
+            (parseFloat(_EK.score) - parseFloat(_EK.avg)) /
+            (parseFloat(_EK.stddev) || 0.01);
           let _GM = GM.value;
-          let _GMValue = (_GM.score - _GM.mean) / _GM.stddev;
+          let _GMValue =
+            (parseFloat(_GM.score) - parseFloat(_GM.avg)) /
+            (parseFloat(_GM.stddev) || 0.01);
           let _IBP = IBP.value;
-          let _IBPValue = (_IBP.score - _IBP.mean) / _IBP.stddev;
+          let _IBPValue =
+            (parseFloat(_IBP.score) - parseFloat(_IBP.avg)) /
+            (parseFloat(_IBP.stddev) || 0.01);
 
           stdAry.value = [_EBPValue, _EKValue, _GMValue, _IBPValue];
-          avgAry.value = [_EBP.mean, _EK.mean, _GM.mean, _IBP.mean];
+          avgAry.value = [_EBP.avg, _EK.avg, _GM.avg, _IBP.avg];
 
           for (let i in stdAry.value) {
             const _std = parseFloat(stdAry.value[i]);
@@ -482,6 +490,8 @@ export default {
             stdAddAry.value[i] = add;
             stdColorAry.value[i] = color;
           }
+          console.log(stdAry.value);
+          console.log(stdColorAry.value);
 
           // 표 데이터 초기화
           const tmpChartData = chartData.value;
