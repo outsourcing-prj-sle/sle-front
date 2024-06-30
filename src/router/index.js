@@ -22,7 +22,7 @@ router.beforeEach((to, from, next) => {
         setTimeout(() => {
           console.log(window.history.state);
         }, 2000);
-        next('/admin');
+        next('/admin/site');
       }
     }
 

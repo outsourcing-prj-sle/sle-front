@@ -1,33 +1,14 @@
 <template>
-  <AppHeader />
   <router-view />
-  <AppFooter />
 </template>
 <script>
-import { defineComponent, computed, watchEffect } from 'vue';
+import { defineComponent } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/store/userStore.js';
-import AppFooter from './components/AppFooter.vue';
-import AppHeader from './components/AppHeader.vue';
 
 export default defineComponent({
-  components: {
-    AppFooter,
-    AppHeader,
-  },
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const userStore = useUserStore();
-    const needLogin = computed(() => route.meta.needLogin);
-    const userId = computed(() => userStore.token);
-
-    watchEffect(() => {
-      if (needLogin.value && !userId.value) {
-        router.push({ name: 'login' });
-      }
-    });
-
     return {};
   },
 });
