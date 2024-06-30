@@ -8,7 +8,7 @@
     >
       <div
         class="w-full text-left mt-8 font-medium text-base"
-        v-html="$t('login_popup.cant_login')"
+        v-html="$t(`login_popup.${dicKey}`)"
       ></div>
       <div class="w-full mt-8">
         <button
@@ -30,6 +30,12 @@
 <script>
 import { ref } from 'vue';
 export default {
+  props: {
+    dicKey: {
+      type: String,
+      default: 'no_data_rudska',
+    },
+  },
   setup(props, { emit }) {
     const openNewTab = () => {
       // const url = 'https://newtab.itt.link';

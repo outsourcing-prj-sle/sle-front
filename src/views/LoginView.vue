@@ -3,6 +3,7 @@
     <AppNewTabPopup
       v-if="showPopup"
       class="z-50"
+      :dicKey="dicKey"
       @closePopup="() => closePopup()"
     />
     <div
@@ -50,6 +51,7 @@ export default {
     const email = ref('');
     const password = ref('');
     const showPopup = ref(false);
+    const dicKey = ref('');
 
     const handleSubmit = async () => {
       const loginResponse = await UserService.login({
@@ -87,9 +89,16 @@ export default {
               const redirectPath = route.query.redirect || '/';
               router.push(redirectPath);
             } else {
-              console.log('wtf?');
-              console.log(callbackRes);
-              showPopup.value = true;
+              if (
+                resData === 'no_data_rudska' ||
+                resData === 'no_userId_rudska' ||
+                resData === 'error_rudska'
+              ) {
+                showPopup.value = true;
+                dicKey.value = resData;
+              } else {
+                alert('서버 에러입니다.\n담당자에게 문의해주세요.');
+              }
             }
           }
         }
@@ -104,6 +113,7 @@ export default {
       email,
       password,
       showPopup,
+      dicKey,
       handleSubmit,
       methods_naverLogin,
       closePopup,
