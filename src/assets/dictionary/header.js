@@ -3,7 +3,7 @@ export default {
     ko: '이미지 파일로 만들어져 있어요 상단 해더의 아이톡톡 확인',
   },
   with: {
-    ko: '과 함게하는',
+    ko: '과 함께하는',
     en: 'with',
   },
   sel_logo: {
