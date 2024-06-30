@@ -242,7 +242,7 @@ export default {
         if (status.value !== 'done') {
           ReportService.reportComplete({
             pollId: type.value,
-            qesitmSn: currentStep.value,
+            qesitmSn: pageToIndex.value,
             qesitmAnswer: v1,
             ...(v2 && { qesitmAnswerImage: v2 }),
           });
@@ -263,7 +263,7 @@ export default {
       if (status.value !== 'done') {
         ReportService.reportSave({
           pollId: type.value,
-          qesitmSn: currentStep.value,
+          qesitmSn: pageToIndex.value,
           qesitmAnswer: v1,
           ...(v2 && { qesitmAnswerImage: v2 }),
         });
