@@ -3,12 +3,8 @@ export default {
     ko: '마음알기 설문3',
     en: 'Activity 3',
   },
-  announce_voice: {
-    ko: '클릭시 안내음성을 들을 수 있습니다. 단, 안내음성은 1회만 들을 수 있습니다.',
-    en: 'You can hear the announcement voice when you click. However, you can only listen to the guided voice once.',
-  },
   announce_content: {
-    ko: '다음 지시를 따라 주시기 바랍니다.이 화면에는 사람의 눈 그림과 각 모서리에 쓰여진 단어 4개를 볼 수 있습니다.사진을 보고 사진 속 사람의 상태를 가장 잘 나타낸 단어를 가능한 한 빨리 선택해주세요.아래의 예시를 한 번 볼까요? 예시 문장을 잘 읽고 1개의 답안을 선택해주세요.',
+    ko: '다음 지시를 따라 주시기 바랍니다.<br /><br />이 화면에는 사람의 눈 그림과 각 모서리에 쓰여진 단어 4개를 볼 수 있습니다.<br />사진을 보고 사진 속 사람의 상태를 가장 잘 나타낸 단어를 가능한 한 빨리 선택해주세요.<br /><br />아래의 예시를 한 번 볼까요? 예시 문장을 잘 읽고 1개의 답안을 선택해주세요.',
     en: 'Once we begin, you will see the photo of a person inside this black screen.<br />Watch carefully as the photo will only be displayed on the screen for a second. Try to see what the person in the phone is thinking or feeling.<br />Always count down so that students will pay attention and not miss the photo being displayed.',
   },
   question: {
@@ -31,11 +27,11 @@ export default {
     ko: '화난',
     en: 'angry',
   },
-  auuounce_content2: {
+  announce_content2: {
     ko: '질문에서 맞거나 틀린 답은 없습니다. 솔직하게 모든 질문에 답해주세요.결정하기 어렵더라도 각 질문마다 최선을 다해 답해주세요.자, 준비되었나요? 준비가 되었다면 ‘시작’을 눌러 시작해보세요!',
     en: 'Give the best answer for you for each sentence, even if it is hard to make up your mind. There are no right or wrong answers. Please do your best, tell the truth, and answer every sentence. Are you ready?',
   },
-  auuounce_content3: {
+  announce_content3: {
     ko: '결정하기 어렵더라도 각 질문마다 최선을 다해 답해주세요.',
     en: ' Give the best answer for you for each sentence, even if it is hard to make up your mind. ',
   },

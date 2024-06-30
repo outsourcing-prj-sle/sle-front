@@ -4,8 +4,8 @@ export default {
     en: 'Activity 5',
   },
   announce_content: {
-    ko: '다음 지시를 따라 주시기 바랍니다.이 화면에는 그림과 감정을 나타내는 단어들이 있습니다. 각 문장을 주의 깊게 듣고 1, 2, 3, 4 보기 중 하나를 선택해주세요.안내음성은 1번만 들을 수 있으니 조용한 장소에서 잘 듣고 선택해주세요.준비되었나요? ‘시작’을 눌러 시작해보세요!',
-    en: 'Here are the directions:On this screen, there are words that represent pictures and emotions.Hear each sentence carefully. You will have four answer choices: 1, 2, 3, and 4.<br />You can only listen to the guide voice once, so please listen carefully and choose in a quiet place.<br />Are you ready? Press "Start" to get started!',
+    ko: '다음 지시를 따라 주시기 바랍니다.<br /><br />이 화면에는 그림과 감정을 나타내는 단어들이 있습니다.<br />각 문장을 주의 깊게 듣고 1, 2, 3, 4 보기 중 하나를 선택해주세요.<br /><span class="text-red-600">안내음성은 1번만 들을 수 있으니 조용한 장소에서 잘 듣고 선택해주세요.</span><br />준비되었나요? ‘시작’을 눌러 시작해보세요!',
+    en: 'Here are the directions:On this screen, there are words that represent pictures and emotions.Hear each sentence carefully.<br />You will have four answer choices: 1, 2, 3, and 4.<br /><span class="text-red-600">You can only listen to the guide voice once, so please listen carefully and choose in a quiet place.</span><br />Are you ready? Press "Start" to get started!',
   },
   announce_voice: {
     ko: '클릭시 안내음성을 들을 수 있습니다. 단, 안내음성은 1회만 들을 수 있습니다.',

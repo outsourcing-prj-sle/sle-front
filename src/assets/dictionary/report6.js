@@ -4,8 +4,11 @@ export default {
     en: 'Activity 6',
   },
   announce_content: {
-    ko: '다음 지시를 따라 주시기 바랍니다.각 질문을 주의 깊게 읽고 질문에 가장 잘 맞는 얼굴 표정을 만들어보세요.다양한 ‘눈’ 그림과 ‘코와 입’ 그림 중에서 ‘눈’ 그림 1개, ‘코와 입’ 그림 1개를 선택해서 표정을 완성할 수 있어요.',
-    en: 'In this task, you will choose one of the eyes as well as the nose/mouth pieces to create a facial expression that best matches the given scenario.<br /> For example, to create a happy face, I would choose these two pieces. [demonstrate the choosing of the correct pieces].As you click, you will see your selections on the kid��s face.<br />Pay attention to the scenario. Give the best answer as quickly as possible, even if it is hard to make up your mind.',
+    ko: `다음 지시를 따라 주시기 바랍니다.<br /><br />각 질문을 주의 깊게 읽고
+          질문에 가장 잘 맞는 얼굴 표정을 만들어보세요.<br />다양한 ‘눈’ 그림과
+          ‘코와 입’ 그림 중에서 ‘눈’ 그림 1개, ‘코와 입’ 그림 1개를 선택해서
+          표정을 완성할 수 있어요.`,
+    en: 'In this task, you will choose one of the eyes as well as the nose/mouth pieces to create a facial expression that best matches the given scenario.<br /> For example, to create a happy face, I would choose these two pieces. [demonstrate the choosing of the correct pieces].As you click, you will see your selections on the kids face.<br />Pay attention to the scenario. Give the best answer as quickly as possible, even if it is hard to make up your mind.',
   },
   announce_voice: {
     ko: '클릭시 안내음성을 들을 수 있습니다. 단, 안내음성은 1회만 들을 수 있습니다.',
@@ -23,15 +26,15 @@ export default {
     ko: '코와 입',
     en: 'Nose&Lip',
   },
-  auuounce_content2: {
-    ko: '질문에서 맞거나 틀린 답은 없습니다. 솔직하게 모든 질문에 답해주세요.결정하기 어렵더라도 각 질문마다 최선을 다해 답해주세요.자, 준비되었나요? 준비가 되었다면 ‘시작’을 눌러 시작해보세요!',
+  announce_content2: {
+    ko: '질문에서 맞거나 틀린 답은 없습니다. 솔직하게 모든 질문에 답해주세요.<br />결정하기 어렵더라도 각 질문마다 최선을 다해 답해주세요.<br /><br />자, 준비되었나요? 준비가 되었다면 ‘시작’을 눌러 시작해보세요!',
     en: 'Give the best answer for you for each sentence, even if it is hard to make up your mind.<br />There are no right or wrong answers. Please do your best, tell the truth, and answer every sentence.<br />Are you ready?',
   },
-  auuounce_content3: {
+  announce_content3: {
     ko: '결정하기 어렵더라도 각 질문마다 최선을 다해 답해주세요.',
     en: ' Give the best answer for you for each sentence, even if it is hard to make up your mind. ',
   },
-  auuounce_content4: {
+  announce_content4: {
     ko: '눈에서 1개, 코와 입에서 1개를 각각 선택해주세요.',
     en: 'Choose one from your eyes and one from your nose and mouth.',
   },

@@ -3,7 +3,7 @@ export default {
     ko: '마음알기 설문2',
     en: 'Activity 2',
   },
-  auuounce_content: {
+  announce_content: {
     ko: '다음 지시를 따라 주시기 바랍니다.<br /> 이 화면에는 학생들의 생각, 감정 그리고 행동을 나타내는 문장들이 있습니다. 각 문장을 주의 깊게 읽고 1, 2, 3, 4 보기 중 하나를 선택해주세요.<br /><보기><br />1번: 나에 대한 설명이나 나의 감정이 전혀 그렇지 않다고 생각하는 경우<br />2번: 나에 대한 설명이나 나의 감정이 가끔 그렇다고 생각하는 경우<br />3번: 나에 대한 설명이나 나의 감정이 자주 그렇다고 생각하는 경우<br />4번: 나에 대한 설명이나 감정이 거의 항상 그렇다고 생각하는 경우<br />아래의 예시를 한 번 볼까요? 예시 문장을 잘 읽고 1개의 답안을 선택해주세요.',
     en: 'Here are the Directions: This section contains sentences that tell how some boys and girls think or feel or act. Read each sentence carefully. You will have four answer choices: 1, 2, 3, and 4.<br />Check 1 if the sentence NEVER describes you or how you feel.<br />Check 2 if the sentence SOMETIMES describes you or how you feel.<br />Check 3 if the sentence OFTEN describes you or how you feel.<br />Check 4 if the sentence ALMOST ALWAYS describes you or how you feel.<br />Here is an example.',
   },
@@ -35,7 +35,7 @@ export default {
     ko: '수영장에서 수영하는 것을 좋아해요.',
     en: 'I like to swim in the pool.',
   },
-  auuounce_content2: {
+  announce_content2: {
     ko: '질문에서 맞거나 틀린 답은 없습니다. 솔직하게 모든 질문에 답해주세요.결정하기 어렵더라도 각 질문마다 최선을 다해 답해주세요.자, 준비되었나요? 준비가 되었다면 ‘시작’을 눌러 시작해보세요!',
     en: 'Give the best answer for you for each sentence, even if it is hard to make up your mind. <br />There are no right or wrong answers. Please do your best, tell the truth, and answer every sentence.<br /> Are you ready?',
   },
