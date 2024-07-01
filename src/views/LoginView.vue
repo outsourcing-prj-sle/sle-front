@@ -72,11 +72,15 @@ export default {
         if (event.origin !== window.location.origin) {
           return;
         }
+        console.log('??????????');
+        console.log(event);
         const { type, code, state } = event.data;
         if (type === 'naverLogin') {
           if (code && state) {
             const callbackRes = await handleNaverCallback(code, state);
             const resData = callbackRes?.data;
+            console.log(resData);
+            console.log(resData.authorization);
 
             if (resData?.authorization) {
               userStore.init({
@@ -89,14 +93,10 @@ export default {
               const redirectPath = route.query.redirect || '/';
               router.push(redirectPath);
             } else {
-              if (
-                resData === 'no_userdata' ||
-                resData === 'no_userId' ||
-                resData === 'error_rudska'
-              ) {
+              if (resData === 'no_userdata' || resData === 'no_userId') {
                 showPopup.value = true;
                 dicKey.value = resData;
-              } else {
+              } else if (resData === 'server_error') {
                 alert('서버 에러입니다.\n담당자에게 문의해주세요.');
               }
             }
