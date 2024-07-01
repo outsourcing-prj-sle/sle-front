@@ -1,5 +1,5 @@
 <template>
-  <!-- <AppHeader /> -->
+  <AdminHeader />
   <router-view />
   <!-- <AppFooter /> -->
 </template>
@@ -7,13 +7,12 @@
 import { defineComponent, computed, watchEffect } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAdminStore } from '@/store/adminStore.js';
-// import AppFooter from '@/components/AppFooter.vue';
-// import AppHeader from '@/components/AppHeader.vue';
+import AdminHeader from '@/components/admin/AdminHeader.vue';
 
 export default defineComponent({
   components: {
     // AppFooter,
-    // AppHeader,
+    AdminHeader,
   },
   setup() {
     const route = useRoute();

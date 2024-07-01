@@ -1,22 +1,28 @@
 import AdminLayout from '@/layouts/AdminLayout.vue';
 import adminLoginView from '@/views/admin/adminLoginView.vue';
+import adminSiteView from '@/views/admin/adminSiteView.vue';
 
 const adminRoutes = [
   {
     path: '/admin',
     component: AdminLayout,
     children: [
-      // {
-      //   path: '',
-      //   name: 'home',
-      //   component: HomeView,
-      //   meta: { footerVisible: true, headerVisible: true, needLogin: true },
-      // },
+      {
+        path: 'site',
+        name: 'adminSite',
+        component: adminSiteView,
+        meta: {
+          headerVisible: true,
+          sidebarVisible: true,
+          needLogin: true,
+          isReportManage: true,
+        },
+      },
       {
         path: 'login',
         name: 'adminLogin',
         component: adminLoginView,
-        meta: { footerVisible: false, headerVisible: true },
+        meta: { headerVisible: false },
       },
     ],
   },

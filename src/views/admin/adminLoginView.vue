@@ -94,6 +94,7 @@ export default {
       adminStore.init({
         token: 'token',
         id: 'id',
+        name: 'asdf',
       });
 
       const redirectPath = route.query.redirect || '/admin/site';
