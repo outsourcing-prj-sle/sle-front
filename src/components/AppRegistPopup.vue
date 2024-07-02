@@ -22,7 +22,7 @@
       </div>
       <div class="flex-1">
         <TeacherResigtPopup1
-          v-if="loginType === 'teacher' && step === 1"
+          v-if="loginType === 'teacher' && step === 1 && userInfo"
           :userInfo="userInfo"
           @openWhaleProfile="openWhaleProfile"
         />
@@ -31,7 +31,7 @@
           @finRegist="finRegist"
         />
         <StudentResigtPopup1
-          v-else-if="loginType === 'student' && step === 1"
+          v-else-if="loginType === 'student' && step === 1 && userInfo"
           :userInfo="userInfo"
           @openWhaleProfile="openWhaleProfile"
         />
@@ -105,10 +105,10 @@ export default {
     const userStore = useUserStore();
     const loginType = computed(() => userStore.type || 'student');
     const step = ref(1);
-    const name = ref('김톡톡톡');
-    const school = ref('이작초등학교');
-    const grade = ref('1');
-    const classroom = ref('2');
+    const name = ref('');
+    const school = ref('');
+    const grade = ref('');
+    const classroom = ref('');
     const gender = ref();
     const year = ref();
     const month = ref();
@@ -129,6 +129,7 @@ export default {
     });
 
     const userInfo = computed(() => {
+      if (!school.value) return '';
       return `${school.value} ${grade.value}${t('common.grade')} ${classroom.value}${t('common.class')} ${name.value}`;
     });
 
@@ -212,6 +213,7 @@ export default {
       gender,
       month,
       year,
+      school,
 
       openWhaleProfile,
       stepNext,

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col flex-1 text-base font-medium">
+  <div class="flex flex-col flex-1 text-base font-medium" v-if="userInfo">
     <span class="text-left mt-10" v-html="hello_teacher"> </span>
     <button
       @click="openWhaleProfile"
