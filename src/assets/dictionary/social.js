@@ -250,18 +250,26 @@ export default {
   },
   ai_title: {
     ko: '__name__ 학생의 사회정서학습 AI분석 의견조사',
-    en: '',
+    en: `__name__ student's opinion survey on AI analysis of Social and Emotional Learning`,
   },
   ai_q1: {
     ko: 'AI가 진단한 피드백 내용과 오프라인에서 살펴본 학생에 대한 선생님의 의견이 얼마나 일치하였나요?',
-    en: '',
+    en: 'How well did the AI-diagnosed feedback match your opinion of the student offline?',
   },
   ai_q2: {
     ko: '일치하지 않는다면 어느 유형이 일치하지 않았나요?* (중복선택 가능)',
-    en: '',
+    en: 'If there was no match, which type of match was there?* (Multiple choices allowed)',
   },
   ai_q3: {
     ko: '개선의견을 자유롭게 적어주세요(선택)',
-    en: '',
+    en: 'Please feel free to write any suggestions for improvement (optional)',
+  },
+  ai_res: {
+    ko: '설문이 저장되었습니다!',
+    en: 'Your survey has been saved!',
+  },
+  no_report_data: {
+    ko: '설문을 완료하지 못한 학생입니다.',
+    en: 'This student did not complete the activity.',
   },
 };

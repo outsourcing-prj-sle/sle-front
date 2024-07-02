@@ -125,15 +125,9 @@
         ></template>
 
         <div>
-          <p>
-            <span class="text-blue-500 font-medium">{{ name }} 학생</span>의
-            사회정서학습 AI분석 의견조사
-          </p>
+          <p v-html="aiTitle"></p>
           <div class="my-[20px]">
-            <p>
-              Q1. AI가 진단한 피드백 내용과 오프라인에서 살펴본 학생에 대한
-              선생님의 의견이 얼마나 일치하였나요?*
-            </p>
+            <p>Q1. {{ $t('social.ai_q1') }}</p>
             <div class="flex gap-[20px] p-[20px]">
               <div class="flex gap-[10px]">
                 <input
@@ -188,10 +182,7 @@
               </div>
             </div>
             <div class="my-[20px]">
-              <p>
-                Q2. 일치하지 않는다면 어느 유형이 일치하지 않았나요?* (중복선택
-                가능)
-              </p>
+              <p>Q2. {{ $t('social.ai_q2') }}</p>
               <div class="flex flex-col gap-[20px] p-[20px]">
                 <div>
                   <input
@@ -248,7 +239,7 @@
               </div>
             </div>
             <div class="mt-[20px]">
-              <p>Q3. 개선의견을 자유롭게 적어주세요(선택)</p>
+              <p>Q3. {{ $t('social.ai_q3') }}</p>
               <textarea
                 class="w-full border border-gray-300 px-[20px] py-[10px] mt-[20px] h-[136px]"
                 name="question03"
@@ -445,7 +436,7 @@ export default {
           name.value = optionsObj.value[selectedOption.value].name;
 
           if (!optionsObj.value[selectedOption.value].userId) {
-            alert('설문을 완료하지 못한 학생입니다.');
+            alert(t('social.no_report_data'));
             return;
           }
 
@@ -456,7 +447,7 @@ export default {
           console.log(resData);
 
           if (!resData.EBP || !resData.EK || !resData.GM || !resData.IBP) {
-            alert('설문을 완료하지 못한 학생입니다.');
+            alert(t('social.no_report_data'));
             return;
           }
           EBP.value = resData.EBP;
@@ -602,12 +593,19 @@ export default {
         return;
       }
 
-      alert('설문이 저장되었습니다!');
+      alert(t('social.ai_res'));
     };
 
     const openTip = (i) => {
       isOpen.value[i] = !isOpen.value[i];
     };
+
+    const aiTitle = computed(() => {
+      return t('social.ai_title').replace(
+        '__name__',
+        `<span class="text-blue-500 font-medium">${name.value} 학생</span>`
+      );
+    });
 
     return {
       qesAnswer1,
@@ -633,6 +631,7 @@ export default {
       isOpen,
       openTip,
       needReport,
+      aiTitle,
     };
   },
 };
