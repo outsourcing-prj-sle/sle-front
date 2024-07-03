@@ -1,60 +1,98 @@
 <template>
-    <div class="w-full overflow-x-scroll">
-        <table class="border border-collapse border-gray-300 w-full max-md:text-[14px]">
-            <thead>
-            <tr class="bg-gray-300">
-                <th class="border border-collapse border-gray-500 p-[10px]"><input type="checkbox"></th>
-                <th class="border border-collapse border-gray-500 p-[10px] whitespace-nowrap" v-for="item in headers" :key="item">{{ item }}</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr class="border border-collapse border-gray-500" v-for="body in bodies" :key="body">
-                <td class="border border-collapse border-gray-500 p-[10px] whitespace-nowrap"><input type="checkbox"></td>
-                <td class="border border-collapse border-gray-500 p-[10px] whitespace-nowrap"><p>{{ body.nttNo }}</p></td>
-                <td class="border border-collapse border-gray-500 p-[10px] whitespace-nowrap"><p>{{ body.pollNm }}</p></td>
-                <td class="border border-collapse border-gray-500 p-[10px] text-ellipsis overflow-hidden whitespace-nowrap break-all" :class="{ 'text-gray-400' : !body.pollTarget}">
-                    <p>{{ body.pollTarget || '관리>설정을 해주세요.' }}</p>
-                </td>
-                <td class="border border-collapse border-gray-500 p-[10px] whitespace-nowrap" :class="{ 'text-gray-400' : !body.date }">
-                    <p>{{ body.date || '관리>설정을 해주세요.' }}</p>
-                </td>
-                <td class="border border-collapse border-gray-500 p-[10px] whitespace-nowrap">
-                    <IDButton v-if="body.dtl" class="rounded-xl"
-                        :text="'상세보기'" 
-                        :isWhite="false" 
-                        :_width="84" 
-                    />
-                    <p v-if="!body.dtl">-</p>
-                </td>
-                <td class="border border-collapse border-gray-500 p-[10px] min-w-[60px]">
-                    <picture class="flex items-center justify-center">
-                        <img class="w-[28px] h-[28px] cursor-pointer" src="@/assets/img/ico-gear.png" alt="">
-                    </picture>
-                </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  <table class="border border-collapse border-gray-300 w-full">
+    <thead>
+      <tr class="bg-gray-300 flex">
+        <th
+          class="border border-collapse border-gray-500 p-[10px]"
+          v-for="(v, i) in header"
+          :class="{
+            ...(v.isFlex1 && { 'flex-1': true }),
+          }"
+          :style="{
+            ...(v.width && { width: `${v.width}px` }),
+          }"
+          :key="`${v.text}${i}`"
+        >
+          <input type="checkbox" v-if="v.isCheckbox" />
+          <span v-if="v.text">
+            {{ v.text }}
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        class="border border-collapse border-gray-500"
+        v-for="(info, i) in body"
+        :key="`${v.id}${i}`"
+      >
+        <td
+          class="border border-collapse border-gray-500 p-[10px] flex"
+          v-for="(v, j) in info"
+          :class="{
+            ...(v.isFlex1 && { 'flex-1': true }),
+          }"
+          :style="{
+            ...(v.width && { width: `${v.width}px` }),
+          }"
+          :key="`${i}${j}`"
+        >
+          <input type="checkbox" v-if="v.isCheckbox" />
+          <span v-if="v.text">
+            {{ v.text }}
+          </span>
+          <button v-if="v.isButton">
+            {{ v.text }}
+          </button>
+          <div class="flex-1" v-if="v.isOpenPopup">
+            <img
+              class="w-[28px] h-[28px]"
+              src="@/assets/img/ico-gear.png"
+              alt=""
+            />
+          </div>
+          <div class="flex-1" v-if="v.isManage">연구소 관리자 관리</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
-    import IDButton from '@/components/id/IDButton.vue';
-
-    export default {
-        components: {
-            IDButton
-        },
-        props: {
-            headers: {
-                type: Array,
-                required: true,
-            },
-            bodies: {
-                type: Array,
-                required: true,
-            },
-        },
-        setup(props, { emit }) {
-        },
+import { computed } from 'vue';
+export default {
+  props: {
+    _width: {
+      type: Number,
+    },
+    text: {
+      type: String,
+    },
+    isWhite: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup(props, { emit }) {
+    const styleClass = computed(() => {
+      const style = {
+        'bg-white text-[#2F80ED]': props.isWhite,
+        'bg-[#2F80ED] text-white': !props.isWhite,
+      };
+      if (props._width) style[`w-[${props._width}px]`] = true;
+      return style;
+    });
+    const onClick = () => {
+      emit('onClick');
     };
+    return {
+      styleClass,
+      onClick,
+    };
+  },
+};
 </script>
+
+<style>
+/* Footer 스타일 */
+</style>
