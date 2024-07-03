@@ -107,7 +107,7 @@
       {{ $t('header.social_tt') }}
     </div>
     <div
-      class="px-2 text-center items-center max-w-max font-bold text-lg"
+      class="px-2 text-center items-center max-w-max font-bold text-lg hidden"
       :class="isLearnTTView && 'text-blue-500'"
       v-if="loginType !== 'student'"
       @click="goTeacherLearnId"

@@ -83,7 +83,7 @@
       @click="submitInfo"
       class="my-[10px] px-4 py-2 mt-[50px] bg-blue-600 text-white rounded-md min-w-[96px]"
     >
-      {{ $t('save.save') }}
+      {{ $t('myinfo.save') }}
     </button>
   </div>
 </template>
@@ -147,8 +147,9 @@ export default {
       const resData = myInfoRes.data;
       console.log(resData);
 
+      // 유저 타입(04:학생, 08:교사)
       userType.value =
-        resData.userType === 'Y' ? t('common.teacher') : t('common.student');
+        resData.userType === '08' ? t('common.teacher') : t('common.student');
       email.value = resData.userEmail;
       gender.value = resData.sex;
       name.value = resData.name;
