@@ -1,5 +1,5 @@
 <template>
-    <div class="input-keyword border border-gray-300 pl-[10px] pr-[40px] py-[10px] rounded-xl" :class="styleClass">
+    <div class="input-keyword border border-gray-300 pl-4 pr-10 py-2 text-sm rounded-md" :class="styleClass">
         <input type="text" class="w-full" :placeholder="placeholder">
     </div>
 </template>
@@ -45,8 +45,9 @@ import { computed, ref } from 'vue';
         background-repeat: no-repeat;
         background-size: cover;
         position: absolute;
-        width: 26px;
-        height: 26px;
+        width: 20px;
+        height: 20px;
         right: 50px;
+        cursor: pointer;
     }
 </style>

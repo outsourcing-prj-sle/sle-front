@@ -1,13 +1,13 @@
 <template>
   <div class="w-full overflow-auto">
     <table
-        class="border border-collapse border-gray-300 w-full"
+        class="w-full"
         v-if="header.length"
     >
         <thead>
-        <tr class="bg-gray-300">
+        <tr class="bg-gray-100">
             <th
-            class="border border-collapse border-gray-500 p-[10px]"
+            class="border-t-2 border-gray-500 p-[10px]"
             v-for="(v, i) in header"
             :class="{
                 ...(v.isFlex1 && { 'flex-1': true }),
@@ -26,12 +26,11 @@
         </thead>
         <tbody v-if="body.length">
         <tr
-            class="border border-collapse border-gray-500"
             v-for="(info, i) in body"
             :key="`bodytr${i}`"
         >
             <td
-            class="border border-collapse border-gray-500 p-[10px]"
+            class="p-[10px]"
             v-for="(v, j) in info"
             :class="{
                 ...(v.isFlex1 && { 'flex-1': true }),
@@ -50,6 +49,16 @@
             :text="v.isButton" 
             :isWhite="false" 
             />
+            <div class="flex gap-[10px]" v-if="v.button1 && v.button2">
+              <IDButtonVue class="rounded-xl whitespace-nowrap hover:bg-[#2F80ED] hover:text-white"
+              :text="v.button1" 
+              :isWhite="true"
+              />
+              <IDButtonVue class="rounded-xl whitespace-nowrap hover:bg-[#2F80ED] hover:text-white"
+              :text="v.button2" 
+              :isWhite="true" 
+              />
+            </div>
             <div class="cursor-pointer min-w-[45px] flex flex-1 justify-center items-center w-full" v-if="v.isOpenPopup">
                 <img
                 class="w-[28px] h-[28px]"
