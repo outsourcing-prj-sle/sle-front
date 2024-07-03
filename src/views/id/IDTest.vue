@@ -10,8 +10,11 @@
           isWhite: true - 흰배경 버튼 / 옵션 아에 빼면 파랑 배경 버튼
           _width: 만약 고정된 길이여야하면 숫자 입력시 해당 px로, / 옵션 아에 빼면 그냥 알아서 이쁘게 지정됨
          -->
-        <IDButton :text="'asdf'" :isWhite="true" :_width="300" />
-        <IDButton :text="'등록'" />
+        <IDButton :text="'asdf'" :isWhite="true" :_width="250" />
+        <IDButton :text="'asdf'" :isWhite="true" :_width="200" />
+        <IDButton :text="'asdf'" :isWhite="true" :_width="150" />
+        <IDButton :text="'asdf'" :isWhite="true" :_width="100" />
+        <!-- <IDButton :text="'등록'" :_width="150" /> -->
       </div>
       <div>
         <!-- 
