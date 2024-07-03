@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import UserService from '@/service/UserService';
@@ -142,6 +142,15 @@ export default {
       );
     });
 
+    const userTypeFlag = ref('');
+    const lang = computed(() => {
+      return t('common.lang');
+    });
+    watch(lang, (newValue, oldValue) => {
+      userType.value =
+        userTypeFlag.value === '08' ? t('common.teacher') : t('common.student');
+    });
+
     onMounted(async () => {
       const myInfoRes = await UserService.myInfo();
       const resData = myInfoRes.data;
@@ -150,6 +159,7 @@ export default {
       // 유저 타입(04:학생, 08:교사)
       userType.value =
         resData.userType === '08' ? t('common.teacher') : t('common.student');
+      userTypeFlag.value = resData.userType;
       email.value = resData.userEmail;
       gender.value = resData.sex;
       name.value = resData.name;

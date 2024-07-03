@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col bg-[#404664] w-[270px] px-2 py-4 h-full"
+    class="flex flex-col bg-[#404664] min-w-[270px] max-xl:min-w-[200px] max-md:min-w-[150px] max-sm:min-w-[130px] px-2 py-4 h-full"
     v-if="showSidebar"
   >
     <div
