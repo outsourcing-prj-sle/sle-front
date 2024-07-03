@@ -37,6 +37,30 @@
           @update:selectedOption="handleSelection1"
         />
       </div>
+      <div>
+        <VDatePicker v-model="date">
+          <template #default="{ togglePopover }">
+            <div class="flex items-center gap-2">
+              <button
+                class="px-10 py-2.5 text-[#797979] rounded-xl text-xs font-light bg-white border-[#CECECE] border border-solid"
+                @click="togglePopover"
+              >
+                {{ formattedDate }}
+              </button>
+              <button
+                class="p-2.5 rounded-xl bg-white border-[#CECECE] border border-solid"
+                @click="togglePopover"
+              >
+                <img
+                  class="w-6 h-6"
+                  src="@/assets/img/IDCalendar.png"
+                  alt="IDCalendar"
+                />
+              </button>
+            </div>
+          </template>
+        </VDatePicker>
+      </div>
     </div>
     <div>
       <IDTable :header="header" :body="body" />
@@ -45,7 +69,7 @@
 </template>
 
 <script>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useIDStore } from '@/store/IDStore.js';
 import IDService from '@/service/IDService.js';
@@ -118,11 +142,24 @@ export default {
       ],
     ]);
 
+    const date = ref(new Date());
+    const formattedDate = computed(() => {
+      const tmp = new Date(date.value);
+      let year = tmp.getFullYear();
+      let month = tmp.getMonth() + 1;
+      let day = tmp.getDate();
+      const format = `${year}-${month}-${day}`;
+
+      return format;
+    });
+
     return {
       options,
       selectedOption,
       header,
       body,
+      date,
+      formattedDate,
 
       handleSelection1,
     };
