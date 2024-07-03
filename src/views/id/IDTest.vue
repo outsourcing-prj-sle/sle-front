@@ -39,57 +39,7 @@
       </div>
     </div>
     <div>
-      <table class="border border-collapse border-gray-300 w-full">
-        <thead>
-          <tr class="bg-gray-300 flex">
-            <th
-              class="border border-collapse border-gray-500 p-[10px]"
-              v-for="(v, i) in header"
-              :key="`${v.text}${i}`"
-            >
-              <input type="checkbox" v-if="v.isCheckbox" />
-              <span v-if="v.text">
-                {{ v.text }}
-              </span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class="border border-collapse border-gray-500"
-            v-for="(info, i) in body"
-            :key="`${v.id}${i}`"
-          >
-            <td
-              class="border border-collapse border-gray-500 p-[10px] flex"
-              v-for="(v, j) in info"
-              :class="{
-                ...(v.isFlex1 && { 'flex-1': true }),
-              }"
-              :style="{
-                ...(v.width && { width: `${v.width}px` }),
-              }"
-              :key="`${i}${j}`"
-            >
-              <input type="checkbox" v-if="v.isCheckbox" />
-              <span v-if="v.text">
-                {{ v.text }}
-              </span>
-              <button v-if="v.isButton">
-                {{ v.text }}
-              </button>
-              <div class="flex-1" v-if="v.isOpenPopup">
-                <img
-                  class="w-[28px] h-[28px]"
-                  src="@/assets/img/ico-gear.png"
-                  alt=""
-                />
-              </div>
-              <div class="flex-1" v-if="v.isManage">연구소 관리자 관리</div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <IDTable :header="header" :body="body" />
     </div>
   </div>
 </template>
@@ -99,6 +49,7 @@ import { ref, onBeforeMount } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useIDStore } from '@/store/IDStore.js';
 import IDService from '@/service/IDService.js';
+import IDTable from '@/components/id/IDTable.vue';
 import IDButton from '@/components/id/IDButton.vue';
 import AppDropdown from '@/components/AppDropdown.vue';
 
@@ -106,6 +57,7 @@ export default {
   name: 'IDManageReportView',
   components: {
     IDButton,
+    IDTable,
     AppDropdown,
   },
   setup() {
