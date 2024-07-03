@@ -142,7 +142,7 @@ export default {
       let flag = '';
 
       if (loginType.value === 'student' && step.value === 2 && !gender.value) {
-        flag = t('common.gender_title');
+        flag = t('login_popup.gender_title');
       }
 
       if (
@@ -150,7 +150,7 @@ export default {
         step.value === 3 &&
         !(year.value && month.value)
       ) {
-        flag = t('common.birth_title');
+        flag = t('login_popup.birth_title');
       }
 
       if (flag) {
