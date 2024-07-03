@@ -29,7 +29,7 @@
         'w-full': openFull,
       }"
     >
-      <div class="py-1 max-h-48 overflow-y-auto">
+      <div class="py-1 max-h-48 overflow-y-auto" v-if="options.length">
         <a
           v-for="option in options"
           :key="option"
@@ -37,6 +37,19 @@
           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
         >
           {{ option }}
+        </a>
+      </div>
+      <div
+        class="py-1 max-h-48 overflow-y-auto"
+        v-else-if="objectOptions.length"
+      >
+        <a
+          v-for="option in objectOptions"
+          :key="option"
+          @click="selectOption(option.value)"
+          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
+        >
+          {{ option.name }}
         </a>
       </div>
     </div>
@@ -51,6 +64,10 @@ export default {
   props: {
     options: {
       type: Array,
+      required: true,
+    },
+    objectOptions: {
+      type: Array, // { name, value}
       required: true,
     },
     startText: {
