@@ -21,16 +21,9 @@
           </div>
         </div>
         <img
-          src="@/assets/img/logo_company_en.png"
+          :src="require(`@/assets/img/logo_company_${$t('common.lang')}.png`)"
           alt="logo"
           class="max-h-16"
-          v-if="$t('common.all') === 'all'"
-        />
-        <img
-          src="@/assets/img/logo_company.png"
-          alt="logo"
-          class="max-h-16"
-          v-else
         />
       </div>
     </div>

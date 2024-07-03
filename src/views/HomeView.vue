@@ -14,7 +14,7 @@
       class="flex overflow-hidden relative flex-col items-center px-16 pt-12 w-full min-h-[341px] max-md:px-5 max-md:max-w-full max-xl:hidden"
     >
       <img
-        src="@/assets/img/mainBanner.png"
+        :src="require(`@/assets/img/mainBanner_${$t('common.lang')}.png`)"
         alt=""
         class="object-cover absolute inset-0 size-full"
       />
