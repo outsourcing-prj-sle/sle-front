@@ -20,7 +20,18 @@
             Copyright© Gyeongsangnamdo office of education all rights reserved.
           </div>
         </div>
-        <img src="@/assets/img/logo_company.png" alt="logo" class="h-full" />
+        <img
+          src="@/assets/img/logo_company_en.png"
+          alt="logo"
+          class="max-h-16"
+          v-if="$t('common.all') === 'all'"
+        />
+        <img
+          src="@/assets/img/logo_company.png"
+          alt="logo"
+          class="max-h-16"
+          v-else
+        />
       </div>
     </div>
   </footer>
