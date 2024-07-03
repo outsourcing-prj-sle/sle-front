@@ -17,8 +17,8 @@
         />
       </div>
       <IDTable
-      :headers="headers"
-      :bodies="bodies"
+      :header="header"
+      :body="body"
       />
       <div class="flex justify-center gap-[10px]">
         <div>
@@ -48,32 +48,57 @@ export default {
     const selectedOption = ref('대상');
     const options2 = ref([123, 456]);
     const selectedOption2 = ref('정렬');
-    const headers = ['번호', '활동명', '대상', '기간', '상세', '관리'];
-    const bodies = [
+    const header = [
       {
-        nttNo: 1,
-        pollId: 'QES0000000001',
-        pollNm: '마음알기 설문1',
-        pollTarget: '',
-        date: '',
-        dtl: false,
+        isCheckbox: true
       },
       {
-        nttNo: 2,
-        pollId: 'QES0000000002',
-        pollNm: '마음알기 설문2',
-        pollTarget: '초3, 초4, 초5, 초6, 경남중학교, 경남시범초등학교',
-        date: '2023년 1월 1일' + ' ~ ' + '3월 1일' + '까지',
-        dtl: true,
-      },
+        text: '번호'
+      }, 
       {
-        nttNo: 3,
-        pollId: 'QES0000000003',
-        pollNm: '마음알기 설문3',
-        pollTarget: '초3, 초4, 초5, 초6',
-        date: '2023년 1월 1일' + ' ~ ' + '4월 1일' + '까지',
-        dtl: true,
+        text: '활동명'
+      }, 
+      {
+        text: '대상'
+      }, 
+      {
+        text: '기간'
+      }, 
+      {
+        text:'상세'
+      }, 
+      {
+        text:'관리'
       }
+    ];
+    const body = [
+      [
+        { isCheckbox: true },
+        { text: 1 },
+        { text: '마음알기 설문1' },
+        { text: '관리>설정을 해주세요.' },
+        { text: '관리>설정을 해주세요.' },
+        { text: '-' },
+        { isOpenPopup: true }
+      ],
+      [
+        { isCheckbox: true },
+        { text: 2 },
+        { text: '마음알기 설문2' },
+        { text: '초3, 초4, 초5, 초6, 경남중학교, 경남시범초등학교'},
+        { text: '2023년 1월 1일 ~ 3월 1일까지' },
+        { isButton: '상세보기' },
+        { isOpenPopup: true }
+      ],
+      [
+        { isCheckbox: true },
+        { text: 3 },
+        { text: '마음알기 설문3' },
+        { text: '초3, 초4, 초5, 초6' },
+        { text: '2023년 1월 1일 ~ 4월 1일까지' },
+        { isButton: '상세보기' },
+        { isOpenPopup: true }
+      ]
     ];
 
     const handleSelection1 = (v) => {
@@ -85,8 +110,8 @@ export default {
       selectedOption,
       options2,
       selectedOption2,
-      headers,
-      bodies,
+      header,
+      body,
 
       handleSelection1
     };

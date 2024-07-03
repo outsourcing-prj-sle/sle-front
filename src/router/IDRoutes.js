@@ -2,6 +2,7 @@ import IDLayout from '@/layouts/IDLayout.vue';
 import IDLoginView from '@/views/id/IDLoginView.vue';
 import IDManageReportView from '@/views/id/IDManageReportView.vue';
 import IDTest from '@/views/id/IDTest.vue';
+import IDManageReportDtlView from '@/views/id/IDManageReportDtlView.vue'
 
 const IDRoutes = [
   {
@@ -29,6 +30,26 @@ const IDRoutes = [
         path: 'IDTest',
         name: 'IDTest',
         component: IDTest,
+        meta: {
+          headerVisible: true,
+          sidebarVisible: true,
+          isManageReport: true,
+        },
+      },
+      {
+        path: 'report',
+        name: 'IDManageReportView',
+        component: IDManageReportView,
+        meta: {
+          headerVisible: true,
+          sidebarVisible: true,
+          isManageReport: true,
+        },
+      },
+      {
+        path: 'report/dtl',
+        name: 'IDManageReportDtlView',
+        component: IDManageReportDtlView,
         meta: {
           headerVisible: true,
           sidebarVisible: true,

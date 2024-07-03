@@ -1,69 +1,78 @@
 <template>
-  <table
-    class="border border-collapse border-gray-300 w-full"
-    v-if="header.length"
-  >
-    <thead>
-      <tr class="bg-gray-300 flex">
-        <th
-          class="border border-collapse border-gray-500 p-[10px]"
-          v-for="(v, i) in header"
-          :class="{
-            ...(v.isFlex1 && { 'flex-1': true }),
-          }"
-          :style="{
-            ...(v.width && { width: `${v.width}px` }),
-          }"
-          :key="`${v.text}${i}`"
+  <div class="w-full overflow-auto">
+    <table
+        class="border border-collapse border-gray-300 w-full"
+        v-if="header.length"
+    >
+        <thead>
+        <tr class="bg-gray-300">
+            <th
+            class="border border-collapse border-gray-500 p-[10px]"
+            v-for="(v, i) in header"
+            :class="{
+                ...(v.isFlex1 && { 'flex-1': true }),
+            }"
+            :style="{
+                ...(v.width && { width: `${v.width}px` }),
+            }"
+            :key="`${v.text}${i}`"
+            >
+            <input type="checkbox" class="min-w-[35px]" v-if="v.isCheckbox" />
+            <span class="whitespace-nowrap" v-if="v.text">
+                {{ v.text }}
+            </span>
+            </th>
+        </tr>
+        </thead>
+        <tbody v-if="body.length">
+        <tr
+            class="border border-collapse border-gray-500"
+            v-for="(info, i) in body"
+            :key="`bodytr${i}`"
         >
-          <input type="checkbox" v-if="v.isCheckbox" />
-          <span v-if="v.text">
-            {{ v.text }}
-          </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody v-if="body.length">
-      <tr
-        class="border border-collapse border-gray-500"
-        v-for="(info, i) in body"
-        :key="`${v.id}${i}`"
-      >
-        <td
-          class="border border-collapse border-gray-500 p-[10px] flex"
-          v-for="(v, j) in info"
-          :class="{
-            ...(v.isFlex1 && { 'flex-1': true }),
-          }"
-          :style="{
-            ...(v.width && { width: `${v.width}px` }),
-          }"
-          :key="`${i}${j}`"
-        >
-          <input type="checkbox" v-if="v.isCheckbox" />
-          <span v-if="v.text">
-            {{ v.text }}
-          </span>
-          <button v-if="v.isButton">
-            {{ v.text }}
-          </button>
-          <div class="flex-1" v-if="v.isOpenPopup">
-            <img
-              class="w-[28px] h-[28px]"
-              src="@/assets/img/ico-gear.png"
-              alt=""
+            <td
+            class="border border-collapse border-gray-500 p-[10px]"
+            v-for="(v, j) in info"
+            :class="{
+                ...(v.isFlex1 && { 'flex-1': true }),
+            }"
+            :style="{
+                ...(v.width && { width: `${v.width}px` }
+                ),
+            }"
+            :key="`${i}${j}`"
+            >
+            <input class="min-w-[35px]" type="checkbox" v-if="v.isCheckbox" />
+            <span v-if="v.text" class="whitespace-nowrap">
+                {{ v.text }}
+            </span>
+            <IDButtonVue v-if="v.isButton" class="rounded-xl whitespace-nowrap"
+            :text="v.isButton" 
+            :isWhite="false" 
             />
-          </div>
-          <div class="flex-1" v-if="v.isManage">연구소 관리자 관리</div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+            <div class="cursor-pointer min-w-[45px] flex flex-1 justify-center items-center w-full" v-if="v.isOpenPopup">
+                <img
+                class="w-[28px] h-[28px]"
+                src="@/assets/img/ico-gear.png"
+                alt=""
+                />
+            </div>
+            <div class="flex-1" v-if="v.isManage">연구소 관리자 관리</div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
 import { computed } from 'vue';
+import IDButtonVue from '@/components/id/IDButton.vue'
+
 export default {
+  components: {
+    IDButtonVue
+  },
   props: {
     header: {
       type: Array,
