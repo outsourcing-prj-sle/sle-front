@@ -1,5 +1,8 @@
 <template>
-  <table class="border border-collapse border-gray-300 w-full">
+  <table
+    class="border border-collapse border-gray-300 w-full"
+    v-if="header.length"
+  >
     <thead>
       <tr class="bg-gray-300 flex">
         <th
@@ -20,7 +23,7 @@
         </th>
       </tr>
     </thead>
-    <tbody>
+    <tbody v-if="body.length">
       <tr
         class="border border-collapse border-gray-500"
         v-for="(info, i) in body"
@@ -62,33 +65,17 @@
 import { computed } from 'vue';
 export default {
   props: {
-    _width: {
-      type: Number,
+    header: {
+      type: Array,
+      default: () => [],
     },
-    text: {
-      type: String,
-    },
-    isWhite: {
-      type: Boolean,
-      default: false,
+    body: {
+      type: Array,
+      default: () => [],
     },
   },
   setup(props, { emit }) {
-    const styleClass = computed(() => {
-      const style = {
-        'bg-white text-[#2F80ED]': props.isWhite,
-        'bg-[#2F80ED] text-white': !props.isWhite,
-      };
-      if (props._width) style[`w-[${props._width}px]`] = true;
-      return style;
-    });
-    const onClick = () => {
-      emit('onClick');
-    };
-    return {
-      styleClass,
-      onClick,
-    };
+    return {};
   },
 };
 </script>
