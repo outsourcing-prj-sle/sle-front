@@ -1,4 +1,8 @@
 export default {
+  lang: {
+    ko: 'ko',
+    en: 'en',
+  },
   sort_dead: {
     ko: '마감순',
     en: 'Sort by Deadline',
