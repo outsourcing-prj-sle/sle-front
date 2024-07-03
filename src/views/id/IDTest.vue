@@ -38,6 +38,59 @@
         />
       </div>
     </div>
+    <div>
+      <table class="border border-collapse border-gray-300 w-full">
+        <thead>
+          <tr class="bg-gray-300 flex">
+            <th
+              class="border border-collapse border-gray-500 p-[10px]"
+              v-for="(v, i) in header"
+              :key="`${v.text}${i}`"
+            >
+              <input type="checkbox" v-if="v.isCheckbox" />
+              <span v-if="v.text">
+                {{ v.text }}
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="border border-collapse border-gray-500"
+            v-for="(info, i) in body"
+            :key="`${v.id}${i}`"
+          >
+            <td
+              class="border border-collapse border-gray-500 p-[10px] flex"
+              v-for="(v, j) in info"
+              :class="{
+                ...(v.isFlex1 && { 'flex-1': true }),
+              }"
+              :style="{
+                ...(v.width && { width: `${v.width}px` }),
+              }"
+              :key="`${i}${j}`"
+            >
+              <input type="checkbox" v-if="v.isCheckbox" />
+              <span v-if="v.text">
+                {{ v.text }}
+              </span>
+              <button v-if="v.isButton">
+                {{ v.text }}
+              </button>
+              <div class="flex-1" v-if="v.isOpenPopup">
+                <img
+                  class="w-[28px] h-[28px]"
+                  src="@/assets/img/ico-gear.png"
+                  alt=""
+                />
+              </div>
+              <div class="flex-1" v-if="v.isManage">연구소 관리자 관리</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -64,10 +117,61 @@ export default {
     const handleSelection1 = (v) => {
       console.log(v);
     };
+    const header = ref([
+      {
+        isCheckbox: true,
+      },
+      {
+        text: '번호',
+      },
+      {
+        text: '활동명',
+      },
+      {
+        text: '대상',
+      },
+      {
+        text: '기간',
+      },
+      {
+        text: '상세',
+      },
+      {
+        text: '관리',
+      },
+    ]);
+    const body = ref([
+      [
+        {
+          isCheckbox: true,
+        },
+        {
+          text: '번호',
+        },
+        {
+          text: '활동명',
+        },
+        {
+          text: '대상',
+        },
+        {
+          text: '기간',
+        },
+        {
+          text: '상세',
+        },
+        {
+          text: '관리',
+        },
+      ],
+    ]);
 
     return {
       options,
       selectedOption,
+      header,
+      body,
+
       handleSelection1,
     };
   },
