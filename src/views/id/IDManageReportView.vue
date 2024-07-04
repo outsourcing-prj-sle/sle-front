@@ -16,9 +16,10 @@
           @update:selectedOption="handleSelection1"
         />
       </div>
-      <IDTable
+      <IDTableDtl
       :header="header"
       :body="body"
+      @onClick="goReportDtl"
       />
       <div class="flex justify-center gap-[10px]">
         <div>
@@ -34,14 +35,15 @@ import { ref, onBeforeMount } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useIDStore } from '@/store/IDStore.js';
 import IDService from '@/service/IDService.js';
-import IDTable from '@/components/id/IDTable.vue'
+import IDTableDtl from '@/components/id/IDTableDtl.vue'
 import AppDropdown from '@/components/AppDropdown.vue'
 import { onMounted } from 'vue';
+import router from '@/router';
 
 export default {
   name: 'IDManageReportView',
   components: {
-    IDTable,
+    IDTableDtl,
     AppDropdown,
   },
   setup() {
@@ -123,6 +125,10 @@ export default {
       console.log(resData);
     }
 
+    const goReportDtl = () => {
+      router.push({ name: 'IDManageReportDtlView', query: { pollNm : '마음알기 설문1' }})
+    };
+
     return {
       options,
       selectedOption,
@@ -132,10 +138,12 @@ export default {
       body,
 
       handleSelection1,
-      fetchReportList
+      fetchReportList,
+      goReportDtl,
     };
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
