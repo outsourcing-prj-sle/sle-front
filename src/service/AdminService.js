@@ -241,10 +241,8 @@ const systemInfoList = (entity, data = {
 };
 
 // 시스템 정보 중복 조회
-const checkSystemExist = (entity, date = {
-  id: 'id'
-}) => {
-  return apiClient.get(baseURL + '/system/check/' + entity + '/' + id);
+const checkSystemExist = (entity, id) => {
+  return apiClient.get(baseURL + '/system/check/' + entity + '/' + id,);
 };
 
 
