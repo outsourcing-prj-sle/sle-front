@@ -67,7 +67,7 @@ const IDRoutes = [
         meta: {
           headerVisible: true,
           sidebarVisible: true,
-          isManageReport: true,
+          isManageSel: true,
         },
       },
       {
@@ -77,7 +77,7 @@ const IDRoutes = [
         meta: {
           headerVisible: true,
           sidebarVisible: true,
-          isManageReport: true,
+          isManageLt: true,
         },
       },
       {
@@ -87,7 +87,7 @@ const IDRoutes = [
         meta: {
           headerVisible: true,
           sidebarVisible: true,
-          isManageReport: true,
+          isManageResearch: true,
         },
       },
       {
@@ -97,7 +97,7 @@ const IDRoutes = [
         meta: {
           headerVisible: true,
           sidebarVisible: true,
-          isManageReport: true,
+          isManageResearch: true,
         },
       },
     ],

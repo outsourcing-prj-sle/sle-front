@@ -8,20 +8,42 @@
       :class="{
         'bg-[#353C5E] border-l-4 border-l-[#2F80ED] text-base': isManageReport,
       }"
-      @click="goManageReport"
+      @click="goPollManage"
       v-if="isManageReport"
     >
       설문 관리
     </div>
+    
     <div
       class="px-5 py-2 cursor-pointer text-left text-sm font-medium text-white"
       :class="{
-        'bg-[#353C5E] border-l-4 border-l-[#2F80ED] text-base': !isManageReport,
+        'bg-[#353C5E] border-l-4 border-l-[#2F80ED] text-base': isManageSel,
       }"
-      @click="goManageReport"
-      v-if="!isManageReport"
+      @click="goIdttSelManage"
+      v-if="isManageIdtt"
+    >
+      사회정서학습
+    </div>
+    <div
+      class="px-5 py-2 cursor-pointer text-left text-sm font-medium text-white"
+      :class="{
+        'bg-[#353C5E] border-l-4 border-l-[#2F80ED] text-base': isManageLt,
+      }"
+      @click="goIdttLtManage"
+      v-if="isManageIdtt"
     >
       학습성향
+    </div>
+
+    <div
+      class="px-5 py-2 cursor-pointer text-left text-sm font-medium text-white"
+      :class="{
+        'bg-[#353C5E] border-l-4 border-l-[#2F80ED] text-base': isManageResearch,
+      }"
+      @click="goResearchManage"
+      v-if="isManageResearch"
+    >
+      연구소관리자 관리
     </div>
   </div>
 </template>
@@ -38,18 +60,28 @@ export default {
     const IDStore = useIDStore();
     const showSidebar = computed(() => route.meta.sidebarVisible);
     const isManageReport = computed(() => route.meta.isManageReport);
+    const isManageSel = computed(() => route.meta.isManageSel);
+    const isManageLt = computed(() => route.meta.isManageLt);
+    const isManageIdtt = computed(() => route.meta.isManageSel || route.meta.isManageLt);
+    const isManageResearch = computed(() => route.meta.isManageResearch);
 
     const userId = computed(() => IDStore.token);
     const userName = computed(() => IDStore.name);
 
-    const goManageReport = () => {
-      if (isManageReport.value) return;
-      router.push({ name: 'manageReport' });
+    const goPollManage = () => {
+      router.push({ name: 'IDManageReportView' });
     };
 
-    const logout = () => {
-      IDStore.logout();
-      router.push({ name: 'IDLogin' });
+    const goIdttSelManage = () => {
+      router.push({ name: 'IDManageSelView' });
+    };
+
+    const goIdttLtManage = () => {
+      router.push({ name: 'IDManageLtView' });
+    };
+
+    const goResearchManage = () => {
+      router.push({ name: 'IDManageResearchView' });
     };
 
     return {
@@ -57,9 +89,15 @@ export default {
       userId,
       userName,
       isManageReport,
+      isManageSel,
+      isManageLt,
+      isManageIdtt,
+      isManageResearch,
 
-      goManageReport,
-      logout,
+      goPollManage,
+      goIdttSelManage,
+      goIdttLtManage,
+      goResearchManage,
     };
   },
 };

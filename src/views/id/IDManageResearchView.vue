@@ -2,7 +2,7 @@
   <div class="flex justify-start mx-[40px] my-[20px] max-md:mx-[20px] max-md:my-[20px]">
     <div class="flex flex-col gap-[20px] items-start w-full">
       <p class="font-bold text-[20px] max-md:text-[16px]">연구소관리자 관리</p>
-      <div class="flex flex-col items-start w-full bg-gray-100 border border-gray-300 rounded-xl p-[20px] gap-[20px]">
+      <div class="flex flex-col items-start w-full bg-gray-100 border border-gray-300 rounded-xl p-[20px] gap-[20px] text-sm">
         <div class="flex gap-[20px] items-center font-bold">
           <p>기간</p>
         </div>
@@ -98,7 +98,7 @@ export default {
         { text: '1345632' },
         { text: '010-0000-0000' },
         { text: '13213@gne.go.kr' },
-        { button1: 't1', button2: 't2'},
+        { isButton2: true },
       ]
     ];
 

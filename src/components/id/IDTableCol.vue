@@ -1,11 +1,11 @@
 <template>
-  <div class="w-full overflow-auto">
+  <div class="w-full overflow-y-visible">
     <table
         class="w-full border-t-2 border-gray-300"
         v-if="data.length"
     >
       <tr v-for="item in data" :key="item">
-        <th class="bg-gray-100 px-4 text-left min-w-[100px]" :class="{ 'essential' : item.isRequired}">
+        <th class="bg-gray-100 px-4 text-left min-w-[100px] text-sm text-nowrap" :class="{ 'essential' : item.isRequired}">
           {{ item.header }}
         </th>
         <td class="flex justify-start px-4 py-2">
@@ -15,6 +15,7 @@
               v-if="selectedOption"
               :options="options"
               :startText="selectedOption"
+              :openFull="true"
               @update:selectedOption="handleSelection1"
             />
             <input class="text-sm border border-gray-300 px-4 py-2 min-w-[150px]] rounded-md" type="text">
@@ -28,6 +29,7 @@
               v-if="selectedOption2"
               :options="options2"
               :startText="selectedOption2"
+              :openFull="true"
               @update:selectedOption="handleSelection1"
             />
           </div>

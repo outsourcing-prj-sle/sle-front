@@ -3,7 +3,7 @@
     <div class="w-full">
       <button
         @click="toggleDropdown"
-        class="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+        class="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none text-nowrap"
       >
         {{ selectedOption || '선택' }}
         <svg

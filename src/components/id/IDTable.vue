@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full overflow-auto">
+  <div class="w-full overflow-auto text-sm">
     <table
         class="w-full"
         v-if="header.length"
@@ -49,15 +49,11 @@
             :text="v.isButton" 
             :isWhite="false" 
             />
-            <div class="flex gap-[10px]" v-if="v.button1 && v.button2">
-              <IDButtonVue class="rounded-xl whitespace-nowrap hover:bg-[#2F80ED] hover:text-white"
-              :text="v.button1" 
-              :isWhite="true"
-              />
-              <IDButtonVue class="rounded-xl whitespace-nowrap hover:bg-[#2F80ED] hover:text-white"
-              :text="v.button2" 
-              :isWhite="true" 
-              />
+            <div class="flex gap-[10px] justify-center" v-if="v.isButton2">
+              <button class="edit border border-[#2F80ED] rounded-[5px] px-3 py-3 text-sm font-semibold whitespace-nowrap hover:bg-[#2F80ED] hover:text-white">
+              </button>
+              <button class="trash border border-[#2F80ED] rounded-[5px] px-3 py-3 text-sm font-semibold whitespace-nowrap hover:bg-[#2F80ED] hover:text-white">
+              </button>
             </div>
             <div class="cursor-pointer min-w-[45px] flex flex-1 justify-center items-center w-full" v-if="v.isOpenPopup">
                 <img
@@ -99,5 +95,22 @@ export default {
 </script>
 
 <style>
-/* Footer 스타일 */
+  .edit {
+    background-image: url("@/assets/img/edit.png");
+    background-size: 14px 14px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .edit:hover {
+    background-image: url("@/assets/img/edit-hover.svg");
+  }
+  .trash {
+    background-image: url("@/assets/img/trash.png");
+    background-size: 14px 14px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .trash:hover {
+    background-image: url("@/assets/img/trash-hover.svg");
+  }
 </style>

@@ -14,25 +14,25 @@
             :class="{
               'rounded-2xl bg-blue-600 text-white': isManageReport,
             }"
-            @click="goSite"
+            @click="goPollManage"
           >
             설문 관리
           </button>
           <button
             class="px-5 py-3 text-base font-semibold h-fit text-nowrap"
             :class="{
-              'rounded-2xl bg-blue-600 text-white': !isManageReport,
+              'rounded-2xl bg-blue-600 text-white': isManageIdtt,
             }"
-            @click="goSite"
+            @click="goIdttManage"
           >
             ID톡톡 관리
           </button>
           <button
             class="px-5 py-3 text-base font-semibold h-fit text-nowrap"
             :class="{
-              'rounded-2xl bg-blue-600 text-white': !isManageReport,
+              'rounded-2xl bg-blue-600 text-white': isManageResearch,
             }"
-            @click="goSite"
+            @click="goResearchManage"
           >
             연구소관리자 관리
           </button>
@@ -84,6 +84,8 @@ export default {
     const adminStore = useAdminStore();
     const showHeader = computed(() => route.meta.headerVisible);
     const isManageReport = computed(() => route.meta.isManageReport);
+    const isManageIdtt = computed(() => route.meta.isManageSel || route.meta.isManageLt);
+    const isManageResearch = computed(() => route.meta.isManageResearch);
 
     const userId = computed(() => adminStore.token);
     const userName = computed(() => adminStore.name);
@@ -97,14 +99,31 @@ export default {
       router.push({ name: 'adminLogin' });
     };
 
+    const goPollManage = () => {
+      router.push({ name: 'IDManageReportView' });
+    };
+
+    const goIdttManage = () => {
+      router.push({ name: 'IDManageSelView' });
+    };
+
+    const goResearchManage = () => {
+      router.push({ name: 'IDManageResearchView' });
+    };
+
     return {
       showHeader,
       userId,
       userName,
       isManageReport,
+      isManageIdtt,
+      isManageResearch,
 
       goSite,
       logout,
+      goPollManage,
+      goIdttManage,
+      goResearchManage
     };
   },
 };
