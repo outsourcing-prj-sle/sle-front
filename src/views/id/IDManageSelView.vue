@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useIDStore } from '@/store/IDStore.js';
 import IDService from '@/service/IDService.js';
@@ -102,6 +102,16 @@ export default {
       console.log(v);
     };
 
+    onMounted(() => {
+      fetchIdttList();
+    });
+
+    const fetchIdttList = async () => {
+      const reportReponse = await IDService.getIdtt('SE', { pageNo: 2, recordCount: 10 });
+      const resData = reportReponse.data;
+      console.log(resData);
+    }
+
     const downloadExcel = () => {
       // if (infoArr.value.length) {
       //   const aEl = document.createElement('a');
@@ -150,6 +160,7 @@ export default {
       body,
 
       handleSelection1,
+      fetchIdttList,
       downloadExcel
     };
   },

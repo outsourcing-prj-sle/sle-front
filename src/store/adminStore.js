@@ -8,9 +8,9 @@ export const useAdminStore = defineStore('admin', {
   }),
   actions: {
     init(data) {
-      this.token = data.token;
-      this.id = data.id;
-      this.name = data.name;
+      this.token = '';
+      this.id = '';
+      this.name = '';
     },
     logout() {
       this.token = '';

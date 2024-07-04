@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useIDStore } from '@/store/IDStore.js';
 import { getActivePinia } from 'pinia';
 
-const baseURL = '/id';
+const baseURL = '/id-admin';
 
 // Pinia가 활성화될 때까지 기다리기
 function getIDStore() {
@@ -34,7 +34,7 @@ apiClient.interceptors.request.use(
 
     // 관리자 페이지 헤더 설정
     if (IDStore) {
-      config.headers.Authorization = IDStore.token || 'USRCNFRM_00000000004';
+      config.headers.Authorization = IDStore.token || 'USRCNFRM_00000000001';
     }
 
     return config;
@@ -93,58 +93,66 @@ const login = (data = {}) => {
   return apiClient.post('/login', data);
 };
 
-// 내정보 조회
-const myInfo = (data = {}) => {
-  return apiClient.get(baseURL, data);
+// 연구소 관리자 목록 조회
+const getResearchAdmin = (data = {}) => {
+  return apiClient.get(baseURL + '/users', { params: data });
 };
 
-// 내정보 서버 업데이트
-const myInfoInterval = () => {
-  let cnt = 20;
-  const myInterval = setInterval(() => {
-    if (!cnt) clearInterval(myInterval);
-    cnt--;
-    myInfo();
-  }, 1000 * 60);
+// 연구소 관리자 등록
+const insertResearchAdmin = (data = {}) => {
+  return apiClient.put(baseURL + '/users', data);
 };
 
-// 회원가입
-const signup = (data = {}) => {
-  return apiClient.put(baseURL + '/insert', data);
+// 연구소 관리자 수정
+const updateResearchAdmin = (uriParam, data = {}) => {
+  return apiClient.put(baseURL + `/users/${uriParam}`, data)
 };
 
-// 아이디 중복 체크
-const checkId = (data = {}) => {
-  return apiClient.get(baseURL + '/checkId', { params: data });
+// 연구소 관리자 삭제
+const deleteResearchAdmin = (uriParam, data = {}) => {
+  return apiClient.delete(baseURL + `/users/${uriParam}`, data)
 };
 
-// 나의 SEL 알기 (교사, 학생)
-const getMySEL = (data = {}) => {
-  return apiClient.get(baseURL + '/mysel');
+// ID톡톡 관리 목록 조회
+const getIdtt = (uriParam, data = {}) => {
+  return apiClient.get(baseURL + `/idtt/${uriParam}`, {params: data})
 };
 
-const userIDTT = (data = {}) => {
-  return apiClient.get(baseURL + '/idTokTok', { params: data });
+// 설문관리 목록 조회
+const getReports = (data = {}) => {
+  return apiClient.get(baseURL + '/reports', {params: data})
 };
 
-// 회원정보 수정
-const updateUserInfo = (data = {}) => {
-  return apiClient.put(baseURL + '/update', data);
+// 설문관리 상세 조회
+const getReportsDtl = (uriParam, data = {}) => {
+  return apiClient.get(baseURL + `/reports/${uriParam}`, {params: data})
 };
 
-// AI분석 의견조사 결과 등록
-const insertReseachResult = (data = {}) => {
-  return apiClient.put(baseURL + '/research', data);
+// 설문관리 설문 수정
+const updateReports = (uriParam, data = {}) => {
+  return apiClient.put(baseURL + `/reports/target/${uriParam}`, data)
+};
+
+// 학교급, 학년 목록 조회
+const getSchulGradeInfo = (data = {}) => {
+  return apiClient.get(baseURL + '/schulGradeCode', {params: data})
+};
+
+// 학교 목록 조회
+const getSchulInfo = (data = {}) => {
+  return apiClient.get(baseURL + '/schulCode', {params: data})
 };
 
 export default {
   login,
-  myInfo,
-  signup,
-  checkId,
-  getMySEL,
-  userIDTT,
-  updateUserInfo,
-  insertReseachResult,
-  myInfoInterval,
+  getResearchAdmin,
+  insertResearchAdmin,
+  updateResearchAdmin,
+  deleteResearchAdmin,
+  getIdtt,
+  getReports,
+  getReportsDtl,
+  updateReports,
+  getSchulGradeInfo,
+  getSchulInfo,
 };

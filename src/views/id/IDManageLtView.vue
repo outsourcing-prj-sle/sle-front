@@ -46,6 +46,7 @@ import IDService from '@/service/IDService.js';
 import IDTable from '@/components/id/IDTable.vue'
 import AppDropdown from '@/components/AppDropdown.vue'
 import IDPagination from '@/components/id/IDPagination.vue';
+import { onMounted } from 'vue';
 
 export default {
   name: 'IDManageLtView',
@@ -102,6 +103,16 @@ export default {
       console.log(v);
     };
 
+    onMounted(() => {
+      fetchIdttList();
+    });
+
+    const fetchIdttList = async () => {
+      const reportReponse = await IDService.getIdtt('LT', { pageNo: 2, recordCount: 10 });
+      const resData = reportReponse.data;
+      console.log(resData);
+    }
+
     const downloadExcel = () => {
       // if (infoArr.value.length) {
       //   const aEl = document.createElement('a');
@@ -150,6 +161,7 @@ export default {
       body,
 
       handleSelection1,
+      fetchIdttList,
       downloadExcel
     };
   },

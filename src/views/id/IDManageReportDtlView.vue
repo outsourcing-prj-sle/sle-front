@@ -58,6 +58,7 @@ import AppDropdown from '@/components/AppDropdown.vue'
 import IDPagination from '@/components/id/IDPagination.vue';
 import IDSearch from '@/components/id/IDSearch.vue';
 import IDButton from '@/components/id/IDButton.vue';
+import { onMounted } from 'vue';
 
 export default {
   name: 'IDManageReportDtlView',
@@ -137,9 +138,25 @@ export default {
       ]
     ];
 
+    onMounted(() => {
+      fetchReportDtlList();
+    });
+
     const handleSelection1 = (v) => {
       console.log(v);
     };
+
+    const fetchReportDtlList = async () => {
+      const reportReponse = await IDService.getReportsDtl('QES00000000000000001', {
+        searchKeyword : '경남시범초',
+        schulGradeCode : '',
+        stGrade : '5',
+        pageNo : 1,
+        recordCount : 10,
+      });
+      const resData = reportReponse.data;
+      console.log(resData);
+    }
 
     const downloadExcel = () => {
       // if (infoArr.value.length) {
@@ -190,6 +207,7 @@ export default {
       body,
 
       handleSelection1,
+      fetchReportDtlList,
       downloadExcel
     };
   },

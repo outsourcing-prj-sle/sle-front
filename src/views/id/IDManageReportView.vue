@@ -36,6 +36,7 @@ import { useIDStore } from '@/store/IDStore.js';
 import IDService from '@/service/IDService.js';
 import IDTable from '@/components/id/IDTable.vue'
 import AppDropdown from '@/components/AppDropdown.vue'
+import { onMounted } from 'vue';
 
 export default {
   name: 'IDManageReportView',
@@ -101,9 +102,26 @@ export default {
       ]
     ];
 
+    onMounted(() => {
+      fetchReportList();
+    });
+
     const handleSelection1 = (v) => {
       console.log(v);
     };
+
+    const fetchReportList = async () => {
+      const reportReponse = await IDService.getReports({
+        pageNo : 1,
+        recordCount : 10,
+        searchBeginDate : '20240501',
+        searchEndDate : '20240901',
+        searchType : '01', // 01:회원구분, 02:소속, 03:이름, 04:아이디, 05:핸드폰번호, 06:이메일
+        searchKeyword : '연구소관리자'
+      });
+      const resData = reportReponse.data;
+      console.log(resData);
+    }
 
     return {
       options,
@@ -113,7 +131,8 @@ export default {
       header,
       body,
 
-      handleSelection1
+      handleSelection1,
+      fetchReportList
     };
   },
 };
