@@ -14,6 +14,7 @@
         <IDButton
         :text="'목록'"
         :isWhite="true"
+        @onClick="goResearchListVw"
         />
       </div>
     </div>
@@ -35,6 +36,7 @@ export default {
     IDButton
 },
   setup() {
+    const router = useRouter();
     const data = [
       {
         header: '이름',
@@ -84,10 +86,15 @@ export default {
       console.log(v);
     };
 
+    const goResearchListVw = () => {
+      router.push({ name: 'IDManageResearchView' })
+    };
+
     return {
       data,
 
       handleSelection1,
+      goResearchListVw
     };
   },
 };

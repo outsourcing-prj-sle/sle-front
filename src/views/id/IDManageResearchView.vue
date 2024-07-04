@@ -4,10 +4,55 @@
       <p class="font-bold text-[20px] max-md:text-[16px]">연구소관리자 관리</p>
       <div class="flex flex-col items-start w-full bg-gray-100 border border-gray-300 rounded-xl p-[20px] gap-[20px] text-sm">
         <div class="flex gap-[20px] items-center font-bold">
-          <p>기간</p>
+          <p class="w-[40px]">기간</p>
+          <VDatePicker v-model="startDate">
+            <template #default="{ togglePopover }">
+              <div class="flex items-center gap-2">
+                <button
+                  class="px-10 py-2.5 text-[#797979] rounded-xl text-xs font-light bg-white border-[#CECECE] border border-solid"
+                  @click="togglePopover"
+                >
+                  {{ formattedStartDate }}
+                </button>
+                <button
+                  class="px-3 py-2 rounded-xl bg-white border-[#CECECE] border border-solid"
+                  @click="togglePopover"
+                >
+                  <img
+                    class="w-6 h-6"
+                    src="@/assets/img/IDCalendar.png"
+                    alt="IDCalendar"
+                  />
+                </button>
+              </div>
+            </template>
+          </VDatePicker>
+          <p>~</p>
+          <VDatePicker v-model="endDate">
+            <template #default="{ togglePopover }">
+              <div class="flex items-center gap-2">
+                <button
+                  class="px-10 py-2.5 text-[#797979] rounded-xl text-xs font-light bg-white border-[#CECECE] border border-solid"
+                  @click="togglePopover"
+                >
+                  {{ formattedEndDate }}
+                </button>
+                <button
+                  class="px-3 py-2 rounded-xl bg-white border-[#CECECE] border border-solid"
+                  @click="togglePopover"
+                >
+                  <img
+                    class="w-6 h-6"
+                    src="@/assets/img/IDCalendar.png"
+                    alt="IDCalendar"
+                  />
+                </button>
+              </div>
+            </template>
+          </VDatePicker>
         </div>
         <div class="flex gap-[20px] items-center font-bold">
-          <p>검색어</p>
+          <p class="w-[40px]">검색어</p>
           <AppDropdown
             :options="options"
             :startText="selectedOption"
@@ -30,12 +75,19 @@
       :recordCount=10
       :totalCount=12
       />
+      <div class="w-full flex justify-end">
+        <IDButton
+        @onClick="goInsertResearchVw"
+        :text="'등록'"
+        :isWhite="false"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onBeforeMount, onMounted } from 'vue';
+import { ref, onBeforeMount, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useIDStore } from '@/store/IDStore.js';
 import IDService from '@/service/IDService.js';
@@ -53,6 +105,7 @@ export default {
     IDButton
 },
   setup() {
+    const router = useRouter();
     const options = ref([123, 456]);
     const selectedOption = ref('선택');
     const header = [
@@ -123,14 +176,45 @@ export default {
       console.log(resData);
     }
 
+    const goInsertResearchVw = () => {
+      router.push({ name: 'IDManageResearchInsertView' })
+    }
+
+    const startDate = ref(new Date());
+    const formattedStartDate = computed(() => {
+      const tmp = new Date(startDate.value);
+      let year = tmp.getFullYear();
+      let month = tmp.getMonth() + 1;
+      let day = tmp.getDate();
+      const format = `${year}-${month}-${day}`;
+
+      return format;
+    });
+
+    const endDate = ref(new Date());
+    const formattedEndDate = computed(() => {
+      const tmp = new Date(endDate.value);
+      let year = tmp.getFullYear();
+      let month = tmp.getMonth() + 1;
+      let day = tmp.getDate();
+      const format = `${year}-${month}-${day}`;
+
+      return format;
+    });
+
     return {
       options,
       selectedOption,
       header,
       body,
+      startDate,
+      formattedStartDate,
+      endDate,
+      formattedEndDate,
 
       handleSelection1,
       fetchResearchList,
+      goInsertResearchVw
     };
   },
 };
