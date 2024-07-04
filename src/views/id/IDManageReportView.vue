@@ -126,7 +126,7 @@ export default {
     }
 
     const goReportDtl = () => {
-      router.push({ name: 'IDManageReportDtlView', query: { pollNm : '마음알기 설문1' }})
+      router.push({ name: 'IDManageReportDtlView' })
     };
 
     return {

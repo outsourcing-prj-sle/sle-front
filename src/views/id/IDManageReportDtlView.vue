@@ -40,6 +40,7 @@
       :totalCount=12
       />
       <IDButton class="bg-gray-300"
+      @click="goReportList"
       :text="'목록으로'"
       :isGray="true"
       :_width="160"
@@ -70,6 +71,7 @@ export default {
     IDButton
 },
   setup() {
+    const router = useRouter();
     const options = ref([123, 456]);
     const selectedOption = ref('학교급');
     const options2 = ref([123, 456]);
@@ -197,6 +199,10 @@ export default {
       // }
     };
 
+    const goReportList = () => {
+      router.push({ name: 'IDManageReportView' })
+    }
+
     return {
       options,
       selectedOption,
@@ -208,7 +214,8 @@ export default {
 
       handleSelection1,
       fetchReportDtlList,
-      downloadExcel
+      downloadExcel,
+      goReportList
     };
   },
 };
