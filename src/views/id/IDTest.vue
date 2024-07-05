@@ -1,4 +1,5 @@
 <template>
+  <div class="absolute top-0 left-0 w-full h-full bg-black opacity-40"></div>
   <div class="flex justify-center">
     <div
       class="w-full max-w-md content-center p-8 space-y-8 min-h-[350px] bg-white rounded-[20px] shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2"

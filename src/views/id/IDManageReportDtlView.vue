@@ -35,9 +35,9 @@
       :body="body"
       />
       <IDPagination
-      :pageNo=1
-      :recordCount=10
-      :totalCount=12
+      :pageNo=19
+      :recordCount=5
+      :totalCount=100
       />
       <IDButton class="bg-gray-300"
       @click="goReportList"

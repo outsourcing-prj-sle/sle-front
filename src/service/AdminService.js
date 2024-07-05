@@ -286,10 +286,6 @@ const deleteSubCode = (codeId, subCodeId) => {
   return apiClient.delete(baseURL + '/system/cmmn_code/' + codeId + '/' + subCodeId);
 };
 
-const deleteSubCode = (codeId, subCodeId) => {
-  return apiClient.delete(baseURL + '/system/cmmn_code/' + codeId + '/' + subCodeId);
-};
-
 export default {
   login,
   myInfo,

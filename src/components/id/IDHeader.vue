@@ -4,9 +4,9 @@
     class="flex gap-5 justify-between py-1.5 pl-5 pr-6 border-b-8 border-solid border-[#E8E8E8] max-md:px-5 items-center"
       v-if="showHeader"
     >
-      <div class="cursor-pointer flex gap-7 flex-1" @click="goMain">
+      <div class="flex gap-7 flex-1" @click="goMain">
         <div class="flex justify-start py-3 min-w-[100px] w-[250px] max-xl:w-[190px] max-md:w-[140px] max-sm:w-[100px]">
-          <img src="@/assets/img/logo_sel.png" alt="Logo" class="h-[52px]" />
+          <img src="@/assets/img/logo_sel.png" alt="Logo" class="h-[52px] cursor-pointer" @click="goPollManage" />
         </div>
         <div class="flex gap-5 items-center">
           <button
