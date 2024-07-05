@@ -89,10 +89,12 @@ return;
 }
  */
 
-const login = (data = {
-  id: 'userid',
-  password: 'password'
-}) => {
+const login = (
+  data = {
+    id: 'userid',
+    password: 'password',
+  }
+) => {
   return apiClient.post(baseURL + '/login', data);
 };
 
@@ -104,9 +106,11 @@ const myInfo = (data = {}) => {
 };
 
 // 유저 정보 조회
-const userInfo = (data = {
-  id: 'id'
-}) => {
+const userInfo = (
+  data = {
+    id: 'id',
+  }
+) => {
   return apiClient.get(baseURL + '/users', { param: data });
 };
 
@@ -121,56 +125,67 @@ const myInfoInterval = () => {
 };
 
 // 회원가입
-const signup = (data = {
-  id: 'id',
-  name: 'name',
-  password: 'password',
-  userRole: 'SuperAdmin',
-  phoneNumber: '000-0000-0000',
-  userEmail: 'admin001@gne.co.kr',
-  userSpaceOrgInfo: '경남교육청'
-}) => {
+const signup = (
+  data = {
+    id: 'id',
+    name: 'name',
+    password: 'password',
+    userRole: 'SuperAdmin',
+    phoneNumber: '000-0000-0000',
+    userEmail: 'admin001@gne.co.kr',
+    userSpaceOrgInfo: '경남교육청',
+  }
+) => {
   return apiClient.put(baseURL + '/users/register', data);
 };
 
 // 아이디 중복 체크
-const checkId = (data = {
-  id: 'id'
-}) => {
+const checkId = (
+  data = {
+    id: 'id',
+  }
+) => {
   return apiClient.get(baseURL + '/users/checkId', { params: data });
 };
 
 // 유저 리스트 조회(권한별) (OgzAdmin, SuperAdmin, SchoolAdmin)→Admin, OfficeOfEdu, Student, Teacher, NormalUser
 // 특정 컬럼 검색 시 DATA에 넣어서 호출. data를 보내지 않으면 전체 조회
-const userManagement = (role, data = {
-  startDate: '2024-08-13', 
-  endDate: '2024-08-13',
-  id: 'id',
-  uniqId: 'uniqId',
-  userSpaceOrgInfo: '경남',
-  name: 'name',
-  userEmail: 'admin001'
-}) => {
+const userManagement = (
+  role,
+  data = {
+    startDate: '2024-08-13',
+    endDate: '2024-08-13',
+    id: 'id',
+    uniqId: 'uniqId',
+    userSpaceOrgInfo: '경남',
+    name: 'name',
+    userEmail: 'admin001',
+  }
+) => {
   return apiClient.get(baseURL + '/users/' + role, { params: data });
 };
 
 // 유저 삭제
-const userDelete = (data = {
-  id: 'id'
-}) => {
+const userDelete = (
+  data = {
+    id: 'id',
+  }
+) => {
   return apiClient.delete(baseURL + '/users/delete', { params: data });
 };
 
 // 회원정보 수정 // 아직
-const updateUserInfo = (data = {
-  id: 'id',
-  name: 'name',
-  password: 'password',
-  userRole: 'SuperAdmin',
-  phoneNumber: '000-0000-0000',
-  userEmail: 'admin001@gne.co.kr',
-  userSpaceOrgInfo: '경남교육청'
-}) => {
+const updateUserInfo = (
+  data = {
+    id: 'id',
+    name: 'name',
+    password: 'password',
+    userRole: 'SuperAdmin',
+    phoneNumber: '000-0000-0000',
+    userEmail: 'admin001@gne.co.kr',
+    userSpaceOrgInfo: '경남교육청',
+  }
+) => {
   return apiClient.put(baseURL + '/users/update', data);
 };
 
@@ -233,57 +248,81 @@ const systemInfo = (entity, id) => {
 };
 
 // 시스템 정보 전체 조회 (공통 코드 한정 검색 가능)
-const systemInfoList = (entity, data = {
-  code_id: 'code_id',
-  code_name: 'code_name'
-}) => {
+const systemInfoList = (
+  entity,
+  data = {
+    code_id: 'code_id',
+    code_name: 'code_name',
+  }
+) => {
   return apiClient.get(baseURL + '/system/' + entity, data);
 };
 
 // 시스템 정보 중복 조회
 const checkSystemExist = (entity, id) => {
-  return apiClient.get(baseURL + '/system/check/' + entity + '/' + id,);
+  return apiClient.get(baseURL + '/system/check/' + entity + '/' + id);
 };
-
 
 // 공통코드 하위 코드 관리
 
 //하위 코드 등록
-const insertSubCode = (codeId, data = {
-  codeId: 'code_001',
-  subCodeId: "sub_code_001",
-	subCodeName: "Sub Code One",
-	codeDescription: "Description for code one",
-	active: 1,
-	createdBy: "sel_00000001"
-}) => {
-  return apiClient.post(baseURL + '/system/cmmn_code/' + codeId + '/sub_code_register', data);
+const insertSubCode = (
+  codeId,
+  data = {
+    codeId: 'code_001',
+    subCodeId: 'sub_code_001',
+    subCodeName: 'Sub Code One',
+    codeDescription: 'Description for code one',
+    active: 1,
+    createdBy: 'sel_00000001',
+  }
+) => {
+  return apiClient.post(
+    baseURL + '/system/cmmn_code/' + codeId + '/sub_code_register',
+    data
+  );
 };
 
-const updateSubCode = (codeId, data = {
-  codeId: 'code_001',
-  subCodeId: "sub_code_001",
-	subCodeName: "Sub Code One",
-	codeDescription: "Description for code one",
-	active: 0,
-	createdBy: "sel_00000001"
-}) => {
-  return apiClient.put(baseURL + '/system/cmmn_code/' + codeId + '/sub_code_update', data);
+const updateSubCode = (
+  codeId,
+  data = {
+    codeId: 'code_001',
+    subCodeId: 'sub_code_001',
+    subCodeName: 'Sub Code One',
+    codeDescription: 'Description for code one',
+    active: 0,
+    createdBy: 'sel_00000001',
+  }
+) => {
+  return apiClient.put(
+    baseURL + '/system/cmmn_code/' + codeId + '/sub_code_update',
+    data
+  );
 };
 
 const subCodeInfo = (codeId, subCodeId) => {
-  return apiClient.get(baseURL + '/system/cmmn_code/' + codeId + '/' + subCodeId);
+  return apiClient.get(
+    baseURL + '/system/cmmn_code/' + codeId + '/' + subCodeId
+  );
 };
 
-const subCodeInfoList = (codeId, data = {
-  subCodeId: 'code001',
-  subCodeName: 'school'
-}) => {
-  return apiClient.get(baseURL + '/system/cmmn_code/' + codeId + 'sub_codes', data);
+const subCodeInfoList = (
+  codeId,
+  data = {
+    subCodeId: 'code001',
+    subCodeName: 'school',
+  }
+) => {
+  return apiClient.get(
+    baseURL + '/system/cmmn_code/' + codeId + 'sub_codes',
+    data
+  );
 };
 
 const deleteSubCode = (codeId, subCodeId) => {
-  return apiClient.delete(baseURL + '/system/cmmn_code/' + codeId + '/' + subCodeId);
+  return apiClient.delete(
+    baseURL + '/system/cmmn_code/' + codeId + '/' + subCodeId
+  );
 };
 
 export default {
@@ -306,5 +345,5 @@ export default {
   subCodeInfo,
   subCodeInfoList,
   deleteSubCode,
-  checkSystemExist
+  checkSystemExist,
 };
