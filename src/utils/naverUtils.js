@@ -6,10 +6,11 @@ import UserService from '@/service/UserService.js';
  * @returns {Promise<void>}
  */
 async function methods_naverLogin() {
-  const redirectUri =
-    process.env.VUE_APP_PRODUCTION === 'live'
-      ? process.env.VUE_APP_REDIRECT_URI
-      : 'http://localhost:5173/naver/callback';
+  // const redirectUri =
+  //   process.env.VUE_APP_PRODUCTION === 'live'
+  //     ? process.env.VUE_APP_REDIRECT_URI
+  //     : 'http://localhost:5173/naver/callback';
+  const redirectUri = `${window.location.origin}/naver/callback`;
   const state = process.env.VUE_APP_STATE;
   const clientId = process.env.VUE_APP_CLIENT_ID;
 
@@ -36,10 +37,7 @@ async function handleNaverCallback(code, state) {
 }
 
 function logoutWhalespace() {
-  const redirectUri =
-    process.env.VUE_APP_PRODUCTION === 'live'
-      ? process.env.VUE_APP_REDIRECT_URI
-      : 'http://localhost:5173/naver/callback';
+  const redirectUri = `${window.location.origin}/naver/callback`;
   const state = process.env.VUE_APP_STATE;
   const clientId = process.env.VUE_APP_CLIENT_ID;
 
