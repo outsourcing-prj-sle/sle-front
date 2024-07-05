@@ -69,9 +69,9 @@ export default {
     onBeforeMount(() => {
       // 웨일스페이스 팝업 핸들링
       window.addEventListener('message', async (event) => {
-        if (event.origin !== window.location.origin) {
-          return;
-        }
+        // if (event.origin !== window.location.origin) {
+        //   return;
+        // }
         console.log('??????????');
         console.log(event);
         const { type, code, state } = event.data;
