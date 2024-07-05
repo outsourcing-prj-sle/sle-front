@@ -15,7 +15,7 @@ function getUserStore() {
 const apiClient = axios.create({
   baseURL:
     process.env.VUE_APP_PRODUCTION === 'live'
-      ? 'http://1.213.164.252:60080/api'
+      ? 'http://devgnesel.itt.link:60080/api'
       : 'http://localhost:5173/api',
   headers: {
     'Content-Type': 'application/json',

@@ -1,4 +1,6 @@
 <template>
+  <IDPopup
+  />
   <div class="flex justify-start mx-[40px] my-[20px] max-md:mx-[20px] max-md:my-[20px]">
     <div class="flex flex-col gap-[20px] items-start w-full">
       <p class="font-bold text-[20px] max-md:text-[16px]">설문관리</p>
@@ -35,16 +37,18 @@ import { ref, onBeforeMount } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useIDStore } from '@/store/IDStore.js';
 import IDService from '@/service/IDService.js';
-import IDTableDtl from '@/components/id/IDTableDtl.vue'
-import AppDropdown from '@/components/AppDropdown.vue'
+import IDTableDtl from '@/components/id/IDTableDtl.vue';
+import AppDropdown from '@/components/AppDropdown.vue';
 import { onMounted } from 'vue';
 import router from '@/router';
+import IDPopup from '@/components/id/IDPopup.vue';
 
 export default {
   name: 'IDManageReportView',
   components: {
     IDTableDtl,
     AppDropdown,
+    IDPopup
   },
   setup() {
     const options = ref([123, 456]);
