@@ -25,7 +25,7 @@
         </tr>
         </thead>
         <tbody v-if="body.length">
-        <tr class="hover:bg-gray-50 cursor-pointer"
+        <tr class="hover:bg-gray-50"
             v-for="(info, i) in body"
             :key="`bodytr${i}`"
         >

@@ -46,11 +46,11 @@
         },
         computed: {
             range() {
-                let start = Number.parseInt(this.pageNo / this.recordCount) * this.recordCount + 1;
-                let end = start + this.recordCount > this.totalCount ? this.totalCount + 1 : start + this.recordCount;
+                let start = Number.parseInt((this.pageNo - 1) / this.recordCount) * this.recordCount + 1;
+                let end = (start + this.recordCount - 1) < Number.parseInt((this.totalCount - 1) / this.recordCount) ? start + this.recordCount - 1 : Number.parseInt((this.totalCount - 1) / this.recordCount) + 1;
                 const array = [];
 
-                for (let i = start; i < end; i++) {
+                for (let i = start; i <= end; i++) {
                     array.push(i);
                 }
                 return array;
