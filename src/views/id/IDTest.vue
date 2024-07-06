@@ -67,7 +67,7 @@
       </div>
     </div>
     <div>
-      <IDTable :header="header" :body="body" />
+      <IDTable :header="header" :_body="body" />
     </div>
   </div>
 </template>

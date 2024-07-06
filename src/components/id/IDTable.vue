@@ -24,11 +24,18 @@
             </th>
         </tr>
         </thead>
+        <tbody v-if="!body.length">
+          <tr>
+            <td class="border-b-[1px] border-gray-300" :colspan="header.length">
+              <p class="text-center py-[10px] font-bold">데이터가 없습니다.</p>
+            </td>
+          </tr>
+        </tbody>
         <tbody v-if="body.length">
-        <tr
-            v-for="(info, i) in body"
-            :key="`bodytr${i}`"
-        >
+          <tr
+              v-for="(info, i) in body"
+              :key="`bodytr${i}`"
+          >
             <td
             class="p-[10px]"
             v-for="(v, j) in info"
@@ -41,30 +48,30 @@
             }"
             :key="`${i}${j}`"
             >
-            <input class="min-w-[35px]" type="checkbox" v-if="v.isCheckbox" />
-            <span v-if="v.text" class="whitespace-nowrap">
-                {{ v.text }}
-            </span>
-            <IDButtonVue v-if="v.isButton" class="rounded-xl whitespace-nowrap"
-            :text="v.isButton" 
-            :isWhite="false" 
-            />
-            <div class="flex gap-[10px] justify-center" v-if="v.isButton2">
-              <button class="edit border border-[#2F80ED] rounded-[5px] px-3 py-3 text-sm font-semibold whitespace-nowrap hover:bg-[#2F80ED] hover:text-white">
-              </button>
-              <button class="trash border border-[#2F80ED] rounded-[5px] px-3 py-3 text-sm font-semibold whitespace-nowrap hover:bg-[#2F80ED] hover:text-white">
-              </button>
-            </div>
-            <div class="cursor-pointer min-w-[45px] flex flex-1 justify-center items-center w-full" v-if="v.isOpenPopup">
-                <img
-                class="w-[28px] h-[28px]"
-                src="@/assets/img/ico-gear.png"
-                alt=""
-                />
-            </div>
-            <div class="flex-1" v-if="v.isManage">연구소 관리자 관리</div>
+              <input class="min-w-[35px]" type="checkbox" v-if="v.isCheckbox" />
+              <span v-if="v.text" class="whitespace-nowrap">
+                  {{ v.text }}
+              </span>
+              <IDButtonVue v-if="v.isButton" class="rounded-xl whitespace-nowrap"
+              :text="v.isButton" 
+              :isWhite="false" 
+              />
+              <div class="flex gap-[10px] justify-center" v-if="v.isButton2">
+                <button class="edit border border-[#2F80ED] rounded-[5px] px-3 py-3 text-sm font-semibold whitespace-nowrap hover:bg-[#2F80ED] hover:text-white">
+                </button>
+                <button class="trash border border-[#2F80ED] rounded-[5px] px-3 py-3 text-sm font-semibold whitespace-nowrap hover:bg-[#2F80ED] hover:text-white">
+                </button>
+              </div>
+              <div class="cursor-pointer min-w-[45px] flex flex-1 justify-center items-center w-full" v-if="v.isOpenPopup">
+                  <img
+                  class="w-[28px] h-[28px]"
+                  src="@/assets/img/ico-gear.png"
+                  alt=""
+                  />
+              </div>
+              <div class="flex-1" v-if="v.isManage">연구소 관리자 관리</div>
             </td>
-        </tr>
+          </tr>
         </tbody>
     </table>
   </div>
@@ -83,13 +90,17 @@ export default {
       type: Array,
       default: () => [],
     },
-    body: {
+    _body: {
       type: Array,
       default: () => [],
     },
   },
   setup(props, { emit }) {
-    return {};
+    const body = computed(() => props._body);
+
+    return {
+      body,
+    };
   },
 };
 </script>

@@ -10,7 +10,7 @@
         />
         <IDButton v-for="i in range" :key="i" class="hover:bg-[#2F80ED] hover:text-white"
         :text="i" 
-        :isGray= "i !== pageNo"
+        :isGray= "i !== nowPageNo"
         />
         <IDButton class="hover:bg-[#2F80ED] hover:text-white"
         :text="'>'"
@@ -54,6 +54,9 @@
                     array.push(i);
                 }
                 return array;
+            },
+            nowPageNo() {
+                return this.pageNo;
             }
         },
         setup(props, { emit }) {

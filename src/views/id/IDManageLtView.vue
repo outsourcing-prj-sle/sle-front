@@ -27,12 +27,12 @@
       </div>
       <IDTable
       :header="header"
-      :body="body"
+      :_body="body"
       />
       <IDPagination
-      :pageNo=1
-      :recordCount=10
-      :totalCount=12
+      :pageNo=pageNo
+      :recordCount=recordCount
+      :totalCount=totalCount
       />
     </div>
   </div>
@@ -86,31 +86,48 @@ export default {
         text: 'Q1_3'
       },
     ];
-    const body = [
-      [
-        { isCheckbox: true },
-        { text: 1 },
-        { text: '이작초등학교' },
-        { text: '김톡톡' },
-        { text: '3-01' },
-        { text: '1' },
-        { text: '2, 3' },
-        { text: '더 다양한 종류의 분석을 통하여 다양한 자료를 함께 볼 수 있었으면 좋겠습니다.' },
-      ]
-    ];
+    const body = ref([]);
 
     const handleSelection1 = (v) => {
       console.log(v);
     };
+
+    const pageNo = ref(1);
+    const recordCount = ref(10);
+    const totalCount = ref(0);
 
     onMounted(() => {
       fetchIdttList();
     });
 
     const fetchIdttList = async () => {
-      const reportReponse = await IDService.getIdtt('LT', { pageNo: 2, recordCount: 10 });
+      const reportReponse = await IDService.getIdtt('LT', { pageNo: 1, recordCount: 10 });
       const resData = reportReponse.data;
       console.log(resData);
+
+      pageNo.value = resData.pageNo;
+      recordCount.value = resData.recordCount;
+      totalCount.value = resData.totalCount;
+
+      let result = [];
+      resData.idttList.map((item, idx) => {
+        let arr = [
+          { isCheckbox: true },
+          { text: idx+1 },
+          { text: item.schulNm },
+          { text: item.userNm },
+          { text: item.userSpaceOrgInfo },
+        ]
+
+        item.qesAnswer.map((subItem) => {
+          arr.push({ text: subItem });
+        });
+
+        result.push(arr);
+      });
+
+      body.value = result;
+      console.log(body.value);
     }
 
     const downloadExcel = () => {
@@ -159,6 +176,9 @@ export default {
       selectedOption2,
       header,
       body,
+      pageNo,
+      recordCount,
+      totalCount,
 
       handleSelection1,
       fetchIdttList,

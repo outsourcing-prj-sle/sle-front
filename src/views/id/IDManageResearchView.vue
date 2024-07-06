@@ -68,12 +68,12 @@
       </div>
       <IDTable
       :header="header"
-      :body="body"
+      :_body="body"
       />
       <IDPagination
-      :pageNo=1
-      :recordCount=10
-      :totalCount=12
+      :pageNo="pageNo"
+      :recordCount="recordCount"
+      :totalCount="totalCount"
       />
       <div class="w-full flex justify-end">
         <IDButton
@@ -140,20 +140,11 @@ export default {
         text: '관리'
       },
     ];
-    const body = [
-      [
-        { isCheckbox: true },
-        { text: 1 },
-        { text: '2024-03-02' },
-        { text: '연구소관리자' },
-        { text: 'ID연구소' },
-        { text: '홍길동' },
-        { text: '1345632' },
-        { text: '010-0000-0000' },
-        { text: '13213@gne.go.kr' },
-        { isButton2: true },
-      ]
-    ];
+    const body = ref([]);
+
+    const pageNo = ref(1);
+    const recordCount = ref(10);
+    const totalCount = ref(30);
 
     const handleSelection1 = (v) => {
       console.log(v);
@@ -165,8 +156,8 @@ export default {
 
     const fetchResearchList = async () => {
       const reportReponse = await IDService.getResearchAdmin({ 
-        pageNo: 1, 
-        recordCount: 10,
+        pageNo: pageNo.value, 
+        recordCount: recordCount.value,
         searchBeginDate: '',
         searchEndDate: '',
         searchType: '',
@@ -174,6 +165,32 @@ export default {
       });
       const resData = reportReponse.data;
       console.log(resData);
+
+      pageNo.value = resData.pageNo;
+      recordCount.value = resData.recordCount;
+      totalCount.value = resData.totalCount;
+      console.log(pageNo.value, recordCount.value, totalCount.value);
+
+      let result = [];
+      resData.userInfoList.map((item, idx) => {
+        let arr = [
+          { isCheckbox: true },
+          { text: idx+1 },
+          { text: item.frstRegistPnttm },
+          { text: item.userSeCode },
+          { text: item.userSpaceInfo },
+          { text: item.userNm },
+          { text: item.userId },
+          { text: item.phoneNumber },
+          { text: item.emailAdres },
+          { isButton2: true },
+        ]
+
+        result.push(arr);
+      });
+
+      body.value = result;
+      console.log(body.value);
     }
 
     const goInsertResearchVw = () => {
@@ -211,6 +228,9 @@ export default {
       formattedStartDate,
       endDate,
       formattedEndDate,
+      pageNo,
+      recordCount,
+      totalCount,
 
       handleSelection1,
       fetchResearchList,
