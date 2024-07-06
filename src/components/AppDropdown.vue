@@ -64,11 +64,9 @@ export default {
   props: {
     options: {
       type: Array,
-      required: true,
     },
     objectOptions: {
       type: Array, // { name, value}
-      required: true,
     },
     startText: {
       type: String,

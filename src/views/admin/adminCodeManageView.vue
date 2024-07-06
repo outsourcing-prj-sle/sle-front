@@ -3,18 +3,24 @@
     class="flex justify-start mx-[40px] my-[20px] max-md:mx-[20px] max-md:my-[20px]"
   >
     <div class="flex flex-col gap-[20px] items-start w-full">
-      <p class="font-bold text-[20px] max-md:text-[16px]">연구소관리자 관리</p>
+      <p class="font-bold text-[20px] max-md:text-[16px]">공통 코드관리</p>
       <div class="flex w-full justify-between content-center">
         <div class="text-xs font-medium content-center">
-          총 n개 | 현재페이지 1
+          총 n개 | 현재페이지 1/10
         </div>
-        <div>
+        <div class="flex gap-[20px] items-center font-bold">
           <AppDropdown
-            v-if="selectedOption"
             :options="options"
             :startText="selectedOption"
+            :openFull="true"
             @update:selectedOption="handleSelection1"
           />
+          <input
+            class="py-2 px-4 border border-gray-300 bg-white rounded-md text-sm"
+            type="text"
+            placeholder="검색어를 입력하세요."
+          />
+          <AdminButton :text="'검색'" :isWhite="false" :isSearch="true" />
         </div>
       </div>
       <AdminTable :header="header" :body="body" />
@@ -27,7 +33,7 @@
 </template>
 
 <script>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useAdminStore } from '@/store/adminStore.js';
 import AdminService from '@/service/AdminService.js';
@@ -37,7 +43,7 @@ import AdminButton from '@/components/admin/AdminButton.vue';
 import AppDropdown from '@/components/AppDropdown.vue';
 
 export default {
-  name: 'adminSiteView',
+  name: 'adminCodeManageView',
   components: {
     AdminPagination,
     AdminTable,
@@ -91,11 +97,37 @@ export default {
       selectedOption.value = v;
     };
 
+    const startDate = ref(new Date());
+    const formattedStartDate = computed(() => {
+      const tmp = new Date(startDate.value);
+      let year = tmp.getFullYear();
+      let month = tmp.getMonth() + 1;
+      let day = tmp.getDate();
+      const format = `${year}-${month}-${day}`;
+
+      return format;
+    });
+
+    const endDate = ref(new Date());
+    const formattedEndDate = computed(() => {
+      const tmp = new Date(endDate.value);
+      let year = tmp.getFullYear();
+      let month = tmp.getMonth() + 1;
+      let day = tmp.getDate();
+      const format = `${year}-${month}-${day}`;
+
+      return format;
+    });
+
     return {
       header,
       body,
       options,
       selectedOption,
+      startDate,
+      formattedStartDate,
+      endDate,
+      formattedEndDate,
 
       handleSelection1,
     };

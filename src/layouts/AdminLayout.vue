@@ -1,18 +1,23 @@
 <template>
   <AdminHeader />
-  <router-view />
-  <!-- <AppFooter /> -->
+  <div class="flex flex-1 h-full">
+    <AdminSidebar />
+    <div class="w-full overflow-hidden">
+      <router-view />
+    </div>
+  </div>
 </template>
 <script>
 import { defineComponent, computed, watchEffect } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAdminStore } from '@/store/adminStore.js';
 import AdminHeader from '@/components/admin/AdminHeader.vue';
+import AdminSidebar from '@/components/admin/AdminSidebar.vue';
 
 export default defineComponent({
   components: {
-    // AppFooter,
     AdminHeader,
+    AdminSidebar,
   },
   setup() {
     const route = useRoute();
@@ -22,6 +27,7 @@ export default defineComponent({
     const userId = computed(() => adminStore.token);
 
     watchEffect(() => {
+      console.log(userId.value);
       if (needLogin.value && !userId.value) {
         router.push({ name: 'adminLogin' });
       }
@@ -33,6 +39,12 @@ export default defineComponent({
 </script>
 
 <style>
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

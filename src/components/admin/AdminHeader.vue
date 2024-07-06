@@ -1,40 +1,51 @@
 <template>
   <div class="flex flex-col bg-white">
     <header
-      class="flex gap-5 justify-between py-1.5 pl-5 pr-6 w-full border-b-8 border-solid border-neutral-100 max-md:flex-wrap max-md:px-5 max-md:max-w-full items-center"
+      class="flex gap-5 justify-between py-1.5 pl-5 pr-6 border-b-8 border-solid border-[#E8E8E8] max-md:px-5 items-center"
       v-if="showHeader"
     >
       <div class="cursor-pointer flex gap-7 flex-1" @click="goMain">
-        <div class="flex justify-start w-[250px] py-3">
+        <div
+          class="flex justify-start py-3 min-w-[100px] w-[250px] max-xl:w-[190px] max-md:w-[140px] max-sm:w-[100px]"
+        >
           <img src="@/assets/img/logo_sel.png" alt="Logo" class="h-[52px]" />
         </div>
         <div class="flex gap-5 items-center">
           <button
-            class="px-5 py-3 text-base font-semibold h-fit"
+            class="px-5 py-3 text-base font-semibold h-fit text-nowrap"
             :class="{
-              'rounded-2xl bg-blue-600 text-white': isReportManage,
+              'rounded-2xl bg-blue-600 text-white': isSystemManagement,
             }"
             @click="goSite"
           >
-            설문 관리
+            시스템 관리
           </button>
           <button
-            class="px-5 py-3 text-base font-semibold h-fit"
+            class="px-5 py-3 text-base font-semibold h-fit text-nowrap"
             :class="{
-              'rounded-2xl bg-blue-600 text-white': !isReportManage,
+              'rounded-2xl bg-blue-600 text-white': isManagement,
             }"
-            @click="goSite"
+            @click="goManage"
           >
-            ID톡톡 관리
+            관리자 관리
           </button>
           <button
-            class="px-5 py-3 text-base font-semibold h-fit"
+            class="px-5 py-3 text-base font-semibold h-fit text-nowrap"
             :class="{
-              'rounded-2xl bg-blue-600 text-white': !isReportManage,
+              'rounded-2xl bg-blue-600 text-white': isUserManangement,
             }"
-            @click="goSite"
+            @click="goUser"
           >
-            연구소관리자 관리
+            회원 관리
+          </button>
+          <button
+            class="px-5 py-3 text-base font-semibold h-fit text-nowrap"
+            :class="{
+              'rounded-2xl bg-blue-600 text-white': isLogManagement,
+            }"
+            @click="goLog"
+          >
+            로그 관리
           </button>
         </div>
       </div>
@@ -83,13 +94,25 @@ export default {
     const router = useRouter();
     const adminStore = useAdminStore();
     const showHeader = computed(() => route.meta.headerVisible);
-    const isReportManage = computed(() => route.meta.isReportManage);
+    const isSystemManagement = computed(() => route.meta.isSystemManagement);
+    const isManagement = computed(() => route.meta.isManagement);
+    const isUserManangement = computed(() => route.meta.isUserManangement);
+    const isLogManagement = computed(() => route.meta.isLogManagement);
 
     const userId = computed(() => adminStore.token);
     const userName = computed(() => adminStore.name);
 
     const goSite = () => {
       router.push({ name: 'adminSite' });
+    };
+    const goLog = () => {
+      router.push({ name: 'adminLog' });
+    };
+    const goManage = () => {
+      router.push({ name: 'adminManage' });
+    };
+    const goUser = () => {
+      router.push({ name: 'adminUser', params: { userType: 'school' } });
     };
 
     const logout = () => {
@@ -101,10 +124,16 @@ export default {
       showHeader,
       userId,
       userName,
-      isReportManage,
+      isSystemManagement,
+      isManagement,
+      isUserManangement,
+      isLogManagement,
 
       goSite,
       logout,
+      goLog,
+      goManage,
+      goUser,
     };
   },
 };

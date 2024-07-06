@@ -3,18 +3,10 @@
     class="flex justify-start mx-[40px] my-[20px] max-md:mx-[20px] max-md:my-[20px]"
   >
     <div class="flex flex-col gap-[20px] items-start w-full">
-      <p class="font-bold text-[20px] max-md:text-[16px]">연구소관리자 관리</p>
+      <p class="font-bold text-[20px] max-md:text-[16px]">IP설정</p>
       <div class="flex w-full justify-between content-center">
         <div class="text-xs font-medium content-center">
           총 n개 | 현재페이지 1
-        </div>
-        <div>
-          <AppDropdown
-            v-if="selectedOption"
-            :options="options"
-            :startText="selectedOption"
-            @update:selectedOption="handleSelection1"
-          />
         </div>
       </div>
       <AdminTable :header="header" :body="body" />
@@ -34,22 +26,18 @@ import AdminService from '@/service/AdminService.js';
 import AdminTable from '@/components/admin/AdminTable.vue';
 import AdminPagination from '@/components/admin/AdminPagination.vue';
 import AdminButton from '@/components/admin/AdminButton.vue';
-import AppDropdown from '@/components/AppDropdown.vue';
 
 export default {
-  name: 'adminSiteView',
+  name: 'adminIPView',
   components: {
     AdminPagination,
     AdminTable,
     AdminButton,
-    AppDropdown,
   },
   setup() {
     const route = useRoute();
     const router = useRouter();
     const adminStore = useAdminStore();
-    const options = ref(['최신순', '오래된순']);
-    const selectedOption = ref('최신순');
     const header = ref([
       {
         text: '번호',
@@ -87,17 +75,9 @@ export default {
       ],
     ]);
 
-    const handleSelection1 = (v) => {
-      selectedOption.value = v;
-    };
-
     return {
       header,
       body,
-      options,
-      selectedOption,
-
-      handleSelection1,
     };
   },
 };

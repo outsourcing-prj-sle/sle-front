@@ -64,37 +64,34 @@ export default {
     const password = ref('');
 
     const submitLogin = async () => {
-      // const loginResponse = await AdminService.login({
-      //   id: email.value,
-      //   password: password.value,
-      // });
-      // const resData = loginResponse.data;
+      if (!email.value) {
+        alert('아이디를 입력해주세요');
+      }
+      if (!password.value) {
+        alert('비밀번호를 입력해주세요');
+      }
 
-      // if (resData.error) {
-      //   alert(resData.error);
-      //   return;
-      // }
+      const loginResponse = await AdminService.login({
+        id: email.value,
+        password: password.value,
+      });
+      const resData = loginResponse.data;
 
-      // if (resData?.authorization) {
-      //   userStore.init({
-      //     token: resData.authorization,
-      //     type: resData.userRole,
-      //     isRegistered: !!resData.sex,
-      //     extra: resData.extra,
-      //   });
+      if (resData.error) {
+        alert(resData.error);
+        return;
+      }
+      if (!resData.token) {
+        alert('아이디, 비밀번호를 확인해주세요');
+        return;
+      }
 
-      //   const redirectPath = route.query.redirect || '/';
-      //   router.push(redirectPath);
-      // } else {
-      //   console.log('wtf?');
-      //   console.log(callbackRes);
-      //   showPopup.value = true;
-      // }
+      console.log(resData);
 
       adminStore.init({
-        token: 'token',
-        id: 'id',
-        name: 'asdf',
+        token: resData.token,
+        id: resData.id,
+        name: resData.name || '이름',
       });
 
       const redirectPath = route.query.redirect || '/admin/site';
