@@ -34,7 +34,7 @@ apiClient.interceptors.request.use(
 
     // 관리자 페이지 헤더 설정
     if (adminStore) {
-      config.headers.Authorization = adminStore.token || 'USRCNFRM_00000000004';
+      config.headers.Authorization = adminStore.token || 'sel_00000004';
     }
 
     return config;
