@@ -2,6 +2,12 @@ import axios from 'axios';
 import { useIDStore } from '@/store/IDStore.js';
 import { getActivePinia } from 'pinia';
 
+const domainMap = {
+  '1.213.164.252': 'http://1.213.164.252:60080/api',
+  'devgnesel.itt.link': 'http://devgnesel.itt.link:60080/api',
+  localhost: 'http://localhost:5173/api',
+};
+const currentDomain = window.location.hostname;
 const baseURL = '/id-admin';
 
 // Pinia가 활성화될 때까지 기다리기
@@ -13,14 +19,11 @@ function getIDStore() {
 }
 
 const apiClient = axios.create({
-  baseURL:
-    process.env.VUE_APP_PRODUCTION === 'live'
-      ? 'http://1.213.164.252:60080/api'
-      : 'http://localhost:5173/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: domainMap[currentDomain] || 'http://1.213.164.252:60080/api',
 });
+
+apiClient.defaults.headers.common['Content-Type'] = 'application/json';
+apiClient.defaults.headers.common['ngrok-skip-browser-warning'] = 'true';
 
 apiClient.interceptors.request.use(
   (config) => {
@@ -105,42 +108,42 @@ const insertResearchAdmin = (data = {}) => {
 
 // 연구소 관리자 수정
 const updateResearchAdmin = (uriParam, data = {}) => {
-  return apiClient.put(baseURL + `/users/${uriParam}`, data)
+  return apiClient.put(baseURL + `/users/${uriParam}`, data);
 };
 
 // 연구소 관리자 삭제
 const deleteResearchAdmin = (uriParam, data = {}) => {
-  return apiClient.delete(baseURL + `/users/${uriParam}`, data)
+  return apiClient.delete(baseURL + `/users/${uriParam}`, data);
 };
 
 // ID톡톡 관리 목록 조회
 const getIdtt = (uriParam, data = {}) => {
-  return apiClient.get(baseURL + `/idtt/${uriParam}`, {params: data})
+  return apiClient.get(baseURL + `/idtt/${uriParam}`, { params: data });
 };
 
 // 설문관리 목록 조회
 const getReports = (data = {}) => {
-  return apiClient.get(baseURL + '/reports', {params: data})
+  return apiClient.get(baseURL + '/reports', { params: data });
 };
 
 // 설문관리 상세 조회
 const getReportsDtl = (uriParam, data = {}) => {
-  return apiClient.get(baseURL + `/reports/${uriParam}`, {params: data})
+  return apiClient.get(baseURL + `/reports/${uriParam}`, { params: data });
 };
 
 // 설문관리 설문 수정
 const updateReports = (uriParam, data = {}) => {
-  return apiClient.put(baseURL + `/reports/target/${uriParam}`, data)
+  return apiClient.put(baseURL + `/reports/target/${uriParam}`, data);
 };
 
 // 학교급, 학년 목록 조회
 const getSchulGradeInfo = (data = {}) => {
-  return apiClient.get(baseURL + '/schulGradeCode', {params: data})
+  return apiClient.get(baseURL + '/schulGradeCode', { params: data });
 };
 
 // 학교 목록 조회
 const getSchulInfo = (data = {}) => {
-  return apiClient.get(baseURL + '/schulCode', {params: data})
+  return apiClient.get(baseURL + '/schulCode', { params: data });
 };
 
 export default {
