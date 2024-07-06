@@ -1,10 +1,13 @@
 <template>
-  <div class="absolute top-0 left-0 w-full h-full bg-black opacity-40 z-50"></div>
-    <div
+  <div class="absolute top-0 left-0 w-full h-full bg-black opacity-40 z-50" v-if="isShow1 || isShow2" ></div>
+    <div v-if="isShow1"
       class="content-center p-8 min-h-[350px] z-50 bg-white rounded-[20px] shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2 flex flex-col gap-[10px]"
       style="transform: translate(-50%, -50%)"
     >
-      <p class="text-lg text-left font-bold">SEL 설문관리</p>
+      <div class="flex justify-between items-center">
+        <p class="text-lg font-bold">SEL 설문관리</p>
+        <button class="text-2xl font-bold" @click="togglePopup">x</button>
+      </div>
       <p class="text-base text-left font-semibold">SEL 활동명 : 마음알기 설문1</p>
       <div class="flex flex-col gap-[10px] text-sm items-start mt-[10px]">
         <p class="text-left text-[#2F80ED] font-semibold">기간 설정</p>
@@ -82,6 +85,10 @@
             <IDButton :text="'고등학교'" :isWhite="true" :_width="100" class="hover:bg-[#2F80ED] hover:text-white text-black" />
           </div>
           <div class="flex gap-[10px] items-center">
+            <p class="w-[50px] text-left">학교급</p>
+            <IDButton :text="'학교검색'" :isWhite="false" :_width="100" />
+          </div>
+          <div class="flex gap-[10px] items-center">
             <p class="w-[50px] text-left">학년</p>
             <IDButton :text="'1학년'" :isWhite="true" :_width="70" class="hover:bg-[#2F80ED] hover:text-white text-black" />
             <IDButton :text="'2학년'" :isWhite="true" :_width="70" class="hover:bg-[#2F80ED] hover:text-white text-black" />
@@ -128,6 +135,74 @@
           <IDButton :text="'고등학교-3학년'" :_width="120" :isWhite="true" class="h-[40px] text-black btn-selected"  />
         </div>
       </div>
+
+      <div v-if="isShow2"
+      class="content-center p-8 z-50 bg-white rounded-[20px] shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2 flex flex-col gap-[10px] min-w-[500px]"
+      style="transform: translate(-50%, -50%)"
+      >
+        <div class="flex justify-between items-center">
+          <p class="text-lg font-bold">학교검색</p>
+          <button class="text-2xl font-bold" @click="toggleSubPopup">x</button>
+        </div>
+        <IDSearch class="w-full"
+        :placeholder="'학교명을 입력해주세요.'"
+        />
+        <div class="flex items-center gap-[20px]">
+          <AppDropdown
+          :options="options1"
+          :startText="selectedOption1"
+          :openFull="true"
+          @update:selectedOption="handleSelection1"
+          />
+          <AppDropdown
+          :options="options2"
+          :startText="selectedOption2"
+          :openFull="true"
+          @update:selectedOption="handleSelection1"
+          />
+        </div>
+        <div class="w-full flex flex-col gap-[10px]">
+          <div class="w-full bg-gray-100 rounded-md flex p-[10px] gap-[5px] flex-wrap flex-col cursor-pointer">          
+            <p class="text-base text-left font-semibold">아이초등학교</p>
+            <p class="text-xs text-gray-500 text-left">충청북도 청주시</p>
+          </div>
+          <div class="w-full bg-[#2F80ED] text-white rounded-md flex p-[10px] gap-[5px] flex-wrap flex-col cursor-pointer">
+            <p class="text-base text-left font-semibold">톡톡초등학교</p>
+            <p class="text-xs text-left">충청북도 청주시</p>
+            <div class="w-full flex gap-[10px] mt-[10px]">
+              <div class="w-[35px]">
+                <p class="text-sm text-left font-semibold">학년</p>
+              </div>
+              <div class="flex gap-[10px] flex-wrap items-center">
+                <div>
+                  <IDButton :text="'전체'" :_width="60" :isWhite="true" class="h-[30px] text-black text-xs"  />
+                </div>
+                <div>
+                  <IDButton :text="'1학년'" :_width="60" :isWhite="true" class="h-[30px] text-black text-xs"  />
+                </div>
+                <div>
+                  <IDButton :text="'2학년'" :_width="60" :isWhite="true" class="h-[30px] text-black text-xs"  />
+                </div>
+                <div>
+                  <IDButton :text="'3학년'" :_width="60" :isWhite="true" class="h-[30px] text-black text-xs"  />
+                </div>
+                <div>
+                  <IDButton :text="'4학년'" :_width="60" :isWhite="true" class="h-[30px] text-black text-xs"  />
+                </div>
+                <div>
+                  <IDButton :text="'5학년'" :_width="60" :isWhite="true" class="h-[30px] text-black text-xs"  />
+                </div>
+                <div>
+                  <IDButton :text="'6학년'" :_width="60" :isWhite="true" class="h-[30px] text-black text-xs"  />
+                </div>
+              </div>    
+            </div>
+            <div class="mt-[10px]">
+              <IDButton :text="'추가'" :_width="60" class="h-[30px] border border-gray-400 bg-gray-400 text-xs"  />
+            </div>     
+          </div>
+        </div>
+      </div>
     </div>
 </template>
 
@@ -138,83 +213,36 @@ import { useIDStore } from '@/store/IDStore.js';
 import IDService from '@/service/IDService.js';
 import IDButton from '@/components/id/IDButton.vue';
 import AppDropdown from '@/components/AppDropdown.vue';
+import IDSearch from '@/components/id/IDSearch.vue';
 
 export default {
   props: {
-      keyword: {
-          type: String
-      },
-      placeholder: {
-          type: String
-      },
-      _width: {
-          type: Number,
-          default: 1000
-      },
+    isShow: {
+      type: Boolean,
+      default: false
+    }
   },
   components: {
     IDButton,
+    IDSearch,
+    AppDropdown
   },
-  setup() {
+  setup(props, { emit }) {
     const route = useRoute();
     const router = useRouter();
     const IDStore = useIDStore();
-    const options = ref([123, 456]);
-    const selectedOption = ref('전체보기');
+    const isShow1 = ref(props.isShow);
+    const isShow2 = ref(false);
+    const options1 = ref(['학교급', 456]);
+    const options2 = ref(['오름차순', '내림차순']);
+    const selectedOption1 = ref('학교급');
+    const selectedOption2 = ref('오름차순');
+    const startDate = ref(new Date());
+    const endDate = ref(new Date());
     const handleSelection1 = (v) => {
       console.log(v);
     };
-    const header = ref([
-      {
-        isCheckbox: true,
-      },
-      {
-        text: '번호',
-      },
-      {
-        text: '활동명',
-      },
-      {
-        text: '대상',
-      },
-      {
-        text: '기간',
-      },
-      {
-        text: '상세',
-      },
-      {
-        text: '관리',
-      },
-    ]);
-    const body = ref([
-      [
-        {
-          isCheckbox: true,
-        },
-        {
-          text: '번호',
-        },
-        {
-          text: '활동명',
-        },
-        {
-          text: '대상',
-        },
-        {
-          text: '기간',
-        },
-        {
-          text: '상세',
-        },
-        {
-          text: '관리',
-        },
-      ],
-    ]);
 
-    const startDate = ref(new Date());
-    const endDate = ref(new Date());
     const formattedStartDate = computed(() => {
       const tmp = new Date(startDate.value);
       let year = tmp.getFullYear();
@@ -234,11 +262,21 @@ export default {
       return format;
     });
 
+    const togglePopup = () => {
+      return !isShow1.value;
+    }
+
+    const toggleSubPopup = () => {
+      return !isShow2.value;
+    }
+
     return {
-      options,
-      selectedOption,
-      header,
-      body,
+      isShow1,
+      isShow2,
+      options1,
+      options2,
+      selectedOption1,
+      selectedOption2,
       startDate,
       endDate,
       formattedStartDate,

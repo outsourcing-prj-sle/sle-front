@@ -48,7 +48,7 @@
             <IDButtonVue v-if="v.isButton" class="rounded-xl whitespace-nowrap"
             :text="v.isButton" 
             :isWhite="false" 
-            @click="onClick"
+            @click="showPopup"
             />
             <div class="flex gap-[10px] justify-center" v-if="v.isButton2">
               <button class="edit border border-[#2F80ED] rounded-[5px] px-3 py-3 text-sm font-semibold whitespace-nowrap hover:bg-[#2F80ED] hover:text-white">
@@ -90,12 +90,12 @@ export default {
     },
   },
   setup(props, { emit }) {
-    const onClick = () => {
+    const showPopup = () => {
       emit('onClick');
     };
 
     return {
-      onClick,
+      showPopup,
     };
   },
 };
