@@ -17,10 +17,10 @@ const apiClient = axios.create({
     process.env.VUE_APP_PRODUCTION === 'live'
       ? 'http://1.213.164.252:60080/api'
       : 'http://localhost:5173/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
+
+apiClient.defaults.headers.common['Content-Type'] = 'application/json';
+apiClient.defaults.headers.common['ngrok-skip-browser-warning'] = 'true';
 
 apiClient.interceptors.request.use(
   (config) => {
@@ -191,7 +191,11 @@ const updateUserInfo = (
 
 // 각종 시스템 관리 등록
 const insertSystem = (entity, data = {}) => {
-  return apiClient.post(baseURL + '/system/' + entity + '/register', data);
+  return apiClient.post(baseURL + '/system/' + entity + '/register', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 };
 /*
 Terms
@@ -213,7 +217,6 @@ site
 	"siteDescription": "Description for site one",
 	"mouseSecurity": 1,
 	"keyboardSecurity": 1,
-	"createdBy": "자기자신 uniqId"
 }
   code
 {
@@ -234,7 +237,11 @@ site
 */
 // 시스템 정보 업데이트 (data 위와 같음)
 const updateSystem = (entity, data = {}) => {
-  return apiClient.put(baseURL + '/system/' + entity + '/register', data);
+  return apiClient.put(baseURL + '/system/' + entity + '/update', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 };
 
 // 시스템 정보 삭제
@@ -259,8 +266,16 @@ const systemInfoList = (
 };
 
 // 시스템 정보 중복 조회
-const checkSystemExist = (entity, id) => {
-  return apiClient.get(baseURL + '/system/check/' + entity + '/' + id);
+const checkSystemExist = (
+  entity,
+  data = {
+    url: 'www.google.com',
+    id: 'id',
+  }
+) => {
+  return apiClient.get(baseURL + '/system/' + entity + '/check/', {
+    params: data,
+  });
 };
 
 // 공통코드 하위 코드 관리
