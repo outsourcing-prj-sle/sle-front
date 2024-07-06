@@ -23,19 +23,67 @@
     <section
       class="flex flex-col px-20 mt-7 w-full text-base max-md:px-5 max-md:max-w-full"
     >
-      <div>
-        <apexchart
-          width="380"
-          type="donut"
-          :options="donutChartOptions1"
-          :series="donutChartSeries1"
-        ></apexchart>
+      <div class="w-[300px] flex justify-start my-[20px] z-50">
+        <AppDropdown
+          v-if="selectedOption"
+          :options="options"
+          :startText="options[0]"
+          :openWay="'left'"
+          @update:selectedOption="handleSelection"
+        />
+      </div>
+      <b class="text-xl text-left">
+        <span class="text-blue-500">학급</span> 학습성향
+      </b>
+      <div class="flex justify-between flex-wrap">
+        <div class="flex flex-col w-[300px] mt-[10px]">
+          <apexchart
+            width="300"
+            type="donut"
+            :options="donutChartOptions1"
+            :series="donutChartSeries1"
+          ></apexchart>
+          <div class="flex items-start">
+            <picture>
+              <img class="w-[100px]" src="@/assets/img/ico-lt-robot.svg" alt="">
+            </picture>
+            <p class="text-left text-sm">우리 학급은 학습내용을 자유롭게 건너뛰면서 학습하는 성향의 아이들이 반복해서 과제를 확인하고 점검하는 성향의 아이들보다 많습니다.</p>
+          </div>
+        </div>
+        <div class="flex flex-col w-[300px] mt-[10px]">
+          <apexchart
+            width="300"
+            type="donut"
+            :options="donutChartOptions1"
+            :series="donutChartSeries1"
+          ></apexchart>
+          <div class="flex items-start">
+            <picture>
+              <img class="w-[100px]" src="@/assets/img/ico-lt-robot.svg" alt="">
+            </picture>
+            <p class="text-left text-sm">우리 학급은 학습내용을 자유롭게 건너뛰면서 학습하는 성향의 아이들이 반복해서 과제를 확인하고 점검하는 성향의 아이들보다 많습니다.</p>
+          </div>
+        </div>
+        <div class="flex flex-col w-[300px] mt-[10px]">
+          <apexchart
+            width="300"
+            type="donut"
+            :options="donutChartOptions1"
+            :series="donutChartSeries1"
+          ></apexchart>
+          <div class="flex items-start">
+            <picture>
+              <img class="w-[100px]" src="@/assets/img/ico-lt-robot.svg" alt="">
+            </picture>
+            <p class="text-left text-sm">우리 학급은 학습내용을 자유롭게 건너뛰면서 학습하는 성향의 아이들이 반복해서 과제를 확인하고 점검하는 성향의 아이들보다 많습니다.</p>
+          </div>
+        </div>
       </div>
     </section>
     <section
-      class="flex flex-col px-20 mt-7 w-full text-base max-md:px-5 max-md:max-w-full"
+      class="flex flex-col px-20 mt-20 w-full text-base max-md:px-5 max-md:max-w-full"
     >
-      <div class="w-[300px] flex justify-start">
+      <div class="w-[300px] flex justify-start z-50">
         <AppDropdown
           v-if="selectedOption"
           :options="options"
@@ -48,14 +96,27 @@
         <b class="text-xl">
           <span class="text-blue-500">{{ name }} 학생</span>의 학습성향 그래프
         </b>
-        <div class="w-full text-center items-center flex justify-center"></div>
-        <div>
+        <div class="flex justify-center items-center border border-gray-300 p-[20px] mt-[20px] gap-[10px] mb-[60px]">
+          <div class="flex flex-col min-w-[150px] w-[150px] h-[200px] text-sm font-bold justify-between
+          max-[1000px]:h-[150px] max-[900px]:h-[120px] max-[900px]:text-xs max-[900px]:w-[100px] max-[900px]:min-w-0 max-[800px]:hidden
+          ">
+            <p>학습 콘텐츠를 자주 보고 점검하는 성향</p>
+            <p>신속하게 과제를 수행하는 성향</p>
+            <p>소통을 활발하게 하며 학습하는 성향</p>
+          </div>
           <apexchart
             width="500"
             type="bar"
             :options="barChartOptions"
             :series="barChartSeries"
           ></apexchart>
+          <div class="flex flex-col min-w-[150px] w-[150px] h-[200px] text-sm font-bold justify-between
+          max-[1000px]:h-[150px] max-[900px]:h-[120px] max-[900px]:text-xs max-[900px]:w-[100px] max-[900px]:min-w-0 max-[800px]:hidden
+          ">
+            <p>학습 콘텐츠를 건너뛰며 점검하는 성향</p>
+            <p>느긋하게 과제를 수행하는 성향</p>
+            <p>독립적으로 학습하는 성향</p>
+          </div>
         </div>
         <b class="text-xl my-[20px]">*성향별 상세 안내</b>
         <div class="mb-[40px]">
@@ -101,7 +162,7 @@
             </p>
           </div>
         </div>
-        <div>
+        <div class="mt-[60px]">
           <p>
             <span class="text-blue-500 font-medium">{{ name }} 학생</span>의
             학습성향 AI분석 의견조사
@@ -349,107 +410,113 @@ export default {
       alert('설문이 저장되었습니다!');
     };
 
-    const barChartSeries = ref([
-      {
-        name: 'Males',
-        data: [
-          0.4, 0.65, 0.76, 0.88, 1.5, 2.1, 2.9, 3.8, 3.9, 4.2, 4, 4.3, 4.1, 4.2,
-          4.5, 3.9, 3.5, 3,
-        ],
-      },
-      {
-        name: 'Females',
-        data: [
-          -0.8, -1.05, -1.06, -1.18, -1.4, -2.2, -2.85, -3.7, -3.96, -4.22,
-          -4.3, -4.4, -4.1, -4, -4.1, -3.4, -3.1, -2.8,
-        ],
-      },
-    ]);
+    const barChartSeries = ref([{
+      data: [
+        {
+          x: 'TEAM A',
+          y: [8, 13],
+          fillColor: '#A46DF1',
+        },
+        {
+          x: 'TEAM B',
+          y: [8, 11],
+          fillColor: '#FF80BD',
+        },
+        {
+          x: 'TEAM C',
+          y: [9, 16],
+          fillColor: '#2584FF',
+        }
+      ]
+    }]);
 
     const barChartOptions = ref({
       chart: {
-        type: 'bar',
-        height: 440,
-        stacked: true,
+        horizontal: true,
       },
-      colors: ['#008FFB', '#FF4560'],
+      colors: ['#A46DF1', '#FF80BD', '#2584FF'],
       plotOptions: {
         bar: {
-          borderRadius: 5,
-          borderRadiusApplication: 'end', // 'around', 'end'
-          borderRadiusWhenStacked: 'all', // 'all', 'last'
           horizontal: true,
-          barHeight: '80%',
+          borderRadius: 30,
+          toolbar: {
+            show: false,
+          },
+        },
+      },
+      xaxis: {
+        min: 0,
+        max: 20,
+        labels: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        lines: {
+          show: false,
+        },
+      },
+      yaxis: {
+        labels: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+      },
+      grid: {
+        xaxis: {
+          lines: {
+            show: true,
+            offsetX: 0,
+            offsetY: 0,
+            color: '#E0E0E0',
+            strokeDashArray: 0,
+            opacity: 0.5,
+          },
+        },
+        yaxis: {
+          lines: {
+            show: true,
+          },
         },
       },
       dataLabels: {
         enabled: false,
       },
-      stroke: {
-        width: 1,
-        colors: ['#fff'],
-      },
-
-      grid: {
-        xaxis: {
-          lines: {
-            show: false,
-          },
-        },
-      },
-      yaxis: {
-        stepSize: 1,
-      },
-      tooltip: {
-        shared: false,
-        x: {
-          formatter: function (val) {
-            return val;
-          },
-        },
-        y: {
-          formatter: function (val) {
-            return Math.abs(val) + '%';
-          },
-        },
-      },
-      title: {
-        text: 'Mauritius population pyramid 2011',
-      },
-      xaxis: {
-        categories: [
-          '85+',
-          '80-84',
-          '75-79',
-          '70-74',
-          '65-69',
-          '60-64',
-          '55-59',
-          '50-54',
-          '45-49',
-          '40-44',
-          '35-39',
-          '30-34',
-          '25-29',
-          '20-24',
-          '15-19',
-          '10-14',
-          '5-9',
-          '0-4',
-        ],
-        title: {
-          text: 'Percent',
-        },
-        labels: {
-          formatter: function (val) {
-            return Math.abs(Math.round(val)) + '%';
-          },
-        },
+      fill: {
+        type: 'solid',
       },
     });
 
-    const donutChartOptions1 = ref({});
-    const donutChartSeries1 = ref([44, 55, 41, 17, 15]);
+    const donutChartOptions1 = ref({
+      chart: {
+        type: 'donut',
+      },
+      colors: ['#E3ACD0', '#72AFE7'],
+      labels: ['학습 콘텐츠를 건너뛰며 점검하는 성향', '학습 콘텐츠를 자주 보고 점검하는 성향'],
+      plotOptions: {
+        pie: {
+          donut: {
+            size: '50%'
+          }
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val, opts) {
+          return `${opts.w.config.series[opts.seriesIndex]}명`;
+        }
+      },
+      legend: {
+        position: 'top',
+      }
+    });
+    const donutChartSeries1 = ref([20, 10]);
 
     const donutChartOptions2 = ref({});
     const donutChartSeries2 = ref([44, 55, 41, 17, 15]);
