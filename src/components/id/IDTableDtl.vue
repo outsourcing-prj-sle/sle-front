@@ -48,7 +48,7 @@
             <IDButtonVue v-if="v.isButton" class="rounded-xl whitespace-nowrap"
             :text="v.isButton" 
             :isWhite="false" 
-            @click="showPopup"
+            @click="onClick"
             />
             <div class="flex gap-[10px] justify-center" v-if="v.isButton2">
               <button class="edit border border-[#2F80ED] rounded-[5px] px-3 py-3 text-sm font-semibold whitespace-nowrap hover:bg-[#2F80ED] hover:text-white">
@@ -61,6 +61,7 @@
                 class="w-[28px] h-[28px]"
                 src="@/assets/img/ico-gear.png"
                 alt=""
+                @click="openPopup"
                 />
             </div>
             <div class="flex-1" v-if="v.isManage">연구소 관리자 관리</div>
@@ -74,6 +75,7 @@
 <script>
 import { computed } from 'vue';
 import IDButtonVue from '@/components/id/IDButton.vue'
+import { useStateStore } from '@/store/stateStore.js';
 
 export default {
   components: {
@@ -90,12 +92,19 @@ export default {
     },
   },
   setup(props, { emit }) {
-    const showPopup = () => {
+    const stateStore = useStateStore();
+
+    const onClick = () => {
       emit('onClick');
     };
 
+    const openPopup = () => {
+      stateStore.openPopup();
+    };
+
     return {
-      showPopup,
+      onClick,
+      openPopup
     };
   },
 };
