@@ -32,12 +32,12 @@
       </div>
       <IDTable
       :header="header"
-      :body="body"
+      :_body="body"
       />
       <IDPagination
-      :pageNo=19
-      :recordCount=5
-      :totalCount=100
+      :pageNo=pageNo
+      :recordCount=recordCount
+      :totalCount=totalCount
       />
       <IDButton class="bg-gray-300"
       @click="goReportList"
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useIDStore } from '@/store/IDStore.js';
 import IDService from '@/service/IDService.js';
@@ -77,68 +77,41 @@ export default {
     const options2 = ref([123, 456]);
     const selectedOption2 = ref('학년');
     const pollNm = ref("마음알기 설문1 상세");
-    const header = [
-      {
-        isCheckbox: true
-      },
-      {
-        text: '번호'
-      }, 
-      {
-        text: '학교'
-      }, 
-      {
-        text: '학년'
-      }, 
-      {
-        text: '이름'
-      }, 
-      {
-        text: '성별'
-      }, 
-      {
-        text: '생년-월'
-      },
-      {
-        text: '계정'
-      },
-      {
-        text: 'EK1.1'
-      },
-      {
-        text: 'EK1.2'
-      },
-      {
-        text: 'EK1.3'
-      },
-      {
-        text: 'EK1.4'
-      },
-      {
-        text: 'EK1.5'
-      },
-      {
-        text: 'EK1.6'
-      },
-    ];
-    const body = [
-      [
-        { isCheckbox: true },
-        { text: 1 },
-        { text: '이작초등학교' },
-        { text: '3' },
-        { text: '홍길동' },
-        { text: '남' },
-        { text: '2014-09' },
-        { text: 'test@gne.go.kr' },
-        { text: 3 },
-        { text: 1 },
-        { text: 1 },
-        { text: 2 },
-        { text: 4 },
-        { text: 1 }
-      ]
-    ];
+    const header = computed(() => {
+      return [
+        {
+          isCheckbox: true
+        },
+        {
+          text: '번호'
+        }, 
+        {
+          text: '학교'
+        }, 
+        {
+          text: '학년'
+        }, 
+        {
+          text: '이름'
+        }, 
+        {
+          text: '성별'
+        }, 
+        {
+          text: '생년-월'
+        },
+        {
+          text: '계정'
+        },
+        ...headerArr.value
+      ];
+    });
+    const headerArr = ref([]);
+    const body = ref([]);
+
+    const pageNo = ref(1);
+    const recordCount = ref(10);
+    const totalCount = ref(0);
 
     onMounted(() => {
       fetchReportDtlList();
@@ -153,11 +126,42 @@ export default {
         searchKeyword : '경남시범초',
         schulGradeCode : '',
         stGrade : '5',
-        pageNo : 1,
-        recordCount : 10,
+        pageNo : pageNo.value,
+        recordCount : recordCount.value,
       });
       const resData = reportReponse.data;
       console.log(resData);
+
+      pageNo.value = resData.pageNo;
+      recordCount.value = resData.recordCount;
+      totalCount.value = resData.totalCount;
+
+      let result = [];
+      let answerArr = [];
+      resData.pollDtlList.map((item, idx) => {
+        let arr = [
+          { isCheckbox: true },
+          { text: idx+1 },
+          { text: item.schulNm },
+          { text: item.stGrade },
+          { text: item.userNm },
+          { text: (item.sexdstn === 'F' ? '여' : '남') },
+          { text: item.brthy?.substring(0,4) + '-' + item.brthy?.substring(4,6)},
+          { text: 'test@gne.go.kr' },
+        ]
+
+        item.answer.map((subItem, index) => {
+          arr.push({ text: subItem });
+          if(idx === 0) answerArr.push({ text: `EK1.${index+1}` });
+        });
+
+        result.push(arr);
+      });
+
+      body.value = result;
+      headerArr.value = answerArr;
+      console.log(body.value);
+      console.log(headerArr.value);
     }
 
     const downloadExcel = () => {
@@ -210,7 +214,11 @@ export default {
       selectedOption2,
       pollNm,
       header,
+      headerArr,
       body,
+      pageNo,
+      recordCount,
+      totalCount,
 
       handleSelection1,
       fetchReportDtlList,

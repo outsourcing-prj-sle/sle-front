@@ -23,6 +23,11 @@
       :body="body"
       @onClick="goReportDtl"
       />
+      <IDPagination
+      :pageNo=pageNo
+      :recordCount=recordCount
+      :totalCount=totalCount
+      />
     </div>
   </div>
 </template>
@@ -36,14 +41,17 @@ import IDTableDtl from '@/components/id/IDTableDtl.vue';
 import AppDropdown from '@/components/AppDropdown.vue';
 import { onMounted } from 'vue';
 import router from '@/router';
+import IDPagination from '@/components/id/IDPagination.vue';
 import IDPopup from '@/components/id/IDPopup.vue';
+import { _mixDate } from '@/utils/utils.js';
 
 export default {
   name: 'IDManageReportView',
   components: {
     IDTableDtl,
     AppDropdown,
-    IDPopup
+    IDPopup,
+    IDPagination
   },
   setup() {
     const options = ref([123, 456]);
@@ -73,35 +81,11 @@ export default {
         text:'관리'
       }
     ];
-    const body = [
-      [
-        { isCheckbox: true },
-        { text: 1 },
-        { text: '마음알기 설문1' },
-        { text: '관리>설정을 해주세요.' },
-        { text: '관리>설정을 해주세요.' },
-        { text: '-' },
-        { isOpenPopup: true }
-      ],
-      [
-        { isCheckbox: true },
-        { text: 2 },
-        { text: '마음알기 설문2' },
-        { text: '초3, 초4, 초5, 초6, 경남중학교, 경남시범초등학교'},
-        { text: '2023년 1월 1일 ~ 3월 1일까지' },
-        { isButton: '상세보기' },
-        { isOpenPopup: true }
-      ],
-      [
-        { isCheckbox: true },
-        { text: 3 },
-        { text: '마음알기 설문3' },
-        { text: '초3, 초4, 초5, 초6' },
-        { text: '2023년 1월 1일 ~ 4월 1일까지' },
-        { isButton: '상세보기' },
-        { isOpenPopup: true }
-      ]
-    ];
+    const body = ref([]);
+
+    const pageNo = ref(1);
+    const recordCount = ref(10);
+    const totalCount = ref(0);
 
     onMounted(() => {
       fetchReportList();
@@ -122,6 +106,33 @@ export default {
       });
       const resData = reportReponse.data;
       console.log(resData);
+
+      pageNo.value = resData.pageNo;
+      recordCount.value = resData.recordCount;
+      totalCount.value = resData.totalCount;
+
+      let result = [];
+      resData.pollList.map((item, idx) => {
+        let arr = [
+          { isCheckbox: true },
+          { text: idx+1 },
+          { text: item.pollNm },
+          { text: '관리>설정을 해주세요.' },
+          { text: (item.pollBgnde !== '' &&  item.pollEndde !== '') ? _mixDate(item.pollBgnde, item.pollEndde) : '관리>설정을 해주세요.'},
+        ]
+
+        if(item.pollTarget.length) {
+          arr.push({ isButton: '상세보기' });
+        } else {
+          arr.push({ text: '-' });
+        }
+        arr.push({ isOpenPopup: true });
+
+        result.push(arr);
+      });
+
+      body.value = result;
+      console.log(body.value);
     }
 
     const goReportDtl = () => {
@@ -135,6 +146,9 @@ export default {
       selectedOption2,
       header,
       body,
+      pageNo,
+      recordCount,
+      totalCount,
 
       handleSelection1,
       fetchReportList,
