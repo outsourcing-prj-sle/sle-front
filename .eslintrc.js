@@ -13,5 +13,6 @@ module.exports = {
     'linebreak-style': ['error', 'unix'],
     'no-unused-vars': 'off',
     'vue/no-unused-vars': 'off',
+    'vue/no-unused-components': 'off',
   },
 };
