@@ -23,50 +23,13 @@
     <section
       class="flex flex-col px-20 mt-7 w-full text-base max-md:px-5 max-md:max-w-full"
     >
-      <div class="w-[300px] flex justify-start">
-        <AppDropdown
-          v-if="selectedOption"
-          :options="options"
-          :startText="options[0]"
-          :openWay="'left'"
-          @update:selectedOption="handleSelection"
-        />
-      </div>
-      <!-- <div class="mt-4 w-full text-left" v-if="!needReport"> -->
-      <div class="mt-4 w-full text-left">
-        <b class="text-xl">
-          <span class="text-blue-500">학급</span> 학습성향
-        </b>
-        <div
-          class="flex flex-col flex-1 justify-center text-center items-center mt-20"
-        >
-          <img
-            class="w-[181px] h-[181px]"
-            src="@/assets/img/no_data.png"
-            alt="no_data"
-          />
-          <span class="mt-20">
-            해당 학급은 SEL활동에 참여하지 않아 불러올 데이터가 없습니다.<br />
-            참여 유도 후 재시도 바랍니다.
-          </span>
-        </div>
-      </div>
-      <!-- <div class="mt-4 w-full text-left" v-else> -->
-      <div class="mt-4 w-full text-left">
-        <b class="text-xl">
-          <span class="text-blue-500">학급</span> 학습성향
-        </b>
-        <div class="w-full text-center items-center flex justify-center">
-          <Radar
-            :data="_chartData"
-            :options="_chartOptions"
-            :style="{
-              height: '400px',
-              position: 'relative',
-            }"
-            @chart:render="handleChartRender"
-          />
-        </div>
+      <div>
+        <apexchart
+          width="380"
+          type="donut"
+          :options="donutChartOptions1"
+          :series="donutChartSeries1"
+        ></apexchart>
       </div>
     </section>
     <section
@@ -81,47 +44,25 @@
           @update:selectedOption="handleSelection"
         />
       </div>
-      <!-- <div class="mt-4 w-full text-left" v-if="!needReport"> -->
       <div class="mt-4 w-full text-left">
         <b class="text-xl">
           <span class="text-blue-500">{{ name }} 학생</span>의 학습성향 그래프
         </b>
-        <div
-          class="flex flex-col flex-1 justify-center text-center items-center mt-20"
-        >
-          <img
-            class="w-[181px] h-[181px]"
-            src="@/assets/img/no_data.png"
-            alt="no_data"
-          />
-          <span class="mt-20">
-            해당 학생은 SEL활동에 참여하지 않아 불러올 데이터가 없습니다.<br />
-            참여 유도 후 재시도 바랍니다.
-          </span>
-        </div>
-      </div>
-      <!-- <div class="mt-4 w-full text-left" v-else> -->
-      <div class="mt-4 w-full text-left">
-        <b class="text-xl">
-          <span class="text-blue-500">{{ name }} 학생</span>의 학습성향 그래프
-        </b>
-        <div class="w-full text-center items-center flex justify-center">
-          <Radar
-            :data="_chartData"
-            :options="_chartOptions"
-            :style="{
-              height: '400px',
-              position: 'relative',
-            }"
-            @chart:render="handleChartRender"
-          />
+        <div class="w-full text-center items-center flex justify-center"></div>
+        <div>
+          <apexchart
+            width="500"
+            type="bar"
+            :options="barChartOptions"
+            :series="barChartSeries"
+          ></apexchart>
         </div>
         <b class="text-xl my-[20px]">*성향별 상세 안내</b>
         <div class="mb-[40px]">
           <p class="my-[10px] font-medium text-xl">
             학습 콘텐츠를 건너뛰며 점검하는 성향
           </p>
-          <div class="p-[10px] border-gray-300 border-2 rounded-xl mb-[10px]">
+          <div class="p-[20px] border-gray-300 border-2 rounded-xl mb-[10px]">
             <p>
               이 학생들은 학습 활동의 순서에 얽매이지 않고 스스로 자유롭게
               학습하고자 하는 성향입니다 이 유형이 높을수록 학습내용을 대충
@@ -136,7 +77,7 @@
           <p class="my-[10px] font-medium text-xl">
             신속하게 과제를 수행하는 성향
           </p>
-          <div class="p-[10px] border-gray-300 border-2 rounded-xl mb-[10px]">
+          <div class="p-[20px] border-gray-300 border-2 rounded-xl mb-[10px]">
             <p>
               이 학생들은 자신이 계획한 목표를 실행하기 위해서 과제의 제출
               마감시간을 잘 지키고 신속하게 학업을 수행하려고 하는 성향입니다.
@@ -150,7 +91,7 @@
         </div>
         <div class="mb-[40px]">
           <p class="my-[10px] font-medium text-xl">독립적으로 학습하는 성향</p>
-          <div class="p-[10px] border-gray-300 border-2 rounded-xl mb-[10px]">
+          <div class="p-[20px] border-gray-300 border-2 rounded-xl mb-[10px]">
             <p>
               이 학생들은 혼자 학습하는 것을 선호하는 성향입니다. 이 유형이
               높을수록 타인의 시선을 의식하지 않고 자기 주도적이며 독립적 학습이
@@ -302,31 +243,10 @@ import { ref, computed, onMounted, watch, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import UserService from '@/service/UserService.js';
 import AppDropdown from '@/components/AppDropdown.vue';
-import { _mixDate } from '@/utils/utils.js';
-import {
-  Chart as ChartJS,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Radar } from 'vue-chartjs';
-
-ChartJS.register(
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend
-);
 
 export default {
   components: {
     AppDropdown,
-    Radar,
   },
   setup() {
     const router = useRouter();
@@ -334,81 +254,12 @@ export default {
     const optionsObj = ref({});
     const name = ref('');
 
-    const chartData = ref({
-      labels: [
-        '내면화 행동 문제',
-        '감정지식',
-        '성장 마인트 셋',
-        '외면화 행동 문제',
-      ],
-      datasets: [
-        {
-          label: '학급 평균',
-          data: [28, 48, 40, 19],
-          fill: true,
-          backgroundColor: 'rgba(255,99,132,0.2)',
-          borderColor: 'rgb(255, 99, 132)',
-          pointBackgroundColor: 'orange',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgb(255, 99, 132)',
-          pointRadius: 5,
-        },
-        {
-          label: '학생',
-          data: [65, 59, 90, 81],
-          fill: true,
-          backgroundColor: 'rgba(179,181,198,0.2)',
-          borderColor: 'rgb(54, 162, 235)',
-          pointBackgroundColor: 'rgb(54, 162, 235)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgb(54, 162, 235)',
-          pointRadius: 5,
-        },
-      ],
-    });
-
-    const chartOptions = ref({
-      responsive: false,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          labels: {
-            font: {
-              size: 15,
-            },
-          },
-        },
-      },
-      elements: {
-        line: {
-          borderWidth: 3,
-        },
-      },
-    });
-
-    const _chartData = computed(() => {
-      return chartData.value;
-    });
-    const _chartOptions = computed(() => {
-      return chartOptions.value;
-    });
-
     const options = ref([
       '홍길동(dlwkr01@gne.go.kr)',
       '홍길동(dlwkr01@gne.go.kr)',
       '홍길동(dlwkr01@gne.go.kr)',
     ]);
     const selectedOption = ref('');
-    const EBP = ref();
-    const EK = ref();
-    const GM = ref();
-    const IBP = ref();
-    const avgAry = ref([]); // 평균
-    const stdAry = ref([]); // 계산값
-    const stdAddAry = ref([]); // 평균 + 계산값 (표)
-    const stdColorAry = ref([]); // 계산값 표에넣을 색깔로
     const qesAnswer1 = ref();
     const qesAnswer2 = ref([]);
     const qesAnswer3 = ref();
@@ -463,125 +314,8 @@ export default {
       // todo :selectopton.value[현재학생 `${d.name}(${d.email})`] 로 userId얻고 그거로 데이터 호출
     };
 
-    watch(
-      () => [selectedOption.value],
-      async () => {
-        if (selectedOption.value) {
-          if (!optionsObj.value[selectedOption.value].userId) {
-            // alert('설문을 완료하지 못한 학생입니다.');
-            return;
-          }
-          isOpen.value = [false, false, false, false];
-          name.value = optionsObj.value[selectedOption.value].name;
-          const resUserIDTT = await UserService.userIDTT({
-            id: optionsObj.value[selectedOption.value].userId,
-          });
-          const resData = resUserIDTT.data;
-          console.log(resData);
-
-          if (!resData.EBP || !resData.EK || !resData.GM || !resData.IBP) {
-            // alert('설문을 완료하지 못한 학생입니다.'
-            return;
-          }
-          EBP.value = resData.EBP;
-          EK.value = resData.EK;
-          GM.value = resData.GM;
-          IBP.value = resData.IBP;
-
-          let _EBP = EBP.value;
-          let _EBPValue = (_EBP.score - _EBP.mean) / _EBP.stddev;
-          let _EK = EK.value;
-          let _EKValue = (_EK.score - _EK.mean) / _EK.stddev;
-          let _GM = GM.value;
-          let _GMValue = (_GM.score - _GM.mean) / _GM.stddev;
-          let _IBP = IBP.value;
-          let _IBPValue = (_IBP.score - _IBP.mean) / _IBP.stddev;
-
-          stdAry.value = [_EBPValue, _EKValue, _GMValue, _IBPValue];
-          avgAry.value = [_EBP.mean, _EK.mean, _GM.mean, _IBP.mean];
-
-          for (let i in stdAry.value) {
-            const _std = parseFloat(stdAry.value[i]);
-            const _avg = parseFloat(avgAry.value[i]);
-            const add = (_std + _avg).toFixed(2);
-            let color = 'red';
-            if (_std > -1) color = 'orange';
-            if (_std > 1) color = 'green';
-
-            stdAddAry.value[i] = add;
-            stdColorAry.value[i] = color;
-          }
-
-          // 표 데이터 초기화
-          const tmpChartData = chartData.value;
-          tmpChartData.datasets[1].pointBackgroundColor = stdColorAry.value;
-          chartData.value = {
-            ...tmpChartData,
-            datasets: [
-              {
-                ...tmpChartData.datasets[0],
-                data: avgAry.value,
-              },
-              {
-                ...tmpChartData.datasets[1],
-                label: name.value,
-                data: stdAddAry.value,
-                pointBackgroundColor: stdColorAry.value,
-              },
-            ],
-          };
-
-          const maxCeil =
-            parseInt(Math.max(...stdAddAry.value, ...avgAry.value)) + 1;
-
-          // 표 범위 초기화
-          chartOptions.value = {
-            ...chartOptions,
-            scales: {
-              r: {
-                max: maxCeil,
-                ticks: {
-                  stepSize: 1,
-                },
-              },
-            },
-          };
-        }
-      },
-      { immediate: true } // 초기 실행을 위해 immediate: true 설정
-    );
-
     const handleSelection = (option) => {
       selectedOption.value = option;
-    };
-
-    const goReportNoticePage = (type = 1) => {
-      router.push({
-        name: 'reportNotice',
-        params: { type: type },
-      });
-    };
-
-    const goReportQuestionPage = (type = 1) => {
-      router.push({
-        name: 'reportQuestion',
-        params: { type: type },
-      });
-    };
-
-    const mixDate = (s, e) => {
-      return _mixDate(s, e);
-    };
-
-    const handleChartRender = (chart) => {
-      // console.log(chart);
-    };
-
-    const colorToKor1 = (color) => {
-      let result = '위험없음';
-      if (color === 'orange') result = '평균범위';
-      if (color === 'red') result = '위험높음';
-      return result;
     };
 
     const submitInfo = async () => {
@@ -615,9 +349,113 @@ export default {
       alert('설문이 저장되었습니다!');
     };
 
-    const openTip = (i) => {
-      isOpen.value[i] = !isOpen.value[i];
-    };
+    const barChartSeries = ref([
+      {
+        name: 'Males',
+        data: [
+          0.4, 0.65, 0.76, 0.88, 1.5, 2.1, 2.9, 3.8, 3.9, 4.2, 4, 4.3, 4.1, 4.2,
+          4.5, 3.9, 3.5, 3,
+        ],
+      },
+      {
+        name: 'Females',
+        data: [
+          -0.8, -1.05, -1.06, -1.18, -1.4, -2.2, -2.85, -3.7, -3.96, -4.22,
+          -4.3, -4.4, -4.1, -4, -4.1, -3.4, -3.1, -2.8,
+        ],
+      },
+    ]);
+
+    const barChartOptions = ref({
+      chart: {
+        type: 'bar',
+        height: 440,
+        stacked: true,
+      },
+      colors: ['#008FFB', '#FF4560'],
+      plotOptions: {
+        bar: {
+          borderRadius: 5,
+          borderRadiusApplication: 'end', // 'around', 'end'
+          borderRadiusWhenStacked: 'all', // 'all', 'last'
+          horizontal: true,
+          barHeight: '80%',
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        width: 1,
+        colors: ['#fff'],
+      },
+
+      grid: {
+        xaxis: {
+          lines: {
+            show: false,
+          },
+        },
+      },
+      yaxis: {
+        stepSize: 1,
+      },
+      tooltip: {
+        shared: false,
+        x: {
+          formatter: function (val) {
+            return val;
+          },
+        },
+        y: {
+          formatter: function (val) {
+            return Math.abs(val) + '%';
+          },
+        },
+      },
+      title: {
+        text: 'Mauritius population pyramid 2011',
+      },
+      xaxis: {
+        categories: [
+          '85+',
+          '80-84',
+          '75-79',
+          '70-74',
+          '65-69',
+          '60-64',
+          '55-59',
+          '50-54',
+          '45-49',
+          '40-44',
+          '35-39',
+          '30-34',
+          '25-29',
+          '20-24',
+          '15-19',
+          '10-14',
+          '5-9',
+          '0-4',
+        ],
+        title: {
+          text: 'Percent',
+        },
+        labels: {
+          formatter: function (val) {
+            return Math.abs(Math.round(val)) + '%';
+          },
+        },
+      },
+    });
+
+    const donutChartOptions1 = ref({});
+    const donutChartSeries1 = ref([44, 55, 41, 17, 15]);
+
+    const donutChartOptions2 = ref({});
+    const donutChartSeries2 = ref([44, 55, 41, 17, 15]);
+
+    const donutChartOptions3 = ref({});
+    const donutChartSeries3 = ref([44, 55, 41, 17, 15]);
 
     return {
       qesAnswer1,
@@ -626,23 +464,20 @@ export default {
       options,
       selectedOption,
       infoArr,
-      handleSelection,
-      goReportNoticePage,
-      goReportQuestionPage,
-      mixDate,
-      _chartData,
-      _chartOptions,
-      handleChartRender,
       name,
-      colorToKor1,
-      avgAry,
-      stdAry,
-      stdAddAry,
-      stdColorAry,
-      submitInfo,
       isOpen,
-      openTip,
       needReport,
+      barChartSeries,
+      barChartOptions,
+      donutChartOptions1,
+      donutChartSeries1,
+      donutChartOptions2,
+      donutChartSeries2,
+      donutChartOptions3,
+      donutChartSeries3,
+
+      handleSelection,
+      submitInfo,
     };
   },
 };

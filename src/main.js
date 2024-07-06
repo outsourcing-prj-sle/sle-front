@@ -6,6 +6,7 @@ import i18n from '@/utils/i18n.js';
 import './assets/css/style.css';
 import { setupCalendar, Calendar, DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
+import VueApexCharts from 'vue3-apexcharts';
 
 const app = createApp(App);
 app.use(i18n);
@@ -16,6 +17,9 @@ app.config.globalProperties.$t = i18n.global.t;
 app.use(setupCalendar, {});
 app.component('VCalendar', Calendar);
 app.component('VDatePicker', DatePicker);
+
+// 차트
+app.use(VueApexCharts);
 
 app.use(pinia);
 app.use(router);
