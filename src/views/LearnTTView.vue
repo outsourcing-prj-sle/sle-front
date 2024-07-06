@@ -412,54 +412,35 @@ export default {
 
     const barChartSeries = ref([
       {
-        name: 'Males',
-        data: [0.4, 0.65, 0.76, 0.88, 1.5, 2.1],
+        name: '1',
+        data: [3, 1, 6],
       },
       {
-        name: 'Females',
-        data: [-0.8, -1.05, -1.06, -1.18, -1.4, -2.2],
+        name: '2',
+        data: [-2, -2, -1],
       },
     ]);
 
     const barChartOptions = ref({
       chart: {
         horizontal: true,
+        stacked: true,
       },
       colors: [
-        '#33b2df',
-        '#546E7A',
-        '#d4526e',
-        '#13d8aa',
-        '#A5978B',
-        '#2b908f',
+        '#A46DF1',
+        '#FF80BD',
+        '#2584FF',
       ],
       plotOptions: {
         bar: {
-          distributed: true, // << 이 옵션 꼭 필요
-          borderRadius: 5,
+          distributed: true, 
           borderRadiusApplication: 'end', // 'around', 'end'
           borderRadiusWhenStacked: 'all', // 'all', 'last'
           horizontal: true,
-          borderRadius: 30,
+          borderRadius: 28,
           toolbar: {
             show: false,
           },
-        },
-      },
-      xaxis: {
-        min: 0,
-        max: 20,
-        labels: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        lines: {
-          show: false,
         },
       },
       yaxis: {
@@ -473,29 +454,39 @@ export default {
       grid: {
         xaxis: {
           lines: {
-            show: false,
+            show: true,
+            offsetX: 0,
+            offsetY: 0,
+            color: '#E0E0E0',
+            strokeDashArray: 1,
+            opacity: 0.5,
+          },
+        },
+        yaxis: {
+          lines: {
+            show: true,
           },
         },
       },
-      yaxis: {
-        stepSize: 1,
-      },
       tooltip: {
-        shared: false,
+        enabled: false, 
       },
-      title: {
-        text: 'Mauritius population pyramid 2011',
+      dataLabels: {
+        enabled: false, 
+      },
+      legend: {
+        show: false,
       },
       xaxis: {
-        // categories: ['15-19', '10-14', '5-9', '0-4'],
-        title: {
-          text: 'Percent',
+        min: -10,
+        max: 10,
+        categories: ['1', '2', '3'],
+        labels: {
+          show: false,
         },
-        // labels: {
-        //   formatter: function (val) {
-        //     return Math.abs(Math.round(val)) + '%';
-        //   },
-        // },
+        axisTicks: {
+          show: true,
+        },
       },
     });
 
