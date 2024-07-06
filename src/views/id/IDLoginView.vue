@@ -92,7 +92,7 @@ export default {
         name: resData.userNM || 'name',
       });
 
-      const redirectPath = route.query.redirect || '/id/manage-report';
+      const redirectPath = route.query.redirect || '/id/report';
       router.push(redirectPath);
     };
     return {
