@@ -31,9 +31,9 @@
     >
       <div class="py-1 max-h-48 overflow-y-auto" v-if="options.length">
         <a
-          v-for="option in options"
+          v-for="(option, i) in options"
           :key="option"
-          @click="selectOption(option)"
+          @click="selectOption(i)"
           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
         >
           {{ option }}
@@ -44,9 +44,9 @@
         v-else-if="objectOptions.length"
       >
         <a
-          v-for="option in objectOptions"
+          v-for="(option, i) in objectOptions"
           :key="option"
-          @click="selectOption(option.value)"
+          @click="selectOption(i)"
           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
         >
           {{ option.name }}
@@ -64,9 +64,11 @@ export default {
   props: {
     options: {
       type: Array,
+      default: () => [],
     },
     objectOptions: {
       type: Array, // { name, value}
+      default: () => [],
     },
     startText: {
       type: String,
@@ -98,10 +100,20 @@ export default {
       isOpen.value = !isOpen.value;
     };
 
-    const selectOption = (option) => {
-      selectedOption.value = option;
+    const selectOption = (index) => {
+      let selectedName = '';
+      let selectedValue = '';
+      if (props.options.length) {
+        selectedName = props.options[index];
+      }
+      if (props.objectOptions.length) {
+        selectedName = props.objectOptions[index].name;
+        selectedValue = props.objectOptions[index].value;
+      }
+
+      selectedOption.value = selectedName;
       isOpen.value = false;
-      emit('update:selectedOption', option);
+      emit('update:selectedOption', selectedValue || selectedName);
     };
 
     return {

@@ -410,33 +410,35 @@ export default {
       alert('설문이 저장되었습니다!');
     };
 
-    const barChartSeries = ref([{
-      data: [
-        {
-          x: 'TEAM A',
-          y: [8, 13],
-          fillColor: '#A46DF1',
-        },
-        {
-          x: 'TEAM B',
-          y: [8, 11],
-          fillColor: '#FF80BD',
-        },
-        {
-          x: 'TEAM C',
-          y: [9, 16],
-          fillColor: '#2584FF',
-        }
-      ]
-    }]);
+    const barChartSeries = ref([
+      {
+        name: 'Males',
+        data: [0.4, 0.65, 0.76, 0.88, 1.5, 2.1],
+      },
+      {
+        name: 'Females',
+        data: [-0.8, -1.05, -1.06, -1.18, -1.4, -2.2],
+      },
+    ]);
 
     const barChartOptions = ref({
       chart: {
         horizontal: true,
       },
-      colors: ['#A46DF1', '#FF80BD', '#2584FF'],
+      colors: [
+        '#33b2df',
+        '#546E7A',
+        '#d4526e',
+        '#13d8aa',
+        '#A5978B',
+        '#2b908f',
+      ],
       plotOptions: {
         bar: {
+          distributed: true, // << 이 옵션 꼭 필요
+          borderRadius: 5,
+          borderRadiusApplication: 'end', // 'around', 'end'
+          borderRadiusWhenStacked: 'all', // 'all', 'last'
           horizontal: true,
           borderRadius: 30,
           toolbar: {
@@ -471,25 +473,29 @@ export default {
       grid: {
         xaxis: {
           lines: {
-            show: true,
-            offsetX: 0,
-            offsetY: 0,
-            color: '#E0E0E0',
-            strokeDashArray: 0,
-            opacity: 0.5,
-          },
-        },
-        yaxis: {
-          lines: {
-            show: true,
+            show: false,
           },
         },
       },
-      dataLabels: {
-        enabled: false,
+      yaxis: {
+        stepSize: 1,
       },
-      fill: {
-        type: 'solid',
+      tooltip: {
+        shared: false,
+      },
+      title: {
+        text: 'Mauritius population pyramid 2011',
+      },
+      xaxis: {
+        // categories: ['15-19', '10-14', '5-9', '0-4'],
+        title: {
+          text: 'Percent',
+        },
+        // labels: {
+        //   formatter: function (val) {
+        //     return Math.abs(Math.round(val)) + '%';
+        //   },
+        // },
       },
     });
 

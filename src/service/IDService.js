@@ -93,7 +93,7 @@ return;
  */
 
 const login = (data = {}) => {
-  return apiClient.post('/login', data);
+  return apiClient.post(baseURL + '/login', data);
 };
 
 // 연구소 관리자 목록 조회

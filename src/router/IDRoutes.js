@@ -2,7 +2,7 @@ import IDLayout from '@/layouts/IDLayout.vue';
 import IDLoginView from '@/views/id/IDLoginView.vue';
 import IDManageReportView from '@/views/id/IDManageReportView.vue';
 import IDTest from '@/views/id/IDTest.vue';
-import IDManageReportDtlView from '@/views/id/IDManageReportDtlView.vue'
+import IDManageReportDtlView from '@/views/id/IDManageReportDtlView.vue';
 import IDManageSelView from '@/views/id/IDManageSelView.vue';
 import IDManageLtView from '@/views/id/IDManageLtView.vue';
 import IDManageResearchView from '@/views/id/IDManageResearchView.vue';
@@ -13,17 +13,6 @@ const IDRoutes = [
     path: '/id',
     component: IDLayout,
     children: [
-      {
-        path: 'manage-report',
-        name: 'manageReport',
-        component: IDManageReportView,
-        meta: {
-          headerVisible: true,
-          sidebarVisible: true,
-          needLogin: true,
-          isManageReport: true,
-        },
-      },
       {
         path: 'login',
         name: 'IDLogin',
@@ -48,6 +37,7 @@ const IDRoutes = [
           headerVisible: true,
           sidebarVisible: true,
           isManageReport: true,
+          needLogin: true,
         },
       },
       {
@@ -58,6 +48,7 @@ const IDRoutes = [
           headerVisible: true,
           sidebarVisible: true,
           isManageReport: true,
+          needLogin: true,
         },
       },
       {
@@ -68,6 +59,7 @@ const IDRoutes = [
           headerVisible: true,
           sidebarVisible: true,
           isManageSel: true,
+          needLogin: true,
         },
       },
       {
@@ -78,6 +70,7 @@ const IDRoutes = [
           headerVisible: true,
           sidebarVisible: true,
           isManageLt: true,
+          needLogin: true,
         },
       },
       {
@@ -88,6 +81,7 @@ const IDRoutes = [
           headerVisible: true,
           sidebarVisible: true,
           isManageResearch: true,
+          needLogin: true,
         },
       },
       {
@@ -98,6 +92,7 @@ const IDRoutes = [
           headerVisible: true,
           sidebarVisible: true,
           isManageResearch: true,
+          needLogin: true,
         },
       },
     ],
