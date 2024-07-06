@@ -59,7 +59,9 @@
               <div class="flex gap-[10px] justify-center" v-if="v.isButton2">
                 <button class="edit border border-[#2F80ED] rounded-[5px] px-3 py-3 text-sm font-semibold whitespace-nowrap hover:bg-[#2F80ED] hover:text-white">
                 </button>
-                <button class="trash border border-[#2F80ED] rounded-[5px] px-3 py-3 text-sm font-semibold whitespace-nowrap hover:bg-[#2F80ED] hover:text-white">
+                <button class="trash border border-[#2F80ED] rounded-[5px] px-3 py-3 text-sm font-semibold whitespace-nowrap hover:bg-[#2F80ED] hover:text-white"
+                @click="deleteUserInfo(v.uniqId)"
+                >
                 </button>
               </div>
               <div class="cursor-pointer min-w-[45px] flex flex-1 justify-center items-center w-full" v-if="v.isOpenPopup">
@@ -80,6 +82,7 @@
 <script>
 import { computed } from 'vue';
 import IDButtonVue from '@/components/id/IDButton.vue'
+import IDService from '@/service/IDService.js';
 
 export default {
   components: {
@@ -98,8 +101,19 @@ export default {
   setup(props, { emit }) {
     const body = computed(() => props._body);
 
+    const deleteUserInfo = async (uniqId) => {
+      if(confirm('정말 삭제하시겠습니까?')) {
+        const response = await IDService.deleteResearchAdmin(uniqId, {});
+        const resData = response.data;
+        alert(resData);
+        emit('userDeleted');
+      }
+    };
+
     return {
       body,
+
+      deleteUserInfo,
     };
   },
 };
