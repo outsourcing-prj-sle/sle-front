@@ -14,7 +14,7 @@
       v-for="i in range"
       :key="i"
       class="hover:bg-[#2F80ED] hover:text-white"
-      :text="i"
+      :text="i + ''"
       :isGray="i !== pageNo"
     />
     <IDButton
@@ -32,6 +32,7 @@
 
 <script>
 import IDButton from '@/components/id/IDButton.vue';
+import { computed } from 'vue';
 
 export default {
   components: {
@@ -51,24 +52,26 @@ export default {
       required: true,
     },
   },
-  computed: {
-    range() {
-      let start =
-        Number.parseInt(this.pageNo / this.recordCount) * this.recordCount + 1;
+  setup(props, { emit }) {
+    const range = computed(() => {
+      if (!props.pageNo || !props.recordCount || !props.totalCount) return [];
+      let start = props.pageNo - ((props.pageNo - 1) % props.recordCount);
       let end =
-        start + this.recordCount > this.totalCount
-          ? this.totalCount + 1
-          : start + this.recordCount;
+        props.pageNo + 9 > props.totalCount
+          ? props.totalCount
+          : props.pageNo + 9;
+
       const array = [];
 
       for (let i = start; i < end; i++) {
         array.push(i);
       }
       return array;
-    },
-  },
-  setup(props, { emit }) {
-    console.log(props);
+    });
+
+    return {
+      range,
+    };
   },
 };
 </script>

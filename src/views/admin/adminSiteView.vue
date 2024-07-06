@@ -20,14 +20,14 @@
       <AdminTable :header="header" :body="body" />
       <AdminPagination :pageNo="1" :recordCount="10" :totalCount="12" />
       <div class="w-full text-right">
-        <AdminButton :text="'등록'" />
+        <AdminButton :text="'등록'" @onClick="goSiteUpdate" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useAdminStore } from '@/store/adminStore.js';
 import AdminService from '@/service/AdminService.js';
@@ -50,6 +50,8 @@ export default {
     const adminStore = useAdminStore();
     const options = ref(['최신순', '오래된순']);
     const selectedOption = ref('최신순');
+    const page = ref(1);
+    const limit = ref(10);
     const header = ref([
       {
         text: '번호',
@@ -87,8 +89,29 @@ export default {
       ],
     ]);
 
+    onMounted(() => {
+      fetchList();
+    });
+
+    const fetchList = async () => {
+      const listResponse = await AdminService.systemInfoList('site', {
+        page: page.value,
+        limit: limit.value,
+      });
+      const resData = listResponse.data;
+      if (resData.error) {
+        alert(resData.error);
+        return;
+      }
+      console.log(resData);
+    };
+
     const handleSelection1 = (v) => {
       selectedOption.value = v;
+    };
+
+    const goSiteUpdate = () => {
+      router.push({ name: 'adminSiteUpdate' });
     };
 
     return {
@@ -98,6 +121,7 @@ export default {
       selectedOption,
 
       handleSelection1,
+      goSiteUpdate,
     };
   },
 };
