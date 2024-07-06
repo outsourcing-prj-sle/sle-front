@@ -1,209 +1,327 @@
 <template>
-  <div class="absolute top-0 left-0 w-full h-full bg-black opacity-40 z-50" v-if="isShow1 || isShow2" @click="togglePopup(false)"></div>
-    <div v-if="isShow1"
-      class="content-center p-8 min-h-[350px] z-50 bg-white rounded-[20px] shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2 flex flex-col gap-[10px]"
+  <div
+    class="absolute top-0 left-0 w-full h-full bg-black opacity-40 z-50"
+    v-if="isShow1 || isShow2"
+    @click="togglePopup(false)"
+  ></div>
+  <div
+    v-if="isShow1"
+    class="content-center p-8 min-h-[350px] z-50 bg-white rounded-[20px] shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2 flex flex-col gap-[10px]"
+    style="transform: translate(-50%, -50%) scale(0.8)"
+  >
+    <div class="flex justify-between items-center">
+      <p class="text-lg font-bold">SEL 설문관리</p>
+      <button class="text-2xl font-bold" @click="togglePopup(false)">x</button>
+    </div>
+    <p class="text-base text-left font-semibold">SEL 활동명 : {{ title }}</p>
+    <div class="flex flex-col gap-[10px] text-sm items-start mt-[10px]">
+      <p class="text-left text-[#2F80ED] font-semibold">기간 설정</p>
+      <div class="flex justify-between items-center w-full">
+        <div class="flex items-center gap-[20px]">
+          <p class="w-[50px] text-left">시작일</p>
+          <VDatePicker v-model="startDate">
+            <template #default="{ togglePopover }">
+              <div class="flex items-center gap-2">
+                <button
+                  class="px-10 py-2.5 text-[#797979] rounded-xl text-xs font-light bg-white border-[#CECECE] border border-solid"
+                  @click="togglePopover"
+                >
+                  {{ formattedStartDate }}
+                </button>
+                <button
+                  class="py-2 px-3 rounded-xl bg-white border-[#CECECE] border border-solid"
+                  @click="togglePopover"
+                >
+                  <img
+                    class="w-6 h-6"
+                    src="@/assets/img/IDCalendar.png"
+                    alt="IDCalendar"
+                  />
+                </button>
+              </div>
+            </template>
+          </VDatePicker>
+        </div>
+        <div class="flex items-center gap-[20px]">
+          <p class="w-[50px] text-left">종료일</p>
+          <VDatePicker v-model="endDate">
+            <template #default="{ togglePopover }">
+              <div class="flex items-center gap-2">
+                <button
+                  class="px-10 py-2.5 text-[#797979] rounded-xl text-xs font-light bg-white border-[#CECECE] border border-solid"
+                  @click="togglePopover"
+                >
+                  {{ formattedEndDate }}
+                </button>
+                <button
+                  class="py-2 px-3 rounded-xl bg-white border-[#CECECE] border border-solid"
+                  @click="togglePopover"
+                >
+                  <img
+                    class="w-6 h-6"
+                    src="@/assets/img/IDCalendar.png"
+                    alt="IDCalendar"
+                  />
+                </button>
+              </div>
+            </template>
+          </VDatePicker>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-[10px] text-sm items-start mt-[10px]">
+      <p class="text-left text-[#2F80ED] font-semibold">대상 설정</p>
+      <div class="flex flex-col gap-[20px] text-sm">
+        <div class="flex gap-[20px] items-center">
+          <p class="w-[50px] text-left">학교</p>
+          <div class="flex gap-[10px]">
+            <input
+              type="radio"
+              id="option1"
+              value="1"
+              v-model="isChooseSchool"
+            />
+            <label class="cursor-pointer" for="option1">학교/학년 전체</label>
+          </div>
+          <div class="flex gap-[10px]">
+            <input
+              type="radio"
+              id="option2"
+              value="2"
+              v-model="isChooseSchool"
+            />
+            <label class="cursor-pointer" for="option2"
+              >특정 학교 직접 선택</label
+            >
+          </div>
+        </div>
+        <div class="flex gap-[10px] items-center" v-if="isChooseSchool === '1'">
+          <p class="w-[50px] text-left">학교급</p>
+          <IDButton
+            :text="'초등학교'"
+            :isWhite="schValue === 'SCH_02' ? false : true"
+            :_width="100"
+            @onClick="() => changeSch('SCH_02')"
+            class="hover:bg-[#2F80ED] hover:text-white text-black"
+          />
+          <IDButton
+            :text="'중학교'"
+            :isWhite="schValue === 'SCH_03' ? false : true"
+            :_width="100"
+            @onClick="() => changeSch('SCH_03')"
+            class="hover:bg-[#2F80ED] hover:text-white text-black"
+          />
+          <IDButton
+            :text="'고등학교'"
+            :isWhite="schValue === 'SCH_04' ? false : true"
+            :_width="100"
+            @onClick="() => changeSch('SCH_04')"
+            class="hover:bg-[#2F80ED] hover:text-white text-black"
+          />
+        </div>
+        <div class="flex gap-[10px] items-center" v-if="isChooseSchool === '2'">
+          <p class="w-[50px] text-left">학교급</p>
+          <IDButton
+            :text="'학교검색'"
+            :isWhite="false"
+            :_width="100"
+            @click="toggleSubPopup"
+          />
+        </div>
+        <div class="flex gap-[10px] items-center" v-if="isChooseSchool === '1'">
+          <p class="w-[50px] text-left">학년</p>
+          <IDButton
+            :text="'1학년'"
+            :isWhite="gradeValue.includes('GRADE01') ? false : true"
+            :_width="70"
+            @onClick="() => changeGrade('GRADE01')"
+            class="hover:bg-[#2F80ED] hover:text-white text-black"
+          />
+          <IDButton
+            :text="'2학년'"
+            :isWhite="gradeValue.includes('GRADE02') ? false : true"
+            :_width="70"
+            @onClick="() => changeGrade('GRADE02')"
+            class="hover:bg-[#2F80ED] hover:text-white text-black"
+          />
+          <IDButton
+            :text="'3학년'"
+            :isWhite="gradeValue.includes('GRADE03') ? false : true"
+            :_width="70"
+            @onClick="() => changeGrade('GRADE03')"
+            class="hover:bg-[#2F80ED] hover:text-white text-black"
+          />
+          <IDButton
+            v-if="schValue === 'SCH_02'"
+            :text="'4학년'"
+            :isWhite="gradeValue.includes('GRADE04') ? false : true"
+            :_width="70"
+            @onClick="() => changeGrade('GRADE04')"
+            class="hover:bg-[#2F80ED] hover:text-white text-black"
+          />
+          <IDButton
+            v-if="schValue === 'SCH_02'"
+            :text="'5학년'"
+            :isWhite="gradeValue.includes('GRADE05') ? false : true"
+            :_width="70"
+            @onClick="() => changeGrade('GRADE05')"
+            class="hover:bg-[#2F80ED] hover:text-white text-black"
+          />
+          <IDButton
+            v-if="schValue === 'SCH_02'"
+            :text="'6학년'"
+            :isWhite="gradeValue.includes('GRADE06') ? false : true"
+            :_width="70"
+            @onClick="() => changeGrade('GRADE06')"
+            class="hover:bg-[#2F80ED] hover:text-white text-black"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex text-sm justify-center mt-[10px]"
+      v-if="isChooseSchool === '1'"
+    >
+      <IDButton
+        :text="'추가'"
+        :_width="150"
+        isGray="true"
+        @click="startAddTarget"
+        class="bg-gray-300 text-white"
+      />
+    </div>
+    <p class="text-base text-left font-semibold">목록</p>
+    <div
+      class="w-full bg-gray-100 min-h-[200px] rounded-md flex p-[10px] pt-[20px] gap-[10px] flex-wrap"
+    >
+      <div v-for="v in pollTarget" :key="`${v.text}pollTarget`">
+        <IDButton
+          v-if="v"
+          :text="v.text"
+          :_width="150"
+          :isEllipsis="true"
+          :isWhite="true"
+          @onClick="() => delTarget(v.code)"
+          class="h-[40px] text-black btn-selected"
+        />
+      </div>
+    </div>
+
+    <div class="flex text-sm justify-center mt-[10px]">
+      <IDButton :text="'저장'" :_width="150" @click="submit" />
+    </div>
+
+    <div
+      v-if="isShow2"
+      class="content-center p-8 z-50 bg-white rounded-[20px] shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2 flex flex-col gap-[10px] min-w-[500px]"
       style="transform: translate(-50%, -50%)"
     >
       <div class="flex justify-between items-center">
-        <p class="text-lg font-bold">SEL 설문관리</p>
-        <button class="text-2xl font-bold" @click="togglePopup(false)">x</button>
+        <p class="text-lg font-bold">학교검색</p>
+        <button class="text-2xl font-bold" @click="toggleSubPopup">x</button>
       </div>
-      <p class="text-base text-left font-semibold">SEL 활동명 : 마음알기 설문1</p>
-      <div class="flex flex-col gap-[10px] text-sm items-start mt-[10px]">
-        <p class="text-left text-[#2F80ED] font-semibold">기간 설정</p>
-        <div class="flex justify-between items-center w-full">
-          <div class="flex items-center gap-[20px]">
-            <p class="w-[50px] text-left">시작일</p>
-            <VDatePicker v-model="startDate">
-              <template #default="{ togglePopover }">
-                <div class="flex items-center gap-2">
-                  <button
-                    class="px-10 py-2.5 text-[#797979] rounded-xl text-xs font-light bg-white border-[#CECECE] border border-solid"
-                    @click="togglePopover"
-                  >
-                    {{ formattedStartDate }}
-                  </button>
-                  <button
-                    class="py-2 px-3 rounded-xl bg-white border-[#CECECE] border border-solid"
-                    @click="togglePopover"
-                  >
-                    <img
-                      class="w-6 h-6"
-                      src="@/assets/img/IDCalendar.png"
-                      alt="IDCalendar"
-                    />
-                  </button>
-                </div>
-              </template>
-            </VDatePicker>
-          </div>
-          <div class="flex items-center gap-[20px]">
-            <p class="w-[50px] text-left">종료일</p>
-            <VDatePicker v-model="endDate">
-              <template #default="{ togglePopover }">
-                <div class="flex items-center gap-2">
-                  <button
-                    class="px-10 py-2.5 text-[#797979] rounded-xl text-xs font-light bg-white border-[#CECECE] border border-solid"
-                    @click="togglePopover"
-                  >
-                    {{ formattedEndDate }}
-                  </button>
-                  <button
-                    class="py-2 px-3 rounded-xl bg-white border-[#CECECE] border border-solid"
-                    @click="togglePopover"
-                  >
-                    <img
-                      class="w-6 h-6"
-                      src="@/assets/img/IDCalendar.png"
-                      alt="IDCalendar"
-                    />
-                  </button>
-                </div>
-              </template>
-            </VDatePicker>
-          </div>
-        </div>
-      </div>
-      <div class="flex flex-col gap-[10px] text-sm items-start mt-[10px]">
-        <p class="text-left text-[#2F80ED] font-semibold">대상 설정</p>
-        <div class="flex flex-col gap-[20px] text-sm">
-          <div class="flex gap-[20px] items-center">
-            <p class="w-[50px] text-left">학교</p>
-            <div class="flex gap-[10px]">
-              <input type="radio" id="option1" value="1" />
-              <label class="cursor-pointer" for="option1">학교/학년 전체</label>
-            </div>
-            <div class="flex gap-[10px]">
-              <input type="radio" id="option2" value="1" />
-              <label class="cursor-pointer" for="option2">특정 학교 직접 선택</label>
-            </div>
-          </div>
-          <div class="flex gap-[10px] items-center">
-            <p class="w-[50px] text-left">학교급</p>
-            <IDButton :text="'초등학교'" :isWhite="true" :_width="100" class="hover:bg-[#2F80ED] hover:text-white text-black" />
-            <IDButton :text="'중학교'" :isWhite="true" :_width="100" class="hover:bg-[#2F80ED] hover:text-white text-black" />
-            <IDButton :text="'고등학교'" :isWhite="true" :_width="100" class="hover:bg-[#2F80ED] hover:text-white text-black" />
-          </div>
-          <div class="flex gap-[10px] items-center">
-            <p class="w-[50px] text-left">학교급</p>
-            <IDButton :text="'학교검색'" :isWhite="false" :_width="100" />
-          </div>
-          <div class="flex gap-[10px] items-center">
-            <p class="w-[50px] text-left">학년</p>
-            <IDButton :text="'1학년'" :isWhite="true" :_width="70" class="hover:bg-[#2F80ED] hover:text-white text-black" />
-            <IDButton :text="'2학년'" :isWhite="true" :_width="70" class="hover:bg-[#2F80ED] hover:text-white text-black" />
-            <IDButton :text="'3학년'" :isWhite="true" :_width="70" class="hover:bg-[#2F80ED] hover:text-white text-black" />
-            <IDButton :text="'4학년'" :isWhite="true" :_width="70" class="hover:bg-[#2F80ED] hover:text-white text-black" />
-            <IDButton :text="'5학년'" :isWhite="true" :_width="70" class="hover:bg-[#2F80ED] hover:text-white text-black" />
-            <IDButton :text="'6학년'" :isWhite="true" :_width="70" class="hover:bg-[#2F80ED] hover:text-white text-black" />
-          </div>
-        </div>
-      </div>
-      <div class="flex text-sm justify-center mt-[10px]">
-        <IDButton :text="'추가'" :_width="150" isGray="true" @click="toggleSubPopup" class="bg-gray-300 text-white" />
-      </div>
-      <p class="text-base text-left font-semibold">목록</p>
-      <div class="w-full bg-gray-100 min-h-[200px] rounded-md flex p-[10px] pt-[20px] gap-[10px] flex-wrap">
-        <div>
-          <IDButton :text="'초등학교-3학년'" :_width="120" :isWhite="true" class="h-[40px] text-black btn-selected"  />
-        </div>
-        <div>
-          <IDButton :text="'초등학교-4학년'" :_width="120" :isWhite="true" class="h-[40px] text-black btn-selected"  />
-        </div>
-        <div>
-          <IDButton :text="'초등학교-5학년'" :_width="120" :isWhite="true" class="h-[40px] text-black btn-selected"  />
-        </div>
-        <div>
-          <IDButton :text="'초등학교-6학년'" :_width="120" :isWhite="true" class="h-[40px] text-black btn-selected"  />
-        </div>
-        <div>
-          <IDButton :text="'중학교-1학년'" :_width="120" :isWhite="true" class="h-[40px] text-black btn-selected"  />
-        </div>
-        <div>
-          <IDButton :text="'중학교-2학년'" :_width="120" :isWhite="true" class="h-[40px] text-black btn-selected"  />
-        </div>
-        <div>
-          <IDButton :text="'중학교-3학년'" :_width="120" :isWhite="true" class="h-[40px] text-black btn-selected"  />
-        </div>
-        <div>
-          <IDButton :text="'고등학교-1학년'" :_width="120" :isWhite="true" class="h-[40px] text-black btn-selected"  />
-        </div>
-        <div>
-          <IDButton :text="'고등학교-2학년'" :_width="120" :isWhite="true" class="h-[40px] text-black btn-selected"  />
-        </div>
-        <div>
-          <IDButton :text="'고등학교-3학년'" :_width="120" :isWhite="true" class="h-[40px] text-black btn-selected"  />
-        </div>
-      </div>
-
-      <div v-if="isShow2"
-      class="content-center p-8 z-50 bg-white rounded-[20px] shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2 flex flex-col gap-[10px] min-w-[500px]"
-      style="transform: translate(-50%, -50%)"
-      >
-        <div class="flex justify-between items-center">
-          <p class="text-lg font-bold">학교검색</p>
-          <button class="text-2xl font-bold" @click="toggleSubPopup">x</button>
-        </div>
-        <IDSearch class="w-full"
+      <IDSearch
+        class="w-full"
+        v-model="searchText"
+        @keyup.enter="searchSch"
         :placeholder="'학교명을 입력해주세요.'"
-        />
-        <div class="flex items-center gap-[20px]">
-          <AppDropdown
-          :options="options1"
+      />
+      <div class="flex items-center gap-[20px]">
+        <AppDropdown
+          :objectOptions="options1"
           :startText="selectedOption1"
           :openFull="true"
           @update:selectedOption="handleSelection1"
-          />
-          <AppDropdown
+        />
+        <AppDropdown
           :options="options2"
           :startText="selectedOption2"
           :openFull="true"
-          @update:selectedOption="handleSelection1"
-          />
-        </div>
-        <div class="w-full flex flex-col gap-[10px]">
-          <div class="w-full bg-gray-100 rounded-md flex p-[10px] gap-[5px] flex-wrap flex-col cursor-pointer">          
-            <p class="text-base text-left font-semibold">아이초등학교</p>
-            <p class="text-xs text-gray-500 text-left">충청북도 청주시</p>
-          </div>
-          <div class="w-full bg-[#2F80ED] text-white rounded-md flex p-[10px] gap-[5px] flex-wrap flex-col cursor-pointer">
-            <p class="text-base text-left font-semibold">톡톡초등학교</p>
-            <p class="text-xs text-left">충청북도 청주시</p>
-            <div class="w-full flex gap-[10px] mt-[10px]">
-              <div class="w-[35px]">
-                <p class="text-sm text-left font-semibold">학년</p>
-              </div>
-              <div class="flex gap-[10px] flex-wrap items-center">
-                <div>
-                  <IDButton :text="'전체'" :_width="60" :isWhite="true" class="h-[30px] text-black text-xs"  />
-                </div>
-                <div>
-                  <IDButton :text="'1학년'" :_width="60" :isWhite="true" class="h-[30px] text-black text-xs"  />
-                </div>
-                <div>
-                  <IDButton :text="'2학년'" :_width="60" :isWhite="true" class="h-[30px] text-black text-xs"  />
-                </div>
-                <div>
-                  <IDButton :text="'3학년'" :_width="60" :isWhite="true" class="h-[30px] text-black text-xs"  />
-                </div>
-                <div>
-                  <IDButton :text="'4학년'" :_width="60" :isWhite="true" class="h-[30px] text-black text-xs"  />
-                </div>
-                <div>
-                  <IDButton :text="'5학년'" :_width="60" :isWhite="true" class="h-[30px] text-black text-xs"  />
-                </div>
-                <div>
-                  <IDButton :text="'6학년'" :_width="60" :isWhite="true" class="h-[30px] text-black text-xs"  />
-                </div>
-              </div>    
+          @update:selectedOption="handleSelection2"
+        />
+      </div>
+      <div class="w-full flex flex-col gap-[10px]">
+        <div
+          v-for="(v, i) in schList"
+          :key="`${i}${v.schulCode}`"
+          class="w-full bg-gray-100 rounded-md flex p-[10px] gap-[5px] flex-wrap flex-col cursor-pointer"
+        >
+          <p class="text-base text-left font-semibold">{{ v.schulNm }}</p>
+          <p class="text-xs text-gray-500 text-left">{{ v.regionDetail }}</p>
+          <div class="w-full flex gap-[10px] mt-[10px]">
+            <div class="w-[35px]">
+              <p class="text-sm text-left font-semibold">학년</p>
             </div>
-            <div class="mt-[10px]">
-              <IDButton :text="'추가'" :_width="60" class="h-[30px] border border-gray-400 bg-gray-400 text-xs"  />
-            </div>     
+            <div class="flex gap-[10px] flex-wrap items-center">
+              <div>
+                <IDButton
+                  :text="'전체'"
+                  :_width="60"
+                  :isWhite="true"
+                  class="h-[30px] text-black text-xs"
+                />
+              </div>
+              <div>
+                <IDButton
+                  :text="'1학년'"
+                  :_width="60"
+                  :isWhite="true"
+                  class="h-[30px] text-black text-xs"
+                />
+              </div>
+              <div>
+                <IDButton
+                  :text="'2학년'"
+                  :_width="60"
+                  :isWhite="true"
+                  class="h-[30px] text-black text-xs"
+                />
+              </div>
+              <div>
+                <IDButton
+                  :text="'3학년'"
+                  :_width="60"
+                  :isWhite="true"
+                  class="h-[30px] text-black text-xs"
+                />
+              </div>
+              <div>
+                <IDButton
+                  :text="'4학년'"
+                  :_width="60"
+                  :isWhite="true"
+                  class="h-[30px] text-black text-xs"
+                />
+              </div>
+              <div>
+                <IDButton
+                  :text="'5학년'"
+                  :_width="60"
+                  :isWhite="true"
+                  class="h-[30px] text-black text-xs"
+                />
+              </div>
+              <div>
+                <IDButton
+                  :text="'6학년'"
+                  :_width="60"
+                  :isWhite="true"
+                  class="h-[30px] text-black text-xs"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="mt-[10px]">
+            <IDButton
+              :text="'추가'"
+              :_width="60"
+              class="h-[30px] border border-gray-400 bg-gray-400 text-xs"
+            />
           </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -220,22 +338,102 @@ export default {
   props: {
     isShow: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
+    metadata: {
+      type: Object,
+    },
   },
   components: {
     IDButton,
     IDSearch,
-    AppDropdown
+    AppDropdown,
   },
   setup(props, { emit }) {
+    const gradeDic = {
+      GRADE01: '1학년',
+      GRADE02: '2학년',
+      GRADE03: '3학년',
+      GRADE04: '4학년',
+      GRADE05: '5학년',
+      GRADE06: '6학년',
+    };
+    const schDic = {
+      SCH_02: '초등학교',
+      SCH_03: '중학교',
+      SCH_04: '고등학교',
+    };
+
     const route = useRoute();
     const router = useRouter();
     const IDStore = useIDStore();
     const stateStore = useStateStore();
+    const info = computed(() => {
+      return props.metadata;
+    });
+
+    const schValue = ref('SCH_02');
+    const gradeValue = ref([]);
+    const pollId = ref('');
+    const pollTarget = ref({});
+    const title = ref('');
+    const isChooseSchool = ref('1');
     const isShow1 = ref(props.isShow);
     const isShow2 = ref(false);
-    const options1 = ref(['학교급', 456]);
+    const options1 = ref([
+      {
+        name: '학교급',
+        value: 'all',
+      },
+      {
+        name: '초1',
+        value: 'SCH_02__GRADE01',
+      },
+      {
+        name: '초2',
+        value: 'SCH_02__GRADE02',
+      },
+      {
+        name: '초3',
+        value: 'SCH_02__GRADE03',
+      },
+      {
+        name: '초4',
+        value: 'SCH_02__GRADE04',
+      },
+      {
+        name: '초5',
+        value: 'SCH_02__GRADE05',
+      },
+      {
+        name: '초6',
+        value: 'SCH_02__GRADE06',
+      },
+      {
+        name: '중1',
+        value: 'SCH_03__GRADE01',
+      },
+      {
+        name: '중2',
+        value: 'SCH_03__GRADE02',
+      },
+      {
+        name: '중3',
+        value: 'SCH_03__GRADE03',
+      },
+      {
+        name: '고1',
+        value: 'SCH_04__GRADE01',
+      },
+      {
+        name: '고2',
+        value: 'SCH_04__GRADE02',
+      },
+      {
+        name: '고3',
+        value: 'SCH_04__GRADE03',
+      },
+    ]);
     const options2 = ref(['오름차순', '내림차순']);
     const selectedOption1 = ref('학교급');
     const selectedOption2 = ref('오름차순');
@@ -244,9 +442,42 @@ export default {
     const isWork = computed(() => {
       return stateStore.popupFlag;
     });
+    const originSchList = ref([]);
+    const schList = ref([]);
+    const selectedSch = ref();
+    const searchText = ref();
+    const searchTextComplete = ref();
+    const searchSchGradeComplete = ref();
+
     const handleSelection1 = (v) => {
-      console.log(v);
+      searchSchGradeComplete.value = v;
     };
+
+    const handleSelection2 = (v) => {
+      selectedOption2.value = v;
+    };
+
+    watch(
+      () => info.value,
+      (newVal) => {
+        console.log('newVal');
+        console.log(newVal);
+        title.value = newVal.pollNm;
+        startDate.value = new Date(toDateFormat(newVal.pollBgnde));
+        endDate.value = new Date(toDateFormat(newVal.pollEndde));
+        pollId.value = newVal.pollId;
+        let tmpObj = {};
+        for (let i in newVal.pollTarget) {
+          const key = newVal.pollTargetCode[i];
+          const val = newVal.pollTarget[i].replaceAll('__', '-');
+          tmpObj[key] = {
+            text: val,
+            code: key,
+          };
+        }
+        pollTarget.value = tmpObj;
+      }
+    );
 
     watch(
       () => isWork.value,
@@ -254,6 +485,14 @@ export default {
         togglePopup(popupFlag);
       }
     );
+
+    const toDateFormat = (d) => {
+      let year = d.slice(0, 4);
+      let month = d.slice(4, 6);
+      let day = d.slice(6, 8);
+
+      return `${year}-${month}-${day}`;
+    };
 
     const formattedStartDate = computed(() => {
       const tmp = new Date(startDate.value);
@@ -279,11 +518,100 @@ export default {
       isShow2.value = false;
     };
 
-    const toggleSubPopup = () => {
+    const toggleSubPopup = async () => {
+      if (!isShow2.value) {
+        const schInfoResponse = await IDService.getSchulInfo();
+
+        const resData = schInfoResponse.data;
+
+        if (resData.error) {
+          alert(resData.error);
+          return;
+        }
+        console.log(resData);
+        originSchList.value = resData.data;
+        sortSchList();
+      }
       isShow2.value = !isShow2.value;
     };
 
+    const submit = async () => {
+      IDService.updateReports({});
+    };
+
+    const changeSch = (v) => {
+      schValue.value = v;
+    };
+
+    const changeGrade = (v) => {
+      if (gradeValue.value.includes(v)) {
+        gradeValue.value = gradeValue.value.filter((item) => item !== v);
+      } else {
+        gradeValue.value.push(v);
+      }
+    };
+
+    const startAddTarget = () => {
+      const tmpGrade = gradeValue.value;
+      const tmpSch = schValue.value;
+      gradeValue.value = [];
+      for (let i in tmpGrade) {
+        addTarget(tmpSch, tmpGrade[i]);
+      }
+    };
+
+    const addTarget = (sch, grade, school = 'null', school_code = 'null') => {
+      const tmpObj = pollTarget.value;
+      const target = `${school_code}__${sch}__${grade}`;
+      const targetText =
+        school === 'null'
+          ? `${schDic[sch]}-${gradeDic[grade]}`
+          : `${school}-${schDic[sch]}-${gradeDic[grade]}`;
+      if (!pollTarget.value[target]) {
+        tmpObj[target] = { code: target, text: targetText };
+        pollTarget.value = tmpObj;
+      }
+    };
+
+    const delTarget = (key) => {
+      delete pollTarget.value[key];
+    };
+
+    const searchSch = () => {
+      searchTextComplete.value = searchText.value;
+      sortSchList();
+    };
+
+    const sortSchList = () => {
+      let tmpList = originSchList.value;
+      if (searchTextComplete.value) {
+        tmpList = tmpList.filter((item) =>
+          item.schulNm.includes(searchTextComplete.value)
+        );
+      }
+      if (
+        searchSchGradeComplete.value &&
+        searchSchGradeComplete.value !== 'all'
+      ) {
+        tmpList = tmpList.filter(
+          (item) => (item.schulGradeCode = searchSchGradeComplete.value)
+        );
+      }
+      if (selectedOption2.value === '오름차순') {
+        tmpList = [...tmpList].sort((a, b) =>
+          a.schulNm.localeCompare(b.schulNm)
+        );
+      } else {
+        tmpList = [...tmpList].sort((a, b) =>
+          b.schulNm.localeCompare(a.schulNm)
+        );
+      }
+
+      schList.value = tmpList;
+    };
+
     return {
+      title,
       isShow1,
       isShow2,
       options1,
@@ -294,28 +622,42 @@ export default {
       endDate,
       formattedStartDate,
       formattedEndDate,
+      isChooseSchool,
+      schValue,
+      gradeValue,
+      pollTarget,
+      searchText,
+      schList,
 
       handleSelection1,
+      handleSelection2,
       togglePopup,
-      toggleSubPopup
+      toggleSubPopup,
+      changeGrade,
+      changeSch,
+      submit,
+      startAddTarget,
+      addTarget,
+      delTarget,
+      searchSch,
     };
   },
 };
 </script>
 
 <style scoped>
-  .btn-selected::after {
-    content: 'x';
-    position: relative;
-    bottom: 35px;
-    left: 100px;
-    width: 15px;
-    height: 15px;
-    background-color: red;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-  }
+.btn-selected::after {
+  content: 'x';
+  position: relative;
+  bottom: 35px;
+  left: 130px;
+  width: 15px;
+  height: 15px;
+  background-color: red;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+}
 </style>

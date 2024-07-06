@@ -3,6 +3,7 @@
     class="border rounded-[10px] px-3 py-2 text-sm font-semibold"
     :style="{
       ...width,
+      ...ellipsis,
     }"
     :class="styleClass"
     @click="onClick"
@@ -29,6 +30,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    isEllipsis: {
+      type: Boolean,
+    },
   },
   setup(props, { emit }) {
     const styleClass = computed(() => {
@@ -46,12 +50,19 @@ export default {
       if (props._width) result.width = props._width + 'px';
       return result;
     });
+    const ellipsis = computed(() => {
+      const result = {};
+      if (props.isEllipsis)
+        result['overflow-hidden overflow-ellipsis whitespace-nowrap'] = true;
+      return result;
+    });
     const onClick = () => {
       emit('onClick');
     };
     return {
       styleClass,
       width,
+      ellipsis,
       onClick,
     };
   },

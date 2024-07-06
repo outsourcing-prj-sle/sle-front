@@ -1,5 +1,5 @@
 <template>
-  <IDPopup />
+  <IDPopup v-if="popupReport" :metadata="originList[popupReport]" />
   <div
     class="flex justify-start mx-[40px] my-[20px] max-md:mx-[20px] max-md:my-[20px]"
   >
@@ -31,9 +31,10 @@
 </template>
 
 <script>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useIDStore } from '@/store/IDStore.js';
+import { useStateStore } from '@/store/stateStore.js';
 import IDService from '@/service/IDService.js';
 import IDTableDtl from '@/components/id/IDTableDtl.vue';
 import AppDropdown from '@/components/AppDropdown.vue';
@@ -53,6 +54,9 @@ export default {
   },
   setup() {
     const rank = { 전체: 0, 초: 1, 중: 2, 고: 3 };
+    const stateStore = useStateStore();
+    const popupReport = computed(() => stateStore?.popupReport || '0');
+    const originList = ref([]);
     const options1 = ref(['전체']);
     const startOption1 = ref();
     const selectedValue1 = ref();
@@ -139,7 +143,7 @@ export default {
         recordCount: recordCount.value,
       });
       const resData = reportReponse.data;
-      console.log(resData);
+      originList.value = resData.pollList;
 
       pageNo.value = resData.pageNo;
       totalCount.value = resData.totalCount;
@@ -164,7 +168,7 @@ export default {
         } else {
           arr.push({ text: '-' });
         }
-        arr.push({ isOpenPopup: true });
+        arr.push({ isOpenPopup: idx + '' });
 
         if (item.pollTarget.length) {
           let ary = item.pollTarget;
@@ -228,6 +232,8 @@ export default {
     };
 
     return {
+      originList,
+      popupReport,
       options1,
       options2,
       startOption1,

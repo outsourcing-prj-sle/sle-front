@@ -68,7 +68,7 @@
                 class="w-[28px] h-[28px]"
                 src="@/assets/img/ico-gear.png"
                 alt=""
-                @click="openPopup"
+                @click="() => openPopup(v.isOpenPopup)"
               />
             </div>
             <div class="flex-1" v-else-if="v.isManage">연구소 관리자 관리</div>
@@ -109,8 +109,9 @@ export default {
       emit('onClick');
     };
 
-    const openPopup = () => {
+    const openPopup = (index) => {
       stateStore.openPopup();
+      stateStore.setPopupReportIndex(index);
     };
 
     return {
