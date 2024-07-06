@@ -69,6 +69,7 @@
       <IDTable
       :header="header"
       :_body="body"
+      @userDeleted="fetchResearchList"
       />
       <IDPagination
       :pageNo="pageNo"
@@ -183,7 +184,7 @@ export default {
           { text: item.userId },
           { text: item.phoneNumber },
           { text: item.emailAdres },
-          { isButton2: true },
+          { isButton2: true, uniqId: item.uniqId },
         ]
 
         result.push(arr);
