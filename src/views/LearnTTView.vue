@@ -45,9 +45,17 @@
           ></apexchart>
           <div class="flex items-start">
             <picture>
-              <img class="w-[100px]" src="@/assets/img/ico-lt-robot.svg" alt="">
+              <img
+                class="w-[100px]"
+                src="@/assets/img/ico-lt-robot.svg"
+                alt=""
+              />
             </picture>
-            <p class="text-left text-sm">우리 학급은 학습내용을 자유롭게 건너뛰면서 학습하는 성향의 아이들이 반복해서 과제를 확인하고 점검하는 성향의 아이들보다 많습니다.</p>
+            <p class="text-left text-sm">
+              우리 학급은 학습내용을 자유롭게 건너뛰면서 학습하는 성향의
+              아이들이 반복해서 과제를 확인하고 점검하는 성향의 아이들보다
+              많습니다.
+            </p>
           </div>
         </div>
         <div class="flex flex-col w-[300px] mt-[10px]">
@@ -59,9 +67,17 @@
           ></apexchart>
           <div class="flex items-start">
             <picture>
-              <img class="w-[100px]" src="@/assets/img/ico-lt-robot.svg" alt="">
+              <img
+                class="w-[100px]"
+                src="@/assets/img/ico-lt-robot.svg"
+                alt=""
+              />
             </picture>
-            <p class="text-left text-sm">우리 학급은 학습내용을 자유롭게 건너뛰면서 학습하는 성향의 아이들이 반복해서 과제를 확인하고 점검하는 성향의 아이들보다 많습니다.</p>
+            <p class="text-left text-sm">
+              우리 학급은 학습내용을 자유롭게 건너뛰면서 학습하는 성향의
+              아이들이 반복해서 과제를 확인하고 점검하는 성향의 아이들보다
+              많습니다.
+            </p>
           </div>
         </div>
         <div class="flex flex-col w-[300px] mt-[10px]">
@@ -73,9 +89,17 @@
           ></apexchart>
           <div class="flex items-start">
             <picture>
-              <img class="w-[100px]" src="@/assets/img/ico-lt-robot.svg" alt="">
+              <img
+                class="w-[100px]"
+                src="@/assets/img/ico-lt-robot.svg"
+                alt=""
+              />
             </picture>
-            <p class="text-left text-sm">우리 학급은 학습내용을 자유롭게 건너뛰면서 학습하는 성향의 아이들이 반복해서 과제를 확인하고 점검하는 성향의 아이들보다 많습니다.</p>
+            <p class="text-left text-sm">
+              우리 학급은 학습내용을 자유롭게 건너뛰면서 학습하는 성향의
+              아이들이 반복해서 과제를 확인하고 점검하는 성향의 아이들보다
+              많습니다.
+            </p>
           </div>
         </div>
       </div>
@@ -96,10 +120,12 @@
         <b class="text-xl">
           <span class="text-blue-500">{{ name }} 학생</span>의 학습성향 그래프
         </b>
-        <div class="flex justify-center items-center border border-gray-300 p-[20px] mt-[20px] gap-[10px] mb-[60px]">
-          <div class="flex flex-col min-w-[150px] w-[150px] h-[200px] text-sm font-bold justify-between
-          max-[1000px]:h-[150px] max-[900px]:h-[120px] max-[900px]:text-xs max-[900px]:w-[100px] max-[900px]:min-w-0 max-[800px]:hidden
-          ">
+        <div
+          class="flex justify-center items-center border border-gray-300 p-[20px] mt-[20px] gap-[10px] mb-[60px]"
+        >
+          <div
+            class="flex flex-col min-w-[150px] w-[150px] h-[200px] text-sm font-bold justify-between max-[1000px]:h-[150px] max-[900px]:h-[120px] max-[900px]:text-xs max-[900px]:w-[100px] max-[900px]:min-w-0 max-[800px]:hidden"
+          >
             <p>학습 콘텐츠를 자주 보고 점검하는 성향</p>
             <p>신속하게 과제를 수행하는 성향</p>
             <p>소통을 활발하게 하며 학습하는 성향</p>
@@ -110,9 +136,9 @@
             :options="barChartOptions"
             :series="barChartSeries"
           ></apexchart>
-          <div class="flex flex-col min-w-[150px] w-[150px] h-[200px] text-sm font-bold justify-between
-          max-[1000px]:h-[150px] max-[900px]:h-[120px] max-[900px]:text-xs max-[900px]:w-[100px] max-[900px]:min-w-0 max-[800px]:hidden
-          ">
+          <div
+            class="flex flex-col min-w-[150px] w-[150px] h-[200px] text-sm font-bold justify-between max-[1000px]:h-[150px] max-[900px]:h-[120px] max-[900px]:text-xs max-[900px]:w-[100px] max-[900px]:min-w-0 max-[800px]:hidden"
+          >
             <p>학습 콘텐츠를 건너뛰며 점검하는 성향</p>
             <p>느긋하게 과제를 수행하는 성향</p>
             <p>독립적으로 학습하는 성향</p>
@@ -426,14 +452,10 @@ export default {
         horizontal: true,
         stacked: true,
       },
-      colors: [
-        '#A46DF1',
-        '#FF80BD',
-        '#2584FF',
-      ],
+      colors: ['#A46DF1', '#FF80BD', '#2584FF'],
       plotOptions: {
         bar: {
-          distributed: true, 
+          distributed: true,
           borderRadiusApplication: 'end', // 'around', 'end'
           borderRadiusWhenStacked: 'all', // 'all', 'last'
           horizontal: true,
@@ -469,10 +491,10 @@ export default {
         },
       },
       tooltip: {
-        enabled: false, 
+        enabled: false,
       },
       dataLabels: {
-        enabled: false, 
+        enabled: false,
       },
       legend: {
         show: false,
@@ -488,6 +510,18 @@ export default {
           show: true,
         },
       },
+      states: {
+        hover: {
+          filter: {
+            type: 'none',
+          },
+        },
+        active: {
+          filter: {
+            type: 'none',
+          },
+        },
+      },
     });
 
     const donutChartOptions1 = ref({
@@ -495,23 +529,26 @@ export default {
         type: 'donut',
       },
       colors: ['#E3ACD0', '#72AFE7'],
-      labels: ['학습 콘텐츠를 건너뛰며 점검하는 성향', '학습 콘텐츠를 자주 보고 점검하는 성향'],
+      labels: [
+        '학습 콘텐츠를 건너뛰며 점검하는 성향',
+        '학습 콘텐츠를 자주 보고 점검하는 성향',
+      ],
       plotOptions: {
         pie: {
           donut: {
-            size: '50%'
-          }
-        }
+            size: '50%',
+          },
+        },
       },
       dataLabels: {
         enabled: true,
         formatter: function (val, opts) {
           return `${opts.w.config.series[opts.seriesIndex]}명`;
-        }
+        },
       },
       legend: {
         position: 'top',
-      }
+      },
     });
     const donutChartSeries1 = ref([20, 10]);
 
