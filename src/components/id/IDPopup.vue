@@ -1,12 +1,12 @@
 <template>
-  <div class="absolute top-0 left-0 w-full h-full bg-black opacity-40 z-50" v-if="isShow1 || isShow2" ></div>
+  <div class="absolute top-0 left-0 w-full h-full bg-black opacity-40 z-50" v-if="isShow1 || isShow2" @click="togglePopup(false)"></div>
     <div v-if="isShow1"
       class="content-center p-8 min-h-[350px] z-50 bg-white rounded-[20px] shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2 flex flex-col gap-[10px]"
       style="transform: translate(-50%, -50%)"
     >
       <div class="flex justify-between items-center">
         <p class="text-lg font-bold">SEL 설문관리</p>
-        <button class="text-2xl font-bold" @click="togglePopup">x</button>
+        <button class="text-2xl font-bold" @click="togglePopup(false)">x</button>
       </div>
       <p class="text-base text-left font-semibold">SEL 활동명 : 마음알기 설문1</p>
       <div class="flex flex-col gap-[10px] text-sm items-start mt-[10px]">
@@ -100,7 +100,7 @@
         </div>
       </div>
       <div class="flex text-sm justify-center mt-[10px]">
-        <IDButton :text="'추가'" :_width="150" isGray="true" class="bg-gray-300 text-white" />
+        <IDButton :text="'추가'" :_width="150" isGray="true" @click="toggleSubPopup" class="bg-gray-300 text-white" />
       </div>
       <p class="text-base text-left font-semibold">목록</p>
       <div class="w-full bg-gray-100 min-h-[200px] rounded-md flex p-[10px] pt-[20px] gap-[10px] flex-wrap">
@@ -207,9 +207,10 @@
 </template>
 
 <script>
-import { ref, onBeforeMount, computed } from 'vue';
+import { ref, watch, onBeforeMount, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useIDStore } from '@/store/IDStore.js';
+import { useStateStore } from '@/store/stateStore.js';
 import IDService from '@/service/IDService.js';
 import IDButton from '@/components/id/IDButton.vue';
 import AppDropdown from '@/components/AppDropdown.vue';
@@ -231,6 +232,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const IDStore = useIDStore();
+    const stateStore = useStateStore();
     const isShow1 = ref(props.isShow);
     const isShow2 = ref(false);
     const options1 = ref(['학교급', 456]);
@@ -239,9 +241,19 @@ export default {
     const selectedOption2 = ref('오름차순');
     const startDate = ref(new Date());
     const endDate = ref(new Date());
+    const isWork = computed(() => {
+      return stateStore.popupFlag;
+    });
     const handleSelection1 = (v) => {
       console.log(v);
     };
+
+    watch(
+      () => isWork.value,
+      (popupFlag) => {
+        togglePopup(popupFlag);
+      }
+    );
 
     const formattedStartDate = computed(() => {
       const tmp = new Date(startDate.value);
@@ -262,13 +274,14 @@ export default {
       return format;
     });
 
-    const togglePopup = () => {
-      return !isShow1.value;
-    }
+    const togglePopup = (param) => {
+      isShow1.value = param;
+      isShow2.value = false;
+    };
 
     const toggleSubPopup = () => {
-      return !isShow2.value;
-    }
+      isShow2.value = !isShow2.value;
+    };
 
     return {
       isShow1,
@@ -283,6 +296,8 @@ export default {
       formattedEndDate,
 
       handleSelection1,
+      togglePopup,
+      toggleSubPopup
     };
   },
 };

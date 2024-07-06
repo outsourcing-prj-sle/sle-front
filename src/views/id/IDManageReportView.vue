@@ -23,11 +23,6 @@
       :body="body"
       @onClick="goReportDtl"
       />
-      <div class="flex justify-center gap-[10px]">
-        <div>
-          <p></p>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -143,7 +138,7 @@ export default {
 
       handleSelection1,
       fetchReportList,
-      goReportDtl,
+      goReportDtl
     };
   },
 };
