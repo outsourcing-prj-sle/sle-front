@@ -259,14 +259,8 @@ const systemInfo = (entity, id) => {
 };
 
 // 시스템 정보 전체 조회 (공통 코드 한정 검색 가능)
-const systemInfoList = (
-  entity,
-  data = {
-    code_id: 'code_id',
-    code_name: 'code_name',
-  }
-) => {
-  return apiClient.get(baseURL + '/system/' + entity, data);
+const systemInfoList = (entity, data = {}) => {
+  return apiClient.get(baseURL + '/system/' + entity, { params: data });
 };
 
 // 시스템 정보 중복 조회

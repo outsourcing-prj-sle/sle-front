@@ -100,6 +100,7 @@ export default {
       console.log(resData);
 
       const list = resData.siteInfoList;
+      body.value = [];
       for (const i in list) {
         body.value[i] = [];
         body.value[i].push({
@@ -125,6 +126,7 @@ export default {
 
     const handleSelection1 = (v) => {
       selectedOption.value = v;
+      fetchList();
     };
 
     const goSiteUpdate = () => {
@@ -132,6 +134,7 @@ export default {
     };
 
     const updatePage = (v) => {
+      console.log(v);
       page.value = v;
       fetchList();
     };

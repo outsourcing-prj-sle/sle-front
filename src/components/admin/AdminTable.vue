@@ -75,6 +75,23 @@
                 alt="edit"
               />
             </div>
+            <div
+              class="flex-1 flex justify-center"
+              v-else-if="v.isEditWidthDelete"
+            >
+              <img
+                class="w-[28px] h-[28px]"
+                src="@/assets/img/edit.png"
+                alt="edit"
+                @click="goEdit(v.id)"
+              />
+              <img
+                class="w-[28px] h-[28px] ml-1"
+                src="@/assets/img/trash.png"
+                alt="edit"
+                @click="doDelete(v.id)"
+              />
+            </div>
             <span v-else-if="v.text" class="whitespace-nowrap">
               {{ v.text }}
             </span>
@@ -107,7 +124,10 @@ export default {
     const goEdit = (id) => {
       emit('goEdit', id);
     };
-    return { goEdit };
+    const doDelete = (id) => {
+      emit('doDelete', id);
+    };
+    return { goEdit, doDelete };
   },
 };
 </script>

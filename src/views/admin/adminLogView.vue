@@ -6,7 +6,7 @@
       <p class="font-bold text-[20px] max-md:text-[16px]">관리 로그</p>
       <div class="flex w-full justify-between content-center">
         <div class="text-xs font-medium content-center">
-          총 n개 | 현재페이지 1/10
+          총 {{ totalCount }}개 | 현재페이지 {{ page }}
         </div>
         <div class="flex gap-[20px] items-center font-bold">
           <AppDropdown
@@ -23,11 +23,14 @@
           <AdminButton :text="'검색'" :isWhite="false" :isSearch="true" />
         </div>
       </div>
-      <AdminTable :header="header" :body="body" />
-      <AdminPagination :pageNo="1" :recordCount="10" :totalCount="12" />
-      <div class="w-full text-right">
-        <AdminButton :text="'등록'" />
-      </div>
+      <AdminTable v-if="body.length" :header="header" :body="body" />
+
+      <AdminPagination
+        :pageNo="page"
+        :recordCount="10"
+        :totalCount="totalCount"
+        @updatePage="updatePage"
+      />
     </div>
   </div>
 </template>
@@ -56,6 +59,9 @@ export default {
     const adminStore = useAdminStore();
     const options = ref(['최신순', '오래된순']);
     const selectedOption = ref('최신순');
+    const page = ref(1);
+    const totalCount = ref(10);
+
     const header = ref([
       {
         text: '번호',
@@ -93,43 +99,28 @@ export default {
       ],
     ]);
 
+    const fetchList = async () => {};
+
     const handleSelection1 = (v) => {
       selectedOption.value = v;
     };
 
-    const startDate = ref(new Date());
-    const formattedStartDate = computed(() => {
-      const tmp = new Date(startDate.value);
-      let year = tmp.getFullYear();
-      let month = tmp.getMonth() + 1;
-      let day = tmp.getDate();
-      const format = `${year}-${month}-${day}`;
-
-      return format;
-    });
-
-    const endDate = ref(new Date());
-    const formattedEndDate = computed(() => {
-      const tmp = new Date(endDate.value);
-      let year = tmp.getFullYear();
-      let month = tmp.getMonth() + 1;
-      let day = tmp.getDate();
-      const format = `${year}-${month}-${day}`;
-
-      return format;
-    });
+    const updatePage = (v) => {
+      console.log(v);
+      page.value = v;
+      fetchList();
+    };
 
     return {
       header,
       body,
       options,
       selectedOption,
-      startDate,
-      formattedStartDate,
-      endDate,
-      formattedEndDate,
+      totalCount,
+      page,
 
       handleSelection1,
+      updatePage,
     };
   },
 };

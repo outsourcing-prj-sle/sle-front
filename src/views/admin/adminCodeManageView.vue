@@ -6,7 +6,7 @@
       <p class="font-bold text-[20px] max-md:text-[16px]">공통 코드관리</p>
       <div class="flex w-full justify-between content-center">
         <div class="text-xs font-medium content-center">
-          총 n개 | 현재페이지 1/10
+          총 {{ totalCount }}개 | 현재페이지 {{ page }}
         </div>
         <div class="flex gap-[20px] items-center font-bold">
           <AppDropdown
@@ -26,7 +26,7 @@
       <AdminTable :header="header" :body="body" />
       <AdminPagination :pageNo="1" :recordCount="10" :totalCount="12" />
       <div class="w-full text-right">
-        <AdminButton :text="'등록'" />
+        <AdminButton :text="'등록'" @onClick="goUpdate" />
       </div>
     </div>
   </div>
@@ -119,6 +119,15 @@ export default {
       return format;
     });
 
+    const goUpdate = (id) => {
+      router.push({
+        name: 'adminCodeUpdate',
+        query: {
+          id: id,
+        },
+      });
+    };
+
     return {
       header,
       body,
@@ -130,6 +139,7 @@ export default {
       formattedEndDate,
 
       handleSelection1,
+      goUpdate,
     };
   },
 };

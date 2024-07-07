@@ -52,24 +52,56 @@
             />
           </div>
           <div
+            v-else-if="item.body.isUserType"
+            class="flex gap-[10px] items-center z-50"
+          >
+            <AppDropdown
+              v-if="selectedOption3"
+              :options="options3"
+              :startText="item.value || selectedOption3"
+              :openMax="true"
+              @update:selectedOption="(v) => handleSelection('isUserType', v)"
+            />
+          </div>
+          <div
+            v-else-if="item.body.isCode"
+            class="flex gap-[10px] items-center z-50"
+          >
+            <AppDropdown
+              v-if="selectedOption4"
+              :options="options4"
+              :startText="item.value || selectedOption4"
+              :openMax="true"
+              @update:selectedOption="(v) => handleSelection('isCode', v)"
+            />
+          </div>
+          <div
             v-else-if="item.body.isEmail"
             class="flex gap-[10px] items-center"
           >
             <input
               class="text-sm border border-gray-300 px-4 py-2 min-w-[150px]] rounded-md"
               type="text"
+              :value="item.value1"
+              @input="updateEvent($event.target.value, index, 'value1')"
             />
             <p>@</p>
             <input
               class="text-sm border border-gray-300 px-4 py-2 min-w-[150px] rounded-md"
               type="text"
+              :initial-value="item.value2"
+              v-model="emailSecond"
+              @input="updateEvent($event.target.value, index, 'value2')"
+              :disabled="selectedOption2 !== '직접입력'"
             />
             <AppDropdown
               v-if="selectedOption2"
               :options="options2"
               :startText="selectedOption2"
               :openFull="true"
-              @update:selectedOption="(v) => handleSelection('isEmail', v)"
+              @update:selectedOption="
+                (v) => handleSelection(v, index, 'isEmail')
+              "
             />
           </div>
           <div class="flex gap-2.5" v-else-if="item.body.isYesNo">
@@ -152,10 +184,27 @@ export default {
   },
   setup(props, { emit }) {
     const data = ref([]);
-    const options = ref(['국번']);
-    const options2 = ref(['작접입력']);
+    const options4 = ref([
+      '전자정부프레임워크 공통서비스',
+      'SEL 시스템 서비스',
+    ]);
+    const selectedOption4 = ref('전자정부프레임워크 공통서비스');
+    const options3 = ref(['선택', '교육청관리자', '최고관리자', '기관관리자']);
+    const selectedOption3 = ref('선택');
+    const options = ref(['국번', '010', '011', '016', '017', '018', '019']);
+    const options2 = ref([
+      '직접입력',
+      'gmail.com',
+      'yahoo.com',
+      'naver.com',
+      'daum.net',
+      'hotmail.com',
+      'outlook.com',
+      'icloud.com',
+    ]);
     const selectedOption = ref('국번');
     const selectedOption2 = ref('직접입력');
+    const emailSecond = ref('');
 
     onMounted(() => {
       data.value = props._data;
@@ -200,12 +249,15 @@ export default {
       emit('handleEventUpdate', value, index, event);
     };
 
-    const handleSelection = (e, v) => {
-      switch (e) {
-        case 'isPhone':
-          break;
-        case 'isEmail':
-          break;
+    const handleSelection = (v, i, e) => {
+      if (e === 'isEmail') {
+        selectedOption2.value = v;
+        if (v === '직접입력') {
+          emailSecond.value = '';
+        } else {
+          emailSecond.value = v;
+        }
+        emit('handleEventUpdate', v, i, 'value2');
       }
     };
 
@@ -214,6 +266,10 @@ export default {
       options2,
       selectedOption,
       selectedOption2,
+      options3,
+      selectedOption3,
+      options4,
+      selectedOption4,
       data,
 
       updateValue,
