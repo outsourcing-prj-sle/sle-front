@@ -98,11 +98,9 @@ export default {
           },
         ];
       } else {
-        const systemInfoResponse = await AdminService.systemInfo(
-          'ip',
-          id.value
-        );
-        const resData = systemInfoResponse.data;
+        const userInfo = await AdminService.userInfo(id.value);
+        const resData = userInfo.data;
+        console.log(resData);
 
         if (resData.error) {
           alert(resData.error);
@@ -116,7 +114,7 @@ export default {
               isText: true,
             },
             isRequired: true,
-            value: resData.userNm,
+            value: resData.name,
           },
           {
             header: '아이디',
@@ -124,7 +122,7 @@ export default {
               isText: true,
             },
             isRequired: true,
-            value: resData.userId,
+            value: resData.id,
           },
           {
             header: '비밀번호',
@@ -139,7 +137,7 @@ export default {
               isUserType: true,
               placeholder: '연구소관리자',
             },
-            value: resData.userSpaceInfo,
+            value: resData.userRole,
           },
           {
             header: '핸드폰번호',
@@ -157,8 +155,8 @@ export default {
               isEmail: true,
             },
             isRequired: true,
-            value1: resData.emailAdres.split('@')[0],
-            value2: resData.emailAdres.split('@')[1],
+            value1: resData.userEmail.split('@')[0],
+            value2: resData.userEmail.split('@')[1],
           },
         ];
       }
@@ -216,6 +214,7 @@ export default {
       }
 
       if (id.value) {
+        apiData.uniqId = id.value;
         submitResult = await AdminService.signup(apiData);
       } else {
         submitResult = await AdminService.signup(apiData);
@@ -223,7 +222,8 @@ export default {
 
       const resData = submitResult.data;
       console.log(resData);
-      // router.push({ name: 'adminManageView' });
+      alert('등록되었습니다');
+      router.push({ name: 'adminManageView' });
     };
 
     const goAdminManage = () => {

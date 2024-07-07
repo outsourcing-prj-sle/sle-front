@@ -259,7 +259,7 @@ export default {
       await AdminService.userDelete(id);
 
       alert('삭제되었습니다.');
-      // location.reload(true);
+      location.reload(true);
     };
 
     const updatePage = (v) => {

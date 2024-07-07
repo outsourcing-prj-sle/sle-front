@@ -216,13 +216,6 @@ export default {
     });
 
     watch(
-      () => props._data,
-      (newVal) => {
-        if (!data.value.length) data.value = newVal;
-      }
-    );
-
-    watch(
       () => props.changeTableState,
       (newVal) => {
         console.log('yhs :: newVal');
@@ -232,6 +225,19 @@ export default {
           const key = newVal.key;
           const value = newVal.value;
           data.value[index][key] = value;
+        }
+      }
+    );
+
+    watch(
+      () => props._data,
+      (newVal) => {
+        if (!data.value.length) {
+          data.value = newVal;
+          const hasEmail = newVal.filter((item) => item.body.isEmail);
+          if (hasEmail.length) {
+            emailSecond.value = hasEmail[0].value2;
+          }
         }
       }
     );
@@ -275,6 +281,7 @@ export default {
       options4,
       selectedOption4,
       data,
+      emailSecond,
 
       updateValue,
       updateEvent,
