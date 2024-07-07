@@ -9,7 +9,8 @@
           <AppDropdown
             :objectOptions="options"
             :startText="selectedOption"
-            :openFull="true"
+            :openMax="true"
+            :openWay="'left'"
             @update:selectedOption="handleSelection1"
           />
           <AppDropdown
@@ -100,7 +101,33 @@ export default {
 
     onMounted(() => {
       fetchIdttList();
+      fetchSchList();
     });
+
+    const fetchSchList = async () => {
+      const getMySchList = await IDService.getMySchList();
+      const resData = getMySchList.data;
+
+      if (resData.error) {
+        alert(resData.error);
+        return;
+      }
+
+      console.log(resData);
+      options.value = [
+        {
+          name: '학교',
+          value: '',
+        },
+      ];
+      if (!resData.length) return;
+      for (const i in resData) {
+        options.value.push({
+          name: resData[i].schulNm,
+          value: resData[i].schulCode,
+        });
+      }
+    };
 
     const handleSelection1 = (v) => {
       valueOption.value = v;

@@ -23,10 +23,12 @@
     </div>
     <div
       v-if="isOpen"
-      class="origin-top-right w-56 absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+      class="origin-top-right absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
       :class="{
         'left-0': openWay === 'left',
         'w-full': openFull,
+        'w-max': openMax,
+        'w-56': !openFull && !openMax,
       }"
     >
       <div class="py-1 max-h-48 overflow-y-auto" v-if="options.length">
@@ -81,6 +83,10 @@ export default {
       default: 'right',
     },
     openFull: {
+      type: Boolean,
+      default: false,
+    },
+    openMax: {
       type: Boolean,
       default: false,
     },

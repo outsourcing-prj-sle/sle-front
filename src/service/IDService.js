@@ -101,6 +101,11 @@ const getResearchAdmin = (data = {}) => {
   return apiClient.get(baseURL + '/users', { params: data });
 };
 
+// 학교 목록 조회
+const getMySchList = () => {
+  return apiClient.get(baseURL + '/idtt/schulList');
+};
+
 // 연구소 관리자 목록 조회
 const getAdminInfo = (uriParam, data = {}) => {
   return apiClient.get(baseURL + `/users/${uriParam}`, { params: data });
@@ -164,4 +169,5 @@ export default {
   getSchulGradeInfo,
   getSchulInfo,
   getAdminInfo,
+  getMySchList,
 };
