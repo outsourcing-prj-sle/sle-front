@@ -96,7 +96,10 @@ export default {
     };
 
     const fetchList = async () => {
-      const systemInfoResponse = await AdminService.systemInfoList('ip');
+      const systemInfoResponse = await AdminService.systemInfoList('ip', {
+        pageNo: page.value,
+        limit: limit.value,
+      });
       const resData = systemInfoResponse.data;
 
       if (resData.error) {
