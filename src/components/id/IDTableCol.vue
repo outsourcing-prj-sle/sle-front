@@ -13,18 +13,20 @@
             <AppDropdown
               v-if="selectedOption"
               :options="options"
-              :startText="selectedOption"
+              :startText="item.value1 || selectedOption"
               :openFull="true"
               @update:selectedOption="(v) => updateEvent(v, index, 'value1')"
             />
             <input
               class="text-sm border border-gray-300 px-4 py-2 min-w-[150px]] rounded-md"
               type="text"
+              :value="item.value2"
               @input="updateEvent($event.target.value, index, 'value2')"
             />
             <input
               class="text-sm border border-gray-300 px-4 py-2 min-w-[150px] rounded-md"
               type="text"
+              :value="item.value3"
               @input="updateEvent($event.target.value, index, 'value3')"
             />
           </div>
@@ -35,12 +37,14 @@
             <input
               class="text-sm border border-gray-300 px-4 py-2 min-w-[150px]] rounded-md"
               type="text"
+              :value="item.value1"
               @input="updateEvent($event.target.value, index, 'value1')"
             />
             <p>@</p>
             <input
               class="text-sm border border-gray-300 px-4 py-2 min-w-[150px] rounded-md"
               type="text"
+              :initial-value="item.value2"
               v-model="emailSecond"
               @input="updateEvent($event.target.value, index, 'value2')"
               :disabled="selectedOption2 !== '직접입력'"
@@ -122,7 +126,13 @@ export default {
     watch(
       () => props._data,
       (newVal) => {
-        if (!data.value.length) data.value = newVal;
+        if (!data.value.length) {
+          data.value = newVal;
+          const hasEmail = newVal.filter((item) => item.body.isEmail);
+          if (hasEmail.length) {
+            emailSecond.value = hasEmail[0].value2;
+          }
+        }
       }
     );
 

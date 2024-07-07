@@ -75,6 +75,7 @@
         v-if="body.length"
         :header="header"
         :_body="body"
+        @goUpdate="goUpdate"
         @userDeleted="fetchResearchList"
       />
       <IDPagination
@@ -227,6 +228,15 @@ export default {
       return format;
     });
 
+    const goUpdate = (v) => {
+      router.push({
+        name: 'IDManageResearchInsertView',
+        query: {
+          id: v,
+        },
+      });
+    };
+
     return {
       options,
       selectedOption,
@@ -243,6 +253,7 @@ export default {
       handleSelection1,
       fetchResearchList,
       goInsertResearchVw,
+      goUpdate,
     };
   },
 };

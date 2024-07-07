@@ -43,7 +43,7 @@ export default {
       value: null,
     });
 
-    onMounted(() => {
+    onMounted(async () => {
       if (!id.value) {
         data.value = [
           {
@@ -90,8 +90,66 @@ export default {
           },
         ];
       } else {
-        // data 받아오기
-        id.value = 'site_001';
+        const userResponse = await IDService.getAdminInfo(id.value);
+        const resData = userResponse.data;
+
+        if (resData.error) {
+          alert(resData.error);
+          return;
+        }
+
+        data.value = [
+          {
+            header: '이름',
+            body: {
+              isText: true,
+            },
+            isRequired: true,
+            value: resData.userNm,
+          },
+          {
+            header: '아이디',
+            body: {
+              isText: true,
+            },
+            isRequired: true,
+            value: resData.userId,
+          },
+          {
+            header: '비밀번호',
+            body: {
+              isText: true,
+            },
+            isRequired: true,
+          },
+          {
+            header: '회원구분',
+            body: {
+              isText: true,
+              placeholder: '연구소관리자',
+            },
+            value: resData.userSpaceInfo,
+          },
+          {
+            header: '핸드폰번호',
+            body: {
+              isPhone: true,
+            },
+            isRequired: true,
+            value1: resData.phoneNumber.split('-')[0],
+            value2: resData.phoneNumber.split('-')[1],
+            value3: resData.phoneNumber.split('-')[2],
+          },
+          {
+            header: '이메일',
+            body: {
+              isEmail: true,
+            },
+            isRequired: true,
+            value1: resData.emailAdres.split('@')[0],
+            value2: resData.emailAdres.split('@')[1],
+          },
+        ];
       }
     });
 
@@ -125,53 +183,55 @@ export default {
 
       let submitResult;
 
-      if (data.value[0].value) submitResult.name = data.value[0].value;
+      if (data.value[0].value) apiData.userNm = data.value[0].value;
       else {
         alert('이름을 입력해주세요.');
         return;
       }
 
-      if (data.value[1].value) submitResult.id = data.value[1].value;
+      if (data.value[1].value) apiData.userId = data.value[1].value;
       else {
         alert('아이디를 입력해주세요.');
         return;
       }
 
-      if (data.value[2].value) submitResult.pw = data.value[2].value;
+      if (data.value[2].value) apiData.password = data.value[2].value;
       else {
-        alert('비밀번호를 입력해주세요.');
-        return;
+        if (!id.value) {
+          alert('비밀번호를 입력해주세요.');
+          return;
+        }
       }
 
-      if (data.value[3].value) submitResult.type = data.value[3].value;
+      if (data.value[3].value) apiData.userSeCode = data.value[3].value;
 
       if (
         data.value[4].value1 !== '국번' &&
         data.value[4].value2 &&
         data.value[4].value1
       ) {
-        submitResult.phone = `${data.value[4].value1}-${data.value[4].value2}-${data.value[4].value3}`;
+        apiData.phoneNumber = `${data.value[4].value1}-${data.value[4].value2}-${data.value[4].value3}`;
       } else {
         alert('핸드폰번호를 확인해주세요.');
         return;
       }
 
       if (data.value[5].value1 && data.value[5].value2) {
-        submitResult.eamil = `${data.value[5].value1}@${data.value[5].value2}`;
+        apiData.emailAdres = `${data.value[5].value1}@${data.value[5].value2}`;
       } else {
         alert('이메일을 확인해주세요.');
         return;
       }
 
       if (id.value) {
-        submitResult = await IDService.insertResearchAdmin(apiData);
-      } else {
         submitResult = await IDService.updateResearchAdmin(id.value, apiData);
+      } else {
+        submitResult = await IDService.insertResearchAdmin(apiData);
       }
 
       const resData = submitResult.data;
       console.log(resData);
-      // router.push({ name: 'adminSite' });
+      router.push({ name: 'IDManageResearchView' });
     };
 
     return {

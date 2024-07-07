@@ -101,6 +101,11 @@ const getResearchAdmin = (data = {}) => {
   return apiClient.get(baseURL + '/users', { params: data });
 };
 
+// 연구소 관리자 목록 조회
+const getAdminInfo = (uriParam, data = {}) => {
+  return apiClient.get(baseURL + `/users/${uriParam}`, { params: data });
+};
+
 // 연구소 관리자 등록
 const insertResearchAdmin = (data = {}) => {
   return apiClient.put(baseURL + '/users', data);
@@ -158,4 +163,5 @@ export default {
   updateReports,
   getSchulGradeInfo,
   getSchulInfo,
+  getAdminInfo,
 };

@@ -54,6 +54,7 @@
             <div class="flex gap-[10px] justify-center" v-if="v.isButton2">
               <button
                 class="edit border border-[#2F80ED] rounded-[5px] px-3 py-3 text-sm font-semibold whitespace-nowrap hover:bg-[#2F80ED] hover:text-white"
+                @click="goUpdate(v.uniqId)"
               ></button>
               <button
                 class="trash border border-[#2F80ED] rounded-[5px] px-3 py-3 text-sm font-semibold whitespace-nowrap hover:bg-[#2F80ED] hover:text-white"
@@ -109,10 +110,15 @@ export default {
       }
     };
 
+    const goUpdate = (v) => {
+      emit('goUpdate', v);
+    };
+
     return {
       body,
 
       deleteUserInfo,
+      goUpdate,
     };
   },
 };
