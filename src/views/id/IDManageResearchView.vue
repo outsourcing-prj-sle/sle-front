@@ -64,7 +64,7 @@
         <div class="flex gap-[20px] items-center font-bold">
           <p class="w-[40px]">검색어</p>
           <AppDropdown
-            :options="options"
+            :objectOptions="options"
             :startText="selectedOption"
             :openFull="true"
             @update:selectedOption="handleSelection1"
@@ -73,8 +73,13 @@
             class="py-2 px-4 border border-gray-300 bg-white rounded-md text-sm"
             type="text"
             placeholder="검색어를 입력하세요."
+            v-model="searchText"
           />
-          <IDButton :text="'검색'" :isWhite="false" />
+          <IDButton
+            :text="'검색'"
+            :isWhite="false"
+            @onClick="fetchResearchList"
+          />
         </div>
       </div>
       <IDTable
@@ -120,8 +125,39 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const options = ref([123, 456]);
+    const searchText = ref('');
+    const options = ref([
+      {
+        name: '선택',
+        value: '',
+      },
+      {
+        name: '회원구분',
+        value: '01',
+      },
+      {
+        name: '소속',
+        value: '02',
+      },
+      {
+        name: '이름',
+        value: '03',
+      },
+      {
+        name: '아이디',
+        value: '04',
+      },
+      {
+        name: '핸드폰 번호',
+        value: '05',
+      },
+      {
+        name: '이메일',
+        value: '06',
+      },
+    ]);
     const selectedOption = ref('선택');
+    const valueOption = ref('');
     const header = [
       {
         isCheckbox: true,
@@ -161,7 +197,7 @@ export default {
     const totalCount = ref(30);
 
     const handleSelection1 = (v) => {
-      console.log(v);
+      valueOption.value = v;
     };
 
     onMounted(() => {
@@ -185,8 +221,8 @@ export default {
         recordCount: recordCount.value,
         searchBeginDate: parseDate(startDate.value),
         searchEndDate: parseDate(endDate.value),
-        searchType: '',
-        searchKeyword: '',
+        searchType: valueOption.value,
+        searchKeyword: valueOption.value ? searchText.value : '',
       };
       const reportReponse = await IDService.getResearchAdmin(requestData);
       const resData = reportReponse.data;
@@ -273,6 +309,7 @@ export default {
       pageNo,
       recordCount,
       totalCount,
+      searchText,
 
       handleSelection1,
       fetchResearchList,
