@@ -135,7 +135,7 @@ export default {
     const selectedOption2 = ref('학년');
     const valueOption2 = ref('');
     const updateText2 = ref();
-    const pollNm = ref('마음알기 설문1');
+    const pollNm = ref();
     const header = computed(() => {
       return [
         {
@@ -261,6 +261,8 @@ export default {
       console.log(resData);
 
       totalCount.value = resData.totalCount;
+      const num = pollId.value[pollId.value.length - 1];
+      pollNm.value = '마음알기 설문' + num;
 
       let result = [];
       let answerArr = [];
