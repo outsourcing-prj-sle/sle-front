@@ -25,7 +25,7 @@
             :text="'검색'"
             :isWhite="false"
             :isSearch="true"
-            @onClick="fetchResearchList"
+            @onClick="fetchList"
           />
         </div>
       </div>
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { ref, onBeforeMount, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useAdminStore } from '@/store/adminStore.js';
 import AdminService from '@/service/AdminService.js';
@@ -78,28 +78,12 @@ export default {
         value: '',
       },
       {
-        name: '회원구분',
-        value: '01',
+        name: '코드ID',
+        value: 'codeId',
       },
       {
-        name: '소속',
-        value: '02',
-      },
-      {
-        name: '이름',
-        value: '03',
-      },
-      {
-        name: '아이디',
-        value: '04',
-      },
-      {
-        name: '핸드폰 번호',
-        value: '05',
-      },
-      {
-        name: '이메일',
-        value: '06',
+        name: '코드ID명',
+        value: 'codeName',
       },
     ]);
     const selectedOption = ref('선택');
@@ -131,7 +115,63 @@ export default {
 
     const page = ref(1);
     const recordCount = ref(10);
+    const limit = ref(10);
     const totalCount = ref(10);
+
+    onMounted(() => {
+      fetchList();
+    });
+
+    const fetchList = async () => {
+      const requestData = {
+        pageNo: page.value,
+        recordCount: recordCount.value,
+      };
+      if (valueOption.value && searchText.value) {
+        requestData[valueOption.value] = searchText.value;
+      }
+      const listResponse = await AdminService.systemInfoList(
+        'cmmn_code',
+        requestData
+      );
+      const resData = listResponse.data;
+      if (resData.error) {
+        alert(resData.error);
+        return;
+      }
+      console.log(resData);
+
+      const list = resData.codeInfoList;
+      body.value = [];
+      for (const i in list) {
+        body.value[i] = [];
+        body.value[i].push({
+          text: (page.value - 1) * 10 + parseInt(i) + 1,
+        });
+        body.value[i].push({
+          text: list[i].codeId,
+        });
+        body.value[i].push({
+          text: list[i].codeName,
+        });
+        body.value[i].push({
+          text: list[i].active ? '예' : '아니요',
+        });
+        body.value[i].push({
+          text: 1,
+        });
+        body.value[i].push({
+          isDetail: true,
+          id: list[i].codeId,
+        });
+        body.value[i].push({
+          isEditWidthDelete: true,
+          id: list[i].codeId,
+        });
+      }
+
+      totalCount.value = resData.totalCount;
+    };
 
     const handleSelection1 = (v) => {
       valueOption.value = v;
@@ -146,8 +186,16 @@ export default {
       });
     };
 
-    const doDelete = (id) => {
-      console.log('yhs :: dodelete');
+    const doDelete = async (id) => {
+      let res = await AdminService.deleteSystem('cmmn_code', id);
+      alert('삭제되었습니다.');
+      fetchList();
+    };
+
+    const updatePage = (v) => {
+      console.log(v);
+      page.value = v;
+      fetchList();
     };
 
     return {
@@ -155,10 +203,15 @@ export default {
       body,
       options,
       selectedOption,
+      page,
+      totalCount,
+      searchText,
 
       handleSelection1,
       goUpdate,
       doDelete,
+      updatePage,
+      fetchList,
     };
   },
 };

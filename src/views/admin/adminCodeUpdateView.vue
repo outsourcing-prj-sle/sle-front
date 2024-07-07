@@ -104,24 +104,41 @@ export default {
           alert(resData.error);
           return;
         }
-        checkSiteText.value = resData.codeID;
+        console.log(resData);
+        checkSiteText.value = resData.codeId;
 
         data.value = [
           {
-            header: '접속자IP',
+            header: '분류코드',
             body: {
-              isText: true,
+              isCode: true,
             },
+            value: resData.categoryCode,
             isRequired: true,
-            value: '',
           },
           {
-            header: '관리자ID',
+            header: '코드 ID',
+            body: {
+              isCheckText: true,
+            },
+            value: resData.codeId,
+            isRequired: true,
+          },
+          {
+            header: '코드ID 명',
             body: {
               isText: true,
             },
+            value: resData.codeName,
             isRequired: true,
-            value: '',
+          },
+          {
+            header: '코드ID 설명',
+            body: {
+              isTextArea: true,
+              placeholder: '설명을 입력하세요.',
+            },
+            value: resData.codeDescription,
           },
           {
             header: '사용여부',
@@ -129,7 +146,7 @@ export default {
               isYesNo: true,
             },
             isRequired: true,
-            value: '1',
+            value: resData.active ? '1' : '0',
           },
         ];
       }
@@ -140,6 +157,11 @@ export default {
       if (id.value) requestData.createdBy = id.value;
 
       requestData.categoryCode = data.value[0].value;
+
+      if (data.value[1].value !== checkSiteText.value) {
+        alert('코드 ID 중복확인을 해주세요.');
+        return;
+      }
 
       if (data.value[1].value) requestData.codeId = data.value[1].value;
       else {
@@ -174,7 +196,8 @@ export default {
 
       const resData = submitResult.data;
       console.log(resData);
-      // router.push({ name: 'adminCode' });
+      alert('수정되었습니다.');
+      router.push({ name: 'adminCode' });
     };
 
     const goCode = () => {
