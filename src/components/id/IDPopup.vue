@@ -475,7 +475,9 @@ export default {
         let tmpObj = {};
         for (let i in newVal.pollTarget) {
           const key = newVal.pollTargetCode[i];
-          const val = newVal.pollTarget[i].replaceAll('__', '-');
+          let valTmp = newVal.pollTarget[i].split('__');
+          if (valTmp[0] === 'null') valTmp.splice(0, 1);
+          const val = valTmp.join('-');
           tmpObj[key] = {
             text: val,
             code: key,
