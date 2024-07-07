@@ -3,7 +3,9 @@
     class="flex justify-start mx-[40px] my-[20px] max-md:mx-[20px] max-md:my-[20px]"
   >
     <div class="flex flex-col gap-[20px] items-start w-full">
-      <p class="font-bold text-[20px] max-md:text-[16px]">사이트관리 등록</p>
+      <p class="font-bold text-[20px] max-md:text-[16px]">
+        사이트관리 {{ id ? '수정' : '등록' }}
+      </p>
       <AdminTableCol
         :_data="data"
         :changeTableState="changeTableState"
@@ -11,7 +13,11 @@
         @handleEventUpdate="handleEventUpdate"
       />
       <div class="flex w-full gap-[20px] justify-center">
-        <AdminButton :text="'등록'" :isWhite="false" @onClick="submit" />
+        <AdminButton
+          :text="id ? '수정' : '등록'"
+          :isWhite="false"
+          @onClick="submit"
+        />
         <AdminButton :text="'목록'" :isWhite="true" @onClick="goSite" />
       </div>
     </div>
@@ -32,14 +38,11 @@ export default {
     AdminTableCol,
     AdminButton,
   },
-  props: {
-    isUpdate: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  props: {},
   setup(props) {
+    const route = useRoute();
     const router = useRouter();
+    const id = ref(route.query.id);
     const data = ref([]);
     const changeTableState = ref({
       index: null,
@@ -47,10 +50,9 @@ export default {
       value: null,
     });
     const checkSiteText = ref('');
-    const siteId = ref();
 
-    onMounted(() => {
-      if (!props.isUpdate) {
+    onMounted(async () => {
+      if (!id.value) {
         data.value = [
           {
             header: '사이트 명',
@@ -109,8 +111,79 @@ export default {
           },
         ];
       } else {
-        // data 받아오기
-        siteId.value = 'site_001';
+        const systemInfoResponse = await AdminService.systemInfo(
+          'site',
+          id.value
+        );
+        const resData = systemInfoResponse.data;
+
+        if (resData.error) {
+          alert(resData.error);
+          return;
+        }
+
+        checkSiteText.value = resData.siteDomain;
+
+        data.value = [
+          {
+            header: '사이트 명',
+            body: {
+              isText: true,
+            },
+            value: resData.siteName,
+            isRequired: true,
+          },
+          {
+            header: '사이트 도메인',
+            body: {
+              isCheckText: true,
+            },
+            value: resData.siteDomain,
+            isRequired: true,
+          },
+          {
+            header: '상단로고',
+            body: {
+              isUpload: true,
+            },
+          },
+          {
+            header: '하단로고',
+            body: {
+              isUpload: true,
+            },
+          },
+          {
+            header: '대표이미지',
+            body: {
+              isUpload: true,
+            },
+          },
+          {
+            header: '사이트설명',
+            body: {
+              isTextArea: true,
+              placeholder: '설명을 입력하세요.',
+            },
+            value: resData.siteDescription,
+          },
+          {
+            header: '마우스 보안허용',
+            body: {
+              isYesNo: true,
+            },
+            isRequired: true,
+            value: resData.mouseSecurity,
+          },
+          {
+            header: '키보드 보안허용',
+            body: {
+              isYesNo: true,
+            },
+            isRequired: true,
+            value: resData.keyboardSecurity,
+          },
+        ];
       }
     });
 
@@ -169,7 +242,7 @@ export default {
 
     const submit = async () => {
       let formData = new FormData();
-      if (siteId.value) formData.append('siteId', siteId.value);
+      if (id.value) formData.append('siteId', id.value);
 
       if (data.value[0].value) formData.append('siteName', data.value[0].value);
       else {
@@ -204,7 +277,7 @@ export default {
       }
 
       let submitResult;
-      if (props.isUpdate) {
+      if (id.value) {
         submitResult = await AdminService.updateSystem('site', formData);
       } else {
         submitResult = await AdminService.insertSystem('site', formData);
@@ -217,6 +290,7 @@ export default {
 
     return {
       data,
+      id,
 
       handleSelection1,
       goSite,

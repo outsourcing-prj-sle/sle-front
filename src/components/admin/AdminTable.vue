@@ -64,7 +64,11 @@
               />
             </div>
             <div class="flex-1" v-else-if="v.isManage">연구소 관리자 관리</div>
-            <div class="flex-1" v-else-if="v.isEdit">
+            <div
+              class="flex-1 flex justify-center"
+              v-else-if="v.isEdit"
+              @click="goEdit(v.id)"
+            >
               <img
                 class="w-[28px] h-[28px]"
                 src="@/assets/img/edit.png"
@@ -100,7 +104,10 @@ export default {
     },
   },
   setup(props, { emit }) {
-    return {};
+    const goEdit = (id) => {
+      emit('goEdit', id);
+    };
+    return { goEdit };
   },
 };
 </script>

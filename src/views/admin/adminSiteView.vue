@@ -17,7 +17,12 @@
           />
         </div>
       </div>
-      <AdminTable :header="header" :body="body" />
+      <AdminTable
+        v-if="body.length"
+        :header="header"
+        :body="body"
+        @goEdit="goEdit"
+      />
       <AdminPagination
         :pageNo="page"
         :recordCount="10"
@@ -75,25 +80,7 @@ export default {
         text: '수정',
       },
     ]);
-    const body = ref([
-      [
-        {
-          text: '1',
-        },
-        {
-          text: '톡톡클래스',
-        },
-        {
-          text: 'tt.class.kr',
-        },
-        {
-          text: '2024-03-02',
-        },
-        {
-          isEdit: true,
-        },
-      ],
-    ]);
+    const body = ref([]);
 
     onMounted(() => {
       fetchList();
@@ -129,6 +116,7 @@ export default {
         });
         body.value[i].push({
           isEdit: true,
+          id: list[i].siteId,
         });
       }
 
@@ -148,6 +136,15 @@ export default {
       fetchList();
     };
 
+    const goEdit = (id) => {
+      router.push({
+        name: 'adminSiteUpdate',
+        query: {
+          id: id,
+        },
+      });
+    };
+
     return {
       header,
       body,
@@ -160,6 +157,7 @@ export default {
       handleSelection1,
       goSiteUpdate,
       updatePage,
+      goEdit,
     };
   },
 };
