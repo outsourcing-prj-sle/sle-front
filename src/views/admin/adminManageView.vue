@@ -255,8 +255,11 @@ export default {
       });
     };
 
-    const doDelete = (id) => {
-      console.log('todo :: delete');
+    const doDelete = async (id) => {
+      await AdminService.userDelete(id);
+
+      alert('삭제되었습니다.');
+      // location.reload(true);
     };
 
     const updatePage = (v) => {
@@ -266,7 +269,6 @@ export default {
     };
 
     const fetchList = async () => {
-      console.log('fetchList');
       const requestData = {
         pageNo: page.value,
         limit: limit.value,
@@ -274,13 +276,9 @@ export default {
         startDate: parseDate(startDate.value),
         endDate: parseDate(endDate.value),
       };
-      console.log('yhs :: 1');
-      console.log(valueOption2.value);
-      console.log(searchText.value);
       if (valueOption2.value && searchText.value) {
         requestData[valueOption2.value] = searchText.value;
       }
-      console.log('yhs :: 2');
       const userManagement = await AdminService.userManagement(
         'admin',
         requestData
@@ -326,7 +324,7 @@ export default {
           },
           {
             isEditWidthDelete: true,
-            id: v.id,
+            id: v.uniqId,
           },
         ]);
       }

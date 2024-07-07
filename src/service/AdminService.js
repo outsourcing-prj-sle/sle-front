@@ -170,12 +170,8 @@ const userManagement = (
 };
 
 // 유저 삭제
-const userDelete = (
-  data = {
-    id: 'id',
-  }
-) => {
-  return apiClient.delete(baseURL + '/users/delete', { params: data });
+const userDelete = (id) => {
+  return apiClient.delete(baseURL + '/users/admin/' + id);
 };
 
 // 회원정보 수정 // 아직
@@ -339,20 +335,12 @@ const deleteSubCode = (codeId, subCodeId) => {
 };
 
 const getLog = (data = {}) => {
-  return apiClient.get(
-    baseURL + '/system/log',
-    {params: data}
-  );
-}
+  return apiClient.get(baseURL + '/system/log', { params: data });
+};
 
 const getUsers = (id, data = {}) => {
-  return apiClient.get(
-    baseURL + `/users/${id}`,
-    {params: data}
-  )
-}
-
-
+  return apiClient.get(baseURL + `/users/${id}`, { params: data });
+};
 
 export default {
   login,
@@ -376,5 +364,5 @@ export default {
   deleteSubCode,
   checkSystemExist,
   getLog,
-  getUsers
+  getUsers,
 };
