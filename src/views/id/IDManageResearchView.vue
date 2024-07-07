@@ -91,8 +91,9 @@
       />
       <IDPagination
         :pageNo="pageNo"
-        :recordCount="recordCount"
+        :recordCount="10"
         :totalCount="totalCount"
+        @updatePage="updatePage"
       />
       <div class="w-full flex justify-end">
         <IDButton
@@ -297,6 +298,11 @@ export default {
       });
     };
 
+    const updatePage = (v) => {
+      pageNo.value = v;
+      fetchResearchList();
+    };
+
     return {
       options,
       selectedOption,
@@ -315,6 +321,7 @@ export default {
       fetchResearchList,
       goInsertResearchVw,
       goUpdate,
+      updatePage,
     };
   },
 };
