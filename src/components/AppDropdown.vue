@@ -92,7 +92,9 @@ export default {
     watch(
       () => [props.updateText],
       ([t]) => {
-        selectOption(t);
+        if (t) {
+          selectOption(t);
+        }
       }
     );
 
