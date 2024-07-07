@@ -6,7 +6,7 @@
       <p class="font-bold text-[20px] max-md:text-[16px]">연구소관리자 관리</p>
       <div class="flex w-full justify-between content-center">
         <div class="text-xs font-medium content-center">
-          총 n개 | 현재페이지 1
+          총 {{ totalCount }}개 | 현재페이지 {{ page }}
         </div>
         <div>
           <AppDropdown
@@ -18,7 +18,12 @@
         </div>
       </div>
       <AdminTable :header="header" :body="body" />
-      <AdminPagination :pageNo="1" :recordCount="10" :totalCount="12" />
+      <AdminPagination
+        :pageNo="page"
+        :recordCount="10"
+        :totalCount="totalCount"
+        @updatePage="updatePage"
+      />
       <div class="w-full text-right">
         <AdminButton :text="'등록'" @onClick="goSiteUpdate" />
       </div>
@@ -52,6 +57,7 @@ export default {
     const selectedOption = ref('최신순');
     const page = ref(1);
     const limit = ref(10);
+    const totalCount = ref();
     const header = ref([
       {
         text: '번호',
@@ -95,8 +101,9 @@ export default {
 
     const fetchList = async () => {
       const listResponse = await AdminService.systemInfoList('site', {
-        page: page.value,
+        pageNo: page.value,
         limit: limit.value,
+        orderBy: selectedOption.value === '오래된순' ? 'asc' : 'desc',
       });
       const resData = listResponse.data;
       if (resData.error) {
@@ -104,6 +111,28 @@ export default {
         return;
       }
       console.log(resData);
+
+      const list = resData.siteInfoList;
+      for (const i in list) {
+        body.value[i] = [];
+        body.value[i].push({
+          text: (page.value - 1) * 10 + parseInt(i) + 1,
+        });
+        body.value[i].push({
+          text: list[i].siteName,
+        });
+        body.value[i].push({
+          text: list[i].siteDomain,
+        });
+        body.value[i].push({
+          text: list[i].createdAt.split(' ')[0],
+        });
+        body.value[i].push({
+          isEdit: true,
+        });
+      }
+
+      totalCount.value = resData.totalCount;
     };
 
     const handleSelection1 = (v) => {
@@ -114,14 +143,23 @@ export default {
       router.push({ name: 'adminSiteUpdate' });
     };
 
+    const updatePage = (v) => {
+      page.value = v;
+      fetchList();
+    };
+
     return {
       header,
       body,
       options,
+      limit,
+      totalCount,
+      page,
       selectedOption,
 
       handleSelection1,
       goSiteUpdate,
+      updatePage,
     };
   },
 };
