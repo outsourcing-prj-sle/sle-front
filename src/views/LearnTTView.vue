@@ -25,11 +25,11 @@
     >
       <div class="w-[300px] flex justify-start my-[20px] z-50">
         <AppDropdown
-          v-if="selectedOption"
-          :options="options"
-          :startText="options[0]"
+          v-if="selectedOption2"
+          :options="options2"
+          :startText="options2[0]"
           :openWay="'left'"
-          @update:selectedOption="handleSelection"
+          @update:selectedOption="handleSelection2"
         />
       </div>
       <b class="text-xl text-left">
@@ -378,6 +378,7 @@ export default {
     const router = useRouter();
     const infoArr = ref([]);
     const optionsObj = ref({});
+    const optionsObj2 = ref({});
     const name = ref('');
 
     const options = ref([
@@ -386,14 +387,16 @@ export default {
       '홍길동(dlwkr01@gne.go.kr)',
     ]);
     const selectedOption = ref('');
+    const options2 = ref([]);
+    const selectedOption2 = ref('');
     const qesAnswer1 = ref();
     const qesAnswer2 = ref([]);
     const qesAnswer3 = ref();
     const isOpen = ref([false, false, false, false]);
     const needReportAry = ref([]); // 설문 안한사람들 저장
 
-    const barChartDataArr1 = ref([80, 0, 0]);
-    const barChartDataArr2 = ref([-100, -80, -100]);
+    const barChartDataArr1 = ref([]);
+    const barChartDataArr2 = ref([]);
     const barChartColor = ref(['#A46DF1', '#FF80BD', '#2584FF']);
 
     const donutChartDataNmArr1 = ref(['학습 콘텐츠를 건너뛰며 점검하는 성향', '학습 콘텐츠를 자주 보고 점검하는 성향',]);
@@ -418,9 +421,15 @@ export default {
     // 학생 리스트
     const fetchData = async () => {
       const mySELResponse = await UserService.getMySEL();
+      const teacherResponse = await UserService.teacherIdtt();
       const resData = mySELResponse.data;
+      const resData2 = teacherResponse.data;
 
       // console.log(resData);
+      console.log(resData2);
+      /**
+       * 여기서부터 하면 됩니다. resData2가 선생님 정보.
+       */
 
       if (resData.error) {
         alert(resData.error);
@@ -451,12 +460,21 @@ export default {
       needReportAry.value = tmpNeedReportAry;
 
       selectedOption.value = tmpAry[0];
+
+      name.value = optionsObj.value[selectedOption.value].name;
       // console.log(selectedOption.value);
       // todo :selectopton.value[현재학생 `${d.name}(${d.email})`] 로 userId얻고 그거로 데이터 호출
     };
 
     const handleSelection = (option) => {
       selectedOption.value = option;
+
+      name.value = optionsObj.value[option].name;
+      fetchChartData(optionsObj.value[option].userId === null ? 'test' : optionsObj.value[option].userId);
+    };
+
+    const handleSelection2 = (option) => {
+      selectedOption2.value = option;
     };
 
     const submitInfo = async () => {
@@ -491,7 +509,7 @@ export default {
       alert('설문이 저장되었습니다!');
     };
 
-    const barChartSeries = ref([
+    const barChartSeries = computed(() => [
       {
         name: '1',
         data: barChartDataArr1.value,
@@ -703,34 +721,45 @@ export default {
       },
     });
 
-    const fetchChartData = async (id=0) => {
-      const response = await UserService.userIdttLT({ id: 'test' })
+    const fetchChartData = async (userId = 'test') => {
+      const response = await UserService.userIdttLT({ id: userId })
       const resData = response.data;
 
       console.log(resData);
 
-      let arr1 = [];
-      let arr2 = [];
-      let arr3 = [];
+      if(!resData.userPersonality) return;
+      if(!resData.classPersonality) return;
+
+      let cArr1 = [];
+      let cArr2 = [];
+      let cArr3 = [];
+
+      resData.classPersonality[0].type1.values.map((item) => {
+        cArr1.push(item);
+      })
+      resData.classPersonality[0].type2.values.map((item) => {
+        cArr2.push(item);
+      })
+      resData.classPersonality[0].type3.values.map((item) => {
+        cArr3.push(item);
+      })
+
+      donutChartSeries1.value = cArr1;
+      donutChartSeries2.value = cArr2;
+      donutChartSeries3.value = cArr3;
+
+      let uArr1 = [];
+      let uArr2 = [];
       
-      arr1.push(parseInt(resData.userPersonality[0]['건너뛰며 점검하기']));
-      arr2.push(-parseInt(resData.userPersonality[0]['느긋하게 과제하기']));
-      arr1.push(parseInt(resData.userPersonality[0]['신속하게 과제하기']));
-      arr2.push(-parseInt(resData.userPersonality[0]['건너뛰며 점검하기']));
-      arr1.push(parseInt(resData.userPersonality[0]['소통하며 학습하기']));
-      arr2.push(-parseInt(resData.userPersonality[0]['독립적으로 학습하기']));
+      uArr1.push(parseInt(resData.userPersonality[0]['건너뛰며 점검하기']));
+      uArr2.push(-parseInt(resData.userPersonality[0]['느긋하게 과제하기']));
+      uArr1.push(parseInt(resData.userPersonality[0]['신속하게 과제하기']));
+      uArr2.push(-parseInt(resData.userPersonality[0]['건너뛰며 점검하기']));
+      uArr1.push(parseInt(resData.userPersonality[0]['소통하며 학습하기']));
+      uArr2.push(-parseInt(resData.userPersonality[0]['독립적으로 학습하기']));
 
-      console.log(arr1);
-      console.log(arr2);
-
-      barChartDataArr1.value = arr1;
-      barChartDataArr2.value = arr2;
-
-      console.log(barChartDataArr1.value);
-      console.log(barChartDataArr2.value);
-
-
-
+      barChartDataArr1.value = uArr1;
+      barChartDataArr2.value = uArr2;
     };
 
     return {
@@ -739,6 +768,8 @@ export default {
       qesAnswer3,
       options,
       selectedOption,
+      options2,
+      selectedOption2,
       infoArr,
       name,
       isOpen,
@@ -758,6 +789,7 @@ export default {
       donutChartDataNmArr3,
 
       handleSelection,
+      handleSelection2,
       submitInfo,
     };
   },

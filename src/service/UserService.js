@@ -144,6 +144,11 @@ const insertReseachResult = (data = {}) => {
   return apiClient.put(baseURL + '/research', data);
 };
 
+// 경남교육청 선생님 목록 조회
+const teacherIdtt = (data = {}) => {
+  return apiClient.get(baseURL + '/schulUserInfo', { params: data });
+};
+
 export default {
   login,
   myInfo,
@@ -155,4 +160,5 @@ export default {
   updateUserInfo,
   insertReseachResult,
   myInfoInterval,
+  teacherIdtt,
 };
