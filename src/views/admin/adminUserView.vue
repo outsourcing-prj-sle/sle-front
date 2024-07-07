@@ -21,26 +21,26 @@
             class="py-2 px-4 border border-gray-300 bg-white rounded-md text-sm"
             type="text"
             placeholder="검색어를 입력하세요."
-            @v-model="searchText"
+            v-model="searchText"
           />
           <AdminButton :text="'검색'" :isWhite="false" @click="searchList" />
         </div>
       </div>
       <div class="flex w-full justify-between content-center">
         <div class="text-xs font-medium content-center">
-          총 n개 | 현재페이지 1/10
+          총 {{ totalCount }}개 | 현재페이지 {{ page }}
         </div>
         <div>
           <AppDropdown
             v-if="selectedOption2"
-            :options="options"
+            :options="options2"
             :startText="selectedOption2"
             @update:selectedOption="handleSelection1"
           />
         </div>
       </div>
-      <AdminTable :header="header" :body="body" />
-      <AdminPagination :pageNo=page :recordCount="10" :totalCount=totalCount />
+      <AdminTable :header="header" :body="body" @goEdit="goUpdate" @doDelete="doDelete" />
+      <AdminPagination :pageNo=page :recordCount="10" :totalCount=totalCount @updatePage="updatePage" />
       <div class="w-full text-right">
         <AdminButton :text="'등록'" />
       </div>
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { ref, onBeforeMount, computed, onMounted } from 'vue';
+import { ref, watch, onBeforeMount, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useAdminStore } from '@/store/adminStore.js';
 import AdminService from '@/service/AdminService.js';
@@ -71,10 +71,10 @@ export default {
     const router = useRouter();
     const adminStore = useAdminStore();
     const userType = computed(() => parseToKo(route.params.userType));
-    const options = ref(['최신순', '오래된순']);
-    const selectedOption = ref('최신순');
-    const options2 = ref(['회원번호', '소속', '이름', '아이디', '이메일']);
-    const selectedOption2 = ref('회원번호');
+    const options2 = ref(['최신순', '오래된순']);
+    const selectedOption2 = ref('최신순');
+    const options = ref(['회원번호', '소속', '이름', '아이디', '이메일']);
+    const selectedOption = ref('회원번호');
     const searchText = ref('');
     const orderBy = ref('');
     const page = ref(1);
@@ -123,12 +123,6 @@ export default {
 
     const handleSelection2 = (v) => {
       selectedOption2.value = v;
-
-      if(v === '회원번호') fetchData({ 'uniqId': uniqId.value });
-      if(v === '소속') fetchData({ 'userSpaceOrgInfo': userSpaceOrgInfo.value });
-      if(v === '이름') fetchData({ 'name': name.value });
-      if(v === '아이디') fetchData({ 'id': id.value });
-      if(v === '이메일') fetchData({ 'userEmail': userEmail.value });
     };
 
     const startDate = ref(new Date());
@@ -173,13 +167,22 @@ export default {
       fetchData();
     });
 
+    watch(
+      () => userType.value,
+      () => {
+        fetchData();
+      }
+    );
+
     const fetchData = async (data = {}) => {
-      const response = await AdminService.getUsers('school', {
+      const response = await AdminService.getUsers(route.params.userType, {
         orderBy: orderBy.value,
         pageNo: page.value,
         ...data
       });
       const resData = response.data;
+
+      if(!resData.adminUserInfoList) return;
 
       page.value = resData.pageNo;
       totalCount.value = resData.totalCount;
@@ -212,7 +215,8 @@ export default {
             text: item.userEmail,
           },
           {
-            isEdit: true,
+            isEditWidthDelete: true,
+            id: item.uniqId,
           },
         ];
 
@@ -223,6 +227,29 @@ export default {
     };
 
     const searchList = () => {
+      if(selectedOption2.value === '회원번호') fetchData({ 'uniqId': searchText.value });
+      if(selectedOption2.value === '소속') fetchData({ 'userSpaceOrgInfo': searchText.value });
+      if(selectedOption2.value === '이름') fetchData({ 'name': searchText.value });
+      if(selectedOption2.value === '아이디') fetchData({ 'id': searchText.value });
+      if(selectedOption2.value === '이메일') fetchData({ 'userEmail': searchText.value });
+    };
+
+    const updatePage = (v) => {
+      page.value = v;
+      fetchData();
+    };
+
+    const goUpdate = (id) => {
+      router.push({
+        name: 'adminIPUpdate',
+        query: {
+          id,
+        },
+      });
+    };
+
+    const doDelete = (id) => {
+      console.log('todo :: delete');
     };
 
     return {
@@ -238,10 +265,16 @@ export default {
       page,
       totalCount,
       orderBy,
+      options2,
+      selectedOption2,
+      searchText,
 
       handleSelection1,
       handleSelection2,
       searchList,
+      updatePage,
+      goUpdate,
+      doDelete,
     };
   },
 };
