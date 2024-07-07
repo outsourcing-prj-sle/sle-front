@@ -294,37 +294,43 @@ export default {
     };
 
     const downloadExcel = () => {
-      // if (infoArr.value.length) {
-      //   const aEl = document.createElement('a');
-      //   let text = '\uFEFF';
-      //   text += titleArr.value.join(',') + '\n';
-      //   infoArr.value.forEach((info) => {
-      //     text += [info.name, info.email, info.grade, info.gender].join(',');
-      //     if (selectedReport.value === all.value) {
-      //       for (let i in titleReportArr.value) {
-      //         text += info.stateList[i + 1 + '']
-      //           ? ',' + t('sel.ing')
-      //           : ',' + t('sel.non_ing');
-      //       }
-      //     } else {
-      //       text += info.stateList[currentNum.value]
-      //         ? ',' + t('sel.ing')
-      //         : ',' + t('sel.non_ing');
-      //     }
-      //     text += '\n';
-      //   });
-      //   aEl.setAttribute(
-      //     'href',
-      //     `data:text/csv;charset=utf-8,${encodeURIComponent(text)}`
-      //   );
-      //   aEl.setAttribute('download', `${new Date()}_SEL.csv`);
-      //   aEl.style.display = 'none';
-      //   document.body.appendChild(aEl);
-      //   aEl.click();
-      //   document.body.removeChild(aEl);
-      // } else {
-      //   alert(t('sel.no_data'));
-      // }
+      if (body.value.length) {
+        const titleArr = [];
+        const infoArr = [];
+        for (const i in header.value) {
+          if (header.value[i].text) {
+            titleArr.push(header.value[i].text);
+          }
+        }
+        for (const i in body.value) {
+          const tmpAry = [];
+          for (const j in body.value[i]) {
+            if (header.value[j].text) {
+              tmpAry.push(body.value[i][j].text);
+            }
+          }
+          infoArr.push(tmpAry);
+        }
+
+        const aEl = document.createElement('a');
+        let text = '\uFEFF';
+        text += titleArr.join(',') + '\n';
+        infoArr.forEach((info) => {
+          text += info.join(',');
+          text += '\n';
+        });
+        aEl.setAttribute(
+          'href',
+          `data:text/csv;charset=utf-8,${encodeURIComponent(text)}`
+        );
+        aEl.setAttribute('download', `${new Date()}_${pollNm.value}.csv`);
+        aEl.style.display = 'none';
+        document.body.appendChild(aEl);
+        aEl.click();
+        document.body.removeChild(aEl);
+      } else {
+        alert('데이터가 없습니다');
+      }
     };
 
     const goReportList = () => {
