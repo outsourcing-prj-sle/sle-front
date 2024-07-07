@@ -107,6 +107,7 @@ export default {
       let selectedValue = '';
       if (props.options.length) {
         selectedName = props.options[index];
+        selectedValue = props.options[index];
       }
       if (props.objectOptions.length) {
         selectedName = props.objectOptions[index].name;
@@ -115,7 +116,7 @@ export default {
 
       selectedOption.value = selectedName;
       isOpen.value = false;
-      emit('update:selectedOption', selectedValue || selectedName);
+      emit('update:selectedOption', selectedValue);
     };
 
     return {

@@ -109,27 +109,27 @@ export default {
       },
       {
         name: '1학년',
-        value: 'GRADE01',
+        value: '1',
       },
       {
         name: '2학년',
-        value: 'GRADE02',
+        value: '2',
       },
       {
         name: '3학년',
-        value: 'GRADE03',
+        value: '3',
       },
       {
         name: '4학년',
-        value: 'GRADE04',
+        value: '4',
       },
       {
         name: '5학년',
-        value: 'GRADE05',
+        value: '5',
       },
       {
         name: '6학년',
-        value: 'GRADE06',
+        value: '6',
       },
     ]);
     const selectedOption2 = ref('학년');
@@ -237,15 +237,23 @@ export default {
     };
 
     const handleSelection2 = (v) => {
+      console.log(v);
       valueOption2.value = v;
       fetchReportDtlList();
     };
 
     const fetchReportDtlList = async () => {
+      console.log({
+        searchKeyword: searchTextComplete.value,
+        schulGradeCode: valueOption1.value,
+        stGrade: valueOption2.value,
+        pageNo: page.value,
+        recordCount: recordCount.value,
+      });
       const reportReponse = await IDService.getReportsDtl(pollId.value, {
         searchKeyword: searchTextComplete.value,
         schulGradeCode: valueOption1.value,
-        stGrade: valueOption1.value,
+        stGrade: valueOption2.value,
         pageNo: page.value,
         recordCount: recordCount.value,
       });
