@@ -14,6 +14,9 @@
               <div class="flex items-center gap-2">
                 <button
                   class="px-10 py-2.5 text-[#797979] rounded-xl text-xs font-light bg-white border-[#CECECE] border border-solid"
+                  :class="{
+                    'w-[127px] h-[38px]': !startDate,
+                  }"
                   @click="togglePopover"
                 >
                   {{ formattedStartDate }}
@@ -37,6 +40,9 @@
               <div class="flex items-center gap-2">
                 <button
                   class="px-10 py-2.5 text-[#797979] rounded-xl text-xs font-light bg-white border-[#CECECE] border border-solid"
+                  :class="{
+                    'w-[127px] h-[38px]': !endDate,
+                  }"
                   @click="togglePopover"
                 >
                   {{ formattedEndDate }}
@@ -162,15 +168,27 @@ export default {
       fetchResearchList();
     });
 
+    const parseDate = (d) => {
+      if (!d) return '';
+      const tmp = new Date(d);
+      let year = tmp.getFullYear();
+      let month = tmp.getMonth() + 1;
+      let day = tmp.getDate();
+      month = String(month).padStart(2, '0');
+      day = String(day).padStart(2, '0');
+      return `${year}${month}${day}`;
+    };
+
     const fetchResearchList = async () => {
-      const reportReponse = await IDService.getResearchAdmin({
+      const requestData = {
         pageNo: pageNo.value,
         recordCount: recordCount.value,
-        searchBeginDate: '',
-        searchEndDate: '',
+        searchBeginDate: parseDate(startDate.value),
+        searchEndDate: parseDate(endDate.value),
         searchType: '',
         searchKeyword: '',
-      });
+      };
+      const reportReponse = await IDService.getResearchAdmin(requestData);
       const resData = reportReponse.data;
       console.log(resData);
       if (!resData?.userInfoList?.length) return;
@@ -206,23 +224,29 @@ export default {
       router.push({ name: 'IDManageResearchInsertView' });
     };
 
-    const startDate = ref(new Date());
+    const startDate = ref();
     const formattedStartDate = computed(() => {
+      if (!startDate.value) return '';
       const tmp = new Date(startDate.value);
       let year = tmp.getFullYear();
       let month = tmp.getMonth() + 1;
       let day = tmp.getDate();
+      month = String(month).padStart(2, '0');
+      day = String(day).padStart(2, '0');
       const format = `${year}-${month}-${day}`;
 
       return format;
     });
 
-    const endDate = ref(new Date());
+    const endDate = ref();
     const formattedEndDate = computed(() => {
+      if (!endDate.value) return '';
       const tmp = new Date(endDate.value);
       let year = tmp.getFullYear();
       let month = tmp.getMonth() + 1;
       let day = tmp.getDate();
+      month = String(month).padStart(2, '0');
+      day = String(day).padStart(2, '0');
       const format = `${year}-${month}-${day}`;
 
       return format;
