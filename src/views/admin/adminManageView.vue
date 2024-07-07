@@ -15,6 +15,9 @@
                 <button
                   class="px-10 py-2.5 text-[#797979] rounded-xl text-xs font-light bg-white border-[#CECECE] border border-solid"
                   @click="togglePopover"
+                  :class="{
+                    'w-[127px] h-[38px]': !startDate,
+                  }"
                 >
                   {{ formattedStartDate }}
                 </button>
@@ -37,6 +40,9 @@
               <div class="flex items-center gap-2">
                 <button
                   class="px-10 py-2.5 text-[#797979] rounded-xl text-xs font-light bg-white border-[#CECECE] border border-solid"
+                  :class="{
+                    'w-[127px] h-[38px]': !endDate,
+                  }"
                   @click="togglePopover"
                 >
                   {{ formattedEndDate }}
@@ -210,13 +216,15 @@ export default {
 
     const handleSelection1 = (v) => {
       selectedOption.value = v;
+      fetchList();
     };
     const handleSelection2 = (v) => {
       valueOption2.value = v;
     };
 
-    const startDate = ref(new Date());
+    const startDate = ref();
     const formattedStartDate = computed(() => {
+      if (!startDate.value) return '';
       const tmp = new Date(startDate.value);
       let year = tmp.getFullYear();
       let month = tmp.getMonth() + 1;
@@ -226,8 +234,9 @@ export default {
       return format;
     });
 
-    const endDate = ref(new Date());
+    const endDate = ref();
     const formattedEndDate = computed(() => {
+      if (!endDate.value) return '';
       const tmp = new Date(endDate.value);
       let year = tmp.getFullYear();
       let month = tmp.getMonth() + 1;
