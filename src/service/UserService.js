@@ -130,6 +130,10 @@ const userIDTT = (data = {}) => {
   return apiClient.get(baseURL + '/idTokTok', { params: data });
 };
 
+const userIdttLT = (data = {}) => {
+  return apiClient.get(baseURL + '/idttLT', { params: data });
+};  
+
 // 회원정보 수정
 const updateUserInfo = (data = {}) => {
   return apiClient.put(baseURL + '/update', data);
@@ -147,6 +151,7 @@ export default {
   checkId,
   getMySEL,
   userIDTT,
+  userIdttLT,
   updateUserInfo,
   insertReseachResult,
   myInfoInterval,
