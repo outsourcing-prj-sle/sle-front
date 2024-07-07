@@ -73,10 +73,10 @@ export default {
     const userType = computed(() => parseToKo(route.params.userType));
     const options2 = ref(['최신순', '오래된순']);
     const selectedOption2 = ref('최신순');
-    const options = ref(['회원번호', '소속', '이름', '아이디', '이메일']);
-    const selectedOption = ref('회원번호');
+    const options = ref([]);
+    const selectedOption = ref('');
     const searchText = ref('');
-    const orderBy = ref('');
+    const orderBy = ref('desc');
     const page = ref(1);
     const totalCount = ref(12);
     const uniqId = ref('');
@@ -170,19 +170,23 @@ export default {
     watch(
       () => userType.value,
       () => {
-        fetchData();
+        location.reload();
       }
     );
 
     const fetchData = async (data = {}) => {
+      if(route.params.userType === 'school'){
+        options.value = ['회원번호','소속', '이름', '아이디', '이메일'];
+      } else {
+        options.value = ['소속', '이름', '아이디', '이메일'];
+      }
+
       const response = await AdminService.getUsers(route.params.userType, {
         orderBy: orderBy.value,
         pageNo: page.value,
         ...data
       });
       const resData = response.data;
-
-      if(!resData.adminUserInfoList) return;
 
       page.value = resData.pageNo;
       totalCount.value = resData.totalCount;
@@ -191,37 +195,74 @@ export default {
 
       let arr = [];
 
-      resData.adminUserInfoList.map((item, index) => {
-        let obj = [
-          {
-            text: index+1 + (page.value-1) * 10,
-          },
-          {
-            text: item.uniqId,
-          },
-          {
-            text: item.userRole,
-          },
-          {
-            text: item.userSpaceOrgInfo,
-          },
-          {
-            text: item.name,
-          },
-          {
-            text: item.id,
-          },
-          {
-            text: item.userEmail,
-          },
-          {
-            isEditWidthDelete: true,
-            id: item.uniqId,
-          },
-        ];
+      if(resData.adminUserInfoList) {
+        resData.adminUserInfoList.map((item, index) => {
+          let obj = [
+            {
+              text: index+1 + (page.value-1) * 10,
+            },
+            {
+              text: item.uniqId,
+            },
+            {
+              text: item.userRole,
+            },
+            {
+              text: item.userSpaceOrgInfo,
+            },
+            {
+              text: item.name,
+            },
+            {
+              text: item.id,
+            },
+            {
+              text: item.userEmail,
+            },
+            {
+              isEditWidthDelete: true,
+              id: item.uniqId,
+            },
+          ];
 
-        arr.push(obj);
-      });
+          arr.push(obj);
+        });
+      }
+
+      if(resData.userInfoList) {
+        resData.userInfoList.map((item, index) => {
+          let obj = [
+            {
+              text: index+1 + (page.value-1) * 10,
+            },
+            {
+              text: item.authorization,
+            },
+            {
+              text: item.userRole,
+            },
+            {
+              text: item.userSpaceInfo,
+            },
+            {
+              text: item.name,
+            },
+            {
+              text: item.authorization,
+            },
+            {
+              text: item.userEmail,
+            },
+            {
+              isEditWidthDelete: true,
+              id: item.uniqId,
+            },
+          ];
+
+          arr.push(obj);
+        });
+      }
+  
 
       body.value = arr;
     };
@@ -248,8 +289,11 @@ export default {
       });
     };
 
-    const doDelete = (id) => {
-      console.log('todo :: delete');
+    const doDelete = async (id) => {
+      await AdminService.userDelete(id);
+
+      alert('삭제되었습니다.');
+      fetchData();
     };
 
     return {
