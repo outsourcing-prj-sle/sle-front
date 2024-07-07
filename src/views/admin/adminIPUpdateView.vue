@@ -71,6 +71,7 @@ export default {
           id.value
         );
         const resData = systemInfoResponse.data;
+        console.log(resData);
 
         if (resData.error) {
           alert(resData.error);
@@ -84,7 +85,7 @@ export default {
               isText: true,
             },
             isRequired: true,
-            value: '',
+            value: resData.allowedIp,
           },
           {
             header: '관리자ID',
@@ -92,7 +93,7 @@ export default {
               isText: true,
             },
             isRequired: true,
-            value: '',
+            value: resData.adminId,
           },
           {
             header: '사용여부',
@@ -100,7 +101,7 @@ export default {
               isYesNo: true,
             },
             isRequired: true,
-            value: '1',
+            value: resData.active ? '1' : '0',
           },
         ];
       }

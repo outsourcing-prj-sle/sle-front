@@ -72,6 +72,10 @@ export default {
     ]);
     const body = ref([]);
 
+    onMounted(async () => {
+      fetchList();
+    });
+
     const goUpdate = (id) => {
       router.push({
         name: 'adminIPUpdate',
@@ -81,12 +85,9 @@ export default {
       });
     };
 
-    onMounted(async () => {
-      fetchList();
-    });
-
-    const doDelete = (id) => {
-      console.log('todo :: delete');
+    const doDelete = async (id) => {
+      let res = await AdminService.deleteSystem('ip', id);
+      console.log(res.data);
     };
 
     const updatePage = (v) => {
@@ -128,7 +129,7 @@ export default {
           },
           {
             isEditWidthDelete: true,
-            id: v.id,
+            id: v.ipId,
           },
         ]);
       }
@@ -137,6 +138,8 @@ export default {
     return {
       header,
       body,
+      page,
+      totalCount,
 
       goUpdate,
       doDelete,
