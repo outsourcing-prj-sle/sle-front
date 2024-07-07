@@ -80,7 +80,8 @@ export default {
     });
     const isNNext = computed(() => {
       let result = true;
-      if (range.value.length < props.recordCount) result = false;
+      if (range.value[range.value.length - 1] >= totalPage.value)
+        result = false;
       return result;
     });
     const isPrev = computed(() => {

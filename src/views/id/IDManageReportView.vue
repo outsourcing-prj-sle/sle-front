@@ -23,8 +23,9 @@
       <IDTableDtl :header="header" :body="body" @onClick="goReportDtl" />
       <IDPagination
         :pageNo="pageNo"
-        :recordCount="recordCount"
+        :recordCount="10"
         :totalCount="totalCount"
+        @updatePage="updatePage"
       />
     </div>
   </div>
@@ -236,6 +237,10 @@ export default {
       });
     };
 
+    const updatePage = (v) => {
+      pageNo.value = v;
+    };
+
     return {
       originList,
       popupReport,
@@ -253,6 +258,7 @@ export default {
       handleSelection2,
       fetchReportList,
       goReportDtl,
+      updatePage,
     };
   },
 };
