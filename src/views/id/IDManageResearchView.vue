@@ -1,8 +1,12 @@
 <template>
-  <div class="flex justify-start mx-[40px] my-[20px] max-md:mx-[20px] max-md:my-[20px]">
+  <div
+    class="flex justify-start mx-[40px] my-[20px] max-md:mx-[20px] max-md:my-[20px]"
+  >
     <div class="flex flex-col gap-[20px] items-start w-full">
       <p class="font-bold text-[20px] max-md:text-[16px]">연구소관리자 관리</p>
-      <div class="flex flex-col items-start w-full bg-gray-100 border border-gray-300 rounded-xl p-[20px] gap-[20px] text-sm">
+      <div
+        class="flex flex-col items-start w-full bg-gray-100 border border-gray-300 rounded-xl p-[20px] gap-[20px] text-sm"
+      >
         <div class="flex gap-[20px] items-center font-bold">
           <p class="w-[40px]">기간</p>
           <VDatePicker v-model="startDate">
@@ -59,28 +63,30 @@
             :openFull="true"
             @update:selectedOption="handleSelection1"
           />
-          <input class="py-2 px-4 border border-gray-300 bg-white rounded-md text-sm" type="text" placeholder="검색어를 입력하세요.">
-          <IDButton
-            :text="'검색'"
-            :isWhite="false"
+          <input
+            class="py-2 px-4 border border-gray-300 bg-white rounded-md text-sm"
+            type="text"
+            placeholder="검색어를 입력하세요."
           />
+          <IDButton :text="'검색'" :isWhite="false" />
         </div>
       </div>
       <IDTable
-      :header="header"
-      :_body="body"
-      @userDeleted="fetchResearchList"
+        v-if="body.length"
+        :header="header"
+        :_body="body"
+        @userDeleted="fetchResearchList"
       />
       <IDPagination
-      :pageNo="pageNo"
-      :recordCount="recordCount"
-      :totalCount="totalCount"
+        :pageNo="pageNo"
+        :recordCount="recordCount"
+        :totalCount="totalCount"
       />
       <div class="w-full flex justify-end">
         <IDButton
-        @onClick="goInsertResearchVw"
-        :text="'등록'"
-        :isWhite="false"
+          @onClick="goInsertResearchVw"
+          :text="'등록'"
+          :isWhite="false"
         />
       </div>
     </div>
@@ -92,8 +98,8 @@ import { ref, onBeforeMount, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useIDStore } from '@/store/IDStore.js';
 import IDService from '@/service/IDService.js';
-import IDTable from '@/components/id/IDTable.vue'
-import AppDropdown from '@/components/AppDropdown.vue'
+import IDTable from '@/components/id/IDTable.vue';
+import AppDropdown from '@/components/AppDropdown.vue';
 import IDPagination from '@/components/id/IDPagination.vue';
 import IDButton from '@/components/id/IDButton.vue';
 
@@ -103,42 +109,42 @@ export default {
     IDTable,
     AppDropdown,
     IDPagination,
-    IDButton
-},
+    IDButton,
+  },
   setup() {
     const router = useRouter();
     const options = ref([123, 456]);
     const selectedOption = ref('선택');
     const header = [
       {
-        isCheckbox: true
+        isCheckbox: true,
       },
       {
-        text: '번호'
-      }, 
-      {
-        text: '등록일'
-      }, 
-      {
-        text: '회원구분'
-      }, 
-      {
-        text: '소속'
-      }, 
-      {
-        text: '이름'
-      }, 
-      {
-        text: '아이디'
+        text: '번호',
       },
       {
-        text: '핸드폰번호'
+        text: '등록일',
       },
       {
-        text: '이메일'
+        text: '회원구분',
       },
       {
-        text: '관리'
+        text: '소속',
+      },
+      {
+        text: '이름',
+      },
+      {
+        text: '아이디',
+      },
+      {
+        text: '핸드폰번호',
+      },
+      {
+        text: '이메일',
+      },
+      {
+        text: '관리',
       },
     ];
     const body = ref([]);
@@ -156,8 +162,8 @@ export default {
     });
 
     const fetchResearchList = async () => {
-      const reportReponse = await IDService.getResearchAdmin({ 
-        pageNo: pageNo.value, 
+      const reportReponse = await IDService.getResearchAdmin({
+        pageNo: pageNo.value,
         recordCount: recordCount.value,
         searchBeginDate: '',
         searchEndDate: '',
@@ -166,6 +172,7 @@ export default {
       });
       const resData = reportReponse.data;
       console.log(resData);
+      if (!resData?.userInfoList?.length) return;
 
       pageNo.value = resData.pageNo;
       recordCount.value = resData.recordCount;
@@ -176,7 +183,7 @@ export default {
       resData.userInfoList.map((item, idx) => {
         let arr = [
           { isCheckbox: true },
-          { text: idx+1 },
+          { text: idx + 1 },
           { text: item.frstRegistPnttm },
           { text: item.userSeCode },
           { text: item.userSpaceInfo },
@@ -185,18 +192,18 @@ export default {
           { text: item.phoneNumber },
           { text: item.emailAdres },
           { isButton2: true, uniqId: item.uniqId },
-        ]
+        ];
 
         result.push(arr);
       });
 
       body.value = result;
       console.log(body.value);
-    }
+    };
 
     const goInsertResearchVw = () => {
-      router.push({ name: 'IDManageResearchInsertView' })
-    }
+      router.push({ name: 'IDManageResearchInsertView' });
+    };
 
     const startDate = ref(new Date());
     const formattedStartDate = computed(() => {
@@ -235,7 +242,7 @@ export default {
 
       handleSelection1,
       fetchResearchList,
-      goInsertResearchVw
+      goInsertResearchVw,
     };
   },
 };
