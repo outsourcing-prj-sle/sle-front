@@ -3,7 +3,13 @@
     class="input-keyword border border-gray-300 pl-4 pr-10 py-2 text-sm rounded-md"
     :class="styleClass"
   >
-    <input type="text" class="w-full" :placeholder="placeholder" />
+    <input
+      type="text"
+      class="w-full"
+      :placeholder="placeholder"
+      :value="modelValue"
+      @input="updateValue"
+    />
   </div>
 </template>
 
@@ -22,6 +28,10 @@ export default {
       type: Number,
       default: 1000,
     },
+    modelValue: {
+      type: String,
+      default: '',
+    },
   },
   setup(props, { emit }) {
     console.log(props);
@@ -34,8 +44,13 @@ export default {
       return style;
     });
 
+    const updateValue = (event) => {
+      emit('update:modelValue', event.target.value);
+    };
+
     return {
       styleClass,
+      updateValue,
     };
   },
 };

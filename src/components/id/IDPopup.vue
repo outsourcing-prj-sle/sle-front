@@ -222,7 +222,6 @@
       </div>
       <IDSearch
         class="w-full"
-        v-model="searchText"
         @keyup.enter="searchSch"
         :placeholder="'학교명을 입력해주세요.'"
       />
@@ -240,33 +239,41 @@
           @update:selectedOption="handleSelection2"
         />
       </div>
-      <div class="w-full flex flex-col gap-[10px]">
+      <div class="w-full flex flex-col gap-[10px] h-[250px] overflow-auto">
         <div
           v-for="(v, i) in schList"
-          :key="`${i}${v.schulCode}`"
-          class="w-full bg-gray-100 rounded-md flex p-[10px] gap-[5px] flex-wrap flex-col cursor-pointer"
+          :key="`${v.schulCode}`"
+          :class="
+            i === clickedSch
+              ? 'w-full bg-[#2F80ED] text-white rounded-md flex p-[10px] gap-[5px] flex-wrap flex-col cursor-pointer'
+              : 'w-full bg-gray-100 rounded-md flex p-[10px] gap-[5px] flex-wrap flex-col cursor-pointer'
+          "
+          @click="() => clickSchList(i)"
         >
           <p class="text-base text-left font-semibold">{{ v.schulNm }}</p>
-          <p class="text-xs text-gray-500 text-left">{{ v.regionDetail }}</p>
-          <div class="w-full flex gap-[10px] mt-[10px]">
+          <p
+            class="text-xs text-left"
+            :class="i === clickedSch ? 'text-white' : 'text-gray-500'"
+          >
+            {{ v.regionDetail }}
+          </p>
+          <div class="w-full flex gap-[10px] mt-[10px]" v-if="i === clickedSch">
             <div class="w-[35px]">
               <p class="text-sm text-left font-semibold">학년</p>
             </div>
             <div class="flex gap-[10px] flex-wrap items-center">
               <div>
                 <IDButton
-                  :text="'전체'"
-                  :_width="60"
-                  :isWhite="true"
-                  class="h-[30px] text-black text-xs"
-                />
-              </div>
-              <div>
-                <IDButton
                   :text="'1학년'"
                   :_width="60"
                   :isWhite="true"
+                  @click.stop="() => changeGrade('GRADE01')"
                   class="h-[30px] text-black text-xs"
+                  :class="
+                    gradeValue.includes('GRADE01')
+                      ? 'border-[#F8B200] border-2'
+                      : ''
+                  "
                 />
               </div>
               <div>
@@ -274,7 +281,13 @@
                   :text="'2학년'"
                   :_width="60"
                   :isWhite="true"
+                  @click.stop="() => changeGrade('GRADE02')"
                   class="h-[30px] text-black text-xs"
+                  :class="
+                    gradeValue.includes('GRADE02')
+                      ? 'border-[#F8B200] border-2'
+                      : ''
+                  "
                 />
               </div>
               <div>
@@ -282,40 +295,65 @@
                   :text="'3학년'"
                   :_width="60"
                   :isWhite="true"
+                  @click.stop="() => changeGrade('GRADE03')"
                   class="h-[30px] text-black text-xs"
+                  :class="
+                    gradeValue.includes('GRADE03')
+                      ? 'border-[#F8B200] border-2'
+                      : ''
+                  "
                 />
               </div>
-              <div>
+              <div v-if="v.schulGradeCode === 'SCH_02'">
                 <IDButton
                   :text="'4학년'"
                   :_width="60"
                   :isWhite="true"
+                  @click.stop="() => changeGrade('GRADE04')"
                   class="h-[30px] text-black text-xs"
+                  :class="
+                    gradeValue.includes('GRADE04')
+                      ? 'border-[#F8B200] border-2'
+                      : ''
+                  "
                 />
               </div>
-              <div>
+              <div v-if="v.schulGradeCode === 'SCH_02'">
                 <IDButton
                   :text="'5학년'"
                   :_width="60"
                   :isWhite="true"
+                  @click.stop="() => changeGrade('GRADE05')"
                   class="h-[30px] text-black text-xs"
+                  :class="
+                    gradeValue.includes('GRADE05')
+                      ? 'border-[#F8B200] border-2'
+                      : ''
+                  "
                 />
               </div>
-              <div>
+              <div v-if="v.schulGradeCode === 'SCH_02'">
                 <IDButton
                   :text="'6학년'"
                   :_width="60"
                   :isWhite="true"
+                  @click.stop="() => changeGrade('GRADE06')"
                   class="h-[30px] text-black text-xs"
+                  :class="
+                    gradeValue.includes('GRADE06')
+                      ? 'border-[#F8B200] border-2'
+                      : ''
+                  "
                 />
               </div>
             </div>
           </div>
-          <div class="mt-[10px]">
+          <div class="mt-[10px]" v-if="i === clickedSch">
             <IDButton
               :text="'추가'"
               :_width="60"
               class="h-[30px] border border-gray-400 bg-gray-400 text-xs"
+              @click.stop="startAddTarget2"
             />
           </div>
         </div>
@@ -386,52 +424,16 @@ export default {
         value: 'all',
       },
       {
-        name: '초1',
-        value: 'SCH_02__GRADE01',
+        name: '초등학교',
+        value: 'SCH_02',
       },
       {
-        name: '초2',
-        value: 'SCH_02__GRADE02',
+        name: '중학교',
+        value: 'SCH_03',
       },
       {
-        name: '초3',
-        value: 'SCH_02__GRADE03',
-      },
-      {
-        name: '초4',
-        value: 'SCH_02__GRADE04',
-      },
-      {
-        name: '초5',
-        value: 'SCH_02__GRADE05',
-      },
-      {
-        name: '초6',
-        value: 'SCH_02__GRADE06',
-      },
-      {
-        name: '중1',
-        value: 'SCH_03__GRADE01',
-      },
-      {
-        name: '중2',
-        value: 'SCH_03__GRADE02',
-      },
-      {
-        name: '중3',
-        value: 'SCH_03__GRADE03',
-      },
-      {
-        name: '고1',
-        value: 'SCH_04__GRADE01',
-      },
-      {
-        name: '고2',
-        value: 'SCH_04__GRADE02',
-      },
-      {
-        name: '고3',
-        value: 'SCH_04__GRADE03',
+        name: '고등학교',
+        value: 'SCH_04',
       },
     ]);
     const options2 = ref(['오름차순', '내림차순']);
@@ -444,17 +446,20 @@ export default {
     });
     const originSchList = ref([]);
     const schList = ref([]);
-    const selectedSch = ref();
     const searchText = ref();
     const searchTextComplete = ref();
     const searchSchGradeComplete = ref();
+    const clickedSch = ref();
 
     const handleSelection1 = (v) => {
+      gradeValue.value = [];
       searchSchGradeComplete.value = v;
+      sortSchList();
     };
 
     const handleSelection2 = (v) => {
       selectedOption2.value = v;
+      sortSchList();
     };
 
     watch(
@@ -536,7 +541,18 @@ export default {
     };
 
     const submit = async () => {
-      IDService.updateReports({});
+      const targetAry = [];
+      for (let k in pollTarget.value) {
+        targetAry.push(pollTarget.value[k].code);
+      }
+      const res = await IDService.updateReports(pollId.value, {
+        pollTarget: targetAry.join(','),
+        pollBgnde: startDate.value,
+        pollEndde: endDate.value,
+      });
+      console.log(res.data);
+      alert('저장되었습니다.');
+      // location.reload(true);
     };
 
     const changeSch = (v) => {
@@ -583,7 +599,10 @@ export default {
     };
 
     const sortSchList = () => {
+      console.log('start');
       let tmpList = originSchList.value;
+
+      console.log(searchTextComplete.value);
       if (searchTextComplete.value) {
         tmpList = tmpList.filter((item) =>
           item.schulNm.includes(searchTextComplete.value)
@@ -594,7 +613,7 @@ export default {
         searchSchGradeComplete.value !== 'all'
       ) {
         tmpList = tmpList.filter(
-          (item) => (item.schulGradeCode = searchSchGradeComplete.value)
+          (item) => item.schulGradeCode === searchSchGradeComplete.value
         );
       }
       if (selectedOption2.value === '오름차순') {
@@ -606,8 +625,45 @@ export default {
           b.schulNm.localeCompare(a.schulNm)
         );
       }
+      console.log('fin');
 
-      schList.value = tmpList;
+      schList.value = [];
+      const chunkList = [];
+      let max = tmpList.length;
+      let cnt = 0;
+      while (cnt <= max) {
+        chunkList.push(tmpList.slice(cnt, cnt + 100));
+        cnt += 100;
+      }
+
+      // 레이지로딩느낌?
+      for (const i in chunkList) {
+        setTimeout(() => {
+          schList.value.push(...chunkList[i]);
+        }, i * 1000);
+      }
+    };
+
+    const clickSchList = (i) => {
+      gradeValue.value = [];
+      if (clickedSch.value === i) clickedSch.value = null;
+      else clickedSch.value = i;
+    };
+
+    const startAddTarget2 = () => {
+      const iStr = clickedSch.value.toString();
+      if (!iStr || !gradeValue.value.length) return;
+      const tmpGrade = gradeValue.value;
+      const i = clickedSch.value;
+      const currentSch = schList.value[i];
+      const tmp1 = currentSch.schulGradeCode;
+      const tmp2 = currentSch.schulNm;
+      const tmp3 = currentSch.schulCode;
+
+      gradeValue.value = [];
+      for (let i in tmpGrade) {
+        addTarget(tmp1, tmpGrade[i], tmp2, tmp3);
+      }
     };
 
     return {
@@ -628,6 +684,7 @@ export default {
       pollTarget,
       searchText,
       schList,
+      clickedSch,
 
       handleSelection1,
       handleSelection2,
@@ -640,6 +697,8 @@ export default {
       addTarget,
       delTarget,
       searchSch,
+      clickSchList,
+      startAddTarget2,
     };
   },
 };
