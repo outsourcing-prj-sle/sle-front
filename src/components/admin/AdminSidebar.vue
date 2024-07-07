@@ -16,9 +16,9 @@
     <div
       class="px-5 py-2 cursor-pointer text-left text-sm font-medium text-white"
       :class="{
-        'bg-[#353C5E] border-l-4 border-l-[#2F80ED] text-base': false,
+        'bg-[#353C5E] border-l-4 border-l-[#2F80ED] text-base': isTerm,
       }"
-      @click="goSite"
+      @click="goTerm"
       v-if="isSystemManagement"
     >
       약관 관리
@@ -115,6 +115,7 @@ export default {
     const isUserManangement = computed(() => route.meta.isUserManangement);
     const isLogManagement = computed(() => route.meta.isLogManagement);
     const isSite = computed(() => route.meta.isSite);
+    const isTerm = computed(() => route.meta.isTerm);
     const isCode = computed(() => route.meta.isCode);
     const isIP = computed(() => route.meta.isIP);
     const userType = computed(() => route.params.userType);
@@ -126,6 +127,11 @@ export default {
       if (isSite.value) return;
       router.push({ name: 'adminSite' });
     };
+
+    const goTerm = () => {
+      if(isTerm.value) return;
+      router.push({ name: 'adminTerm' });
+    }
 
     const goCode = () => {
       if (isCode.value) return;
@@ -166,11 +172,13 @@ export default {
       isUserManangement,
       isLogManagement,
       isSite,
+      isTerm,
       isCode,
       isIP,
       userType,
 
       goSite,
+      goTerm,
       goCode,
       goLog,
       goIP,

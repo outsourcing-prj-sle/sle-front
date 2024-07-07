@@ -1,6 +1,7 @@
 import AdminLayout from '@/layouts/AdminLayout.vue';
 import adminLoginView from '@/views/admin/adminLoginView.vue';
 import adminSiteView from '@/views/admin/adminSiteView.vue';
+import adminTermView from '@/views/admin/adminTermView.vue';
 import adminCodeManageView from '@/views/admin/adminCodeManageView.vue';
 import adminCodeDetailView from '@/views/admin/adminCodeDetailView.vue';
 import adminManageView from '@/views/admin/adminManageView.vue';
@@ -29,6 +30,18 @@ const adminRoutes = [
           needLogin: true,
           isSystemManagement: true,
           isSite: true,
+        },
+      },
+      {
+        path: 'term',
+        name: 'adminTerm',
+        component: adminTermView,
+        meta: {
+          headerVisible: true,
+          sidebarVisible: true,
+          needLogin: true,
+          isSystemManagement: true,
+          isTerm: true,
         },
       },
       {
