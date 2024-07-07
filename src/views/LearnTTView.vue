@@ -23,15 +23,15 @@
     <section
       class="flex flex-col px-20 mt-7 w-full text-base max-md:px-5 max-md:max-w-full"
     >
-      <div class="w-[300px] flex justify-start my-[20px] z-50">
+      <!-- <div class="w-[300px] flex justify-start my-[20px] z-50">
         <AppDropdown
-          v-if="selectedOption2"
-          :options="options2"
+          v-if="options2.length"
+          :objectOptions="options2"
           :startText="options2[0]"
           :openWay="'left'"
           @update:selectedOption="handleSelection2"
         />
-      </div>
+      </div> -->
       <b class="text-xl text-left">
         <span class="text-blue-500">학급</span> 학습성향
       </b>
@@ -51,13 +51,21 @@
                 alt=""
               />
             </picture>
-            <p v-if="donutChartSeries1[0]>donutChartSeries1[1]" class="text-left text-sm">
+            <p
+              v-if="donutChartSeries1[0] > donutChartSeries1[1]"
+              class="text-left text-sm"
+            >
               우리 학급은 학습내용을 자유롭게 건너뛰면서 학습하는 성향의
               아이들이 반복해서 과제를 확인하고 점검하는 성향의 아이들보다
               많습니다.
             </p>
-            <p v-if="donutChartSeries1[0]<donutChartSeries1[1]" class="text-left text-sm">
-              우리 학급은 반복해서 과제를 확인하고 점검하는 성향의 아이들이 학습내용을 자유롭게 건너뛰면서 학습하는 성향의 아이들보다 많습니다.
+            <p
+              v-if="donutChartSeries1[0] < donutChartSeries1[1]"
+              class="text-left text-sm"
+            >
+              우리 학급은 반복해서 과제를 확인하고 점검하는 성향의 아이들이
+              학습내용을 자유롭게 건너뛰면서 학습하는 성향의 아이들보다
+              많습니다.
             </p>
           </div>
         </div>
@@ -76,11 +84,21 @@
                 alt=""
               />
             </picture>
-            <p v-if="donutChartSeries2[0]>donutChartSeries2[1]" class="text-left text-sm">
-              우리 학급은 학습 수행을 신속하게 하고 목표 지향적인 성향의 아이들이 과제 마감기간에 유연함을 가지고 그 때 그때 수행하는 성향의 아이들보다 많습니다.
+            <p
+              v-if="donutChartSeries2[0] > donutChartSeries2[1]"
+              class="text-left text-sm"
+            >
+              우리 학급은 학습 수행을 신속하게 하고 목표 지향적인 성향의
+              아이들이 과제 마감기간에 유연함을 가지고 그 때 그때 수행하는
+              성향의 아이들보다 많습니다.
             </p>
-            <p v-if="donutChartSeries2[0]<donutChartSeries2[1]" class="text-left text-sm">
-              우리 학급은 과제 마감기간에 유연함을 가지고 그 때 그때 수행하는 성향의 아이들이 학습 수행을 신속하게 하고 목표 지향적인 성향의 아이들보다 많습니다.
+            <p
+              v-if="donutChartSeries2[0] < donutChartSeries2[1]"
+              class="text-left text-sm"
+            >
+              우리 학급은 과제 마감기간에 유연함을 가지고 그 때 그때 수행하는
+              성향의 아이들이 학습 수행을 신속하게 하고 목표 지향적인 성향의
+              아이들보다 많습니다.
             </p>
           </div>
         </div>
@@ -99,11 +117,21 @@
                 alt=""
               />
             </picture>
-            <p v-if="donutChartSeries3[0]>donutChartSeries3[1]" class="text-left text-sm">
-              우리 학급은 선생님이나 또래와의 상호작용을 활발하게 하면서 학습하는 성향의 아이들이 혼자 학습하는 것을 선호하는 성향의 아이들보다 많습니다.
+            <p
+              v-if="donutChartSeries3[0] > donutChartSeries3[1]"
+              class="text-left text-sm"
+            >
+              우리 학급은 선생님이나 또래와의 상호작용을 활발하게 하면서
+              학습하는 성향의 아이들이 혼자 학습하는 것을 선호하는 성향의
+              아이들보다 많습니다.
             </p>
-            <p v-if="donutChartSeries3[0]<donutChartSeries3[1]" class="text-left text-sm">
-              우리 학급은 혼자 학습하는 것을 선호하는 성향의 아이들이 선생님이나 또래와의 상호작용을 활발하게 하면서 학습하는 성향의 아이들보다 많습니다.
+            <p
+              v-if="donutChartSeries3[0] < donutChartSeries3[1]"
+              class="text-left text-sm"
+            >
+              우리 학급은 혼자 학습하는 것을 선호하는 성향의 아이들이 선생님이나
+              또래와의 상호작용을 활발하게 하면서 학습하는 성향의 아이들보다
+              많습니다.
             </p>
           </div>
         </div>
@@ -150,7 +178,10 @@
           </div>
         </div>
         <b class="text-xl my-[20px]">*성향별 상세 안내</b>
-        <div v-if="barChartDataArr1[0] > Math.abs(barChartDataArr2[0])" class="mb-[40px]">
+        <div
+          v-if="barChartDataArr1[0] > Math.abs(barChartDataArr2[0])"
+          class="mb-[40px]"
+        >
           <p class="my-[10px] font-medium text-xl">
             {{ donutChartDataNmArr1[0] }}
           </p>
@@ -165,17 +196,28 @@
             </p>
           </div>
         </div>
-        <div v-if="barChartDataArr1[0] < Math.abs(barChartDataArr2[0])" class="mb-[40px]">
+        <div
+          v-if="barChartDataArr1[0] < Math.abs(barChartDataArr2[0])"
+          class="mb-[40px]"
+        >
           <p class="my-[10px] font-medium text-xl">
             {{ donutChartDataNmArr1[1] }}
           </p>
           <div class="p-[20px] border-gray-300 border-2 rounded-xl mb-[10px]">
             <p>
-              학습 콘텐츠를 자주 보고 점검하는 성향의 학생들은 반복해서 학습 콘텐츠를 확인하거나 점검하고, 과제수정을 자주하는 성향입니다. 학습 콘텐츠를 자주 보고 점검하는 성향이 높을수록완벽성과 안정성을 추구하여 과제 수행 시간이 다른 사람들에 비해 오래 걸릴 수 있습니다. 긴장을 많이 하는 학생일 수 있으므로 여유를 가질 수 있도록 격려해주세요.
+              학습 콘텐츠를 자주 보고 점검하는 성향의 학생들은 반복해서 학습
+              콘텐츠를 확인하거나 점검하고, 과제수정을 자주하는 성향입니다. 학습
+              콘텐츠를 자주 보고 점검하는 성향이 높을수록완벽성과 안정성을
+              추구하여 과제 수행 시간이 다른 사람들에 비해 오래 걸릴 수
+              있습니다. 긴장을 많이 하는 학생일 수 있으므로 여유를 가질 수
+              있도록 격려해주세요.
             </p>
           </div>
         </div>
-        <div v-if="barChartDataArr1[1] > Math.abs(barChartDataArr2[1])" class="mb-[40px]">
+        <div
+          v-if="barChartDataArr1[1] > Math.abs(barChartDataArr2[1])"
+          class="mb-[40px]"
+        >
           <p class="my-[10px] font-medium text-xl">
             {{ donutChartDataNmArr2[0] }}
           </p>
@@ -191,18 +233,28 @@
             </p>
           </div>
         </div>
-        <div v-if="barChartDataArr1[1] < Math.abs(barChartDataArr2[1])" class="mb-[40px]">
+        <div
+          v-if="barChartDataArr1[1] < Math.abs(barChartDataArr2[1])"
+          class="mb-[40px]"
+        >
           <p class="my-[10px] font-medium text-xl">
             {{ donutChartDataNmArr2[1] }}
           </p>
           <div class="p-[20px] border-gray-300 border-2 rounded-xl mb-[10px]">
             <p>
-              느긋하게 과제를 수행하는 성향의 학생들은 마감시간에 대해 유연함을 가지고 그때그때 수행하려고 하는 성향입니다.
-              느긋하게 과제를 수행하는 성향이 높을수록 학업 수행 시 스트레스를 덜 받을 수 있으나 계획적으로 학습하는데 어려움이 있고 미루는 행동을 보일 수 있습니다. 정해진 학습량을 제시간에 수행할 수 있도록 시간관리 학습방법을 도와주세요.
+              느긋하게 과제를 수행하는 성향의 학생들은 마감시간에 대해 유연함을
+              가지고 그때그때 수행하려고 하는 성향입니다. 느긋하게 과제를
+              수행하는 성향이 높을수록 학업 수행 시 스트레스를 덜 받을 수 있으나
+              계획적으로 학습하는데 어려움이 있고 미루는 행동을 보일 수
+              있습니다. 정해진 학습량을 제시간에 수행할 수 있도록 시간관리
+              학습방법을 도와주세요.
             </p>
           </div>
         </div>
-        <div v-if="barChartDataArr1[2] > Math.abs(barChartDataArr2[2])" class="mb-[40px]">
+        <div
+          v-if="barChartDataArr1[2] > Math.abs(barChartDataArr2[2])"
+          class="mb-[40px]"
+        >
           <p class="my-[10px] font-medium text-xl">
             {{ donutChartDataNmArr3[0] }}
           </p>
@@ -216,14 +268,21 @@
             </p>
           </div>
         </div>
-        <div v-if="barChartDataArr1[2] < Math.abs(barChartDataArr2[2])" class="mb-[40px]">
+        <div
+          v-if="barChartDataArr1[2] < Math.abs(barChartDataArr2[2])"
+          class="mb-[40px]"
+        >
           <p class="my-[10px] font-medium text-xl">
             {{ donutChartDataNmArr3[1] }}
           </p>
           <div class="p-[20px] border-gray-300 border-2 rounded-xl mb-[10px]">
             <p>
-              소통을 활발하게 하며 학습하는 성향의 학생들은 교사나 또래와의 사회적 상호작용을 활발하게 하면서 학습하는 성향입니다.
-              소통을 활발하게 하며 학습하는 성향이 높을수록 관계 지향적인 성향으로 인해서 교사나 또래관계에 따라 학업 수행 결과에 변화의 폭이 클 수 있습니다. 스스로 자기를 인식하여 학습에 대한 생각을 정리하고 독립적으로 학습을 하는 경험을 늘릴 수 있도록 도와주세요.
+              소통을 활발하게 하며 학습하는 성향의 학생들은 교사나 또래와의
+              사회적 상호작용을 활발하게 하면서 학습하는 성향입니다. 소통을
+              활발하게 하며 학습하는 성향이 높을수록 관계 지향적인 성향으로
+              인해서 교사나 또래관계에 따라 학업 수행 결과에 변화의 폭이 클 수
+              있습니다. 스스로 자기를 인식하여 학습에 대한 생각을 정리하고
+              독립적으로 학습을 하는 경험을 늘릴 수 있도록 도와주세요.
             </p>
           </div>
         </div>
@@ -399,9 +458,18 @@ export default {
     const barChartDataArr2 = ref([]);
     const barChartColor = ref(['#A46DF1', '#FF80BD', '#2584FF']);
 
-    const donutChartDataNmArr1 = ref(['학습 콘텐츠를 건너뛰며 점검하는 성향', '학습 콘텐츠를 자주 보고 점검하는 성향',]);
-    const donutChartDataNmArr2 = ref(['신속하게 과제를 수행하는 성향', '느긋하게 과제를 수행하는 성향',]);
-    const donutChartDataNmArr3 = ref(['소통을 활발하게 하며 학습하는 성향', '독립적으로 학습하는 성향',]);
+    const donutChartDataNmArr1 = ref([
+      '학습 콘텐츠를 건너뛰며 점검하는 성향',
+      '학습 콘텐츠를 자주 보고 점검하는 성향',
+    ]);
+    const donutChartDataNmArr2 = ref([
+      '신속하게 과제를 수행하는 성향',
+      '느긋하게 과제를 수행하는 성향',
+    ]);
+    const donutChartDataNmArr3 = ref([
+      '소통을 활발하게 하며 학습하는 성향',
+      '독립적으로 학습하는 성향',
+    ]);
     const donutChartColor1 = ref(['#E3ACD0', '#72AFE7']);
     const donutChartColor2 = ref(['#E3ACD0', '#72AFE7']);
     const donutChartColor3 = ref(['#E3ACD0', '#72AFE7']);
@@ -410,6 +478,7 @@ export default {
     const donutChartSeries3 = ref([20, 10]);
 
     onMounted(async () => {
+      initClass();
       await fetchData();
       await fetchChartData();
     });
@@ -418,18 +487,28 @@ export default {
       return !needReportAry.value.includes(selectedOption.value);
     });
 
+    const initClass = async () => {
+      const teacherResponse = await UserService.teacherIdtt();
+      const resData = teacherResponse.data;
+
+      console.log(resData);
+
+      if (resData.error) {
+        alert(resData.error);
+        return;
+      }
+
+      // todo :: 학급 드롭박스 추가 할 정보
+      // 선생님들 리스트 보고 있는 클래스로 드롭박스 생성
+      // 드롭박스 선택하면 아래 동작
+      // 해당 학급 학생 다시 부르기
+      // 차트 다시 부르기
+    };
+
     // 학생 리스트
     const fetchData = async () => {
       const mySELResponse = await UserService.getMySEL();
-      const teacherResponse = await UserService.teacherIdtt();
       const resData = mySELResponse.data;
-      const resData2 = teacherResponse.data;
-
-      // console.log(resData);
-      console.log(resData2);
-      /**
-       * 여기서부터 하면 됩니다. resData2가 선생님 정보.
-       */
 
       if (resData.error) {
         alert(resData.error);
@@ -470,11 +549,17 @@ export default {
       selectedOption.value = option;
 
       name.value = optionsObj.value[option].name;
-      fetchChartData(optionsObj.value[option].userId === null ? 'test' : optionsObj.value[option].userId);
+      fetchChartData(
+        optionsObj.value[option].userId === null
+          ? 'test'
+          : optionsObj.value[option].userId
+      );
     };
 
     const handleSelection2 = (option) => {
       selectedOption2.value = option;
+      fetchData();
+      fetchChartData();
     };
 
     const submitInfo = async () => {
@@ -611,42 +696,42 @@ export default {
           breakpoint: 900,
           options: {
             chart: {
-              width: 300
+              width: 300,
             },
             plotOptions: {
               bar: {
                 borderRadius: 15,
               },
             },
-          }
+          },
         },
         {
           breakpoint: 800,
           options: {
             chart: {
-              width: 250
+              width: 250,
             },
             plotOptions: {
               bar: {
                 borderRadius: 12,
               },
             },
-          },        
+          },
         },
         {
           breakpoint: 600,
           options: {
             chart: {
-              width: 400
+              width: 400,
             },
             plotOptions: {
               bar: {
                 borderRadius: 25,
               },
             },
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
 
     const donutChartOptions1 = ref({
@@ -722,13 +807,13 @@ export default {
     });
 
     const fetchChartData = async (userId = 'test') => {
-      const response = await UserService.userIdttLT({ id: userId })
+      const response = await UserService.userIdttLT({ id: userId });
       const resData = response.data;
 
       console.log(resData);
 
-      if(!resData.userPersonality) return;
-      if(!resData.classPersonality) return;
+      if (!resData.userPersonality) return;
+      if (!resData.classPersonality) return;
 
       let cArr1 = [];
       let cArr2 = [];
@@ -736,13 +821,13 @@ export default {
 
       resData.classPersonality[0].type1.values.map((item) => {
         cArr1.push(item);
-      })
+      });
       resData.classPersonality[0].type2.values.map((item) => {
         cArr2.push(item);
-      })
+      });
       resData.classPersonality[0].type3.values.map((item) => {
         cArr3.push(item);
-      })
+      });
 
       donutChartSeries1.value = cArr1;
       donutChartSeries2.value = cArr2;
@@ -750,7 +835,7 @@ export default {
 
       let uArr1 = [];
       let uArr2 = [];
-      
+
       uArr1.push(parseInt(resData.userPersonality[0]['건너뛰며 점검하기']));
       uArr2.push(-parseInt(resData.userPersonality[0]['느긋하게 과제하기']));
       uArr1.push(parseInt(resData.userPersonality[0]['신속하게 과제하기']));

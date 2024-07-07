@@ -123,7 +123,7 @@ const checkId = (data = {}) => {
 
 // 나의 SEL 알기 (교사, 학생)
 const getMySEL = (data = {}) => {
-  return apiClient.get(baseURL + '/mysel');
+  return apiClient.get(baseURL + '/mysel', { params: data });
 };
 
 const userIDTT = (data = {}) => {
@@ -132,7 +132,7 @@ const userIDTT = (data = {}) => {
 
 const userIdttLT = (data = {}) => {
   return apiClient.get(baseURL + '/idttLT', { params: data });
-};  
+};
 
 // 회원정보 수정
 const updateUserInfo = (data = {}) => {
