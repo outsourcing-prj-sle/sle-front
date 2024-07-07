@@ -1,8 +1,8 @@
 <template>
   <AdminHeader />
-  <div class="flex flex-1 h-full">
+  <div class="flex flex-1">
     <AdminSidebar />
-    <div class="w-full overflow-hidden">
+    <div class="w-full">
       <router-view />
     </div>
   </div>
