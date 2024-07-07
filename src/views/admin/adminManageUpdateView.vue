@@ -223,7 +223,7 @@ export default {
       const resData = submitResult.data;
       console.log(resData);
       alert('등록되었습니다');
-      router.push({ name: 'adminManageView' });
+      router.push({ name: 'adminManage' });
     };
 
     const goAdminManage = () => {
