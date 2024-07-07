@@ -3,7 +3,7 @@
     class="flex justify-start mx-[40px] my-[20px] max-md:mx-[20px] max-md:my-[20px]"
   >
     <div class="flex flex-col gap-[20px] items-start w-full">
-      <p class="font-bold text-[20px] max-md:text-[16px]">연구소관리자 관리</p>
+      <p class="font-bold text-[20px] max-md:text-[16px]">사이트 관리</p>
       <div class="flex w-full justify-between content-center">
         <div class="text-xs font-medium content-center">
           총 {{ totalCount }}개 | 현재페이지 {{ page }}
