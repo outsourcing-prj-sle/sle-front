@@ -72,7 +72,7 @@
               @update:selectedOption="(v) => handleSelection('isEmail', v)"
             />
           </div>
-          <div class="flex gap-2.5" v-if="item.body.isYesNo">
+          <div class="flex gap-2.5" v-else-if="item.body.isYesNo">
             <input
               type="radio"
               :id="`isYesNo_yes${index}`"
@@ -100,7 +100,7 @@
             @input="updateValue($event.target.value, index)"
           >
           </textarea>
-          <div v-if="item.body.isUpload">
+          <div v-else-if="item.body.isUpload">
             <input
               type="file"
               @change="(e) => updateValue(e.target.files[0], index)"
