@@ -12,7 +12,7 @@
       <AdminTable :header="header" :body="body" />
       <AdminPagination :pageNo="1" :recordCount="10" :totalCount="12" />
       <div class="w-full text-right">
-        <AdminButton :text="'등록'" />
+        <AdminButton :text="'등록'" @onClick="goUpdate" />
       </div>
     </div>
   </div>
@@ -75,9 +75,20 @@ export default {
       ],
     ]);
 
+    const goUpdate = (id) => {
+      router.push({
+        name: 'adminIPUpdate',
+        query: {
+          id,
+        },
+      });
+    };
+
     return {
       header,
       body,
+
+      goUpdate,
     };
   },
 };
