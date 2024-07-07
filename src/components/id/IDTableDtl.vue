@@ -50,7 +50,7 @@
               class="rounded-xl whitespace-nowrap"
               :text="v.isButton"
               :isWhite="false"
-              @click="onClick"
+              @click="() => onClick(v.id)"
             />
             <div class="flex gap-[10px] justify-center" v-else-if="v.isButton2">
               <button
@@ -105,8 +105,8 @@ export default {
   setup(props, { emit }) {
     const stateStore = useStateStore();
 
-    const onClick = () => {
-      emit('onClick');
+    const onClick = (v) => {
+      emit('onClick', v);
     };
 
     const openPopup = (index) => {

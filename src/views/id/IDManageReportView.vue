@@ -164,7 +164,7 @@ export default {
         ];
 
         if (item.pollTarget.length) {
-          arr.push({ isButton: '상세보기' });
+          arr.push({ isButton: '상세보기', id: item.pollId });
         } else {
           arr.push({ text: '-' });
         }
@@ -227,8 +227,13 @@ export default {
       options1.value = uniqueGrades;
     };
 
-    const goReportDtl = () => {
-      router.push({ name: 'IDManageReportDtlView' });
+    const goReportDtl = (v) => {
+      router.push({
+        name: 'IDManageReportDtlView',
+        query: {
+          id: v,
+        },
+      });
     };
 
     return {
