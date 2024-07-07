@@ -222,6 +222,7 @@
       </div>
       <IDSearch
         class="w-full"
+        v-model="searchText"
         @keyup.enter="searchSch"
         :placeholder="'학교명을 입력해주세요.'"
       />
@@ -545,14 +546,30 @@ export default {
       for (let k in pollTarget.value) {
         targetAry.push(pollTarget.value[k].code);
       }
+      if (!targetAry.length) {
+        alert('목록에 대상을 추가해주세요.');
+        return;
+      }
+      const pollBgnde = parseDate(startDate.value);
+      const pollEndde = parseDate(endDate.value);
       const res = await IDService.updateReports(pollId.value, {
         pollTarget: targetAry.join(','),
-        pollBgnde: startDate.value,
-        pollEndde: endDate.value,
+        pollBgnde,
+        pollEndde,
       });
       console.log(res.data);
       alert('저장되었습니다.');
-      // location.reload(true);
+      location.reload(true);
+    };
+
+    const parseDate = (d) => {
+      const tmp = new Date(d);
+      let year = tmp.getFullYear();
+      let month = tmp.getMonth() + 1;
+      let day = tmp.getDate();
+      month = String(month).padStart(2, '0');
+      day = String(day).padStart(2, '0');
+      return `${year}${month}${day}`;
     };
 
     const changeSch = (v) => {
