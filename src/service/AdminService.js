@@ -338,6 +338,22 @@ const deleteSubCode = (codeId, subCodeId) => {
   );
 };
 
+const getLog = (data = {}) => {
+  return apiClient.get(
+    baseURL + '/system/log',
+    {params: data}
+  );
+}
+
+const getUsers = (id, data = {}) => {
+  return apiClient.get(
+    baseURL + `/users/${id}`,
+    {params: data}
+  )
+}
+
+
+
 export default {
   login,
   myInfo,
@@ -359,4 +375,6 @@ export default {
   subCodeInfoList,
   deleteSubCode,
   checkSystemExist,
+  getLog,
+  getUsers
 };
