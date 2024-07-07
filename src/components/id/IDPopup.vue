@@ -6,7 +6,7 @@
   ></div>
   <div
     v-if="isShow1"
-    class="content-center p-8 min-h-[350px] z-50 bg-white rounded-[20px] shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2 flex flex-col gap-[10px]"
+    class="content-center p-8 min-h-[350px] z-50 bg-white rounded-[20px] shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2 flex flex-col gap-[10px] w-[590px]"
     style="transform: translate(-50%, -50%) scale(0.8)"
   >
     <div class="flex justify-between items-center">
@@ -187,14 +187,14 @@
         :_width="150"
         isGray="true"
         @click="startAddTarget"
-        class="bg-gray-300 text-white"
+        class="bg-gray-300 text-white hover:bg-gray-500"
       />
     </div>
     <p class="text-base text-left font-semibold">목록</p>
     <div
-      class="w-full bg-gray-100 min-h-[200px] rounded-md flex p-[10px] pt-[20px] gap-[10px] flex-wrap"
+      class="w-full h-[200px] overflow-y-scroll bg-gray-100 rounded-md flex p-[10px] pt-[20px] gap-[10px] flex-wrap content-baseline"
     >
-      <div v-for="v in pollTarget" :key="`${v.text}pollTarget`">
+      <div v-for="v in pollTarget" :key="`${v.text}pollTarget`" class="btn-selected">
         <IDButton
           v-if="v"
           :text="v.text"
@@ -202,7 +202,7 @@
           :isEllipsis="true"
           :isWhite="true"
           @onClick="() => delTarget(v.code)"
-          class="h-[40px] text-black btn-selected"
+          class="h-[40px] text-black whitespace-nowrap overflow-hidden text-ellipsis"
         />
       </div>
     </div>
@@ -727,8 +727,8 @@ export default {
 .btn-selected::after {
   content: 'x';
   position: relative;
-  bottom: 35px;
-  left: 130px;
+  bottom: 45px;
+  left: 140px;
   width: 15px;
   height: 15px;
   background-color: red;
