@@ -2,7 +2,7 @@
   <IDHeader />
   <div class="flex flex-1">
     <IDSidebar />
-    <div class="w-full overflow-hidden">
+    <div class="w-full">
       <router-view />
     </div>
   </div>
