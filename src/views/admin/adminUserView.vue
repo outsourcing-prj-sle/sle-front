@@ -15,14 +15,15 @@
             :options="options"
             :startText="selectedOption"
             :openFull="true"
-            @update:selectedOption="handleSelection1"
+            @update:selectedOption="handleSelection2"
           />
           <input
             class="py-2 px-4 border border-gray-300 bg-white rounded-md text-sm"
             type="text"
             placeholder="검색어를 입력하세요."
+            @v-model="searchText"
           />
-          <AdminButton :text="'검색'" :isWhite="false" />
+          <AdminButton :text="'검색'" :isWhite="false" @click="searchList" />
         </div>
       </div>
       <div class="flex w-full justify-between content-center">
@@ -31,15 +32,15 @@
         </div>
         <div>
           <AppDropdown
-            v-if="selectedOption"
+            v-if="selectedOption2"
             :options="options"
-            :startText="selectedOption"
+            :startText="selectedOption2"
             @update:selectedOption="handleSelection1"
           />
         </div>
       </div>
       <AdminTable :header="header" :body="body" />
-      <AdminPagination :pageNo="1" :recordCount="10" :totalCount="12" />
+      <AdminPagination :pageNo=page :recordCount="10" :totalCount=totalCount />
       <div class="w-full text-right">
         <AdminButton :text="'등록'" />
       </div>
@@ -48,7 +49,7 @@
 </template>
 
 <script>
-import { ref, onBeforeMount, computed } from 'vue';
+import { ref, onBeforeMount, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useAdminStore } from '@/store/adminStore.js';
 import AdminService from '@/service/AdminService.js';
@@ -72,45 +73,62 @@ export default {
     const userType = computed(() => parseToKo(route.params.userType));
     const options = ref(['최신순', '오래된순']);
     const selectedOption = ref('최신순');
+    const options2 = ref(['회원번호', '소속', '이름', '아이디', '이메일']);
+    const selectedOption2 = ref('회원번호');
+    const searchText = ref('');
+    const orderBy = ref('');
+    const page = ref(1);
+    const totalCount = ref(12);
+    const uniqId = ref('');
+    const userSpaceOrgInfo = ref('');
+    const name = ref('');
+    const id = ref('');
+    const userEmail = ref('');
+
     const header = ref([
       {
         text: '번호',
       },
       {
-        text: '사이트명',
+        text: '회원번호',
       },
       {
-        text: '사이트도메인',
+        text: '권한',
       },
       {
-        text: '등록일',
+        text: '소속',
       },
       {
-        text: '수정',
+        text: '이름',
+      },
+      {
+        text: '아이디',
+      },
+      {
+        text: '이메일',
+      },
+      {
+        text: '관리',
       },
     ]);
-    const body = ref([
-      [
-        {
-          text: '1',
-        },
-        {
-          text: '톡톡클래스',
-        },
-        {
-          text: 'tt.class.kr',
-        },
-        {
-          text: '2024-03-02',
-        },
-        {
-          isEdit: true,
-        },
-      ],
-    ]);
+    const body = ref([]);
 
     const handleSelection1 = (v) => {
       selectedOption.value = v;
+
+      if(v === '최신순') orderBy.value = 'desc';
+      if(v === '오래된순') orderBy.value = 'asc';
+      fetchData();
+    };
+
+    const handleSelection2 = (v) => {
+      selectedOption2.value = v;
+
+      if(v === '회원번호') fetchData({ 'uniqId': uniqId.value });
+      if(v === '소속') fetchData({ 'userSpaceOrgInfo': userSpaceOrgInfo.value });
+      if(v === '이름') fetchData({ 'name': name.value });
+      if(v === '아이디') fetchData({ 'id': id.value });
+      if(v === '이메일') fetchData({ 'userEmail': userEmail.value });
     };
 
     const startDate = ref(new Date());
@@ -151,6 +169,62 @@ export default {
       return result;
     };
 
+    onMounted(() => {
+      fetchData();
+    });
+
+    const fetchData = async (data = {}) => {
+      const response = await AdminService.getUsers('school', {
+        orderBy: orderBy.value,
+        pageNo: page.value,
+        ...data
+      });
+      const resData = response.data;
+
+      page.value = resData.pageNo;
+      totalCount.value = resData.totalCount;
+
+      console.log(resData);
+
+      let arr = [];
+
+      resData.adminUserInfoList.map((item, index) => {
+        let obj = [
+          {
+            text: index+1 + (page.value-1) * 10,
+          },
+          {
+            text: item.uniqId,
+          },
+          {
+            text: item.userRole,
+          },
+          {
+            text: item.userSpaceOrgInfo,
+          },
+          {
+            text: item.name,
+          },
+          {
+            text: item.id,
+          },
+          {
+            text: item.userEmail,
+          },
+          {
+            isEdit: true,
+          },
+        ];
+
+        arr.push(obj);
+      });
+
+      body.value = arr;
+    };
+
+    const searchList = () => {
+    };
+
     return {
       header,
       body,
@@ -161,8 +235,13 @@ export default {
       formattedStartDate,
       endDate,
       formattedEndDate,
+      page,
+      totalCount,
+      orderBy,
 
       handleSelection1,
+      handleSelection2,
+      searchList,
     };
   },
 };

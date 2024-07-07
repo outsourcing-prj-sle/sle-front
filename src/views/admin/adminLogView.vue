@@ -19,8 +19,9 @@
             class="py-2 px-4 border border-gray-300 bg-white rounded-md text-sm"
             type="text"
             placeholder="검색어를 입력하세요."
+            v-model="searchText"
           />
-          <AdminButton :text="'검색'" :isWhite="false" :isSearch="true" />
+          <AdminButton :text="'검색'" :isWhite="false" :isSearch="true" @click="submitData" />
         </div>
       </div>
       <AdminTable v-if="body.length" :header="header" :body="body" />
@@ -36,7 +37,7 @@
 </template>
 
 <script>
-import { ref, onBeforeMount, computed } from 'vue';
+import { ref, onBeforeMount, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useAdminStore } from '@/store/adminStore.js';
 import AdminService from '@/service/AdminService.js';
@@ -57,49 +58,79 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const adminStore = useAdminStore();
-    const options = ref(['최신순', '오래된순']);
-    const selectedOption = ref('최신순');
+    const options = ref(['아이디', '변경내용']);
+    const selectedOption = ref('아이디');
     const page = ref(1);
     const totalCount = ref(10);
+    const searchText = ref('');
+    const orderBy = ref('');
 
     const header = ref([
       {
         text: '번호',
       },
       {
-        text: '사이트명',
+        text: '요청자ID',
       },
       {
-        text: '사이트도메인',
+        text: '요청자명',
       },
       {
-        text: '등록일',
+        text: '접속IP',
       },
       {
-        text: '수정',
+        text: '작업일시',
+      },
+      {
+        text: '작업내용',
       },
     ]);
-    const body = ref([
-      [
-        {
-          text: '1',
-        },
-        {
-          text: '톡톡클래스',
-        },
-        {
-          text: 'tt.class.kr',
-        },
-        {
-          text: '2024-03-02',
-        },
-        {
-          isEdit: true,
-        },
-      ],
-    ]);
+    const body = ref([]);
 
-    const fetchList = async () => {};
+    onMounted(() => {
+      fetchList();
+    })
+
+    const fetchList = async ( data = {} ) => {
+      const response = await AdminService.getLog({ pageNo: page.value, ...data });
+      const responseData = response.data;
+
+      console.log(responseData);
+
+      page.value = responseData.pageNo;
+      totalCount.value = responseData.totalCount;
+
+      let list = [];
+
+      if(!responseData.logList) return;
+
+      responseData.logList.map((item, index) => {
+        let obj = [
+          {
+            text: ((index+1) + (page.value-1) * 10)
+          },
+          {
+            text: item.id
+          },
+          {
+            text: item.userName
+          },
+          {
+            text: item.ipAddress
+          },
+          {
+            text: item.accessTime
+          },
+          {
+            text: item.apiUrl
+          },
+        ]
+
+        list.push(obj);
+      });
+
+      body.value = list;
+    };
 
     const handleSelection1 = (v) => {
       selectedOption.value = v;
@@ -111,6 +142,11 @@ export default {
       fetchList();
     };
 
+    const submitData = () => {
+      if(selectedOption.value === '아이디') fetchList({ id: searchText.value });
+      if(selectedOption.value === '변경내용') fetchList({ apiUrl: searchText.value });
+    };
+
     return {
       header,
       body,
@@ -118,9 +154,11 @@ export default {
       selectedOption,
       totalCount,
       page,
+      searchText,
 
       handleSelection1,
       updatePage,
+      submitData,
     };
   },
 };
