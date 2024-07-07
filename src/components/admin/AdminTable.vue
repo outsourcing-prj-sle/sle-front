@@ -15,7 +15,7 @@
             :key="`${v.text}${i}`"
           >
             <input type="checkbox" class="min-w-[35px]" v-if="v.isCheckbox" />
-            <span class="whitespace-nowrap" v-if="v.text">
+            <span class="whitespace-nowrap" v-else-if="v.text">
               {{ v.text }}
             </span>
           </th>
@@ -35,16 +35,13 @@
             :key="`${i}${j}`"
           >
             <input class="min-w-[35px]" type="checkbox" v-if="v.isCheckbox" />
-            <span v-if="v.text" class="whitespace-nowrap">
-              {{ v.text }}
-            </span>
             <IDButtonVue
-              v-if="v.isButton"
+              v-else-if="v.isButton"
               class="rounded-xl whitespace-nowrap"
               :text="v.isButton"
               :isWhite="false"
             />
-            <div class="flex gap-[10px]" v-if="v.button1 && v.button2">
+            <div class="flex gap-[10px]" v-else-if="v.button1 && v.button2">
               <IDButtonVue
                 class="rounded-xl whitespace-nowrap hover:bg-[#2F80ED] hover:text-white"
                 :text="v.button1"
@@ -58,7 +55,7 @@
             </div>
             <div
               class="cursor-pointer min-w-[45px] flex flex-1 justify-center items-center w-full"
-              v-if="v.isOpenPopup"
+              v-else-if="v.isOpenPopup"
             >
               <img
                 class="w-[28px] h-[28px]"
@@ -66,14 +63,17 @@
                 alt=""
               />
             </div>
-            <div class="flex-1" v-if="v.isManage">연구소 관리자 관리</div>
-            <div class="flex-1" v-if="v.isEdit">
+            <div class="flex-1" v-else-if="v.isManage">연구소 관리자 관리</div>
+            <div class="flex-1" v-else-if="v.isEdit">
               <img
                 class="w-[28px] h-[28px]"
                 src="@/assets/img/edit.png"
                 alt="edit"
               />
             </div>
+            <span v-else-if="v.text" class="whitespace-nowrap">
+              {{ v.text }}
+            </span>
           </td>
         </tr>
       </tbody>
