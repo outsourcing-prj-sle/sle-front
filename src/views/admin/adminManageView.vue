@@ -69,11 +69,7 @@
             placeholder="검색어를 입력하세요."
             v-model="searchText"
           />
-          <AdminButton
-            :text="'검색'"
-            :isWhite="false"
-            @onClick="searchText && fetchList"
-          />
+          <AdminButton :text="'검색'" :isWhite="false" @onClick="fetchList" />
         </div>
       </div>
       <div class="flex w-full justify-between content-center">
@@ -216,7 +212,7 @@ export default {
       selectedOption.value = v;
     };
     const handleSelection2 = (v) => {
-      selectedOption.value = v;
+      valueOption2.value = v;
     };
 
     const startDate = ref(new Date());
@@ -261,6 +257,7 @@ export default {
     };
 
     const fetchList = async () => {
+      console.log('fetchList');
       const requestData = {
         pageNo: page.value,
         limit: limit.value,
@@ -268,9 +265,13 @@ export default {
         startDate: parseDate(startDate.value),
         endDate: parseDate(endDate.value),
       };
-      if (valueOption2.value && searchText) {
-        requestData.valueOption2 = searchText;
+      console.log('yhs :: 1');
+      console.log(valueOption2.value);
+      console.log(searchText.value);
+      if (valueOption2.value && searchText.value) {
+        requestData[valueOption2.value] = searchText.value;
       }
+      console.log('yhs :: 2');
       const userManagement = await AdminService.userManagement(
         'admin',
         requestData
@@ -284,13 +285,14 @@ export default {
       console.log(resData);
       const list = resData.adminUserInfoList;
       totalCount.value = resData.totalCount;
+      body.value = [];
 
       for (const i in list) {
         const v = list[i];
 
         body.value.push([
           {
-            text: parseInt(i) + 1 + '',
+            text: parseInt(i) + (page.value - 1) * 10 + 1 + '',
           },
           {
             text: v.createAt.split(' ')[0],
