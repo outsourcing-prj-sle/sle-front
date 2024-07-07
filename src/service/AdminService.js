@@ -110,12 +110,8 @@ const myInfo = (data = {}) => {
 };
 
 // 유저 정보 조회
-const userInfo = (
-  data = {
-    id: 'id',
-  }
-) => {
-  return apiClient.get(baseURL + '/users', { param: data });
+const userInfo = (id) => {
+  return apiClient.get(baseURL + '/users/admin/' + id);
 };
 
 // 내정보 서버 업데이트
