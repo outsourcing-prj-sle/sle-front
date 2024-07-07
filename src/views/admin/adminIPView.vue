@@ -110,6 +110,7 @@ export default {
       console.log(resData);
       const list = resData.ipInfoList;
       totalCount.value = resData.totalCount;
+      body.value = [];
 
       for (const i in list) {
         const v = list[i];
