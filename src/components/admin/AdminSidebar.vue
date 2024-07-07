@@ -11,7 +11,7 @@
       @click="goSite"
       v-if="isSystemManagement"
     >
-      설문 관리
+      사이트 관리
     </div>
     <div
       class="px-5 py-2 cursor-pointer text-left text-sm font-medium text-white"

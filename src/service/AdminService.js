@@ -140,7 +140,7 @@ const signup = (
     userSpaceOrgInfo: '경남교육청',
   }
 ) => {
-  return apiClient.put(baseURL + '/users/register', data);
+  return apiClient.put(baseURL + '/users/admin/register', data);
 };
 
 // 아이디 중복 체크

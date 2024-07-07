@@ -6,7 +6,12 @@
       <p class="font-bold text-[20px] max-md:text-[16px]">
         관리자 {{ id ? '수정' : '등록' }}
       </p>
-      <AdminTableCol :_data="data" @handleInputUpdate="handleInputUpdate" />
+      <AdminTableCol
+        :_data="data"
+        :changeTableState="changeTableState"
+        @handleInputUpdate="handleInputUpdate"
+        @handleEventUpdate="handleEventUpdate"
+      />
       <div class="flex w-full gap-[20px] justify-center">
         <AdminButton
           :text="id ? '수정' : '등록'"
@@ -38,6 +43,11 @@ export default {
     const router = useRouter();
     const id = ref(route.query.id || '');
     const data = ref([]);
+    const changeTableState = ref({
+      index: null,
+      key: null,
+      value: null,
+    });
 
     onMounted(async () => {
       if (!id.value) {
@@ -160,13 +170,13 @@ export default {
 
       let submitResult;
 
-      if (data.value[0].value) apiData.userNm = data.value[0].value;
+      if (data.value[0].value) apiData.name = data.value[0].value;
       else {
         alert('이름을 입력해주세요.');
         return;
       }
 
-      if (data.value[1].value) apiData.userId = data.value[1].value;
+      if (data.value[1].value) apiData.id = data.value[1].value;
       else {
         alert('아이디를 입력해주세요.');
         return;
@@ -180,8 +190,8 @@ export default {
         }
       }
 
-      if (data.value[3].value === '선택')
-        apiData.userSeCode = data.value[3].value;
+      if (data.value[3].value !== '선택')
+        apiData.userRole = data.value[3].value;
       else {
         alert('회원구분을 선택해주세요.');
         return;
@@ -190,7 +200,7 @@ export default {
       if (
         data.value[4].value1 !== '국번' &&
         data.value[4].value2 &&
-        data.value[4].value1
+        data.value[4].value3
       ) {
         apiData.phoneNumber = `${data.value[4].value1}-${data.value[4].value2}-${data.value[4].value3}`;
       } else {
@@ -199,16 +209,16 @@ export default {
       }
 
       if (data.value[5].value1 && data.value[5].value2) {
-        apiData.emailAdres = `${data.value[5].value1}@${data.value[5].value2}`;
+        apiData.userEmail = `${data.value[5].value1}@${data.value[5].value2}`;
       } else {
         alert('이메일을 확인해주세요.');
         return;
       }
 
       if (id.value) {
-        submitResult = await AdminService.updateSystem('admin', apiData);
+        submitResult = await AdminService.signup(apiData);
       } else {
-        submitResult = await AdminService.insertSystem('admin', apiData);
+        submitResult = await AdminService.signup(apiData);
       }
 
       const resData = submitResult.data;
@@ -223,12 +233,28 @@ export default {
     const handleInputUpdate = (v, i) => {
       if (data.value[i]) data.value[i].value = v;
     };
+    const setChangeTableState = (i, e, v) => {
+      changeTableState.value = {
+        index: i,
+        key: e,
+        value: v,
+      };
+    };
+    const handleEventUpdate = (v, i, e) => {
+      switch (e) {
+        default:
+          data.value[i][e] = v;
+          break;
+      }
+    };
 
     return {
       data,
       id,
 
+      setChangeTableState,
       handleInputUpdate,
+      handleEventUpdate,
       submit,
       goAdminManage,
     };

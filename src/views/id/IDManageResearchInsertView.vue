@@ -208,7 +208,7 @@ export default {
       if (
         data.value[4].value1 !== '국번' &&
         data.value[4].value2 &&
-        data.value[4].value1
+        data.value[4].value3
       ) {
         apiData.phoneNumber = `${data.value[4].value1}-${data.value[4].value2}-${data.value[4].value3}`;
       } else {

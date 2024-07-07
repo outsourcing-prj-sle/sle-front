@@ -15,6 +15,9 @@
                 <button
                   class="px-10 py-2.5 text-[#797979] rounded-xl text-xs font-light bg-white border-[#CECECE] border border-solid"
                   @click="togglePopover"
+                  :class="{
+                    'w-[127px] h-[38px]': !startDate,
+                  }"
                 >
                   {{ formattedStartDate }}
                 </button>
@@ -37,6 +40,9 @@
               <div class="flex items-center gap-2">
                 <button
                   class="px-10 py-2.5 text-[#797979] rounded-xl text-xs font-light bg-white border-[#CECECE] border border-solid"
+                  :class="{
+                    'w-[127px] h-[38px]': !endDate,
+                  }"
                   @click="togglePopover"
                 >
                   {{ formattedEndDate }}
@@ -58,22 +64,23 @@
         <div class="flex gap-[20px] items-center font-bold">
           <p class="w-[40px]">검색어</p>
           <AppDropdown
-            :options="options"
-            :startText="selectedOption"
+            :objectOptions="options2"
+            :startText="selectedOption2"
             :openFull="true"
-            @update:selectedOption="handleSelection1"
+            @update:selectedOption="handleSelection2"
           />
           <input
             class="py-2 px-4 border border-gray-300 bg-white rounded-md text-sm"
             type="text"
             placeholder="검색어를 입력하세요."
+            v-model="searchText"
           />
-          <AdminButton :text="'검색'" :isWhite="false" />
+          <AdminButton :text="'검색'" :isWhite="false" @onClick="fetchList" />
         </div>
       </div>
       <div class="flex w-full justify-between content-center">
         <div class="text-xs font-medium content-center">
-          총 n개 | 현재페이지 1/10
+          총 {{ totalCount }}개 | 현재페이지 {{ page }}
         </div>
         <div>
           <AppDropdown
@@ -84,17 +91,28 @@
           />
         </div>
       </div>
-      <AdminTable :header="header" :body="body" />
-      <AdminPagination :pageNo="1" :recordCount="10" :totalCount="12" />
+      <AdminTable
+        v-if="body.length"
+        :header="header"
+        :body="body"
+        @goEdit="goUpdate"
+        @doDelete="doDelete"
+      />
+      <AdminPagination
+        :pageNo="page"
+        :recordCount="10"
+        :totalCount="totalCount"
+        @updatePage="updatePage"
+      />
       <div class="w-full text-right">
-        <AdminButton :text="'등록'" />
+        <AdminButton :text="'등록'" @onClick="goUpdate" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onBeforeMount, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useAdminStore } from '@/store/adminStore.js';
 import AdminService from '@/service/AdminService.js';
@@ -115,51 +133,98 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const adminStore = useAdminStore();
+    const page = ref(1);
+    const limit = ref(10);
+    const totalCount = ref();
     const options = ref(['최신순', '오래된순']);
     const selectedOption = ref('최신순');
+
+    const searchText = ref('');
+    const options2 = ref([
+      {
+        name: '선택',
+        value: '',
+      },
+      {
+        name: '아이디',
+        value: 'id',
+      },
+      {
+        name: '이름',
+        value: 'name',
+      },
+      {
+        name: '회원구분',
+        value: 'userRole',
+      },
+      {
+        name: '핸드폰번호',
+        value: 'phoneNumber',
+      },
+      {
+        name: '이메일',
+        value: 'userEmail',
+      },
+    ]);
+    const selectedOption2 = ref('선택');
+    const valueOption2 = ref('');
     const header = ref([
       {
-        text: '번호',
-      },
-      {
-        text: '사이트명',
-      },
-      {
-        text: '사이트도메인',
+        text: '순서',
       },
       {
         text: '등록일',
       },
       {
-        text: '수정',
+        text: '회원구분',
+      },
+      {
+        text: '소속',
+      },
+      {
+        text: '이름',
+      },
+      {
+        text: '아이디',
+      },
+      {
+        text: '핸드폰번호',
+      },
+      {
+        text: '이메일',
+      },
+      {
+        text: '관리',
       },
     ]);
-    const body = ref([
-      [
-        {
-          text: '1',
-        },
-        {
-          text: '톡톡클래스',
-        },
-        {
-          text: 'tt.class.kr',
-        },
-        {
-          text: '2024-03-02',
-        },
-        {
-          isEdit: true,
-        },
-      ],
-    ]);
+    const body = ref([]);
+
+    onMounted(() => {
+      fetchList();
+    });
+
+    const parseDate = (d) => {
+      if (!d) return '';
+      const tmp = new Date(d);
+      let year = tmp.getFullYear();
+      let month = tmp.getMonth() + 1;
+      let day = tmp.getDate();
+      month = String(month).padStart(2, '0');
+      day = String(day).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
 
     const handleSelection1 = (v) => {
       selectedOption.value = v;
+      fetchList();
+    };
+    const handleSelection2 = (v) => {
+      valueOption2.value = v;
     };
 
-    const startDate = ref(new Date());
+    const startDate = ref();
     const formattedStartDate = computed(() => {
+      if (!startDate.value) return '';
       const tmp = new Date(startDate.value);
       let year = tmp.getFullYear();
       let month = tmp.getMonth() + 1;
@@ -169,8 +234,9 @@ export default {
       return format;
     });
 
-    const endDate = ref(new Date());
+    const endDate = ref();
     const formattedEndDate = computed(() => {
+      if (!endDate.value) return '';
       const tmp = new Date(endDate.value);
       let year = tmp.getFullYear();
       let month = tmp.getMonth() + 1;
@@ -179,6 +245,92 @@ export default {
 
       return format;
     });
+
+    const goUpdate = (id) => {
+      router.push({
+        name: 'adminManageUpate',
+        query: {
+          id,
+        },
+      });
+    };
+
+    const doDelete = (id) => {
+      console.log('todo :: delete');
+    };
+
+    const updatePage = (v) => {
+      console.log(v);
+      page.value = v;
+      fetchList();
+    };
+
+    const fetchList = async () => {
+      console.log('fetchList');
+      const requestData = {
+        pageNo: page.value,
+        limit: limit.value,
+        orderBy: selectedOption.value === '오래된순' ? 'asc' : 'desc',
+        startDate: parseDate(startDate.value),
+        endDate: parseDate(endDate.value),
+      };
+      console.log('yhs :: 1');
+      console.log(valueOption2.value);
+      console.log(searchText.value);
+      if (valueOption2.value && searchText.value) {
+        requestData[valueOption2.value] = searchText.value;
+      }
+      console.log('yhs :: 2');
+      const userManagement = await AdminService.userManagement(
+        'admin',
+        requestData
+      );
+      const resData = userManagement.data;
+
+      if (resData.error) {
+        alert(resData.error);
+        return;
+      }
+      console.log(resData);
+      const list = resData.adminUserInfoList;
+      totalCount.value = resData.totalCount;
+      body.value = [];
+
+      for (const i in list) {
+        const v = list[i];
+
+        body.value.push([
+          {
+            text: parseInt(i) + (page.value - 1) * 10 + 1 + '',
+          },
+          {
+            text: v.createAt.split(' ')[0],
+          },
+          {
+            text: v.userRole,
+          },
+          {
+            text: v.userSpaceOrgInfo,
+          },
+          {
+            text: v.name,
+          },
+          {
+            text: v.id,
+          },
+          {
+            text: v.phoneNumber,
+          },
+          {
+            text: v.userEmail,
+          },
+          {
+            isEditWidthDelete: true,
+            id: v.id,
+          },
+        ]);
+      }
+    };
 
     return {
       header,
@@ -189,8 +341,19 @@ export default {
       formattedStartDate,
       endDate,
       formattedEndDate,
+      searchText,
+      options2,
+      selectedOption2,
+      page,
+      totalCount,
 
       handleSelection1,
+      handleSelection2,
+
+      goUpdate,
+      doDelete,
+      updatePage,
+      fetchList,
     };
   },
 };

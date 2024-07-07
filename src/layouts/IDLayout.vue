@@ -1,6 +1,6 @@
 <template>
   <IDHeader />
-  <div class="flex flex-1 h-full">
+  <div class="flex flex-1">
     <IDSidebar />
     <div class="w-full overflow-hidden">
       <router-view />
