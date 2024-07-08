@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center items-center gap-[10px] w-full">
+  <div v-if="totalCount" class="flex justify-center items-center gap-[10px] w-full">
     <IDButton
       class="hover:bg-[#2F80ED] hover:text-white"
       :text="'<<'"

@@ -176,21 +176,10 @@ export default {
     };
 
     const storeData = () => {
-      let arr = storeDatas.value;
-      let obj = {
-        id: '',
-        val: formattedDate.value,
-        student: editorData.value,
-        teacher: editorData2.value,
-      };
-
-      arr.push(obj);
-      storeDatas.value = arr;
-
       insertService({
         studentTerms: editorData.value,
         staffTerms: editorData2.value,
-        effectiveDate: obj.val,
+        effectiveDate: formattedDate.value,
       });
     };
 
