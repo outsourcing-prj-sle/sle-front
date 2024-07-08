@@ -39,10 +39,20 @@
           />
         </div>
       </div>
-      <AdminTable :header="header" :body="body" @goEdit="goUpdate" @doDelete="doDelete" />
-      <AdminPagination :pageNo=page :recordCount="10" :totalCount=totalCount @updatePage="updatePage" />
-      <div class="w-full text-right">
-        <AdminButton :text="'등록'" />
+      <AdminTable
+        :header="header"
+        :body="body"
+        @goEdit="goUpdate"
+        @doDelete="doDelete"
+      />
+      <AdminPagination
+        :pageNo="page"
+        :recordCount="10"
+        :totalCount="totalCount"
+        @updatePage="updatePage"
+      />
+      <div class="w-full text-right" v-if="userType === '학교'">
+        <AdminButton :text="'등록'" @onClick="goUpdate" />
       </div>
     </div>
   </div>
@@ -116,8 +126,8 @@ export default {
     const handleSelection1 = (v) => {
       selectedOption.value = v;
 
-      if(v === '최신순') orderBy.value = 'desc';
-      if(v === '오래된순') orderBy.value = 'asc';
+      if (v === '최신순') orderBy.value = 'desc';
+      if (v === '오래된순') orderBy.value = 'asc';
       fetchData();
     };
 
@@ -175,8 +185,8 @@ export default {
     );
 
     const fetchData = async (data = {}) => {
-      if(route.params.userType === 'school'){
-        options.value = ['회원번호','소속', '이름', '아이디', '이메일'];
+      if (route.params.userType === 'school') {
+        options.value = ['회원번호', '소속', '이름', '아이디', '이메일'];
       } else {
         options.value = ['소속', '이름', '아이디', '이메일'];
       }
@@ -184,7 +194,7 @@ export default {
       const response = await AdminService.getUsers(route.params.userType, {
         orderBy: orderBy.value,
         pageNo: page.value,
-        ...data
+        ...data,
       });
       const resData = response.data;
 
@@ -195,11 +205,11 @@ export default {
 
       let arr = [];
 
-      if(resData.adminUserInfoList) {
+      if (resData.adminUserInfoList) {
         resData.adminUserInfoList.map((item, index) => {
           let obj = [
             {
-              text: index+1 + (page.value-1) * 10,
+              text: index + 1 + (page.value - 1) * 10,
             },
             {
               text: item.uniqId,
@@ -229,11 +239,11 @@ export default {
         });
       }
 
-      if(resData.userInfoList) {
+      if (resData.userInfoList) {
         resData.userInfoList.map((item, index) => {
           let obj = [
             {
-              text: index+1 + (page.value-1) * 10,
+              text: index + 1 + (page.value - 1) * 10,
             },
             {
               text: item.authorization,
@@ -255,24 +265,28 @@ export default {
             },
             {
               isEditWidthDelete: true,
-              id: item.uniqId,
+              id: item.uniqId || item.authorization,
             },
           ];
 
           arr.push(obj);
         });
       }
-  
 
       body.value = arr;
     };
 
     const searchList = () => {
-      if(selectedOption2.value === '회원번호') fetchData({ 'uniqId': searchText.value });
-      if(selectedOption2.value === '소속') fetchData({ 'userSpaceOrgInfo': searchText.value });
-      if(selectedOption2.value === '이름') fetchData({ 'name': searchText.value });
-      if(selectedOption2.value === '아이디') fetchData({ 'id': searchText.value });
-      if(selectedOption2.value === '이메일') fetchData({ 'userEmail': searchText.value });
+      if (selectedOption2.value === '회원번호')
+        fetchData({ uniqId: searchText.value });
+      if (selectedOption2.value === '소속')
+        fetchData({ userSpaceOrgInfo: searchText.value });
+      if (selectedOption2.value === '이름')
+        fetchData({ name: searchText.value });
+      if (selectedOption2.value === '아이디')
+        fetchData({ id: searchText.value });
+      if (selectedOption2.value === '이메일')
+        fetchData({ userEmail: searchText.value });
     };
 
     const updatePage = (v) => {
@@ -282,7 +296,10 @@ export default {
 
     const goUpdate = (id) => {
       router.push({
-        name: 'adminIPUpdate',
+        name: 'adminUserUpdate',
+        params: {
+          userType: route.params.userType,
+        },
         query: {
           id,
         },

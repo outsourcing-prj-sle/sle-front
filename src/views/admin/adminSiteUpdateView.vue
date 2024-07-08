@@ -116,6 +116,7 @@ export default {
           id.value
         );
         const resData = systemInfoResponse.data;
+        console.log(resData);
 
         if (resData.error) {
           alert(resData.error);
@@ -146,18 +147,21 @@ export default {
             body: {
               isUpload: true,
             },
+            value: resData.topLogoImage,
           },
           {
             header: '하단로고',
             body: {
               isUpload: true,
             },
+            value: resData.bottomLogoImage,
           },
           {
             header: '대표이미지',
             body: {
               isUpload: true,
             },
+            value: resData.mainImage,
           },
           {
             header: '사이트설명',
@@ -173,7 +177,7 @@ export default {
               isYesNo: true,
             },
             isRequired: true,
-            value: resData.mouseSecurity,
+            value: resData.mouseSecurity ? '1' : '0',
           },
           {
             header: '키보드 보안허용',
@@ -181,7 +185,7 @@ export default {
               isYesNo: true,
             },
             isRequired: true,
-            value: resData.keyboardSecurity,
+            value: resData.keyboardSecurity ? '1' : '0',
           },
         ];
       }
@@ -192,7 +196,7 @@ export default {
     };
 
     const goSite = () => {
-      router.push({ name: 'site' });
+      router.push({ name: 'adminSite' });
     };
 
     const handleInputUpdate = (v, i) => {
@@ -255,10 +259,9 @@ export default {
         alert('사이트 도메인을 입력해주세요.');
         return;
       }
-      if (data.value[2].value)
-        formData.append('topLogoImage', data.value[2].value);
+      if (data.value[2].value) formData.append('topImage', data.value[2].value);
       if (data.value[3].value)
-        formData.append('bottomLogoImage', data.value[3].value);
+        formData.append('bottomImage', data.value[3].value);
       if (data.value[4].value)
         formData.append('mainImage', data.value[4].value);
       if (data.value[5].value)
@@ -285,7 +288,8 @@ export default {
 
       const resData = submitResult.data;
       console.log(resData);
-      // router.push({ name: 'adminSite' });
+      alert('등록되었습니다.');
+      router.push({ name: 'adminSite' });
     };
 
     return {

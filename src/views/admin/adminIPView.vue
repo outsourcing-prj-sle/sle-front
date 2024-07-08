@@ -87,7 +87,8 @@ export default {
 
     const doDelete = async (id) => {
       let res = await AdminService.deleteSystem('ip', id);
-      console.log(res.data);
+      alert('삭제되었습니다.');
+      fetchList();
     };
 
     const updatePage = (v) => {

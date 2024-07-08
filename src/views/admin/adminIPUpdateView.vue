@@ -110,7 +110,7 @@ export default {
     const submit = async () => {
       const requestData = {};
       //todo :: 수정하기일때 파라미터
-      if (id.value) requestData.createdBy = id.value;
+      if (id.value) requestData.ipId = id.value;
 
       if (data.value[0].value) requestData.allowedIp = data.value[0].value;
       else {
@@ -134,7 +134,8 @@ export default {
 
       const resData = submitResult.data;
       console.log(resData);
-      // router.push({ name: 'adminSite' });
+      alert('등록되었습니다.');
+      goAdminIp();
     };
 
     const goAdminIp = () => {
