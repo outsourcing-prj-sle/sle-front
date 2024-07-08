@@ -820,14 +820,24 @@ export default {
       let cArr3 = [];
 
       resData.classPersonality[0].type1.values.map((item) => {
-        cArr1.push(item);
+        if(item) {
+          cArr1.push(item);
+        } else {
+          cArr1.push(0);
+        }
       });
       resData.classPersonality[0].type2.values.map((item) => {
-        cArr2.push(item);
-      });
+        if(item) {
+          cArr2.push(item);
+        } else {
+          cArr2.push(0);
+        }      });
       resData.classPersonality[0].type3.values.map((item) => {
-        cArr3.push(item);
-      });
+        if(item) {
+          cArr3.push(item);
+        } else {
+          cArr3.push(0);
+        }      });
 
       donutChartSeries1.value = cArr1;
       donutChartSeries2.value = cArr2;
@@ -836,12 +846,42 @@ export default {
       let uArr1 = [];
       let uArr2 = [];
 
-      uArr1.push(parseInt(resData.userPersonality[0]['건너뛰며 점검하기']));
-      uArr2.push(-parseInt(resData.userPersonality[0]['느긋하게 과제하기']));
-      uArr1.push(parseInt(resData.userPersonality[0]['신속하게 과제하기']));
-      uArr2.push(-parseInt(resData.userPersonality[0]['건너뛰며 점검하기']));
-      uArr1.push(parseInt(resData.userPersonality[0]['소통하며 학습하기']));
-      uArr2.push(-parseInt(resData.userPersonality[0]['독립적으로 학습하기']));
+      
+      if(resData.userPersonality[0]['건너뛰며 점검하기']) {
+        uArr1.push(parseInt(resData.userPersonality[0]['건너뛰며 점검하기']));
+      } else {
+        uArr1.push(0);
+      }
+
+      if(resData.userPersonality[0]['느긋하게 과제하기']) {
+        uArr2.push(-parseInt(resData.userPersonality[0]['느긋하게 과제하기']));
+      } else {
+        uArr2.push(0);
+      }
+      
+      if(resData.userPersonality[0]['신속하게 과제하기']) {
+        uArr1.push(parseInt(resData.userPersonality[0]['신속하게 과제하기']));
+      } else {
+        uArr1.push(0);
+      }
+      
+      if(resData.userPersonality[0]['건너뛰며 점검하기']) {
+        uArr2.push(-parseInt(resData.userPersonality[0]['건너뛰며 점검하기']));
+      } else {
+        uArr2.push(0);
+      }
+      
+      if(resData.userPersonality[0]['소통하며 학습하기']) {
+        uArr1.push(parseInt(resData.userPersonality[0]['소통하며 학습하기']));
+      } else {
+        uArr1.push(0);
+      }
+      
+      if(resData.userPersonality[0]['독립적으로 학습하기']) {
+        uArr2.push(-parseInt(resData.userPersonality[0]['독립적으로 학습하기']));
+      } else {
+        uArr2.push(0);
+      }
 
       barChartDataArr1.value = uArr1;
       barChartDataArr2.value = uArr2;
