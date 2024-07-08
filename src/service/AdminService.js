@@ -114,6 +114,11 @@ const userInfo = (id) => {
   return apiClient.get(baseURL + '/users/admin/' + id);
 };
 
+// 유저 정보 조회
+const userInfoTeacherStudent = (id) => {
+  return apiClient.get(baseURL + '/users/teacher/' + id);
+};
+
 // 내정보 서버 업데이트
 const myInfoInterval = () => {
   let cnt = 20;
@@ -138,6 +143,22 @@ const signup = (
   }
 ) => {
   return apiClient.put(baseURL + '/users/admin/register', data);
+};
+
+// school 회원 등록/수정
+const signupSchool = (
+  data = {
+    id: 'id',
+    name: 'name',
+    password: 'password',
+    userRole: 'SuperAdmin',
+    phoneNumber: '000-0000-0000',
+    userEmail: 'admin001@gne.co.kr',
+    userSpaceOrgInfo: '경남교육청',
+    uniqId: '',
+  }
+) => {
+  return apiClient.put(baseURL + '/users/school/register', data);
 };
 
 // 아이디 중복 체크
@@ -362,4 +383,5 @@ export default {
   checkSystemExist,
   getLog,
   getUsers,
+  userInfoTeacherStudent,
 };

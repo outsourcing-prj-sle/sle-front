@@ -145,6 +145,7 @@
           <input
             v-else-if="item.body.isText"
             class="text-sm border border-gray-300 px-4 py-2 min-w-[300px] rounded-md"
+            :readonly="item.body.isFixed"
             type="text"
             :placeholder="item.body.placeholder"
             :value="item.value"

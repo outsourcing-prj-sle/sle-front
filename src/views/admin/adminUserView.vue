@@ -51,7 +51,7 @@
         :totalCount="totalCount"
         @updatePage="updatePage"
       />
-      <div class="w-full text-right">
+      <div class="w-full text-right" v-if="userType === '학교'">
         <AdminButton :text="'등록'" @onClick="goUpdate" />
       </div>
     </div>
@@ -265,7 +265,7 @@ export default {
             },
             {
               isEditWidthDelete: true,
-              id: item.uniqId,
+              id: item.uniqId || item.authorization,
             },
           ];
 
