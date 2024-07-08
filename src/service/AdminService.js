@@ -134,6 +134,7 @@ const signup = (
     phoneNumber: '000-0000-0000',
     userEmail: 'admin001@gne.co.kr',
     userSpaceOrgInfo: '경남교육청',
+    uniqId: '',
   }
 ) => {
   return apiClient.put(baseURL + '/users/admin/register', data);
