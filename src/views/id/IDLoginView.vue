@@ -7,7 +7,7 @@
       <div class="flex justify-center mb-4">
         <img src="@/assets/img/logo_sel.png" alt="Logo" class="h-24" />
       </div>
-      <div class="text-2xl font-semibold">관리자 로그인</div>
+      <div class="text-2xl font-semibold">ID연구소 로그인</div>
       <div class="space-y-4">
         <div>
           <label for="email" class="block text-sm font-medium text-gray-700"
@@ -40,7 +40,27 @@
           type="submit"
           class="w-full px-4 py-2 text-sm font-medium text-white bg-gray-600 rounded hover:opacity-80 focus:outline-none"
         >
-          관리자 로그인
+          ID연구소 로그인
+        </button>
+      </div>
+      <hr>
+      <p class="text-center font-semibold text-lg" style="margin-top: 10px">연계 사이트</p> 
+      <div class="flex items-center justify-between" style="margin-top: 10px">
+        <button
+          @click="goSelLogin"
+          type="button"
+          class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:opacity-80 focus:outline-none"
+        >
+          SEL 로그인으로 이동하기
+        </button>
+      </div>
+      <div class="flex items-center justify-between" style="margin-top: 10px">
+        <button
+          @click="goAdminLogin"
+          type="button"
+          class="w-full px-4 py-2 text-sm font-medium text-white bg-gray-400 rounded hover:opacity-80 focus:outline-none"
+        >
+          관리자 로그인으로 이동하기
         </button>
       </div>
     </div>
@@ -95,10 +115,21 @@ export default {
       const redirectPath = route.query.redirect || '/id/report';
       router.push(redirectPath);
     };
+
+    const goSelLogin = () => {
+      router.push('/login');
+    }
+
+    const goAdminLogin = () => {
+      router.push('/admin/login');
+    }
+
     return {
       email,
       password,
       submitLogin,
+      goSelLogin,
+      goAdminLogin,
     };
   },
 };
