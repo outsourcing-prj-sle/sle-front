@@ -147,21 +147,21 @@ export default {
             body: {
               isUpload: true,
             },
-            value: resData.topLogoImage,
+            img: resData.topLogoImage && '/' + resData.topLogoImage,
           },
           {
             header: '하단로고',
             body: {
               isUpload: true,
             },
-            value: resData.bottomLogoImage,
+            img: resData.bottomLogoImage && '/' + resData.bottomLogoImage,
           },
           {
             header: '대표이미지',
             body: {
               isUpload: true,
             },
-            value: resData.mainImage,
+            img: resData.mainImage && '/' + resData.mainImage,
           },
           {
             header: '사이트설명',

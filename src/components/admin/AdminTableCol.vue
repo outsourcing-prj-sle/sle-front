@@ -144,9 +144,11 @@
           </textarea>
           <div v-else-if="item.body.isUpload">
             <input
+              v-if="!item.img"
               type="file"
               @change="(e) => updateValue(e.target.files[0], index)"
             />
+            <img v-else :src="item.img" alt="Example Image" />
           </div>
           <input
             v-else-if="item.body.isText"
