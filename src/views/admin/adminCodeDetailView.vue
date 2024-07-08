@@ -6,11 +6,11 @@
       <p class="font-bold text-[20px] max-md:text-[16px]">하위분류 관리</p>
       <div class="flex w-full justify-between content-center">
         <div class="text-xs font-medium content-center">
-          총 n개 | 현재페이지 1/10
+          총 {{ totalCount }}개 | 현재페이지 {{ page }}
         </div>
         <div class="flex gap-[20px] items-center font-bold">
           <AppDropdown
-            :options="options"
+            :objectOptions="options"
             :startText="selectedOption"
             :openFull="true"
             @update:selectedOption="handleSelection1"
@@ -18,22 +18,40 @@
           <input
             class="py-2 px-4 border border-gray-300 bg-white rounded-md text-sm"
             type="text"
+            v-model="searchText"
             placeholder="검색어를 입력하세요."
           />
-          <AdminButton :text="'검색'" :isWhite="false" :isSearch="true" />
+          <AdminButton
+            :text="'검색'"
+            :isWhite="false"
+            :isSearch="true"
+            @onClick="fetchList"
+          />
         </div>
       </div>
-      <AdminTable :header="header" :body="body" />
-      <AdminPagination :pageNo="1" :recordCount="10" :totalCount="12" />
+      <AdminTable
+        v-if="body.length"
+        :header="header"
+        :body="body"
+        @goEdit="goUpdate"
+        @doDelete="doDelete"
+      />
+      <AdminPagination
+        v-if="totalCount"
+        :pageNo="page"
+        :recordCount="10"
+        :totalCount="totalCount"
+        @updatePage="updatePage"
+      />
       <div class="w-full text-right">
-        <AdminButton :text="'등록'" />
+        <AdminButton :text="'등록'" @onClick="goUpdate" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onBeforeMount, computed } from 'vue';
+import { ref, onBeforeMount, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useAdminStore } from '@/store/adminStore.js';
 import AdminService from '@/service/AdminService.js';
@@ -53,83 +71,140 @@ export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
+    const id = ref(route.query.id);
     const adminStore = useAdminStore();
-    const options = ref(['최신순', '오래된순']);
-    const selectedOption = ref('최신순');
+    const searchText = ref('');
+    const options = ref([
+      {
+        name: '코드',
+        value: 'subCodeId',
+      },
+      {
+        name: '코드명',
+        value: 'subCodeName',
+      },
+    ]);
+    const selectedOption = ref('코드');
+    const valueOption = ref('subCodeId');
     const header = ref([
       {
-        text: '번호',
+        text: '순서',
       },
       {
-        text: '사이트명',
+        text: '코드ID',
       },
       {
-        text: '사이트도메인',
+        text: '코드',
       },
       {
-        text: '등록일',
+        text: '코드명',
       },
       {
-        text: '수정',
+        text: '순서변경',
+      },
+      {
+        text: '관리',
       },
     ]);
-    const body = ref([
-      [
-        {
-          text: '1',
-        },
-        {
-          text: '톡톡클래스',
-        },
-        {
-          text: 'tt.class.kr',
-        },
-        {
-          text: '2024-03-02',
-        },
-        {
-          isEdit: true,
-        },
-      ],
-    ]);
+    const body = ref([]);
 
-    const handleSelection1 = (v) => {
-      selectedOption.value = v;
+    const page = ref(1);
+    const recordCount = ref(10);
+    const limit = ref(10);
+    const totalCount = ref(10);
+
+    onMounted(() => {
+      fetchList();
+    });
+
+    const fetchList = async () => {
+      const requestData = {
+        pageNo: page.value,
+        recordCount: recordCount.value,
+      };
+      if (valueOption.value && searchText.value) {
+        requestData[valueOption.value] = searchText.value;
+      }
+      const listResponse = await AdminService.subCodeInfoList(
+        id.value,
+        requestData
+      );
+      const resData = listResponse.data;
+      if (resData.error) {
+        alert(resData.error);
+        return;
+      }
+      console.log(resData);
+
+      const list = resData.subCodeList;
+      body.value = [];
+      for (const i in list) {
+        body.value[i] = [];
+        body.value[i].push({
+          text: (page.value - 1) * 10 + parseInt(i) + 1,
+        });
+        body.value[i].push({
+          text: list[i].codeId,
+        });
+        body.value[i].push({
+          text: list[i].subCodeId,
+        });
+        body.value[i].push({
+          text: list[i].subCodeName,
+        });
+        body.value[i].push({
+          isUpDown: true,
+          id: list[i].subCodeId,
+        });
+        body.value[i].push({
+          isEditWidthDelete: true,
+          id: list[i].subCodeId,
+        });
+      }
+
+      totalCount.value = resData.totalCount;
     };
 
-    const startDate = ref(new Date());
-    const formattedStartDate = computed(() => {
-      const tmp = new Date(startDate.value);
-      let year = tmp.getFullYear();
-      let month = tmp.getMonth() + 1;
-      let day = tmp.getDate();
-      const format = `${year}-${month}-${day}`;
+    const handleSelection1 = (v) => {
+      valueOption.value = v;
+    };
 
-      return format;
-    });
+    const goUpdate = (v) => {
+      router.push({
+        name: 'adminCodeDetailUpdate',
+        query: {
+          id: id.value,
+          subCodeId: v,
+        },
+      });
+    };
 
-    const endDate = ref(new Date());
-    const formattedEndDate = computed(() => {
-      const tmp = new Date(endDate.value);
-      let year = tmp.getFullYear();
-      let month = tmp.getMonth() + 1;
-      let day = tmp.getDate();
-      const format = `${year}-${month}-${day}`;
+    const doDelete = async (v) => {
+      let res = await AdminService.deleteSubCode(id.value, v);
+      alert('삭제되었습니다.');
+      fetchList();
+    };
 
-      return format;
-    });
+    const updatePage = (v) => {
+      console.log(v);
+      page.value = v;
+      fetchList();
+    };
 
     return {
       header,
       body,
       options,
       selectedOption,
-      startDate,
-      formattedStartDate,
-      endDate,
-      formattedEndDate,
+      page,
+      totalCount,
+      searchText,
 
       handleSelection1,
+      goUpdate,
+      doDelete,
+      updatePage,
+      fetchList,
     };
   },
 };

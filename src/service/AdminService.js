@@ -340,10 +340,9 @@ const subCodeInfoList = (
     subCodeName: 'school',
   }
 ) => {
-  return apiClient.get(
-    baseURL + '/system/cmmn_code/' + codeId + 'sub_codes',
-    data
-  );
+  return apiClient.get(baseURL + '/system/cmmn_code/' + codeId + '/sub_codes', {
+    params: data,
+  });
 };
 
 const deleteSubCode = (codeId, subCodeId) => {

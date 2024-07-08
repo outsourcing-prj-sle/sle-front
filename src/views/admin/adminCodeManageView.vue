@@ -35,6 +35,7 @@
         :body="body"
         @goEdit="goUpdate"
         @doDelete="doDelete"
+        @goDetail="goDetail"
       />
       <AdminPagination
         :pageNo="page"
@@ -158,7 +159,7 @@ export default {
           text: list[i].active ? '예' : '아니요',
         });
         body.value[i].push({
-          text: 1,
+          text: list[i].subCount || '0',
         });
         body.value[i].push({
           isDetail: true,
@@ -198,6 +199,15 @@ export default {
       fetchList();
     };
 
+    const goDetail = (v) => {
+      router.push({
+        name: 'adminCodeDetail',
+        query: {
+          id: v,
+        },
+      });
+    };
+
     return {
       header,
       body,
@@ -212,6 +222,7 @@ export default {
       doDelete,
       updatePage,
       fetchList,
+      goDetail,
     };
   },
 };

@@ -92,6 +92,15 @@
                 @click="doDelete(v.id)"
               />
             </div>
+            <div v-else-if="v.isDetail" class="flex justify-center">
+              <button
+                class="py-2 px-4 rounded-[10px] items-center border-[#CECECE] border flex gap-1.5"
+                @click="() => goDetail(v.id)"
+              >
+                <img class="w-4 h-4" src="@/assets/img/menu.png" />
+                하위코드관리
+              </button>
+            </div>
             <span v-else-if="v.text" class="whitespace-nowrap">
               {{ v.text }}
             </span>
@@ -127,7 +136,10 @@ export default {
     const doDelete = (id) => {
       emit('doDelete', id);
     };
-    return { goEdit, doDelete };
+    const goDetail = (id) => {
+      emit('goDetail', id);
+    };
+    return { goEdit, doDelete, goDetail };
   },
 };
 </script>
