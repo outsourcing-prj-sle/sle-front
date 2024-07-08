@@ -30,6 +30,12 @@
             >
               사용가능한 도메인입니다.
             </div>
+            <div
+              v-if="item.isCheckedSubCode"
+              class="text-xs text-green-400 mt-1 text-left"
+            >
+              사용가능한 코드입니다.
+            </div>
           </div>
           <div
             v-else-if="item.body.isPhone"
