@@ -291,8 +291,6 @@ export default {
 
       body.value = result;
       headerArr.value = answerArr;
-      console.log(body.value);
-      console.log(headerArr.value);
     };
 
     const downloadExcel = () => {

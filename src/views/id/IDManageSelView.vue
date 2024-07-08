@@ -67,7 +67,7 @@ export default {
 
     const options2 = ref(['최신순', '오래된순']);
     const selectedOption2 = ref('최신순');
-    const header = [
+    const header = ref([
       {
         isCheckbox: true,
       },
@@ -92,7 +92,7 @@ export default {
       {
         text: 'Q1_3',
       },
-    ];
+    ]);
     const body = ref([]);
 
     const pageNo = ref(1);
