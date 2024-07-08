@@ -21,6 +21,11 @@
           </th>
         </tr>
       </thead>
+      <tbody v-if="!body.length">
+        <tr>
+          <td :colspan="header.length" class="text-center text-sm py-4 border-b-2 border-gray-100">검색 결과가 존재하지 않습니다.</td>
+        </tr>
+      </tbody>
       <tbody v-if="body.length">
         <tr v-for="(info, i) in body" :key="`bodytr${i}`">
           <td
