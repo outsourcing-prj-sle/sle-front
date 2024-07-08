@@ -43,8 +43,10 @@
           관리자 로그인
         </button>
       </div>
-      <hr>
-      <p class="text-center font-semibold text-lg" style="margin-top: 10px">연계 사이트</p> 
+      <hr />
+      <p class="text-center font-semibold text-lg" style="margin-top: 10px">
+        연계 사이트
+      </p>
       <div class="flex items-center justify-between" style="margin-top: 10px">
         <button
           @click="goSelLogin"
@@ -97,16 +99,16 @@ export default {
       });
       const resData = loginResponse.data;
 
+      console.log(resData);
+
       if (resData.error) {
-        alert(resData.error);
+        alert(resData.message || resData.error);
         return;
       }
       if (!resData.token) {
         alert('아이디, 비밀번호를 확인해주세요');
         return;
       }
-
-      console.log(resData);
 
       adminStore.init({
         token: resData.token,
@@ -120,11 +122,11 @@ export default {
 
     const goSelLogin = () => {
       router.push('/login');
-    }
+    };
 
     const goIdLogin = () => {
       router.push('/id/login');
-    }
+    };
 
     return {
       email,
