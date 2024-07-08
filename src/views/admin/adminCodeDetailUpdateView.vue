@@ -176,12 +176,12 @@ export default {
       console.log(resData);
       alert('등록되었습니다');
 
-      // router.push({
-      //   name: 'adminCodeDetail',
-      //   params: {
-      //     id: id.value,
-      //   },
-      // });
+      router.push({
+        name: 'adminCodeDetail',
+        params: {
+          id: id.value,
+        },
+      });
     };
 
     const handleSelection1 = (v) => {
