@@ -99,9 +99,9 @@ export default {
       {
         text: '코드명',
       },
-      {
-        text: '순서변경',
-      },
+      // {
+      //   text: '순서변경',
+      // },
       {
         text: '관리',
       },
@@ -152,10 +152,10 @@ export default {
         body.value[i].push({
           text: list[i].subCodeName,
         });
-        body.value[i].push({
-          isUpDown: true,
-          id: list[i].subCodeId,
-        });
+        // body.value[i].push({
+        //   isUpDown: true,
+        //   id: list[i].subCodeId,
+        // });
         body.value[i].push({
           isEditWidthDelete: true,
           id: list[i].subCodeId,
