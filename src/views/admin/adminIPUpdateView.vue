@@ -134,7 +134,8 @@ export default {
 
       const resData = submitResult.data;
       console.log(resData);
-      // router.push({ name: 'adminSite' });
+      alert('등록되었습니다.');
+      goAdminIp();
     };
 
     const goAdminIp = () => {
