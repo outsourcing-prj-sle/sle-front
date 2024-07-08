@@ -13,7 +13,7 @@
     >
       사이트 관리
     </div>
-    <!-- <div
+    <div
       class="px-5 py-2 cursor-pointer text-left text-sm font-medium text-white"
       :class="{
         'bg-[#353C5E] border-l-4 border-l-[#2F80ED] text-base': isTerm,
@@ -22,7 +22,7 @@
       v-if="isSystemManagement"
     >
       약관 관리
-    </div> -->
+    </div>
     <div
       class="px-5 py-2 cursor-pointer text-left text-sm font-medium text-white"
       :class="{

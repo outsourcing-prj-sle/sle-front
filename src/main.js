@@ -7,6 +7,10 @@ import './assets/css/style.css';
 import { setupCalendar, Calendar, DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
 import VueApexCharts from 'vue3-apexcharts';
+import CKEditor from '@ckeditor/ckeditor5-vue';
+import 'ckeditor5/ckeditor5.css';
+import 'ckeditor5-premium-features/ckeditor5-premium-features.css';
+
 
 const app = createApp(App);
 app.use(i18n);
@@ -20,6 +24,9 @@ app.component('VDatePicker', DatePicker);
 
 // 차트
 app.use(VueApexCharts);
+
+// ckeditor5
+app.use(CKEditor);
 
 app.use(pinia);
 app.use(router);
