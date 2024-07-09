@@ -28,6 +28,9 @@
           />
         </div>
       </div>
+      <div class="text-xs font-medium content-center">
+        총 {{ totalCount }}개 | 현재페이지 {{ pageNo }}
+      </div>
       <IDTable :header="header" :_body="body" />
       <IDPagination
         :pageNo="pageNo"
@@ -69,9 +72,6 @@ export default {
     const options2 = ref(['최신순', '오래된순']);
     const selectedOption2 = ref('최신순');
     const header = ref([
-      {
-        isCheckbox: true,
-      },
       {
         text: '번호',
       },
@@ -157,8 +157,7 @@ export default {
       let result = [];
       resData.idttList.map((item, idx) => {
         let arr = [
-          { isCheckbox: true },
-          { text: idx + 1 },
+          { text: ((idx+1) + (pageNo.value-1) * 10) },
           { text: item.schulNm },
           { text: item.userNm },
           { text: item.userSpaceOrgInfo },

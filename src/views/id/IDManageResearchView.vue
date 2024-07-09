@@ -82,8 +82,10 @@
           />
         </div>
       </div>
+      <div class="text-xs font-medium content-center">
+          총 {{ totalCount }}개 | 현재페이지 {{ pageNo }}
+        </div>
       <IDTable
-        v-if="body.length"
         :header="header"
         :_body="body"
         @goUpdate="goUpdate"
@@ -161,9 +163,6 @@ export default {
     const valueOption = ref('');
     const header = [
       {
-        isCheckbox: true,
-      },
-      {
         text: '번호',
       },
       {
@@ -228,7 +227,6 @@ export default {
       const reportReponse = await IDService.getResearchAdmin(requestData);
       const resData = reportReponse.data;
       console.log(resData);
-      if (!resData?.userInfoList?.length) return;
 
       pageNo.value = resData.pageNo;
       recordCount.value = resData.recordCount;
@@ -238,8 +236,7 @@ export default {
       let result = [];
       resData.userInfoList.map((item, idx) => {
         let arr = [
-          { isCheckbox: true },
-          { text: idx + 1 },
+          { text: ((idx+1) + (pageNo.value-1) * 10) },
           { text: item.frstRegistPnttm },
           { text: item.userSeCode },
           { text: item.userSpaceInfo },

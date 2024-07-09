@@ -1,7 +1,6 @@
 import IDLayout from '@/layouts/IDLayout.vue';
 import IDLoginView from '@/views/id/IDLoginView.vue';
 import IDManageReportView from '@/views/id/IDManageReportView.vue';
-import IDTest from '@/views/id/IDTest.vue';
 import IDManageReportDtlView from '@/views/id/IDManageReportDtlView.vue';
 import IDManageSelView from '@/views/id/IDManageSelView.vue';
 import IDManageLtView from '@/views/id/IDManageLtView.vue';
@@ -18,16 +17,6 @@ const IDRoutes = [
         name: 'IDLogin',
         component: IDLoginView,
         meta: { headerVisible: false, sidebarVisible: false },
-      },
-      {
-        path: 'IDTest',
-        name: 'IDTest',
-        component: IDTest,
-        meta: {
-          headerVisible: true,
-          sidebarVisible: true,
-          isManageReport: true,
-        },
       },
       {
         path: 'report',

@@ -20,6 +20,9 @@
           @update:selectedOption="handleSelection2"
         />
       </div>
+      <div class="text-xs font-medium content-center">
+        총 {{ totalCount }}개 | 현재페이지 {{ pageNo }}
+      </div>
       <IDTableDtl :header="header" :body="body" @onClick="goReportDtl" />
       <IDPagination
         :pageNo="pageNo"
@@ -69,9 +72,6 @@ export default {
     const startOption2 = ref('오름차순');
     const selectedValue2 = ref('asc');
     const header = ref([
-      {
-        isCheckbox: true,
-      },
       {
         text: '번호',
       },
@@ -152,8 +152,7 @@ export default {
       let result = [];
       resData.pollList.map((item, idx) => {
         let arr = [
-          { isCheckbox: true },
-          { isNum: true, text: idx + 1 },
+          { isNum: true, text: ((idx+1) + (pageNo.value-1) * 10) },
           { text: item.pollNm },
           { text: '관리>설정을 해주세요.' },
           {
@@ -169,7 +168,7 @@ export default {
         } else {
           arr.push({ text: '-' });
         }
-        arr.push({ isOpenPopup: idx + '' });
+        arr.push({ isOpenPopup: ((idx+1) + (pageNo.value-1) * 10) + '' });
 
         if (item.pollTarget.length) {
           let ary = item.pollTarget;

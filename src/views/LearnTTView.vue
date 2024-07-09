@@ -20,7 +20,24 @@
         class="h-[240px] w-[332px]"
       />
     </section>
-    <section
+    <section v-if="!isChartData"
+      class="flex flex-col px-20 mt-7 w-full text-base max-md:px-5 max-md:max-w-full"
+    >
+      <b class="text-xl text-left">
+        <span class="text-blue-500">학급</span> 학습성향
+      </b>
+      <div
+        class="flex flex-col flex-1 justify-center text-center items-center mt-20"
+      >
+        <img
+          class="w-[181px] h-[181px]"
+          src="@/assets/img/no_data.png"
+          alt="no_data"
+        />
+        <span class="mt-20">조회된 학급에 대한 학급성향 데이터가 없습니다.</span>
+      </div>
+    </section>
+    <section v-if="isChartData"
       class="flex flex-col px-20 mt-7 w-full text-base max-md:px-5 max-md:max-w-full"
     >
       <!-- <div class="w-[300px] flex justify-start my-[20px] z-50">
@@ -137,7 +154,33 @@
         </div>
       </div>
     </section>
-    <section
+    <section v-if="!isChartData"
+      class="flex flex-col px-20 mt-7 w-full text-base max-md:px-5 max-md:max-w-full"
+    >
+      <div class="w-[300px] flex justify-start z-50 my-4">
+        <AppDropdown
+          v-if="selectedOption"
+          :options="options"
+          :startText="options[0]"
+          :openWay="'left'"
+          @update:selectedOption="handleSelection"
+        />
+      </div>
+      <b class="text-xl text-left">
+        <span class="text-blue-500">{{ name }} 학생</span>의 학습성향 그래프
+      </b>
+      <div
+        class="flex flex-col flex-1 justify-center text-center items-center mt-20"
+      >
+        <img
+          class="w-[181px] h-[181px]"
+          src="@/assets/img/no_data.png"
+          alt="no_data"
+        />
+        <span class="mt-20">조회된 학생에 대한 학습성향 데이터가 없습니다.</span>
+      </div>
+    </section>
+    <section v-if="isChartData"
       class="flex flex-col px-20 mt-20 w-full text-base max-md:px-5 max-md:max-w-full"
     >
       <div class="w-[300px] flex justify-start z-50">
@@ -435,6 +478,7 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const isChartData = ref(true);
     const infoArr = ref([]);
     const optionsObj = ref({});
     const optionsObj2 = ref({});
@@ -812,8 +856,16 @@ export default {
 
       console.log(resData);
 
-      if (!resData.userPersonality) return;
-      if (!resData.classPersonality) return;
+      if (!resData.userPersonality) {
+        isChartData.value = false;
+        return;
+      }
+
+      if (!resData.classPersonality) {
+        isChartData.value = false;
+        return;
+      }
+      isChartData.value = true;
 
       let cArr1 = [];
       let cArr2 = [];
@@ -888,6 +940,7 @@ export default {
     };
 
     return {
+      isChartData,
       qesAnswer1,
       qesAnswer2,
       qesAnswer3,

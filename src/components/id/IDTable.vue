@@ -23,8 +23,8 @@
       </thead>
       <tbody v-if="!body.length">
         <tr>
-          <td class="border-b-[1px] border-gray-300" :colspan="header.length">
-            <p class="text-center py-[10px] font-bold">데이터가 없습니다.</p>
+          <td class="text-center text-sm py-4 border-b-2 border-gray-100" :colspan="header.length">
+            <p>검색 결과가 존재하지 않습니다.</p>
           </td>
         </tr>
       </tbody>

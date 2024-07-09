@@ -6,7 +6,7 @@
   ></div>
   <div
     v-if="isShow1"
-    class="content-center p-8 min-h-[350px] z-50 bg-white rounded-[20px] shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2 flex flex-col gap-[10px] w-[590px]"
+    class="content-center p-8 min-h-[420px] z-50 bg-white rounded-[20px] shadow-[3px_6px_14px_6px_rgba(0,0,0,0.1)] absolute top-1/2 left-1/2 flex flex-col gap-[10px] w-[590px]"
     style="transform: translate(-50%, -50%) scale(0.8)"
   >
     <div class="flex justify-between items-center">
@@ -17,7 +17,7 @@
     <div class="flex flex-col gap-[10px] text-sm items-start mt-[10px]">
       <p class="text-left text-[#2F80ED] font-semibold">기간 설정</p>
       <div class="flex justify-between items-center w-full">
-        <div class="flex items-center gap-[20px]">
+        <div class="flex items-center gap-2">
           <p class="w-[50px] text-left">시작일</p>
           <VDatePicker v-model="startDate">
             <template #default="{ togglePopover }">
@@ -42,7 +42,7 @@
             </template>
           </VDatePicker>
         </div>
-        <div class="flex items-center gap-[20px]">
+        <div class="flex items-center gap-2">
           <p class="w-[50px] text-left">종료일</p>
           <VDatePicker v-model="endDate">
             <template #default="{ togglePopover }">
@@ -185,7 +185,7 @@
       <IDButton
         :text="'추가'"
         :_width="150"
-        isGray="true"
+        :isGray="true"
         @click="startAddTarget"
         class="bg-gray-300 text-white hover:bg-gray-500"
       />
@@ -201,9 +201,9 @@
           :_width="150"
           :isEllipsis="true"
           :isWhite="true"
-          @onClick="() => delTarget(v.code)"
-          class="h-[40px] text-black whitespace-nowrap overflow-hidden text-ellipsis"
+          class="h-[40px] text-black whitespace-nowrap overflow-hidden text-ellipsis cursor-auto"
         />
+        <div class="relative w-4 h-4 left-[140px] bottom-[45px] cursor-pointer z-50" @click="delTarget(v.code)"></div>
       </div>
     </div>
 
@@ -410,11 +410,11 @@ export default {
     const info = computed(() => {
       return props.metadata;
     });
-
     const schValue = ref('SCH_02');
     const gradeValue = ref([]);
     const pollId = ref('');
     const pollTarget = ref({});
+    const tempPollTarget = ref({});
     const title = ref('');
     const isChooseSchool = ref('1');
     const isShow1 = ref(props.isShow);
@@ -484,6 +484,7 @@ export default {
           };
         }
         pollTarget.value = tmpObj;
+        tempPollTarget.value = {...tmpObj};
       }
     );
 
@@ -524,6 +525,7 @@ export default {
     const togglePopup = (param) => {
       isShow1.value = param;
       isShow2.value = false;
+      pollTarget.value = {...tempPollTarget.value};
     };
 
     const toggleSubPopup = async () => {
@@ -609,6 +611,7 @@ export default {
     };
 
     const delTarget = (key) => {
+      console.log(key);
       delete pollTarget.value[key];
     };
 
@@ -727,7 +730,7 @@ export default {
 .btn-selected::after {
   content: 'x';
   position: relative;
-  bottom: 45px;
+  bottom: 60px;
   left: 140px;
   width: 15px;
   height: 15px;

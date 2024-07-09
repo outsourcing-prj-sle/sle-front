@@ -37,6 +37,9 @@
           />
         </div>
       </div>
+      <div class="text-xs font-medium content-center">
+        총 {{ totalCount }}개 | 현재페이지 {{ page }}
+      </div>
       <IDTable :header="header" :_body="body" />
       <IDPagination
         :pageNo="page"
@@ -136,11 +139,11 @@ export default {
     const valueOption2 = ref('');
     const updateText2 = ref();
     const pollNm = ref();
+    const pollNo = computed(() => {
+      return String(pollNm.value).charAt(pollNm.value.length-1);
+    });
     const header = computed(() => {
       return [
-        {
-          isCheckbox: true,
-        },
         {
           text: '번호',
         },
@@ -268,8 +271,7 @@ export default {
       let answerArr = [];
       resData.pollDtlList.map((item, idx) => {
         let arr = [
-          { isCheckbox: true },
-          { text: idx + 1 },
+          { text: ((idx+1) + (page.value-1) * 10) },
           { text: item.schulNm },
           { text: item.stGrade },
           { text: item.userNm },
@@ -283,7 +285,7 @@ export default {
 
         item.answer.map((subItem, index) => {
           arr.push({ text: subItem });
-          if (idx === 0) answerArr.push({ text: `EK1.${index + 1}` });
+          if (idx === 0) answerArr.push({ text: `EK${pollNo.value}.${index + 1}` });
         });
 
         result.push(arr);
@@ -355,6 +357,7 @@ export default {
       selectedOption2,
       updateText2,
       pollNm,
+      pollNo,
       header,
       headerArr,
       body,
