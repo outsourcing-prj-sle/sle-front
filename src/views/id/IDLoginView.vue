@@ -109,7 +109,7 @@ export default {
 
       IDStore.init({
         token: resData.authorization,
-        name: resData.userNM || 'name',
+        name: resData.userNm || 'name',
       });
 
       const redirectPath = route.query.redirect || '/id/report';

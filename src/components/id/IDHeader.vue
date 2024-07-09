@@ -75,27 +75,27 @@
 <script>
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useAdminStore } from '@/store/adminStore.js';
+import { useIDStore } from '@/store/IDStore.js';
 
 export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const adminStore = useAdminStore();
+    const IDStore = useIDStore();
     const showHeader = computed(() => route.meta.headerVisible);
     const isManageReport = computed(() => route.meta.isManageReport);
     const isManageIdtt = computed(() => route.meta.isManageSel || route.meta.isManageLt);
     const isManageResearch = computed(() => route.meta.isManageResearch);
 
-    const userId = computed(() => adminStore.token);
-    const userName = computed(() => adminStore.name);
+    const userId = computed(() => IDStore.token);
+    const userName = computed(() => IDStore.name);
 
     const goSite = () => {
       router.push({ name: 'adminSite' });
     };
 
     const logout = () => {
-      adminStore.logout();
+      IDStore.logout();
       router.push({ name: 'adminLogin' });
     };
 
