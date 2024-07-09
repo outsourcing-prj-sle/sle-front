@@ -8,7 +8,7 @@
         class="flex flex-col items-start w-full bg-gray-100 border border-gray-300 rounded-xl p-[20px] gap-[20px] text-sm"
       >
         <div class="flex gap-[20px] items-center font-bold">
-          <p class="w-[40px]">기간</p>
+          <p class="w-[50px]">기간</p>
           <VDatePicker v-model="startDate">
             <template #default="{ togglePopover }">
               <div class="flex items-center gap-2">
@@ -62,7 +62,7 @@
           </VDatePicker>
         </div>
         <div class="flex gap-[20px] items-center font-bold">
-          <p class="w-[40px]">검색어</p>
+          <p class="w-[50px]">검색어</p>
           <AppDropdown
             :objectOptions="options"
             :startText="selectedOption"
