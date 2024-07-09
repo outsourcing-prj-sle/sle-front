@@ -40,6 +40,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useAdminStore } from '@/store/adminStore.js';
+import { useStateStore } from '@/store/stateStore.js';
 import AdminService from '@/service/AdminService.js';
 import AdminTable from '@/components/admin/AdminTable.vue';
 import AdminPagination from '@/components/admin/AdminPagination.vue';
@@ -57,6 +58,7 @@ export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
+    const stateStore = useStateStore();
     const adminStore = useAdminStore();
     const options = ref(['최신순', '오래된순']);
     const selectedOption = ref('최신순');
@@ -87,6 +89,7 @@ export default {
     });
 
     const fetchList = async () => {
+      stateStore.setLoading(true);
       const listResponse = await AdminService.systemInfoList('site', {
         pageNo: page.value,
         limit: limit.value,
@@ -122,6 +125,7 @@ export default {
       }
 
       totalCount.value = resData.totalCount;
+      stateStore.setLoading(false);
     };
 
     const handleSelection1 = (v) => {
