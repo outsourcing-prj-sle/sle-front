@@ -1,11 +1,16 @@
 <template>
+  <AppLoading />
   <router-view />
 </template>
 <script>
 import { defineComponent } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import AppLoading from '@/components/AppLoading';
 
 export default defineComponent({
+  components: {
+    AppLoading,
+  },
   setup() {
     const route = useRoute();
     const router = useRouter();
