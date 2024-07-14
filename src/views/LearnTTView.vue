@@ -5,14 +5,7 @@
       style="background-color: #deebf7"
     >
       <div class="flex flex-col my-auto">
-        <p class="mt-4 text-base font-medium text-left">
-          <span class="font-bold text-xl">학습성향</span>은 학생 개개의 성격적
-          특성에 따라 학습을 수행하는 태도, 습관 및 특징 등이 고려된 고유한
-          개념입니다. 본 학습성향은 Big 5 성격이론 등을 기반으로 구성되었으며 각
-          특성은 고유한 학습적 성향이고, 좋고 나쁨의 개념이 아닙니다. 학습성향에
-          따라 학습적 성향의 특성과 지도 Tip를 제안하고 있으니 이를 참고하여
-          주시기 바랍니다.
-        </p>
+        <p class="mt-4 text-base font-medium text-left" v-html="learnTitle"></p>
       </div>
       <img
         src="@/assets/img/logo-idtt.png"
@@ -20,11 +13,13 @@
         class="h-[240px] w-[332px]"
       />
     </section>
-    <section v-if="!isChartData"
+    <section
+      v-if="!isChartData"
       class="flex flex-col px-20 mt-7 w-full text-base max-md:px-5 max-md:max-w-full"
     >
       <b class="text-xl text-left">
-        <span class="text-blue-500">학급</span> 학습성향
+        <span class="text-blue-500">{{ $t('learn.class') }}</span>
+        {{ $t('learn.learn_tt') }}
       </b>
       <div
         class="flex flex-col flex-1 justify-center text-center items-center mt-20"
@@ -34,10 +29,11 @@
           src="@/assets/img/no_data.png"
           alt="no_data"
         />
-        <span class="mt-20">조회된 학급에 대한 학급성향 데이터가 없습니다.</span>
+        <span class="mt-20">{{ $t('learn.no_data_class') }}</span>
       </div>
     </section>
-    <section v-if="isChartData"
+    <section
+      v-if="isChartData"
       class="flex flex-col px-20 mt-7 w-full text-base max-md:px-5 max-md:max-w-full"
     >
       <!-- <div class="w-[300px] flex justify-start my-[20px] z-50">
@@ -50,7 +46,8 @@
         />
       </div> -->
       <b class="text-xl text-left">
-        <span class="text-blue-500">학급</span> 학습성향
+        <span class="text-blue-500">{{ $t('learn.class') }}</span>
+        {{ $t('learn.learn_tt') }}
       </b>
       <div class="flex justify-between flex-wrap">
         <div class="flex flex-col w-[300px] mt-[10px]">
@@ -72,17 +69,13 @@
               v-if="donutChartSeries1[0] > donutChartSeries1[1]"
               class="text-left text-sm"
             >
-              우리 학급은 학습내용을 자유롭게 건너뛰면서 학습하는 성향의
-              아이들이 반복해서 과제를 확인하고 점검하는 성향의 아이들보다
-              많습니다.
+              {{ $t('learn.donut_chart_series1_1') }}
             </p>
             <p
               v-if="donutChartSeries1[0] < donutChartSeries1[1]"
               class="text-left text-sm"
             >
-              우리 학급은 반복해서 과제를 확인하고 점검하는 성향의 아이들이
-              학습내용을 자유롭게 건너뛰면서 학습하는 성향의 아이들보다
-              많습니다.
+              {{ $t('learn.donut_chart_series1_2') }}
             </p>
           </div>
         </div>
@@ -105,17 +98,13 @@
               v-if="donutChartSeries2[0] > donutChartSeries2[1]"
               class="text-left text-sm"
             >
-              우리 학급은 학습 수행을 신속하게 하고 목표 지향적인 성향의
-              아이들이 과제 마감기간에 유연함을 가지고 그 때 그때 수행하는
-              성향의 아이들보다 많습니다.
+              {{ $t('learn.donut_chart_series2_1') }}
             </p>
             <p
               v-if="donutChartSeries2[0] < donutChartSeries2[1]"
               class="text-left text-sm"
             >
-              우리 학급은 과제 마감기간에 유연함을 가지고 그 때 그때 수행하는
-              성향의 아이들이 학습 수행을 신속하게 하고 목표 지향적인 성향의
-              아이들보다 많습니다.
+              {{ $t('learn.donut_chart_series2_2') }}
             </p>
           </div>
         </div>
@@ -138,23 +127,20 @@
               v-if="donutChartSeries3[0] > donutChartSeries3[1]"
               class="text-left text-sm"
             >
-              우리 학급은 선생님이나 또래와의 상호작용을 활발하게 하면서
-              학습하는 성향의 아이들이 혼자 학습하는 것을 선호하는 성향의
-              아이들보다 많습니다.
+              {{ $t('learn.donut_chart_series3_1') }}
             </p>
             <p
               v-if="donutChartSeries3[0] < donutChartSeries3[1]"
               class="text-left text-sm"
             >
-              우리 학급은 혼자 학습하는 것을 선호하는 성향의 아이들이 선생님이나
-              또래와의 상호작용을 활발하게 하면서 학습하는 성향의 아이들보다
-              많습니다.
+              {{ $t('learn.donut_chart_series3_2') }}
             </p>
           </div>
         </div>
       </div>
     </section>
-    <section v-if="!isChartData"
+    <section
+      v-if="!isChartData"
       class="flex flex-col px-20 mt-7 w-full text-base max-md:px-5 max-md:max-w-full"
     >
       <div class="w-[300px] flex justify-start z-50 my-4">
@@ -166,9 +152,7 @@
           @update:selectedOption="handleSelection"
         />
       </div>
-      <b class="text-xl text-left">
-        <span class="text-blue-500">{{ name }} 학생</span>의 학습성향 그래프
-      </b>
+      <b class="text-xl text-left" v-html="learnGraphTitle"> </b>
       <div
         class="flex flex-col flex-1 justify-center text-center items-center mt-20"
       >
@@ -177,10 +161,11 @@
           src="@/assets/img/no_data.png"
           alt="no_data"
         />
-        <span class="mt-20">조회된 학생에 대한 학습성향 데이터가 없습니다.</span>
+        <span class="mt-20">{{ $t('learn.no_data_class') }}</span>
       </div>
     </section>
-    <section v-if="isChartData"
+    <section
+      v-if="isChartData"
       class="flex flex-col px-20 mt-20 w-full text-base max-md:px-5 max-md:max-w-full"
     >
       <div class="w-[300px] flex justify-start z-50">
@@ -193,9 +178,7 @@
         />
       </div>
       <div class="mt-4 w-full text-left">
-        <b class="text-xl">
-          <span class="text-blue-500">{{ name }} 학생</span>의 학습성향 그래프
-        </b>
+        <b class="text-xl text-left" v-html="learnGraphTitle"> </b>
         <div
           class="flex justify-center items-center border border-gray-300 p-[20px] mt-[20px] gap-[10px] mb-[60px]"
         >
@@ -220,7 +203,7 @@
             <p>{{ donutChartDataNmArr3[1] }}</p>
           </div>
         </div>
-        <b class="text-xl my-[20px]">*성향별 상세 안내</b>
+        <b class="text-xl my-[20px]">*{{ $t('learn.detail_notice') }}</b>
         <div
           v-if="barChartDataArr1[0] > Math.abs(barChartDataArr2[0])"
           class="mb-[40px]"
@@ -230,12 +213,7 @@
           </p>
           <div class="p-[20px] border-gray-300 border-2 rounded-xl mb-[10px]">
             <p>
-              이 학생들은 학습 활동의 순서에 얽매이지 않고 스스로 자유롭게
-              학습하고자 하는 성향입니다 이 유형이 높을수록 학습내용을 대충
-              넘기거나 훑어보기 때문에 학습을 건너뛰거나 요점을 파악하는데
-              어려움이 있을 수 있습니다. 스스로 흥미가 있는 분야에서는 집중력
-              있게 높은 수행을 보일 수도 있습니다. 학생이 흥미가 있는 영역부터
-              단계적으로 학습할 수 있도록 도와주세요.
+              {{ $t('learn.detail_1') }}
             </p>
           </div>
         </div>
@@ -248,12 +226,7 @@
           </p>
           <div class="p-[20px] border-gray-300 border-2 rounded-xl mb-[10px]">
             <p>
-              학습 콘텐츠를 자주 보고 점검하는 성향의 학생들은 반복해서 학습
-              콘텐츠를 확인하거나 점검하고, 과제수정을 자주하는 성향입니다. 학습
-              콘텐츠를 자주 보고 점검하는 성향이 높을수록완벽성과 안정성을
-              추구하여 과제 수행 시간이 다른 사람들에 비해 오래 걸릴 수
-              있습니다. 긴장을 많이 하는 학생일 수 있으므로 여유를 가질 수
-              있도록 격려해주세요.
+              {{ $t('learn.detail_2') }}
             </p>
           </div>
         </div>
@@ -266,13 +239,7 @@
           </p>
           <div class="p-[20px] border-gray-300 border-2 rounded-xl mb-[10px]">
             <p>
-              이 학생들은 자신이 계획한 목표를 실행하기 위해서 과제의 제출
-              마감시간을 잘 지키고 신속하게 학업을 수행하려고 하는 성향입니다.
-              이 유형이 높을수록 목표지향적이고 학습 효율이 높을 수 있으나 너무
-              급하게 학업을 진행하여서 학업 완성도가 낮아질 수 있습니다. 학업을
-              수행할 때 학습진도나 학습 목차를 찬찬히 살펴보고 단계적 계획을
-              실천할 수 있도록 도와주세요. 또한, 스스로 생각하는 시간을 충분히
-              가지도록 돕는 것도 좋은 방법입니다.
+              {{ $t('learn.detail_3') }}
             </p>
           </div>
         </div>
@@ -285,12 +252,7 @@
           </p>
           <div class="p-[20px] border-gray-300 border-2 rounded-xl mb-[10px]">
             <p>
-              느긋하게 과제를 수행하는 성향의 학생들은 마감시간에 대해 유연함을
-              가지고 그때그때 수행하려고 하는 성향입니다. 느긋하게 과제를
-              수행하는 성향이 높을수록 학업 수행 시 스트레스를 덜 받을 수 있으나
-              계획적으로 학습하는데 어려움이 있고 미루는 행동을 보일 수
-              있습니다. 정해진 학습량을 제시간에 수행할 수 있도록 시간관리
-              학습방법을 도와주세요.
+              {{ $t('learn.detail_4') }}
             </p>
           </div>
         </div>
@@ -303,11 +265,7 @@
           </p>
           <div class="p-[20px] border-gray-300 border-2 rounded-xl mb-[10px]">
             <p>
-              이 학생들은 혼자 학습하는 것을 선호하는 성향입니다. 이 유형이
-              높을수록 타인의 시선을 의식하지 않고 자기 주도적이며 독립적 학습이
-              가능한 반면 협동과제나 그룹활동에서는 어려움을 경험할 수 있습니다.
-              이야기방 활동이나 톡톡 AI도움쌤 등의 기능을 적극적으로 활용하여
-              소통적 참여를 할 수 있도록 도와주세요.
+              {{ $t('learn.detail_5') }}
             </p>
           </div>
         </div>
@@ -320,25 +278,14 @@
           </p>
           <div class="p-[20px] border-gray-300 border-2 rounded-xl mb-[10px]">
             <p>
-              소통을 활발하게 하며 학습하는 성향의 학생들은 교사나 또래와의
-              사회적 상호작용을 활발하게 하면서 학습하는 성향입니다. 소통을
-              활발하게 하며 학습하는 성향이 높을수록 관계 지향적인 성향으로
-              인해서 교사나 또래관계에 따라 학업 수행 결과에 변화의 폭이 클 수
-              있습니다. 스스로 자기를 인식하여 학습에 대한 생각을 정리하고
-              독립적으로 학습을 하는 경험을 늘릴 수 있도록 도와주세요.
+              {{ $t('learn.detail_6') }}
             </p>
           </div>
         </div>
         <div class="mt-[60px]">
-          <p>
-            <span class="text-blue-500 font-medium">{{ name }} 학생</span>의
-            학습성향 AI분석 의견조사
-          </p>
+          <p v-html="aiTitle"></p>
           <div class="my-[20px]">
-            <p>
-              Q1. AI가 진단한 피드백 내용과 오프라인에서 살펴본 학생에 대한
-              선생님의 의견이 얼마나 일치하였나요?*
-            </p>
+            <p>Q1. {{ $t('learn.ai_q1') }}*</p>
             <div class="flex gap-[20px] p-[20px]">
               <div class="flex gap-[10px]">
                 <input
@@ -393,10 +340,7 @@
               </div>
             </div>
             <div class="my-[20px]">
-              <p>
-                Q2. 일치하지 않는다면 어느 유형이 일치하지 않았나요?* (중복선택
-                가능)
-              </p>
+              <p>Q2. {{ $t('learn.ai_q2') }}</p>
               <div class="flex flex-col gap-[20px] p-[20px]">
                 <div>
                   <input
@@ -408,8 +352,7 @@
                     required
                   />
                   <label for="question02_1" class="pr-[50px] cursor-pointer">
-                    학습 콘텐츠를 자주 보고 점검하는 성향/학습 콘텐츠를 건너뛰며
-                    점검하는 성향
+                    {{ $t('learn.ai_q2_1') }}
                   </label>
                 </div>
                 <div>
@@ -422,7 +365,7 @@
                     required
                   />
                   <label for="question02_2" class="pr-[50px] cursor-pointer">
-                    신속하게 과제를 수행하는 성향/느긋하게 과제를 수행하는 성향
+                    {{ $t('learn.ai_q2_2') }}
                   </label>
                 </div>
                 <div>
@@ -435,13 +378,13 @@
                     required
                   />
                   <label for="question02_3" class="pr-[50px] cursor-pointer">
-                    소통을 활발하게 하며 학습하는 성향/독립적으로 학습하는 성향
+                    {{ $t('learn.ai_q2_3') }}
                   </label>
                 </div>
               </div>
             </div>
             <div class="mt-[20px]">
-              <p>Q3. 개선의견을 자유롭게 적어주세요(선택)</p>
+              <p>Q3. {{ $t('learn.ai_q3') }}</p>
               <textarea
                 class="w-full border border-gray-300 px-[20px] py-[10px] mt-[20px] h-[136px]"
                 name="question03"
@@ -457,7 +400,7 @@
               tabindex="0"
               @click="submitInfo"
             >
-              의견 제출
+              {{ $t('learn.submit') }}
             </button>
           </section>
         </div>
@@ -471,12 +414,14 @@ import { ref, computed, onMounted, watch, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import UserService from '@/service/UserService.js';
 import AppDropdown from '@/components/AppDropdown.vue';
+import { useI18n } from 'vue-i18n';
 
 export default {
   components: {
     AppDropdown,
   },
   setup() {
+    const { t } = useI18n();
     const router = useRouter();
     const isChartData = ref(true);
     const infoArr = ref([]);
@@ -503,16 +448,16 @@ export default {
     const barChartColor = ref(['#A46DF1', '#FF80BD', '#2584FF']);
 
     const donutChartDataNmArr1 = ref([
-      '학습 콘텐츠를 건너뛰며 점검하는 성향',
-      '학습 콘텐츠를 자주 보고 점검하는 성향',
+      t(`learn.donut_chart_data_1_1`),
+      t(`learn.donut_chart_data_1_2`),
     ]);
     const donutChartDataNmArr2 = ref([
-      '신속하게 과제를 수행하는 성향',
-      '느긋하게 과제를 수행하는 성향',
+      t(`learn.donut_chart_data_2_1`),
+      t(`learn.donut_chart_data_2_2`),
     ]);
     const donutChartDataNmArr3 = ref([
-      '소통을 활발하게 하며 학습하는 성향',
-      '독립적으로 학습하는 성향',
+      t(`learn.donut_chart_data_3_1`),
+      t(`learn.donut_chart_data_3_2`),
     ]);
     const donutChartColor1 = ref(['#E3ACD0', '#72AFE7']);
     const donutChartColor2 = ref(['#E3ACD0', '#72AFE7']);
@@ -520,6 +465,44 @@ export default {
     const donutChartSeries1 = ref([80, 100]);
     const donutChartSeries2 = ref([20, 10]);
     const donutChartSeries3 = ref([20, 10]);
+
+    const lang = computed(() => {
+      return t('common.lang');
+    });
+
+    const aiTitle = computed(() => {
+      return t('learn.ai_title').replace(
+        '__name__',
+        `<span class="text-blue-500 font-medium">${name.value} 학생</span>`
+      );
+    });
+
+    const learnTitle = computed(() => {
+      const typeHTML = `<span class="font-bold text-xl">${t('learn.learn_tt')}</span>`;
+      return t('learn.learn_tt_detail').replace('__type__', typeHTML);
+    });
+
+    const learnGraphTitle = computed(() => {
+      return t('learn.learn_tt_graph').replace(
+        '__student__',
+        `<span class="text-blue-500">${name.value} ${t('common.student')}</span>`
+      );
+    });
+
+    watch(lang, (newValue, oldValue) => {
+      donutChartDataNmArr1.value = [
+        t(`learn.donut_chart_data_1_1`),
+        t(`learn.donut_chart_data_1_2`),
+      ];
+      donutChartDataNmArr2.value = [
+        t(`learn.donut_chart_data_2_1`),
+        t(`learn.donut_chart_data_2_2`),
+      ];
+      donutChartDataNmArr3.value = [
+        t(`learn.donut_chart_data_3_1`),
+        t(`learn.donut_chart_data_3_2`),
+      ];
+    });
 
     onMounted(async () => {
       initClass();
@@ -608,17 +591,17 @@ export default {
 
     const submitInfo = async () => {
       if (!qesAnswer1.value) {
-        alert('Q1번을 선택해주세요.');
+        alert(t('learn.choose_alert').split('__num__', 1));
         return;
       }
 
       if (!qesAnswer2.value.length) {
-        alert('Q2번을 선택해주세요.');
+        alert(t('learn.choose_alert').split('__num__', 2));
         return;
       }
 
       if (!qesAnswer3.value) {
-        alert('Q3번을 선택해주세요.');
+        alert(t('learn.choose_alert').split('__num__', 3));
         return;
       }
 
@@ -635,7 +618,7 @@ export default {
         return;
       }
 
-      alert('설문이 저장되었습니다!');
+      alert(t('learn.ai_res'));
     };
 
     const barChartSeries = computed(() => [
@@ -778,76 +761,82 @@ export default {
       ],
     });
 
-    const donutChartOptions1 = ref({
-      chart: {
-        type: 'donut',
-      },
-      colors: donutChartColor1.value,
-      labels: donutChartDataNmArr1.value,
-      plotOptions: {
-        pie: {
-          donut: {
-            size: '50%',
+    const donutChartOptions1 = computed(() => {
+      return {
+        chart: {
+          type: 'donut',
+        },
+        colors: donutChartColor1.value,
+        labels: donutChartDataNmArr1.value,
+        plotOptions: {
+          pie: {
+            donut: {
+              size: '50%',
+            },
           },
         },
-      },
-      dataLabels: {
-        enabled: true,
-        formatter: function (val, opts) {
-          return `${opts.w.config.series[opts.seriesIndex]}명`;
+        dataLabels: {
+          enabled: true,
+          formatter: function (val, opts) {
+            return `${opts.w.config.series[opts.seriesIndex]}${t('common.person')}`;
+          },
         },
-      },
-      legend: {
-        position: 'top',
-      },
+        legend: {
+          position: 'top',
+        },
+      };
     });
 
-    const donutChartOptions2 = ref({
-      chart: {
-        type: 'donut',
-      },
-      colors: donutChartColor2.value,
-      labels: donutChartDataNmArr2.value,
-      plotOptions: {
-        pie: {
-          donut: {
-            size: '50%',
+    const donutChartOptions2 = computed(() => {
+      return {
+        chart: {
+          type: 'donut',
+        },
+        colors: donutChartColor2.value,
+        labels: donutChartDataNmArr2.value,
+        plotOptions: {
+          pie: {
+            donut: {
+              size: '50%',
+            },
           },
         },
-      },
-      dataLabels: {
-        enabled: true,
-        formatter: function (val, opts) {
-          return `${opts.w.config.series[opts.seriesIndex]}명`;
+        dataLabels: {
+          enabled: true,
+          formatter: function (val, opts) {
+            return `${opts.w.config.series[opts.seriesIndex]}${t('common.person')}`;
+          },
         },
-      },
-      legend: {
-        position: 'top',
-      },
+        legend: {
+          position: 'top',
+        },
+      };
     });
 
-    const donutChartOptions3 = ref({
-      chart: {
-        type: 'donut',
-      },
-      colors: donutChartColor3.value,
-      labels: donutChartDataNmArr3.value,
-      plotOptions: {
-        pie: {
-          donut: {
-            size: '50%',
+    const donutChartOptions3 = computed(() => {
+      return {
+        chart: {
+          type: 'donut',
+        },
+        colors: donutChartColor3.value,
+        labels: donutChartDataNmArr3.value,
+        plotOptions: {
+          pie: {
+            donut: {
+              size: '50%',
+            },
           },
         },
-      },
-      dataLabels: {
-        enabled: true,
-        formatter: function (val, opts) {
-          return `${opts.w.config.series[opts.seriesIndex]}명`;
+        dataLabels: {
+          enabled: true,
+          formatter: function (val, opts) {
+            return `${opts.w.config.series[opts.seriesIndex]}${t('common.person')}`;
+          },
         },
-      },
-      legend: {
-        position: 'top',
-      },
+        legend: {
+          position: 'top',
+        },
+      };
     });
 
     const fetchChartData = async (userId = 'test') => {
@@ -872,24 +861,26 @@ export default {
       let cArr3 = [];
 
       resData.classPersonality[0].type1.values.map((item) => {
-        if(item) {
+        if (item) {
           cArr1.push(item);
         } else {
           cArr1.push(0);
         }
       });
       resData.classPersonality[0].type2.values.map((item) => {
-        if(item) {
+        if (item) {
           cArr2.push(item);
         } else {
           cArr2.push(0);
-        }      });
+        }
+      });
       resData.classPersonality[0].type3.values.map((item) => {
-        if(item) {
+        if (item) {
           cArr3.push(item);
         } else {
           cArr3.push(0);
-        }      });
+        }
+      });
 
       donutChartSeries1.value = cArr1;
       donutChartSeries2.value = cArr2;
@@ -898,39 +889,40 @@ export default {
       let uArr1 = [];
       let uArr2 = [];
 
-      
-      if(resData.userPersonality[0]['건너뛰며 점검하기']) {
+      if (resData.userPersonality[0]['건너뛰며 점검하기']) {
         uArr1.push(parseInt(resData.userPersonality[0]['건너뛰며 점검하기']));
       } else {
         uArr1.push(0);
       }
 
-      if(resData.userPersonality[0]['느긋하게 과제하기']) {
+      if (resData.userPersonality[0]['느긋하게 과제하기']) {
         uArr2.push(-parseInt(resData.userPersonality[0]['느긋하게 과제하기']));
       } else {
         uArr2.push(0);
       }
-      
-      if(resData.userPersonality[0]['신속하게 과제하기']) {
+
+      if (resData.userPersonality[0]['신속하게 과제하기']) {
         uArr1.push(parseInt(resData.userPersonality[0]['신속하게 과제하기']));
       } else {
         uArr1.push(0);
       }
-      
-      if(resData.userPersonality[0]['건너뛰며 점검하기']) {
+
+      if (resData.userPersonality[0]['건너뛰며 점검하기']) {
         uArr2.push(-parseInt(resData.userPersonality[0]['건너뛰며 점검하기']));
       } else {
         uArr2.push(0);
       }
-      
-      if(resData.userPersonality[0]['소통하며 학습하기']) {
+
+      if (resData.userPersonality[0]['소통하며 학습하기']) {
         uArr1.push(parseInt(resData.userPersonality[0]['소통하며 학습하기']));
       } else {
         uArr1.push(0);
       }
-      
-      if(resData.userPersonality[0]['독립적으로 학습하기']) {
-        uArr2.push(-parseInt(resData.userPersonality[0]['독립적으로 학습하기']));
+
+      if (resData.userPersonality[0]['독립적으로 학습하기']) {
+        uArr2.push(
+          -parseInt(resData.userPersonality[0]['독립적으로 학습하기'])
+        );
       } else {
         uArr2.push(0);
       }
@@ -965,6 +957,9 @@ export default {
       donutChartDataNmArr1,
       donutChartDataNmArr2,
       donutChartDataNmArr3,
+      learnTitle,
+      learnGraphTitle,
+      aiTitle,
 
       handleSelection,
       handleSelection2,

@@ -16,6 +16,7 @@ import report5 from '@/assets/dictionary/report5';
 import report6 from '@/assets/dictionary/report6';
 import sel from '@/assets/dictionary/sel';
 import social from '@/assets/dictionary/social';
+import learn from '@/assets/dictionary/learn';
 
 // 메시지 객체 변환 함수
 const formatMessages = (json, namespace) => {
@@ -45,6 +46,7 @@ const report5Messages = formatMessages(report5, 'report5');
 const report6Messages = formatMessages(report6, 'report6');
 const selMessages = formatMessages(sel, 'sel');
 const socialMessages = formatMessages(social, 'social');
+const learnMessages = formatMessages(learn, 'learn');
 
 // 메시지 통합
 const messages = {
@@ -65,6 +67,7 @@ const messages = {
     ...report6Messages.en,
     ...selMessages.en,
     ...socialMessages.en,
+    ...learnMessages.en,
   },
   ko: {
     ...commonMessages.ko,
@@ -83,6 +86,7 @@ const messages = {
     ...report6Messages.ko,
     ...selMessages.ko,
     ...socialMessages.ko,
+    ...learnMessages.ko,
   },
 };
 

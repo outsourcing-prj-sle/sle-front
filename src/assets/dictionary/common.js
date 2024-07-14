@@ -103,4 +103,8 @@ export default {
     ko: '닫기',
     en: 'close',
   },
+  person: {
+    ko: '명',
+    en: 'person',
+  },
 };
