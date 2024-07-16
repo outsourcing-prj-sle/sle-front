@@ -2,14 +2,10 @@ import axios from 'axios';
 import { useAdminStore } from '@/store/adminStore.js';
 import { getActivePinia } from 'pinia';
 
-// 현재 도메인에 따라 기본 URL 설정
-const domainMap = {
-  '172.20.30.12': 'http://172.20.30.12:80/api',
-  '1.213.164.252': 'http://1.213.164.252:60080/api',
-  'devgnesel.itt.link': 'http://devgnesel.itt.link:60080/api',
-  localhost: 'http://localhost:5173/api',
-};
-const currentDomain = window.location.hostname;
+const fullUrl = window.location.href;
+const url = new URL(fullUrl);
+const domain = url.origin;
+const apiDomain = domain + '/api';
 const baseURL = '/admin';
 
 // Pinia가 활성화될 때까지 기다리기
@@ -21,7 +17,7 @@ function getAdminStore() {
 }
 
 const apiClient = axios.create({
-  baseURL: domainMap[currentDomain] || 'http://1.213.164.252:60080/api',
+  baseURL: apiDomain,
 });
 
 apiClient.defaults.headers.common['Content-Type'] = 'application/json';
@@ -359,8 +355,6 @@ const getLog = (data = {}) => {
 const getUsers = (id, data = {}) => {
   return apiClient.get(baseURL + `/users/${id}`, { params: data });
 };
-
-
 
 export default {
   login,
