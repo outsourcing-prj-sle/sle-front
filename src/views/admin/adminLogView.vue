@@ -24,7 +24,7 @@
           <AdminButton :text="'검색'" :isWhite="false" :isSearch="true" @click="submitData" />
         </div>
       </div>
-      <AdminTable v-if="body.length" :header="header" :body="body" />
+      <AdminTable :header="header" :body="body" />
 
       <AdminPagination
         :pageNo="page"

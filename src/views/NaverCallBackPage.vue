@@ -14,7 +14,7 @@ export default {
       window.opener.postMessage({ type, code, state }, window.location.origin);
       window.opener.postMessage(
         { type, code, state },
-        'http://devgnesel.itt.link:60080'
+        'https://gnesel.itt.link'
       );
       window.close();
     }

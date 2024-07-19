@@ -18,7 +18,6 @@
         </div>
       </div>
       <AdminTable
-        v-if="body.length"
         :header="header"
         :body="body"
         @goEdit="goEdit"
