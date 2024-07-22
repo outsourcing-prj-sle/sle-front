@@ -25,7 +25,7 @@
     <div
       class="flex relative gap-20 justify-center mt-12 max-w-full w-full max-md:flex-wrap max-md:mt-10 max-lg:gap-12 max-md:gap-8"
     >
-      <template v-for="n in 4" :key="`blueball${n}`">
+      <template v-for="n in 5" :key="`blueball${n}`">
         <div class="flex flex-col" v-if="page >= n">
           <div
             class="flex flex-col justify-center p-2 rounded-3xl border border-blue-400 border-solid bg-white"
