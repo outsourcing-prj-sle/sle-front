@@ -51,9 +51,10 @@
         <div
           class="flex flex-col px-9 text-base leading-8 max-md:px-5 max-md:max-w-full"
         >
-          <p class="text-left max-md:mr-1.5 max-md:max-w-full">
-            {{ $t(`report6.question${currentStep}`) }}
-          </p>
+          <p
+            class="text-left max-md:mr-1.5 max-md:max-w-full"
+            v-html="$t(`report6.question${currentStep}`)"
+          ></p>
           <div
             class="flex gap-5 max-md:flex-col max-md:gap-0"
             :class="{
