@@ -15,6 +15,8 @@ export default {
   setup() {
     const stateStore = useStateStore();
     const isLoading = computed(() => {
+      console.log(stateStore.popupFlag, stateStore.popupReport, stateStore.isLoading)
+
       return stateStore.isLoading;
     });
     return { isLoading };

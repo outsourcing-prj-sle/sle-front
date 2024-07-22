@@ -2,6 +2,7 @@
   <div class="flex flex-col bg-white">
     <AppTopAlert :text="textAlert" :showAlert="showAlert" />
     <AppQRPopup @closePopup="() => closePopup()" v-if="qrURL" class="z-50">
+      <button class="text-sm relative float-right" @click="closePopup">X</button>
       <img class="aspect-[1]" :src="qrURL" alt="qrcode" />
     </AppQRPopup>
     <AppRegistPopup
