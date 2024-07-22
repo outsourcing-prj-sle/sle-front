@@ -67,12 +67,6 @@
               :startText="selectedOption2"
               @update:selectedOption="handleSelection2"
             />
-            <AppDropdown
-              v-if="selectedOption3"
-              :options="options3"
-              :startText="selectedOption3"
-              @update:selectedOption="handleSelection3"
-            />
           </div>
         </div>
       </div>
@@ -123,7 +117,7 @@ export default {
     const selectedOption2 = ref('');
 
     const options3 = ref(['01']);
-    const selectedOption3 = ref('');
+    const selectedOption3 = ref('00');
 
     const gender = ref('');
     const school = ref('');
