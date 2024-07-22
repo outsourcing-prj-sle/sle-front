@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref, computed, onBeforeUnmount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import ReportQuestion1 from '@/components/ReportQuestion1.vue';
@@ -178,6 +178,10 @@ export default {
       await fetchData();
     });
 
+    onBeforeUnmount(() => {
+      window.speechSynthesis.cancel();
+    });
+
     const fetchData = async () => {
       try {
         const reportRespose = await ReportService.reportStart({
@@ -232,6 +236,7 @@ export default {
     };
 
     const nextStep = () => {
+      window.speechSynthesis.cancel();
       const v1 = currentAnswer.value;
       const v2 = currentAnswer2.value;
       if (!v1) return;
@@ -277,6 +282,7 @@ export default {
     };
 
     const prevStep = () => {
+      window.speechSynthesis.cancel();
       // 처음일때 무반응
       if (page.value === 1) {
         return;
