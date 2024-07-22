@@ -37,7 +37,7 @@ module.exports = defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://devgnesel.itt.link:60080/',
+        target: 'http://1.213.164.252:60080/',
         // target: 'https://gnesel.itt.link',
         changeOrigin: true,
       },

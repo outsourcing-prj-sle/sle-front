@@ -27,7 +27,7 @@ const userRoutes = [
         path: 'login',
         name: 'login',
         component: LoginView,
-        meta: { footerVisible: false, headerVisible: true },
+        meta: { footerVisible: false, headerVisible: false },
       },
       {
         path: 'signup',

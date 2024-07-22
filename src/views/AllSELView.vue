@@ -40,22 +40,22 @@
         >
           {{
             reportMetadata[selectedReport].state
-              ? $t('sel.ing')
-              : $t('sel.non_ing')
+              ? $t('sel.done')
+              : $t('sel.non_done')
           }}
         </span>
         <span class="font-medium">)</span>
       </div>
       <div class="w-full flex justify-between items-center mt-2">
         <div class="flex gap-4">
-          <!-- <AppDropdown
+          <AppDropdown
             :openWay="'left'"
             :openFull="true"
             :options="options"
             :startText="selectedOption"
             @update:selectedOption="handleSelection"
             v-if="selectedReport !== all"
-          /> -->
+          />
           <label
             class="flex gap-2.5 my-auto text-base font text-neutral-700"
             v-if="selectedReport !== all"
@@ -129,8 +129,8 @@
                     >
                       {{
                         info.stateList[currentNum]
-                          ? $t('sel.ing')
-                          : $t('sel.non_ing')
+                          ? $t('sel.done')
+                          : $t('sel.non_done')
                       }}
                     </td>
                   </tr>
@@ -165,8 +165,8 @@
                     >
                       {{
                         info.stateList[parseTitleToNum(title)]
-                          ? $t('sel.ing')
-                          : $t('sel.non_ing')
+                          ? $t('sel.done')
+                          : $t('sel.non_done')
                       }}
                     </td>
                   </tr>
@@ -243,14 +243,7 @@ export default {
 
     const handleSelection = (option) => {
       selectedOption.value = option;
-      sortList(option);
-    };
-
-    const sortList = (option = '마감순') => {
-      // if (option === '마감순') {
-      // }
-      // if (option === '최신순') {
-      // }
+      console.log(_infoArr.value);
     };
 
     const fetchReportList = async () => {
@@ -345,13 +338,13 @@ export default {
           if (selectedReport.value === all.value) {
             for (let i in titleReportArr.value) {
               text += info.stateList[i + 1 + '']
-                ? ',' + t('sel.ing')
-                : ',' + t('sel.non_ing');
+                ? ',' + t('sel.done')
+                : ',' + t('sel.non_done');
             }
           } else {
             text += info.stateList[currentNum.value]
-              ? ',' + t('sel.ing')
-              : ',' + t('sel.non_ing');
+              ? ',' + t('sel.done')
+              : ',' + t('sel.non_done');
           }
           text += '\n';
         });

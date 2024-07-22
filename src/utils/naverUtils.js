@@ -6,7 +6,7 @@ import UserService from '@/service/UserService.js';
  * @returns {Promise<void>}
  */
 async function methods_naverLogin() {
-  const redirectUri = 'http://devgnesel.itt.link:60080/naver/callback';
+  const redirectUri = 'http://localhost:5173/naver/callback';
   // const redirectUri = 'https://gnesel.itt.link/naver/callback';
   const state = process.env.VUE_APP_STATE;
   const clientId = process.env.VUE_APP_CLIENT_ID;
@@ -34,7 +34,7 @@ async function handleNaverCallback(code, state) {
 }
 
 function logoutWhalespace() {
-  const redirectUri = 'http://devgnesel.itt.link:60080/naver/callback';
+  const redirectUri = 'http://localhost:5173/naver/callback';
   // const redirectUri = 'https://gnesel.itt.link/naver/callback';
   const state = process.env.VUE_APP_STATE;
   const clientId = process.env.VUE_APP_CLIENT_ID;

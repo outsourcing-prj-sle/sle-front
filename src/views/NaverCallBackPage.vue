@@ -15,7 +15,7 @@ export default {
       window.opener.postMessage(
         { type, code, state },
         // 'https://gnesel.itt.link'
-        'http://devgnesel.itt.link:60080'
+        'http://localhost:5173/'
       );
       window.close();
     }

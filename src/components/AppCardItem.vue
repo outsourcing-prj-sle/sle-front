@@ -38,7 +38,7 @@
         </div>
         <div class="w-[206px] flex gap-1.5">
           <button
-            class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-blue-500 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis"
+            class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-blue-500 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis text-sm"
             :class="data.status === 'todo' ? 'bg-blue-500' : 'bg-blue-800'"
             v-if="loginType === 'student' && leftDate(data.endDate)"
             @click="() => goReportNotice(data.pollId, data.status)"
@@ -46,20 +46,20 @@
             {{ data.status === 'todo' ? $t('home.todo') : $t('home.progress') }}
           </button>
           <button
-            class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-gray-600 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis cursor-not-allowed"
+            class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-gray-600 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis cursor-not-allowed text-sm"
             v-if="loginType === 'student' && !leftDate(data.endDate)"
           >
             {{ $t('home.time_over') }}
           </button>
           <button
-            class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-blue-500 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis"
+            class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-blue-500 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis text-sm"
             v-if="loginType === 'teacher'"
             @click="() => copyURL(data.pollId)"
           >
             {{ $t('home.copy_url') }}
           </button>
           <button
-            class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-blue-700 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis"
+            class="items-center flex-1 px-2 py-2.5 mt-8 text-white whitespace-nowrap bg-blue-700 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-ellipsis text-sm"
             v-if="loginType === 'teacher'"
             @click="() => openQRCodePopup(data.pollId)"
           >
@@ -115,7 +115,7 @@
           {{ mixDate(data.startDate, data.endDate) || '2023. 09. 01 ~ 12. 01' }}
         </div>
         <button
-          class="justify-center w-[206px] items-center px-5 py-3 mt-8 text-white whitespace-nowrap bg-zinc-600 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden"
+          class="justify-center w-[206px] items-center px-5 py-3 mt-8 text-white whitespace-nowrap bg-zinc-600 rounded-[30px] max-md:px-5 max-md:mr-2.5 overflow-hidden text-sm"
         >
           {{ $t('home.fin') }}
         </button>

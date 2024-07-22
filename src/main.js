@@ -11,6 +11,14 @@ import CKEditor from '@ckeditor/ckeditor5-vue';
 import 'ckeditor5/ckeditor5.css';
 import 'ckeditor5-premium-features/ckeditor5-premium-features.css';
 
+/**
+ * 콘솔 출력 제거
+ */
+// console.log = () => {};
+// console.warn = () => {};
+// console.error = () => {};
+// console.info = () => {};
+// console.debug = () => {};
 
 const app = createApp(App);
 app.use(i18n);

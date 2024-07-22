@@ -25,22 +25,18 @@
       class="flex relative gap-40 justify-center mt-12 max-w-full w-full max-md:flex-wrap max-md:mt-10"
     >
       <template v-for="n in 4" :key="`blueball${n}`">
-        <div class="flex flex-col" v-if="page >= n">
+        <div class="flex flex-col">
           <div
-            class="flex flex-col justify-center p-2 rounded-3xl border border-blue-400 border-solid bg-white"
+            class="flex flex-col justify-center p-2 rounded-3xl border border-blue-400 border-solid bg-white]"
+            :class="page >= n ? 'border-blue-400' : 'border-white'"
           >
-            <div class="shrink-0 w-8 h-8 bg-blue-400 rounded-2xl"></div>
+            <div class="shrink-0 w-8 h-8 bg-blue-400 rounded-2xl"
+              :class="page >= n ? 'bg-blue-400' : 'bg-neutral-200'"
+            ></div>
           </div>
           <span class="self-center mt-4 text-base text-center text-black">{{
             n
           }}</span>
-        </div>
-        <div
-          class="flex flex-col px-2 pt-2 text-base text-center whitespace-nowrap"
-          v-else
-        >
-          <div class="shrink-0 w-8 h-8 rounded-2xl bg-neutral-200"></div>
-          <span class="mt-6">{{ n }}</span>
         </div>
       </template>
     </div>
