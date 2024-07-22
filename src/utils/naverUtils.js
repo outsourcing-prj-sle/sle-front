@@ -6,8 +6,11 @@ import UserService from '@/service/UserService.js';
  * @returns {Promise<void>}
  */
 async function methods_naverLogin() {
-  const redirectUri = 'http://localhost:5173/naver/callback';
-  // const redirectUri = 'https://gnesel.itt.link/naver/callback';
+  const redirectUri = process.env.VUE_APP_PRODUCTION === 'live' ? process.env.VUE_APP_REDIRECT_URI_LIVE : 
+  (process.env.VUE_APP_PRODUCTION === 'inner' ? process.env.VUE_APP_REDIRECT_URI_INNER_DEV :
+  (
+    process.env.VUE_APP_PRODUCTION === 'outer' ? process.env.VUE_APP_REDIRECT_URI_OUTER_DEV : process.env.VUE_APP_REDIRECT_URI_LOCAL
+  ));
   const state = process.env.VUE_APP_STATE;
   const clientId = process.env.VUE_APP_CLIENT_ID;
 
@@ -34,8 +37,11 @@ async function handleNaverCallback(code, state) {
 }
 
 function logoutWhalespace() {
-  const redirectUri = 'http://localhost:5173/naver/callback';
-  // const redirectUri = 'https://gnesel.itt.link/naver/callback';
+  const redirectUri = process.env.VUE_APP_PRODUCTION === 'live' ? process.env.VUE_APP_REDIRECT_URI_LIVE : 
+  (process.env.VUE_APP_PRODUCTION === 'inner' ? process.env.VUE_APP_REDIRECT_URI_INNER_DEV :
+  (
+    process.env.VUE_APP_PRODUCTION === 'outer' ? process.env.VUE_APP_REDIRECT_URI_OUTER_DEV : process.env.VUE_APP_REDIRECT_URI_LOCAL
+  ));
   const state = process.env.VUE_APP_STATE;
   const clientId = process.env.VUE_APP_CLIENT_ID;
 

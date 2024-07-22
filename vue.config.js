@@ -37,8 +37,8 @@ module.exports = defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://1.213.164.252:60080/',
-        // target: 'https://gnesel.itt.link',
+        target: process.env.VUE_APP_PRODUCTION === 'live' ? process.env.VUE_APP_URI_LIVE :
+        (process.env.VUE_APP_PRODUCTION === 'inner' ? process.env.VUE_APP_URI_INNER_DEV : process.env.VUE_APP_URI_OUTER_DEV),
         changeOrigin: true,
       },
     },
