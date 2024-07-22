@@ -27,8 +27,10 @@
           {{ $t('login.login_rudska') }}
         </button>
       </div>
-      <hr>
-      <p class="text-center font-semibold text-lg" style="margin-top: 10px">연계 사이트</p> 
+      <hr />
+      <p class="text-center font-semibold text-lg" style="margin-top: 10px">
+        연계 사이트
+      </p>
       <div class="flex items-center justify-between" style="margin-top: 10px">
         <button
           @click="goIdLogin"
@@ -52,7 +54,7 @@
 </template>
 
 <script>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 import UserService from '@/service/UserService.js';
@@ -72,6 +74,7 @@ export default {
     const password = ref('');
     const showPopup = ref(false);
     const dicKey = ref('');
+    const userId = computed(() => userStore.token);
 
     const handleSubmit = async () => {
       const loginResponse = await UserService.login({
@@ -85,6 +88,13 @@ export default {
         return;
       }
     };
+
+    onMounted(() => {
+      if (userId.value) {
+        const redirectPath = route.query.redirect || '/';
+        router.push(redirectPath);
+      }
+    });
 
     onBeforeMount(() => {
       // 웨일스페이스 팝업 핸들링
@@ -131,11 +141,11 @@ export default {
 
     const goAdminLogin = () => {
       router.push('/admin/login');
-    }
+    };
 
     const goIdLogin = () => {
       router.push('/id/login');
-    }
+    };
 
     return {
       email,
