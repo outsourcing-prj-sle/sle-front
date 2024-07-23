@@ -8,8 +8,8 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-console': process.env.VUE_APP_PRODUCTION === 'live' ? 'warn' : 'off',
+    'no-debugger': process.env.VUE_APP_PRODUCTION === 'live' ? 'warn' : 'off',
     'linebreak-style': ['error', 'windows'],
     'no-unused-vars': 'off',
     'vue/no-unused-vars': 'off',
