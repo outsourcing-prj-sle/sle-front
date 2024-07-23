@@ -234,6 +234,8 @@ export default {
       () => [all.value],
       () => {
         fetchReportList();
+        options.value = [t('common.sort_dead'), t('common.sort_new')];
+        updateText.value = t('common.sort_dead');
       }
     );
 
@@ -243,7 +245,45 @@ export default {
 
     const handleSelection = (option) => {
       selectedOption.value = option;
-      console.log(_infoArr.value);
+      // todo :: 아래 함수 두개 적당히 수정해서 쓰기
+      if (option === t('common.sort_new')) {
+        // sortArrStart(_infoArr.value);
+      }
+      if (option === t('common.sort_dead')) {
+        // sortArrEnd(_infoArr.value);
+      }
+    };
+
+    const sortArrEnd = (arr) => {
+      return arr.sort((a, b) => {
+        const dateA = new Date(
+          a.endDate.slice(0, 4),
+          a.endDate.slice(4, 6) - 1,
+          a.endDate.slice(6, 8)
+        );
+        const dateB = new Date(
+          b.endDate.slice(0, 4),
+          b.endDate.slice(4, 6) - 1,
+          b.endDate.slice(6, 8)
+        );
+        return dateA - dateB;
+      });
+    };
+
+    const sortArrStart = (arr) => {
+      return arr.sort((a, b) => {
+        const dateA = new Date(
+          a.startDate.slice(0, 4),
+          a.startDate.slice(4, 6) - 1,
+          a.startDate.slice(6, 8)
+        );
+        const dateB = new Date(
+          b.startDate.slice(0, 4),
+          b.startDate.slice(4, 6) - 1,
+          b.startDate.slice(6, 8)
+        );
+        return dateB - dateA;
+      });
     };
 
     const fetchReportList = async () => {

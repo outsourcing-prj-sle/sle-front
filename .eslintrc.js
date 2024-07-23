@@ -14,5 +14,6 @@ module.exports = {
     'no-unused-vars': 'off',
     'vue/no-unused-vars': 'off',
     'vue/no-unused-components': 'off',
+    'linebreak-style': 'off',
   },
 };
