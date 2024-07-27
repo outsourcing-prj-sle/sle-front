@@ -30,7 +30,8 @@
             class="flex flex-col justify-center p-2 rounded-3xl border border-blue-400 border-solid bg-white]"
             :class="page >= n ? 'border-blue-400' : 'border-white'"
           >
-            <div class="shrink-0 w-8 h-8 bg-blue-400 rounded-2xl"
+            <div
+              class="shrink-0 w-8 h-8 bg-blue-400 rounded-2xl"
               :class="page >= n ? 'bg-blue-400' : 'bg-neutral-200'"
             ></div>
           </div>
@@ -59,7 +60,7 @@
           >
             <div class="flex flex-col w-[44%] max-md:ml-0 max-md:w-full">
               <FaceImg
-                :face="face[faceIndex]"
+                :face="face[currentStep]"
                 :eyes="score > 0 ? eyes[score - 1] : ''"
                 :mouth="score2 > 0 ? mouth[score2 - 1] : ''"
               />
