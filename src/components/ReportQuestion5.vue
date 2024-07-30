@@ -31,7 +31,8 @@
             class="flex flex-col justify-center p-2 rounded-3xl border border-blue-400 border-solid bg-white]"
             :class="page >= n ? 'border-blue-400' : 'border-white'"
           >
-            <div class="shrink-0 w-8 h-8 bg-blue-400 rounded-2xl"
+            <div
+              class="shrink-0 w-8 h-8 bg-blue-400 rounded-2xl"
               :class="page >= n ? 'bg-blue-400' : 'bg-neutral-200'"
             ></div>
           </div>
@@ -78,9 +79,10 @@
               1
             </div>
             <img
-              :src="require(`@/assets/img/5a${currentStep}1.png`)"
+              :src="require(`@/assets/img/5a${currentStep}1.svg`)"
               alt="5a1"
               class="self-center mt-6 object-contain max-w-full h-[224px]"
+              :class="{ 'neon-shadow': score === '1' }"
             />
           </label>
 
@@ -102,9 +104,10 @@
               2
             </div>
             <img
-              :src="require(`@/assets/img/5a${currentStep}2.png`)"
+              :src="require(`@/assets/img/5a${currentStep}2.svg`)"
               alt="5a2"
               class="self-center mt-6 object-contain max-w-full h-[224px]"
+              :class="{ 'neon-shadow': score === '2' }"
             />
           </label>
 
@@ -126,9 +129,10 @@
               3
             </div>
             <img
-              :src="require(`@/assets/img/5a${currentStep}3.png`)"
+              :src="require(`@/assets/img/5a${currentStep}3.svg`)"
               alt="5a3"
               class="self-center mt-6 object-contain max-w-full h-[224px]"
+              :class="{ 'neon-shadow': score === '3' }"
             />
           </label>
 
@@ -150,9 +154,10 @@
               4
             </div>
             <img
-              :src="require(`@/assets/img/5a${currentStep}4.png`)"
+              :src="require(`@/assets/img/5a${currentStep}4.svg`)"
               alt="5a4"
               class="self-center mt-6 object-contain max-w-full h-[224px]"
+              :class="{ 'neon-shadow': score === '4' }"
             />
           </label>
         </div>
@@ -291,5 +296,11 @@ input:checked + div {
   100% {
     opacity: 1;
   }
+}
+
+.neon-shadow {
+  /* filter: drop-shadow(0 5px 5px rgb(135, 206, 235)); */
+  filter: drop-shadow(0 7px 7px rgb(0, 102, 204));
+  /* 이미지를 따라 그림자가 생기도록 drop-shadow 필터를 사용했습니다 */
 }
 </style>

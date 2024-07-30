@@ -400,7 +400,7 @@
               tabindex="0"
               @click="submitInfo"
             >
-              {{ $t('learn.submit') }}
+              {{ $t('learn.submit_report') }}
             </button>
           </section>
         </div>
