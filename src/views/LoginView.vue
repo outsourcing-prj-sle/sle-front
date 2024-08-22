@@ -106,6 +106,8 @@ export default {
                 dicKey.value = resData;
               } else if (resData === 'server_error') {
                 alert('서버 에러입니다.\n담당자에게 문의해주세요.');
+              } else if (resData === 'no_naver_token') {
+                alert('네이버 로그인이 불가능합니다.\n계정을 확인해주세요.');
               }
             }
           }
