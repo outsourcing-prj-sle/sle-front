@@ -27,28 +27,6 @@
           {{ $t('login.login_rudska') }}
         </button>
       </div>
-      <hr />
-      <p class="text-center font-semibold text-lg" style="margin-top: 10px">
-        연계 사이트
-      </p>
-      <div class="flex items-center justify-between" style="margin-top: 10px">
-        <button
-          @click="goIdLogin"
-          type="button"
-          class="w-full px-4 py-2 text-sm font-medium text-white bg-gray-400 rounded hover:opacity-80 focus:outline-none"
-        >
-          ID연구소 로그인으로 이동하기
-        </button>
-      </div>
-      <div class="flex items-center justify-between" style="margin-top: 10px">
-        <button
-          @click="goAdminLogin"
-          type="button"
-          class="w-full px-4 py-2 text-sm font-medium text-white bg-gray-400 rounded hover:opacity-80 focus:outline-none"
-        >
-          관리자 로그인으로 이동하기
-        </button>
-      </div>
     </div>
   </div>
 </template>
