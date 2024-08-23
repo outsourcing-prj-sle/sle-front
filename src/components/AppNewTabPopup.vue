@@ -38,8 +38,8 @@ export default {
   },
   setup(props, { emit }) {
     const openNewTab = () => {
-      // const url = 'https://newtab.itt.link';
-      const url = 'https://devnewtab.itt.link';
+      const url = process.env.VUE_APP_PRODUCTION === 'live' ? process.env.VUE_APP_NEW_TAB_URI_LIVE : 
+        process.env.VUE_APP_PRODUCTION === 'inner' ? process.env.VUE_APP_NEW_TAB_URI_INNER_DEV : process.env.VUE_APP_NEW_TAB_URI_OUTER_DEV;
       window.open(url, '_blank');
     };
 
