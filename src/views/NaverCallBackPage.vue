@@ -12,14 +12,7 @@ export default {
 
     if (code && state) {
       window.opener.postMessage({ type, code, state }, window.location.origin);
-      // window.opener.postMessage(
-      //   { type, code, state },
-      //   process.env.VUE_APP_PRODUCTION === 'live' ? process.env.VUE_APP_REDIRECT_URI_LIVE :
-      //   (process.env.VUE_APP_PRODUCTION === 'inner' ? process.env.VUE_APP_REDIRECT_URI_INNER_DEV :
-      //   (
-      //     process.env.VUE_APP_PRODUCTION === 'outer' ? process.env.VUE_APP_REDIRECT_URI_OUTER_DEV : process.env.VUE_APP_REDIRECT_URI_LOCAL
-      //   ))
-      // );
+      // window.opener.postMessage({ type, code, state }, 'localhost:5173');
       window.close();
     }
   },
