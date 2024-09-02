@@ -40,10 +40,10 @@ export default {
     const openNewTab = () => {
       const url =
         process.env.VUE_APP_PRODUCTION === 'live'
-          ? 'newtab.itt.link'
+          ? process.env.VUE_APP_NEW_TAB_URI_LIVE
           : process.env.VUE_APP_PRODUCTION === 'inner'
-            ? 'snewtab.itt.link'
-            : 'devnewtab.itt.link';
+            ? process.env.VUE_APP_NEW_TAB_URI_INNER_DEV
+            : process.env.VUE_APP_NEW_TAB_URI_OUTER_DEV;
       window.open(url, '_blank');
     };
 
