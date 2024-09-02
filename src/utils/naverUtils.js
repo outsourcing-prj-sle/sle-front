@@ -6,15 +6,19 @@ import UserService from '@/service/UserService.js';
  * @returns {Promise<void>}
  */
 async function methods_naverLogin() {
-  const redirectUri = process.env.VUE_APP_PRODUCTION === 'live' ? process.env.VUE_APP_REDIRECT_URI_LIVE : 
-  (process.env.VUE_APP_PRODUCTION === 'inner' ? process.env.VUE_APP_REDIRECT_URI_INNER_DEV :
-  (
-    process.env.VUE_APP_PRODUCTION === 'outer' ? process.env.VUE_APP_REDIRECT_URI_OUTER_DEV : process.env.VUE_APP_REDIRECT_URI_LOCAL
-  ));
+  const redirectUri =
+    process.env.VUE_APP_PRODUCTION === 'live'
+      ? process.env.VUE_APP_REDIRECT_URI_LIVE
+      : process.env.VUE_APP_PRODUCTION === 'inner'
+        ? process.env.VUE_APP_REDIRECT_URI_INNER_DEV
+        : process.env.VUE_APP_PRODUCTION === 'outer'
+          ? process.env.VUE_APP_REDIRECT_URI_OUTER_DEV
+          : process.env.VUE_APP_REDIRECT_URI_LOCAL;
   const state = process.env.VUE_APP_STATE;
   const clientId = process.env.VUE_APP_CLIENT_ID;
 
   const apiUrl = `https://auth.whalespace.io/oauth2/v1.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${state}`;
+  console.log(apiUrl);
   const popup = window.open(apiUrl, 'NaverLogin', 'width=600,height=700');
 }
 
@@ -37,11 +41,14 @@ async function handleNaverCallback(code, state) {
 }
 
 function logoutWhalespace() {
-  const redirectUri = process.env.VUE_APP_PRODUCTION === 'live' ? process.env.VUE_APP_REDIRECT_URI_LIVE : 
-  (process.env.VUE_APP_PRODUCTION === 'inner' ? process.env.VUE_APP_REDIRECT_URI_INNER_DEV :
-  (
-    process.env.VUE_APP_PRODUCTION === 'outer' ? process.env.VUE_APP_REDIRECT_URI_OUTER_DEV : process.env.VUE_APP_REDIRECT_URI_LOCAL
-  ));
+  const redirectUri =
+    process.env.VUE_APP_PRODUCTION === 'live'
+      ? process.env.VUE_APP_REDIRECT_URI_LIVE
+      : process.env.VUE_APP_PRODUCTION === 'inner'
+        ? process.env.VUE_APP_REDIRECT_URI_INNER_DEV
+        : process.env.VUE_APP_PRODUCTION === 'outer'
+          ? process.env.VUE_APP_REDIRECT_URI_OUTER_DEV
+          : process.env.VUE_APP_REDIRECT_URI_LOCAL;
   const state = process.env.VUE_APP_STATE;
   const clientId = process.env.VUE_APP_CLIENT_ID;
 
