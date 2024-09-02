@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { ref, onBeforeMount, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, onBeforeUnmount } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '@/store/userStore.js';
 import UserService from '@/service/UserService.js';
@@ -67,52 +67,54 @@ export default {
       }
     };
 
+    const messageHandler = async (event) => {
+      console.log('??????????');
+      console.log(event);
+      const { type, code, state } = event.data;
+      if (type === 'naverLogin') {
+        if (code && state) {
+          const callbackRes = await handleNaverCallback(code, state);
+          const resData = callbackRes?.data;
+          console.log(resData);
+          console.log(resData.authorization);
+
+          if (resData?.authorization) {
+            userStore.init({
+              token: resData.authorization,
+              type: resData.userRole,
+              isRegistered: !!resData.sex,
+              extra: resData.extra,
+            });
+
+            const redirectPath = route.query.redirect || '/';
+            router.push(redirectPath);
+          } else {
+            if (resData === 'no_userdata' || resData === 'no_userId') {
+              showPopup.value = true;
+              dicKey.value = resData;
+            } else if (resData === 'server_error') {
+              alert('서버 에러입니다.\n담당자에게 문의해주세요.');
+            } else if (resData === 'no_naver_token') {
+              alert('네이버 로그인이 불가능합니다.\n계정을 확인해주세요.');
+            }
+          }
+        }
+      }
+    };
+
     onMounted(() => {
       if (userId.value) {
         const redirectPath = route.query.redirect || '/';
         router.push(redirectPath);
       }
+
+      // 웨일스페이스 팝업 핸들링
+      window.addEventListener('message', messageHandler);
     });
 
-    onBeforeMount(() => {
-      // 웨일스페이스 팝업 핸들링
-      window.addEventListener('message', async (event) => {
-        // if (event.origin !== window.location.origin) {
-        //   return;
-        // }
-        console.log('??????????');
-        console.log(event);
-        const { type, code, state } = event.data;
-        if (type === 'naverLogin') {
-          if (code && state) {
-            const callbackRes = await handleNaverCallback(code, state);
-            const resData = callbackRes?.data;
-            console.log(resData);
-            console.log(resData.authorization);
-
-            if (resData?.authorization) {
-              userStore.init({
-                token: resData.authorization,
-                type: resData.userRole,
-                isRegistered: !!resData.sex,
-                extra: resData.extra,
-              });
-
-              const redirectPath = route.query.redirect || '/';
-              router.push(redirectPath);
-            } else {
-              if (resData === 'no_userdata' || resData === 'no_userId') {
-                showPopup.value = true;
-                dicKey.value = resData;
-              } else if (resData === 'server_error') {
-                alert('서버 에러입니다.\n담당자에게 문의해주세요.');
-              } else if (resData === 'no_naver_token') {
-                alert('네이버 로그인이 불가능합니다.\n계정을 확인해주세요.');
-              }
-            }
-          }
-        }
-      });
+    onBeforeUnmount(() => {
+      console.log('이벤트 리스너 제거');
+      window.removeEventListener('message', messageHandler);
     });
 
     const closePopup = () => {
