@@ -106,6 +106,7 @@
     >
       {{ $t('header.social_tt') }}
     </div>
+    <!--
     <div
       class="px-2 text-center items-center max-w-max font-bold text-lg"
       :class="isLearnTTView && 'text-blue-500'"
@@ -114,6 +115,7 @@
     >
       {{ $t('header.lean_tt') }}
     </div>
+    -->
   </div>
 </template>
 
